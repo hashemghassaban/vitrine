@@ -1,0 +1,97 @@
+import React, { useState, type CSSProperties } from "react";
+import { Popover, Typography } from "antd";
+import "./PulsingButton.less";
+import image10 from "../../../../../assets/full-page-overlay/image10.jpg";
+import { AppButton } from "../../../../../components/AppButton/AppButton";
+const { Title } = Typography;
+
+interface PulsingButtonProps {
+  style?: CSSProperties;
+  className?: string;
+  onClick?: () => void;
+}
+
+const PulsingButton: React.FC<PulsingButtonProps> = ({
+  style,
+  className = "",
+  onClick,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const content = (
+    <div
+    className="content_style"
+      style={{
+       
+        backgroundImage: `url(${image10})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(0, 0, 0, 0.1)",
+          zIndex: 1,
+        }}
+      />
+      <Title
+        level={4}
+        style={{
+          position: "absolute",
+          top: "0px",
+          left: 0,
+          right: 0,
+          padding: "30px",
+          color: "white",
+          zIndex: 2,
+          margin: 0,
+        }}
+      >
+        ویترین پلاس
+      </Title>
+      <AppButton
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 2,
+          backgroundColor: "transparent",
+          color: "white",
+        }}
+      >
+        مشاهده
+      </AppButton>
+    </div>
+  );
+
+  return (
+    <Popover
+      content={content}
+      trigger="hover"
+      open={open}
+      onOpenChange={setOpen}
+      placement="right"
+      styles={{ body: { padding: 0 } }}
+      arrow={false}
+    >
+      <div style={style}>
+        <div className={`button-container ${className}`}>
+          <button className="pulse-button" onClick={onClick}>
+            <span className="plus-icon">+</span>
+          </button>
+          <div className="pulse-ring"></div>
+        </div>
+      </div>
+    </Popover>
+  );
+};
+
+export default PulsingButton;

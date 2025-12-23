@@ -1,0 +1,102 @@
+.brand-section {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.brand-title {
+  margin-bottom: 60px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 45px;
+  text-align: center;
+  color: #767676;
+}
+
+/* Container Flex */
+.brand-scale-container {
+  width: 100%;
+  overflow-x: auto; /* اسکرول افقی فعال */
+  overflow-y: hidden;
+  -ms-overflow-style: none; /* IE و Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.brand-scale-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.brand-scale-row {
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: space-evenly; 
+  align-items: center;
+  gap: 3rem; 
+}
+
+/* ستون برند */
+.brand-col {
+  flex: 0 0 auto;
+}
+
+/* تصویر برند */
+.brand-img {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.brand-img:hover {
+  transform: scale(1.1);
+}
+
+ .brand6-img {
+  max-width: 110px !important;
+  max-height: 50px !important;
+  object-fit: contain !important;
+   transition: transform 0.3s ease;
+}
+
+.brand6-img:hover {
+  transform: scale(1.1);
+}
+
+
+@media (max-width: 1200px) {
+  .brand-img { width: 130px; }
+}
+
+@media (max-width: 992px) {
+  .brand-img { width: 110px; }
+}
+
+@media (max-width: 768px) {
+  .brand-scale-row {
+    justify-content: flex-start; 
+  }
+  .brand-img { width: 90px; }
+}
+
+@media (max-width: 576px) {
+  .brand-img { width: 80px; }
+}
+
+
+/* سایز مخصوص brand6 در حالت عادی */
+.brand6-img {
+  width: 130px !important;
+}
+
+/* سایز کوچیک‌تر برای دستگاه‌های کوچک */
+@media (max-width: 768px) {
+  .brand6-img {
+    width: 70px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .brand6-img {
+    width: 60px !important;
+  }
+}

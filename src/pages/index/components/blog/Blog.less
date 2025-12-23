@@ -1,0 +1,179 @@
+.blog {
+  margin: 120px 0;
+
+  .first__title {
+    font-weight: 700;
+    font-size: 22px;
+    text-align: center;
+    color: #767676;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  .blog__Row {
+    margin-bottom: 40px;
+    align-items: center;
+  }
+    .blog__Row2 {
+      margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .blog__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      max-width: 700px;
+      height: 320px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .blog__content,
+  .blog__content2 {
+    text-align: justify;
+
+   padding: 30;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  .blog__content {
+ 
+    padding-left: 50px;
+
+    .blog__box1{
+      width: 400px;
+    }
+  }
+
+  .blog__content2 {
+
+    padding-right: 150px !important;
+        .blog__box2{
+      width: 400px;
+    }
+
+  }
+
+  .blog__title {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    color: #767676;
+  }
+
+  .blog__text {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 28px;
+    color: #6b6b6b;
+    margin-bottom: 15px;
+  }
+
+  .blog__more {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 45px;
+    color: #010101;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .blog__Button {
+  margin-top: 10px;
+    width: 350px !important;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 45px;
+    color: #818181;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Media Queries بر اساس Ant Design Breakpoints */
+  @media (max-width: 1599px) { /* xxl */
+    .blog__content,
+    .blog__content2 {
+      padding: 40px 40px !important;
+    }
+  }
+
+  @media (max-width: 1199px) { /* xl */
+    .blog__content,
+    .blog__content2 {
+      padding: 30px 30px;
+    }
+
+    .blog__image img {
+      max-width: 650px;
+    }
+  }
+
+  @media (max-width: 991px) { /* lg */
+    .blog__Row {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .blog__content,
+    .blog__content2 {
+      padding: 20px 20px;
+    }
+
+    .blog__image img {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 767px) { /* md */
+    .blog__title {
+      font-size: 18px;
+    }
+    .blog__text {
+      font-size: 14px;
+    }
+    .blog__Button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 575px) { /* sm */
+    .blog__content,
+    .blog__content2 {
+      padding: 15px 15px;
+    }
+    .blog__title {
+      font-size: 16px;
+    }
+    .blog__text {
+      font-size: 13px;
+    }
+  }
+}

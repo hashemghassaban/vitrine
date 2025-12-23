@@ -1,0 +1,102 @@
+.footer-menu {
+
+   .footer-menu__title {
+    padding-right: 13%;
+    text-align: right;
+    color: #767676;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 18px;
+   line-height: 61px;
+  }
+  .footer-menu__item {
+    text-align:right;
+    font-size: 18px;
+    line-height: 48px;
+    color: #767676 !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: black !important;
+      padding-right: 8px;
+    }
+  }
+
+
+  /* حذف کامل خط کناری */
+  .ant-menu,
+  .ant-menu-item {
+    text-align: right;
+    border-inline-end: none !important;
+    margin-bottom: 30px;
+
+  }
+
+
+  .ant-menu-item:hover,
+  .ant-menu-item-active,
+  .ant-menu-item-selected {
+    background: transparent !important;
+  }
+
+  .ant-menu-submenu-title:hover {
+    background: transparent !important;
+  }
+
+
+
+
+
+  /* ---------- ریسپانسیو ---------- */
+
+  @media (max-width: 1200px) {
+    .footer-menu__title {
+      text-align: center;
+      font-size: 16px;
+      line-height: 40px;
+      margin-bottom: 18px;
+    }
+    .footer-menu__item {
+      font-size: 16px;
+      line-height: 40px;
+    }
+    .ant-menu .ant-menu-item {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+    .footer-menu__title {
+      font-size: 15px;
+      line-height: 36px;
+    }
+    .footer-menu__item {
+      font-size: 15px;
+      line-height: 34px;
+
+      &:hover {
+        padding-left: 4px;
+      }
+    }
+    .ant-menu .ant-menu-item {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-menu__title {
+      font-size: 14px;
+      line-height: 30px;
+      margin-bottom: 12px;
+    }
+    .footer-menu__item {
+      font-size: 14px;
+      line-height: 30px;
+    }
+  }
+
+}
+
+
+

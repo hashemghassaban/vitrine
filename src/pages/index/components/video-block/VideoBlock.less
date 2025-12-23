@@ -1,0 +1,162 @@
+.video-block {
+  margin-top: 100px;
+  overflow: visible !important;
+
+  /* --- انیمیشن‌ها --- */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn .8s ease forwards;
+  }
+
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.08); }
+    100% { transform: translateX(-50%) scale(1); }
+  }
+
+  /* --- متن داخل wrapper --- */
+  .content-wrapper {
+  
+    padding: 100px 150px;
+   
+      transform: translateX(50px);
+      animation: fadeInRight 1s forwards;
+      animation-delay: 0.3s;
+         @media (max-width: 1500px) {
+         padding: 80px 80px;
+    }
+            @media (max-width: 1400px) {
+         padding: 60px 60px;
+    }
+             @media (max-width: 1200px) {
+         padding: 40px 40px;
+    }
+                 @media (max-width:1000px) {
+         padding: 30px 30px;
+    }
+   
+    @media (max-width: 992px) {
+      padding: 30px;
+      text-align: center;
+        transform: translateY(20px);
+        animation: fadeInUp 1s forwards;
+        animation-delay: 0.3s;
+
+    }
+    @media (max-width: 576px) {
+      padding: 20px;
+      text-align: center;
+        transform: translateY(20px);
+        animation: fadeInUp 1s forwards;
+        animation-delay: 0.3s;
+    }
+  }
+
+  .video-block__content {
+    overflow: visible !important;
+  }
+
+  .video-block__title {
+    font-weight: 700;
+     font-size: 23px;       
+  line-height: 45px;
+    color: #767676;
+    margin-bottom: 20px;
+  }
+
+  .video-block__desc,
+  .video-block__text {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 28px;
+    margin-bottom: 25px;
+  }
+
+  .video-block__text {
+    color: #6b6b6b;
+  }
+
+  .Buttons {
+    display: flex;
+    gap: 20px;
+   
+     @media (max-width: 992px) {
+    justify-content: center;
+  }
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  .video-block__Button {
+    background: transparent !important;
+    border: 1px solid #818181;
+    color: #818181;
+    width: 150px;
+    font-size: 16px;
+  }
+
+  .shop__Button {
+    background: black;
+    color: white;
+    width: 150px;
+    font-size: 16px;
+  }
+
+  /* --- تصویر / ویدیو --- */
+  .video-col {
+    overflow: visible !important;
+    position: relative;
+  }
+
+  .video-block__img-col,
+  .video-block__video {
+    min-height: 350px;
+    height: 520px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .video-block__img-col {
+    background-image: url("../../../../assets/video-block/video-block.png");
+  }
+
+
+
+
+  .box_icon {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 90px;
+    background: #000;
+    border: 3px solid white;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 200;
+   
+  }
+
+
+
+
+  @media (max-width: 576px) {
+    .box_icon {
+      bottom: -35px;
+      width: 95px;
+      height: 70px;
+    }
+  }
+}

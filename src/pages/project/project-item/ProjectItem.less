@@ -1,0 +1,193 @@
+.ease-in-item {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: easeInNewItem 0.45s ease-in forwards;
+}
+
+@keyframes easeInNewItem {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.interior-page-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+
+  /* استایل تب‌ها */
+  .interior-tabs {
+    margin-bottom: 30px;
+    align-items: center;
+
+    .ant-tabs-ink-bar {
+      display: none !important;
+    }
+
+    .ant-tabs-nav {
+      margin: 0;
+      border-bottom: none !important;
+    }
+
+    .ant-tabs-nav::before {
+      border-bottom: none !important;
+    }
+
+    .ant-tabs-tab {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 8px 16px;
+      margin-inline: 8px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .ant-tabs-tab-active {
+      background-color: #e9e9e9;
+      color: #fff;
+    }
+  }
+
+  /* محتوای اصلی */
+  .content-block-project {
+    margin-bottom: 80px;
+    width: 100%;
+
+    .blog__image-project {
+      display: flex;
+      align-items: center;
+    }
+
+    .blog__content-project {
+      display: flex;
+      align-items: center;
+    }
+
+    .img-box-project {
+      display: flex;
+      width: 100%;
+      justify-content: center !important;
+      img {
+        height: 450px;
+        width: 810px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+        cursor: pointer;
+      }
+      &:hover img {
+        transform: scale(1.02);
+      }
+    }
+
+    .text-box-project {
+      max-width: fit-content;
+      padding-right: 100px;
+    }
+      .title-text-box-project {
+        margin-bottom: 35px;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 23px;
+        text-align: right;
+        color: #767676;
+          cursor: pointer;
+      }
+
+      .title-dec-box-project {
+        font-size: 16px;
+        line-height: 30px;
+        margin-bottom: 20px;
+        color: #767676;
+        margin-top: 30px;
+      }
+
+      .item-box-project {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        align-items: start;
+        margin-bottom: 12px;
+
+        .title-text-project {
+          color: #767676;
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 45px;
+        }
+
+        .dec-text-project {
+          font-weight: 300;
+          font-size: 15px;
+          line-height: 45px;
+          text-align: right;
+          color: #6b6b6b;
+        }
+      }
+
+      .dec-text-project-box {
+        width: 400px;
+      }
+      .text-project {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 31px;
+        text-align: justify;
+        color: #000000;
+      }
+      .ant-btn-link {
+        padding: 0;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 45px;
+        text-align: right;
+        color: #010101;
+
+        &:hover {
+          color: black !important;
+        }
+      }
+      .ant-btn-link::after {
+        content: "←";
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+
+    
+      .ant-btn-link:hover::after {
+        transform: translateX(-5px); 
+      }
+    }
+
+
+    .even-text-box-project{
+    max-width: fit-content;
+    padding-right: 210px;
+    }
+  
+
+
+  .blog__Button-project {
+    margin-bottom: 30px;
+    width: 350px !important;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 45px;
+    color: #818181;
+  }
+
+  /* واکنش‌گرایی برای موبایل */
+  @media (max-width: 991px) {
+    .content-block-project {
+      .blog__image-project,
+      .blog__content-project {
+        order: 0 !important;
+      }
+    }
+  }
+}

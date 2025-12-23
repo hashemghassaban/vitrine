@@ -1,0 +1,114 @@
+.brands-page {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.brands-title {
+  margin-bottom: 10px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 23px;
+  line-height: 45px;
+  color: #767676;
+}
+
+.brands-subtitle {
+  font-size: 15px;
+  color: #000000;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 31px;
+  margin-bottom: 100px;
+}
+
+.brand-card {
+  text-align: right;
+  padding: 10px 20px;
+  justify-content: center;
+  display: flex;
+  border: none;
+}
+.brand-box {
+  margin-bottom: 10px;
+  width: 200px;
+  height: auto;
+}
+.brand-logo {
+  max-width: 160px !important;
+  max-height: 70px !important;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.brand-title {
+  text-align: right;
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-top: 50px;
+  line-height: 45px;
+  color: #767676;
+  cursor: pointer;
+}
+
+.brand-text {
+  text-align: right;
+  color: #737373;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 31px;
+  max-width: 350px;
+  margin: 0 auto;
+  min-height: 60px;
+}
+
+.brand-more {
+  padding: 0;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 45px;
+  text-align: right;
+  color: #010101 !important;
+
+  &:hover {
+    color: black !important;
+  }
+
+  &::after {
+    content: "←";
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: translateX(-5px);
+  }
+}
+
+/* ----------- ریسپانسیو ----------- */
+
+@media (max-width: 992px) {
+  // md / lg
+  .brand-logo {
+    width: 130px;
+  }
+}
+
+@media (max-width: 576px) {
+  // xs
+  .brands-title {
+    font-size: 18px;
+  }
+
+  .brands-subtitle {
+    font-size: 14px;
+  }
+
+  .brand-logo {
+    width: 110px;
+  }
+
+  .brand-text {
+    font-size: 13px;
+  }
+}

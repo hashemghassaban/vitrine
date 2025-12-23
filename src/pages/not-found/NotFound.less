@@ -1,0 +1,86 @@
+.notfound-container {
+  width: 100%;
+  height: 100vh;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // ✔ اصلاح شد
+  text-align: center;
+
+  .notfound-content {
+    position: relative;
+
+    .error-number {
+      font-size: 300px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .error-texts {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .fa-text {
+        font-size: 25px;
+        margin-bottom: 30px;
+      }
+
+      .en-text {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+
+      .ant-btn-link {
+        padding: 0;
+        font-size: 14px;
+        color: white;
+      }
+    }
+  }
+}
+
+/* ----------- Responsive (small) ----------- */
+@media (max-width: 640px) {
+  .notfound-container {
+    align-items: center;
+
+    .notfound-content {
+      .error-number {
+        font-size: 130px !important;
+      }
+
+      .error-texts {
+        .fa-text {
+          font-size: 18px !important;
+        }
+        .en-text {
+          font-size: 18px !important;
+        }
+      }
+    }
+  }
+}
+
+/* ----------- Responsive (xl) ----------- */
+@media (min-width: 1280px) {
+  .notfound-container {
+    .notfound-content {
+      .error-number {
+        font-size: 650px;
+      }
+
+      .error-texts {
+        .fa-text {
+          font-size: 50px !important; // ✔ اصلاح شد
+        }
+        .en-text {
+          font-size: 50px !important;
+        }
+      }
+    }
+  }
+}

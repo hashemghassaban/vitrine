@@ -1,0 +1,117 @@
+.service {
+  width: 100%;
+  padding: 50px 0;
+}
+
+/* عنوان */
+.first__title {
+  font-weight: 700;
+  font-size: 20px;
+  color: #767676;
+  margin-bottom: 30px;
+}
+
+/* متن + انیمیشن ورود */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* انیمیشن */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service__content {
+  text-align: justify;
+  padding-right: 80px;
+  padding-top: 40px;
+}
+
+.service__title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #767676;
+  margin-bottom: 20px;
+}
+
+.service__text {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 31px;
+  color: #6b6b6b;
+  padding-bottom: 40px;
+}
+
+.service__Button {
+  width: 250px !important;
+  font-size: 16px;
+  color: #818181;
+}
+
+/* عکس + افکت هاور */
+.service__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-img {
+  width: 95%;
+  max-width: 900px;
+  border-radius: 12px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+
+  &:hover {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+  }
+}
+
+/* ریسپانسیو */
+@media (max-width: 992px) {
+  .service__content {
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    text-align: justify;
+  }
+  
+  .service__title {
+    font-size: 14px;
+  }
+
+  .service__text {
+    font-size: 12px;
+    line-height: 28px;
+  }
+
+  .service__Button {
+    width: 80% !important;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .service-img {
+    width: 100%;
+  }
+
+  .service__content {
+    padding: 10px 15px;
+      text-align: center;
+  }
+
+  .service__title {
+    font-size: 16px;
+  }
+
+  .service__text {
+    font-size: 14px;
+    line-height: 28px;
+  }
+}

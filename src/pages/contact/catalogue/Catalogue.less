@@ -1,0 +1,83 @@
+.showcase-container {
+  text-align: center;
+  padding: 40px 20px;
+
+  .title  {
+
+    margin-bottom: 40px;
+    color: #767676;
+  }
+    .two-lines  {
+    margin-bottom: 40px;
+    color: #767676;
+  }
+
+}
+
+.showcase-card {
+  background: #F5F5F5;
+  overflow: hidden;
+  padding: 10px;
+  transition: all 0.3s ease;
+  max-width: 423px;
+  max-height: 540px;
+  border-radius:0px;
+
+  &:hover {
+    transform: translateY(-3px);  
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);  
+  }
+
+ 
+  .img-card {
+
+    object-fit: contain;
+     border-radius:0px;
+  }
+
+
+
+  .book-title {
+    text-align: right;
+    color: #767676;
+  }
+
+  .btn {
+    text-align:left ;
+    padding: 0;
+    font-size: 14px;
+
+  }
+}
+
+.showcase-card .ant-card-body {
+ padding-right: 8px !important;
+ padding-left: 8px !important;
+padding-top: 3px !important;
+ }
+
+
+
+@media (max-width: 768px) {
+  .showcase-card {
+    width: 250px;
+  
+  img {
+    height: 250px;
+     
+    object-fit: contain;
+  }
+}
+}
+
+@media (max-width: 480px) {
+  .showcase-card
+  {
+     
+  
+  img {
+    height: 180px;
+    
+  }
+}
+}
