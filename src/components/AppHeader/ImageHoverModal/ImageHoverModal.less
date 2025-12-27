@@ -8,10 +8,20 @@
   cursor: pointer;
 }
 
+.ant-modal{
+    bottom: 0 !important;
+    position: fixed;
+    right: 0;
+    width: 100% !important;
+    min-width: 100%;
+    top: 129px;
+
+}
+
 .image-hover-modal .ant-modal-content {
   background: #121212e6 !important;
   box-shadow: none;
-  padding-inline: 20% !important;
+  padding-inline: 5% !important;
 }
 
 .img-hover-modal-box {
@@ -24,8 +34,8 @@
 
 .modal-title p {
   margin: 0;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 300;
   color: #fff;
 }
 
@@ -34,24 +44,31 @@
 }
 
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 40px;
-  align-items: start;
+  display: flex;
+  flex-flow: column wrap;       
+  height: 335px;               
+     gap: 25px 0;
+  direction: rtl;
+  align-content: flex-start;
 }
 
 .menu-column {
-  display: flex;
-  flex-direction: column;
+  width: calc(100% / 5);
+  box-sizing: border-box;
 }
 
 .menu-column-title {
-  margin-bottom: 5px;
-  font-size: 16px;
-  font-weight: 600;
-  img {
-    margin-inline: 14px;
-  }
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+.menu-column-title img {
+  width: 20px;
+  height: 20px;
 }
 
 .menu-items {
@@ -60,14 +77,36 @@
   margin: 0;
 }
 
+.menu-items li {
+  margin-bottom: 8px;
+}
+
 .menu-item-link {
   color: #ccc;
   text-decoration: none;
   font-size: 14px;
   transition: 0.2s ease;
   display: block;
+  text-align: right;
+      padding-right: 30px;
 }
 
 .menu-item-link:hover {
   color: #fff;
+}
+
+.ant-modal-wrap-rtl{
+  .menu-item-link{
+    text-align: left;
+        padding-right: inherit;
+            padding-left: 30px;
+  }
+.menu-column-title{
+ justify-content: flex-start;
+    flex-direction: row-reverse;
+}
+.ant-row{
+    flex-direction: row-reverse;
+}
+   
 }
