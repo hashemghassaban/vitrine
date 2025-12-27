@@ -3,7 +3,7 @@ import { Row, Col, Card, Typography, } from "antd";
 import "./Catalogue.less";
 import catalogue from "../../../helpers/catalogue";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
-import { download } from "../../../assets/icon/download.png"
+import download from "../../../assets/icon/download.png";
 const { Title,} = Typography;
 
 
