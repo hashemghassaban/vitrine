@@ -3,7 +3,7 @@ import { Row, Col, Card, Typography, } from "antd";
 import "./Catalogue.less";
 import catalogue from "../../../helpers/catalogue";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
-import {  VerticalAlignBottomOutlined } from "@ant-design/icons";
+import download from "../../../assets/icon/download.png";
 const { Title,} = Typography;
 
 
@@ -30,8 +30,10 @@ export default function Catalogue() {
                 {item.title}
               </Title>
 
-              <p  className="btn">
-              <VerticalAlignBottomOutlined/>دانلود  
+             <p  className="btn">
+                      <img src={download} alt="download" />
+
+              دانلود  
               </p>
         
             </Card>

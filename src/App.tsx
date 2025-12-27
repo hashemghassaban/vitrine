@@ -5,8 +5,8 @@ import enUS from "antd/es/locale/en_US";
 import { LanguageProvider, useLanguage } from "./contexts/useLanguage";
 import Pages from "./pages/Pages";
 import "antd/dist/reset.css";
-import "./styles/main.less";
 const { Content } = Layout;
+// const { Header, Content } = Layout;
 
 const AppContent: React.FC = () => {
   const { currentLang } = useLanguage();
@@ -17,12 +17,13 @@ const AppContent: React.FC = () => {
       locale={isRtl ? faIR : enUS}
       theme={{
         token: {
-          fontFamily: 'Yekan Bakh',
+          fontFamily: "YekanBakh",
           colorPrimary: "#5e5e5e",
         },
       }}
     >
       <Layout style={{ minHeight: "100vh" }}>
+        {/* <Header /> */}
         <Content>
           <Pages />
         </Content>
