@@ -1,12 +1,12 @@
 // src/components/ContactBranch/ContactBranch.less
 .contact-branch-container {
-  justify-content:space-around;
-  max-width: 1500px;
-  margin: 40px auto;
-  padding: 0 20px;
-  display: flex;
-  gap: 80px;
-  flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px 0;
+    padding: 0 5%;
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+    width: 100%;
      
  
 
@@ -28,9 +28,9 @@
     margin-bottom: 32px;
 
     .title {
-      font-size: 32px;
+      font-size: 23px;
       font-weight: bold;
-      color: #1a1a1a;
+      color: #767676;
       margin: 0 0 16px 0;
       
   @media (max-width: 1200px) {
@@ -40,9 +40,10 @@
     }
 
     .description {
-      font-size: 16px;
-      color: #666;
+      font-size: 15px;
+      color: #000000;
       line-height: 1.7;
+      font-weight: 100;
 
         @media (max-width: 1200px) {
          font-size: 14px;
@@ -58,15 +59,19 @@
       text-align: right;
       margin-bottom: 16px;
     }
-    
+      span{
+      font-size: 14px;
+          font-weight: 100;
+  }
       .info-text{
-     font-size: 18px;
-      color: #333;
-      font-weight: 700;
+     font-size: 14px;
+      color: #010101;
+      font-weight: 400;
         @media (max-width: 1200px) {
          font-size: 14px;
  
   }
+
    
       }
   }
@@ -83,6 +88,7 @@
          gap: 14px;
  
   }
+  
 
     .action-icon {
       font-size: 24px;
@@ -91,6 +97,7 @@
       transition: color 0.3s;
       &:hover {
         color:  #333;
+        filter: brightness(0.5);
       }
     @media (max-width: 1200px) {
             font-size: 18px;
@@ -98,8 +105,17 @@
   }
     }
   }
-
+:where(.css-dev-only-do-not-override-16o3jpe).ant-select .ant-select-arrow{
+      left: 0;
+          font-size: 9px;
+}
   .form-section {
+    margin-top: 80px;
+    .ant-select-selection-search-input , .ant-select-selection-placeholder , .ant-select-selection-item{
+          font-size: 11px;
+          color: #ACACAC;
+          padding: 0;
+    }
     .form-row {
       margin-bottom: 24px;
       display: flex;
@@ -121,23 +137,20 @@
 
         .input-text{
           width: 100%;
-          font-size: 15px;
+          font-size: 11px;
           color: #ACACAC;
           transition: border-color 0.3s;
           text-align: right;
         
 
-          &:focus {
-           
-            border-color: #ACACAC;
-            border-bottom:#ACACAC;
-            border-top: none;
         
-          }
         }
 
         textarea {
           resize: vertical;
+           font-size: 11px;
+                     color: #ACACAC;
+
         }
       }
     }
@@ -150,8 +163,7 @@
     color: #616161;
       border: none;
       padding: 14px 32px;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
       transition: background 0.3s;
 
@@ -194,3 +206,25 @@
 }
 
 
+.ant-layout-rtl{
+  .header-section .title ,  .header-section .description , .contact-info ,.input-text{ 
+        text-align: left!important;
+            direction: ltr!important;
+  }
+  .contact-branch-container .action-icons{
+    justify-content: flex-end;
+  }
+ .ant-select .ant-select-arrow{
+        left: inherit;
+        right: 0;
+  }
+  .contact-branch-container .form-section .btn{
+    text-align: right;
+  }
+  .anticon{
+        position: relative;
+    transform: rotate(180deg);
+    top: 2px;
+    left: -5px;
+  }
+}
