@@ -29,7 +29,7 @@ export default function ProductDetail() {
  const isMobile = useIsMobile();
   return (
     <>
-      {isMobile ? <HomeMobile /> : <AppHeader productPage={true} /> }
+      {isMobile ? <HomeMobile /> : <AppHeader /> }
       
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">

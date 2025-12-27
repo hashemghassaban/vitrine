@@ -1,5 +1,5 @@
 import { type FC, useState } from "react";
-import { Col, Divider, Modal, Row } from "antd";
+import { Divider, Modal, Row } from "antd";
 import "./ImageHoverModal.less";
 import img from "../../../assets/header/hoverm-modal/img.png";
 import img1 from "../../../assets/header/hoverm-modal/img1.png";
