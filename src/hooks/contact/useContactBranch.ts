@@ -4,8 +4,8 @@ import type ContractBranchDTO from "../../models/dtos/contractBranchDTO";
 import type ServerResult from "../../models/ServerResult";
 
 const useContactBranch = () => {
-  const { axiosAuthInstance } = useAxious();
   const { currentLang } = useLanguage();
+  const { axiosAuthInstance } = useAxious(currentLang);
   const isFa = currentLang === "fa";
 
   async function submitContractForm(dto: ContractBranchDTO) {

@@ -13,7 +13,7 @@ interface PaginationParams {
   pageSize?: number;
 }
 
-const useCustomAxios = () => {
+const useCustomAxios = (currentLang:string) => {
   const [pagination, setPagination] = useState<PaginationParams>({
     page: undefined,
     pageSize: undefined,
@@ -23,12 +23,12 @@ const useCustomAxios = () => {
 
   const axiosInstance = axios.create({
     baseURL: baseAPI,
-    headers: header(),
+    headers: header(currentLang),
   });
 
   const axiosAuthInstance = axios.create({
     baseURL: baseAPI,
-    headers: header(),
+    headers: header(currentLang),
   });
 
   axiosAuthInstance.interceptors.request.use((config) => {
@@ -37,7 +37,7 @@ const useCustomAxios = () => {
 
   const withCustomHeaders = (customHeaders: Record<string, string>) => {
     const finalHeaders = {
-      ...header(),
+      ...header(currentLang),
       ...customHeaders,
     };
 

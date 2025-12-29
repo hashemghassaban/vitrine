@@ -1,14 +1,12 @@
 import useAxious from "../../helpers/axiosInstance";
 import type DepartmentView from "../../models/views/departmentView";
 import type ServerResult from "../../models/ServerResult";
-import { useLanguage } from "../../contexts/useLanguage";
 
-const useDepartment = () => {
-  const { axiosAuthInstance } = useAxious();
-  const { currentLang } = useLanguage();
-  const isFa = currentLang === "fa";
+const useDepartment = (currentLang:string) => {
+  const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getList() {
+    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: DepartmentView[] = [];

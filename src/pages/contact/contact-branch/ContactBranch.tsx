@@ -17,7 +17,6 @@ import type contractBranchDTO from "../../../models/dtos/contractBranchDTO";
 import useContactBranch from "../../../hooks/contact/useContactBranch";
 import { useLanguage } from "../../../contexts/useLanguage";
 const ContactBranch: React.FC = () => {
-  const { getList } = useDepartment();
   const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const { submitContractForm } = useContactBranch();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,17 +28,19 @@ const ContactBranch: React.FC = () => {
     department_id: null,
   });
   const { currentLang } = useLanguage();
+  const { getList } = useDepartment(currentLang);
   const isFa = currentLang === "fa";
 
+  const fetchDepartments = async () => {
+    const { success, data } = await getList();
+    if (success && data) {
+      setDepartments(data);
+    }
+  };
+
   useEffect(() => {
-    const fetchDepartments = async () => {
-      const { success, data } = await getList();
-      if (success && data) {
-        setDepartments(data);
-      }
-    };
     fetchDepartments();
-  }, []);
+  }, [currentLang]);
 
   const handleInputChange = (field: keyof contractBranchDTO, value: any) => {
     setFormData((prev) => ({
@@ -204,7 +205,6 @@ const ContactBranch: React.FC = () => {
                   rows={4}
                   placeholder={isFa ? "موضوع تماس و پیام شما *" : "Message *"}
                   variant="underlined"
-                  maxLength={6}
                   value={formData.content || ""}
                   onChange={(e) => handleInputChange("content", e.target.value)}
                 />
@@ -229,8 +229,8 @@ const ContactBranch: React.FC = () => {
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.874451075304!2d51.422124684728!3d35.704974980188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e0163a9b6c4b1%3A0x8f3c8b9e0c5e5f5e!2sTehran%2C%20Iran!5e0!3m2!1sen!2s!4v1698765432100"
             width="100%"
             height="100%"
-            style={{ border: 0, }}
-            allowFullScreen 
+            style={{ border: 0 }}
+            allowFullScreen
             loading="lazy"
           ></iframe>
           <div className="map-pin">
