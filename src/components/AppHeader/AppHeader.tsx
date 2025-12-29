@@ -27,11 +27,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
 
   const { currentLang, setCurrentLang } = useLanguage();
   const isRtl = currentLang === "fa";
-type Language = 'en' | 'fa' ;
+  type Language = "en" | "fa";
 
- const handleLanguageChange = (lang: Language) => {
-  setCurrentLang(lang);
-};
+  const handleLanguageChange = (lang: Language) => {
+    setCurrentLang(lang);
+  };
 
   return (
     <>
@@ -49,19 +49,17 @@ type Language = 'en' | 'fa' ;
               src={search}
               alt={search}
             />
-             <Menu
-            className="app-header__menu-Text"
-            mode="horizontal"
-            triggerSubMenuAction="hover"
-            selectable={false}
-            overflowedIndicator={null}
-          >
-         
-            <Menu.SubMenu key="b" title={isRtl ? "En" : "فا"} className="En_text"     popupClassName="lang-submenu-popup"
->
-              <Menu.Item key="b-1"  onClick={() => handleLanguageChange("fa")}> En</Menu.Item>
-              <Menu.Item key="b-2"  onClick={() => handleLanguageChange("en")}>فا </Menu.Item>
-            </Menu.SubMenu>
+            <Menu
+              className="app-header__menu-Text"
+              mode="horizontal"
+              triggerSubMenuAction="hover"
+              selectable={false}
+              overflowedIndicator={null}
+            >
+              <Menu.SubMenu key="b" title={isRtl ? "فا" : "En"} className="En_text" popupClassName="lang-submenu-popup">
+                <Menu.Item key="b-1"  onClick={() => handleLanguageChange("en")}> En</Menu.Item>
+                <Menu.Item key="b-2"  onClick={() => handleLanguageChange("fa")}>فا </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
 
             <img className="en_img" src={en} alt={en} />

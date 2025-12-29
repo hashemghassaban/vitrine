@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
@@ -8,13 +8,122 @@ import media3 from "../../../assets/footer/media3.png";
 import media4 from "../../../assets/footer/media4.png";
 import media5 from "../../../assets/footer/media5.png";
 import media6 from "../../../assets/footer/media6.png";
-import { Input, Select } from "antd";
+import { Input, message, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import useDepartment from "../../../hooks/department/useDepartment";
+import type DepartmentView from "../../../models/views/departmentView";
+import type contractBranchDTO from "../../../models/dtos/contractBranchDTO";
+import useContactBranch from "../../../hooks/contact/useContactBranch";
+import { useLanguage } from "../../../contexts/useLanguage";
 const ContactBranch: React.FC = () => {
+  const { getList } = useDepartment();
+  const [departments, setDepartments] = useState<DepartmentView[]>([]);
+  const { submitContractForm } = useContactBranch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<contractBranchDTO>({
+    full_name: null,
+    email: null,
+    phone: null,
+    content: null,
+    department_id: null,
+  });
+  const { currentLang } = useLanguage();
+  const isFa = currentLang === "fa";
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      const { success, data } = await getList();
+      if (success && data) {
+        setDepartments(data);
+      }
+    };
+    fetchDepartments();
+  }, []);
+
+  const handleInputChange = (field: keyof contractBranchDTO, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value || null,
+    }));
+  };
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const showMessage = (content: string) => {
+    messageApi.open({
+      icon: <></>,
+      content: content,
+    });
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^[\d\u06F0-\u06F9\s\-\+]+$/;
+    return phoneRegex.test(phone) && phone.replace(/\D/g, "").length >= 10;
+  };
+
+  const onSubmit = async () => {
+    try {
+      const isEmpty =
+        !formData.full_name ||
+        !formData.email ||
+        !formData.phone ||
+        !formData.content ||
+        !formData.department_id;
+      if (isEmpty) {
+        showMessage(
+          isFa ? "لطفا فرم را تکمیل کنید." : "Please complete the form."
+        );
+        return;
+      }
+
+      if (formData.email && !validateEmail(formData.email)) {
+        showMessage(
+          isFa ? "ایمیل وارد شده نامعتبر است." : "Invalid email address."
+        );
+        return;
+      }
+
+      if (formData.phone && !validatePhone(formData.phone)) {
+        showMessage(
+          isFa ? "شماره تماس وارد شده نامعتبر است" : "Invalid phone number."
+        );
+        return;
+      }
+
+      setIsSubmitting(true);
+      const resp = await submitContractForm(formData);
+      if (resp.success) {
+        showMessage(resp.result);
+        setFormData({
+          full_name: null,
+          email: null,
+          phone: null,
+          content: null,
+          department_id: null,
+        });
+      } else {
+        showMessage(resp.result);
+      }
+    } catch (e: any) {
+      showMessage(e?.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
-      <AppHeader noBackground title={"تماس با ویترین"}  />
+      {contextHolder}
+      <AppHeader
+        noBackground
+        title={isFa ? "تماس با ویترین" : "Contact Vitrine"}
+      />
       <div className="contact-branch-container">
         <div className="contact-content">
           <div className="header-section">
@@ -41,53 +150,76 @@ const ContactBranch: React.FC = () => {
           <div className="form-section">
             <div className="form-row">
               <div className="input-group half">
-                <Input className=" input-text" placeholder="آدرس ایمیل" variant="underlined" />
+                <Input
+                  className=" input-text"
+                  placeholder={isFa ? "آدرس ایمیل" : "email"}
+                  variant="underlined"
+                  value={formData.email || ""}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                />
               </div>
               <div className="input-group half">
-                <Input className=" input-text"
-                  placeholder="نام و نام خانوادگی *"
+                <Input
+                  className=" input-text"
+                  placeholder={isFa ? "نام و نام خانوادگی *" : "Full Name *"}
                   variant="underlined"
+                  value={formData.full_name || ""}
+                  onChange={(e) =>
+                    handleInputChange("full_name", e.target.value)
+                  }
                 />
               </div>
             </div>
 
             <div className="form-row">
               <div className="input-group half">
-                <Input className=" input-text" placeholder="شماره تماس" variant="underlined" />
+                <Input
+                  className=" input-text"
+                  placeholder={isFa ? "شماره تماس" : "Phone Number"}
+                  variant="underlined"
+                  value={formData.phone || ""}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                />
               </div>
               <div className="input-group half">
-                <Select className=" input-text"
-                  placeholder="انتخاب دپارتمان"
+                <Select
+                  className=" input-text"
+                  placeholder={isFa ? "انتخاب دپارتمان" : "Select Department"}
                   variant="underlined"
-                  options={[
-                    {
-                      value: "1",
-                      label: "زیرعنوان",
-                    },
-                    {
-                      value: "2",
-                      label: "زیرعنوان",
-                    },
-                    {
-                      value: "3",
-                      label: "زیرعنوان",
-                    },
-                  ]}
+                  value={formData.department_id}
+                  onChange={(value) =>
+                    handleInputChange("department_id", value)
+                  }
+                  options={departments.map((dept) => ({
+                    value: dept.id,
+                    label: dept.title,
+                  }))}
                 />
               </div>
             </div>
-                <div className="form-row">
-              <div className="input-group" >
-               <TextArea className=" input-text" rows={4}  placeholder="موضوع تماس و پیام شما *"  variant="underlined" maxLength={6} />
+            <div className="form-row">
+              <div className="input-group">
+                <TextArea
+                  className=" input-text"
+                  rows={4}
+                  placeholder={isFa ? "موضوع تماس و پیام شما *" : "Message *"}
+                  variant="underlined"
+                  maxLength={6}
+                  value={formData.content || ""}
+                  onChange={(e) => handleInputChange("content", e.target.value)}
+                />
               </div>
-
             </div>
-      
-            
-             <div  className="btn">
-                 <button className="submit-btn">ارسال پیام <ArrowLeftOutlined/></button>
-             </div>
-           
+
+            <div className="btn">
+              <button
+                className="submit-btn"
+                onClick={onSubmit}
+                disabled={isSubmitting}
+              >
+                {isFa ? "ارسال پیام" : "Send Message"} <ArrowLeftOutlined />
+              </button>
+            </div>
           </div>
         </div>
 
