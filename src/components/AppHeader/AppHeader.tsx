@@ -33,6 +33,40 @@ export const AppHeader: FC<AppHeaderProps> = ({
     setCurrentLang(lang);
   };
 
+  const menuItems = [
+    {
+      key: "menu-products",
+      title: { en: "Products", fa: "محصولات" },
+      type: "imageHover",
+    },
+    {
+      key: "menu-brands",
+      title: { en: "Brands", fa: "برندها" },
+      children: [
+        {
+          key: "menu-brands-main",
+          title: { en: "Main Title", fa: "عنوان اصلی" },
+        },
+        { key: "menu-brands-sub1", title: { en: "Sub 1", fa: "زیرعنوان" } },
+        { key: "menu-brands-sub2", title: { en: "Sub 2", fa: "زیرعنوان" } },
+      ],
+    },
+    { key: "menu-catalogues", title: { en: "Catalogues", fa: "کاتالوگ‌ها" } },
+    { key: "menu-services", title: { en: "Services", fa: "خدمات" } },
+    { key: "menu-projects", title: { en: "Projects", fa: "پروژه‌ها" } },
+    {
+      key: "menu-representation",
+      title: { en: "Representation", fa: "نمایندگی‌ها" },
+      path: "/representation",
+    },
+    { key: "menu-about", title: { en: "About", fa: "درباره" }, path: "/about" },
+    {
+      key: "menu-contact",
+      title: { en: "Contact", fa: "تماس" },
+      path: "/contactBranch",
+    },
+  ];
+
   return (
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
@@ -56,9 +90,19 @@ export const AppHeader: FC<AppHeaderProps> = ({
               selectable={false}
               overflowedIndicator={null}
             >
-              <Menu.SubMenu key="b" title={isRtl ? "فا" : "En"} className="En_text" popupClassName="lang-submenu-popup">
-                <Menu.Item key="b-1"  onClick={() => handleLanguageChange("en")}> En</Menu.Item>
-                <Menu.Item key="b-2"  onClick={() => handleLanguageChange("fa")}>فا </Menu.Item>
+              <Menu.SubMenu
+                key="b"
+                title={isRtl ? "فا" : "En"}
+                className="En_text"
+                popupClassName="lang-submenu-popup"
+              >
+                <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
+                  {" "}
+                  En
+                </Menu.Item>
+                <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
+                  فا{" "}
+                </Menu.Item>
               </Menu.SubMenu>
             </Menu>
 
@@ -71,51 +115,29 @@ export const AppHeader: FC<AppHeaderProps> = ({
             selectable={false}
             overflowedIndicator={null}
           >
-            <Menu.Item key="products" title="محصولات" >
-              <ImageHoverModal triggerImg="محصولات" />
-              
-            </Menu.Item>
-            <Menu.SubMenu key="b" title=" برندها">
-              <Menu.Item key="b-1">عنوان اصلی</Menu.Item>
-              <Menu.Item key="b-2">زیرعنوان </Menu.Item>
-              <Menu.Item key="b-3">زیرعنوان </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.Item key="k" title="کاتالوگ ها">
-              کاتالوگ ها
-            </Menu.Item>
-
-            <Menu.Item key="kh" title="خدمات">
-              خدمات
-            </Menu.Item>
-
-            <Menu.Item key="projects" title="پروژه‌ها">
-              پروژه ها
-            </Menu.Item>
-
-            <Menu.Item
-              key="services"
-              title="نمایندگی‌ها"
-              onClick={() => push(`/representation`)}
-            >
-              نمایندگی‌ها
-            </Menu.Item>
-
-            <Menu.Item
-              key="about"
-              title="درباره"
-              onClick={() => push("/about")}
-            >
-              درباره
-            </Menu.Item>
-
-            <Menu.Item
-              key="home"
-              title="تماس"
-              onClick={() => push("/contactBranch")}
-            >
-              تماس
-            </Menu.Item>
+            {menuItems.map((item) =>
+              item.children ? (
+                <Menu.SubMenu key={item.key} title={item.title[currentLang]}>
+                  {item.children.map((child) => (
+                    <Menu.Item key={child.key}>
+                      {child.title[currentLang]}
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : item.type === "imageHover" ? (
+                <Menu.Item key={item.key} title={item.title[currentLang]}>
+                  <ImageHoverModal triggerImg={item.title[currentLang]} />
+                </Menu.Item>
+              ) : (
+                <Menu.Item
+                  key={item.key}
+                  title={item.title[currentLang]}
+                  onClick={() => (item.path ? push(item.path) : undefined)}
+                >
+                  {item.title[currentLang]}
+                </Menu.Item>
+              )
+            )}
           </Menu>
           {style ? (
             <div className="box-page">
