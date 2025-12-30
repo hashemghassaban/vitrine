@@ -1,6 +1,6 @@
 .showcase-container {
   padding: 40px 20px;
-   
+
   .title-page {
     text-align: center;
     margin-bottom: 40px;
@@ -15,8 +15,7 @@
   border-radius: 0px;
   padding: 0 !important;
   max-width: 380px;
-  height: 530px;
-  cursor:initial;
+  cursor: initial;
 
   &:hover {
     transform: translateY(-2px);
@@ -30,14 +29,16 @@
   }
 
   .book-title {
-    text-align: right;
+    text-align: start;
     margin-top: 3px;
+    margin-inline: 10px;
     margin-bottom: 20px;
     color: #767676;
   }
 
   .book-txt {
-    text-align: right !important;
+    margin-inline: 10px;
+    text-align: start !important;
     color: #767676;
   }
 
@@ -49,17 +50,16 @@
     line-height: 31px;
   }
 }
-.tel-link{
+.tel-link {
   color: black;
 
-  &:hover{
-      color: black;
+  &:hover {
+    color: black;
   }
 }
-.map{
-
-   position: relative; 
-   width: 100% ;
+.map {
+  position: relative;
+  width: 100%;
 }
 
 .click-layer {
@@ -71,7 +71,6 @@
   cursor: pointer;
   background: transparent;
 }
-
 
 @media (max-width: 768px) {
   .showcase-card {
@@ -91,7 +90,4 @@
       object-fit: cover;
     }
   }
-
-
-  
 }
