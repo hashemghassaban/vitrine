@@ -48,6 +48,9 @@ const ServicePage: React.FC = () => {
       <AppHeader title={"خدمات مشاوره و طراحی ویترین"} />
       <div className="showroom-page">
         <Row gutter={[40, 40]} align="middle" className="top-section">
+           <Col xs={24} lg={12} style={{textAlign:'center'}}>
+            <img src={img1} className="top-image" alt="showroom" />
+          </Col>
           <Col className="txt-col" xs={24} lg={12}>
             <div className="top-text-box">
               <h2 className="top-title">معرفی شوروم ویترین</h2>
@@ -61,9 +64,7 @@ const ServicePage: React.FC = () => {
             </div>
           </Col>
 
-          <Col xs={24} lg={12}>
-            <img src={img1} className="top-image" alt="showroom" />
-          </Col>
+         
         </Row>
 
         {/*section2*/}
@@ -114,7 +115,7 @@ const ServicePage: React.FC = () => {
         {/*section3*/}
         <Row justify="center">
           <div>
-            <h2 className="service-title">معرفی شوروم ویترین</h2>
+            <h2 className="service-title"> پروژه های انجام شده </h2>
             <p className="service-subtitle">
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و طراحی.
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و طراحی.

@@ -30,9 +30,9 @@ export default function FAQ() {
 
   return (
     <>
-      <AppHeader noBackground title={""} />
+      <AppHeader noBackground title={"پرسش‌های متداول"} />
       <Row justify="center" align="middle" className="faq-row">
-        <Col xs={24} sm={20} md={16} lg={12} className="faq-col">
+        <Col xs={24} sm={20} md={18}  className="faq-col">
           <Title level={3} className="faq-title">
             {isFa ? "پرسش‌های متداول" : "Frequently Asked Questions (FAQ)"}
           </Title>
@@ -58,13 +58,13 @@ export default function FAQ() {
               )
             }
           >
-            {faq.map((item, idx) => (
+            {faq?.length > 0 && faq.map((item, idx) => (
               <Panel
-                header={<span style={{ color: "#767676 " }}>{item.title}</span>}
+                header={<span style={{ color: "#767676 ", fontSize:'20px'}}>{item.question}</span>}
                 key={idx}
                 className="faq-panel"
               >
-                <p className="faq-text">{item.content}</p>
+                <p className="faq-text">{item.answer}</p>
               </Panel>
             ))}
           </Collapse>

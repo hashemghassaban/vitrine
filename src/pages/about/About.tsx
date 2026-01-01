@@ -30,11 +30,7 @@ export default function About() {
 
       <div className="article-content">
         <Row justify="center" gutter={[32, 32]}>
-          <Col xs={24} lg={12}>
-            <img className="top-image-about" src={img} alt="img" />
-          </Col>
-
-          <Col xs={24} lg={12} className="article-col">
+           <Col xs={24} lg={12} className="article-col">
             <div className="article-div">
               <h2 className="article-title">
                 عنوان مقاله اینجا قرار میگیرد و بصورت کامل
@@ -55,6 +51,11 @@ export default function About() {
               </p>
             </div>
           </Col>
+          <Col xs={24} lg={12}>
+            <img className="top-image-about" src={img} alt="img" />
+          </Col>
+
+         
         </Row>
       </div>
 
