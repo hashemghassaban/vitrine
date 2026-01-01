@@ -22,7 +22,7 @@
   font-weight: 800;
   font-size: 30px;
   line-height: 45px;
-  text-align: right;
+  text-align: left;
   color: #b4b4b4;
   margin-bottom: 100px;
 }
@@ -33,7 +33,7 @@
   font-size: 15px;
   line-height: 31px;
 
-  text-align: right;
+  text-align: left;
 
   color: #d2d2d2;
 }
@@ -55,6 +55,7 @@
 .center-video{
   display: flex;
   justify-content: center;
+      padding: 0 75px;
 }
 
 .video-div {
@@ -73,9 +74,10 @@
 }
 
 .main-image {
-  width: 800px;
+ width: 100%;
   height: 468px;
   display: block;
+
 }
 
 .overlay-image {
@@ -87,6 +89,7 @@
   width: 128px;
   height: 98px;
   z-index: 5;
+ 
 }
 
 
@@ -217,4 +220,9 @@ iframe {
 @keyframes fadeInVideo {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.ant-row-rtl .article-text , .ant-row-rtl .article-title  {
+  text-align: right;
+
 }

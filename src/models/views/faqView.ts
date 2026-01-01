@@ -1,5 +1,5 @@
 export default interface FaqView {
   id: number;
-  title: string;
-  content: string;
+  answer: string;
+  question: string;
 }

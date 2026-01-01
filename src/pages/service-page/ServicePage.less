@@ -12,21 +12,27 @@
 
 .txt-col {
   display: flex;
-  justify-content: right;
+  justify-content: left;
+    text-align: left;
+    justify-content: flex-start;
 }
 .top-text-box {
-  margin-right: 100px;
+  margin-left: 30px;
   font-weight: 700;
   font-size: 23px;
   line-height: 45px;
   color: #767676;
+      display: flex;
+    color: #767676;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .top-title {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 45px;
-  text-align: right;
+  text-align: left;
   max-width: 480px;
 }
 
@@ -81,14 +87,14 @@
 font-weight: 800;
 font-size: 23px;
   margin-bottom: 61px;
-  text-align: right;
+  text-align: left;
   max-width: 480px;
 
 }
 
 .black-text-sec {
   color: #A7A7A7;
-  text-align: right;
+  text-align: left;
   font-weight: 300;
   font-size: 15px;
   line-height: 31px;
@@ -106,7 +112,11 @@ font-size: 23px;
   transition: all 0.3s ease !important;
   display: inline-flex;
   align-items: center;
+  width: 100%;
   gap: 10px;
+      display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
 
   &:hover {
     color: #8f8f8f !important;
@@ -116,6 +126,8 @@ font-size: 23px;
   content: "←";
   display: inline-block;
   transition: transform 0.3s ease;
+  position: relative;
+  transform: rotate(180deg);
 }
 
 .btn-more:hover::before {
@@ -182,7 +194,7 @@ font-size: 23px;
   font-weight: 600;
   font-size: 19px;
   line-height: 45px;
-  text-align: right;
+  text-align: left;
   color: #767676;
   margin-bottom: 0px;
 }
@@ -191,6 +203,7 @@ font-size: 23px;
   font-size: 15px;
   color: #737373;
   padding-top: 0px;
+    text-align: left;
   margin-top: 0px;
 }
 .stack-space {
@@ -224,3 +237,33 @@ font-size: 23px;
 }
 
 
+.ant-layout-rtl{
+  .txt-col {
+    display: flex;
+    justify-content: right;
+    text-align: right;
+}
+.top-title , .black-title-sec  , .black-text-sec  , .card-title  , .card-text{
+  text-align: right;
+}
+.top-text-box {
+
+      display: flex;
+    color: #767676;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.top-text-box {
+  margin-right: 30px;
+}
+.btn-more{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+.btn-more::before {
+
+  position: relative;
+  transform: rotate(0deg);
+}
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Typography, Image, Button } from "antd";
+import { Row, Col, Typography, Image, Button , Divider } from "antd";
 import "./Search.less";
 import img from "../../assets/video-block/video-block.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
@@ -19,7 +19,8 @@ const Search: React.FC = () => {
             <p  className="results-title">
             ۳ نتیجه در جستجوی ویترین
             </p>
-            {items.map((item) => (
+            {items.map((item , index) => (
+              <>
               <Row
              
                 key={item}
@@ -27,6 +28,14 @@ const Search: React.FC = () => {
                 className="result-item"
                 align="middle"
               >
+                 <Col xs={24} md={8}  lg={8} xl={5} className="image-col">
+                  <Image onClick={() => push(`/project/${projects[0].id}`)}
+                    src={img}
+                    alt="thumbnail"
+                    preview={false}
+                    className="result-image"
+                  />
+                </Col>
                 <Col xs={24} md={16}  lg={16} xl={19}>
                   <h2  className="item-title" onClick={() => push(`/project/${projects[0].id}`)}>
                     معرفی شهروند ویترین
@@ -42,15 +51,14 @@ const Search: React.FC = () => {
                 </Button>
                 </Col>
 
-                <Col xs={24} md={8}  lg={8} xl={5} className="image-col">
-                  <Image onClick={() => push(`/project/${projects[0].id}`)}
-                    src={img}
-                    alt="thumbnail"
-                    preview={false}
-                    className="result-image"
-                  />
-                </Col>
+               
               </Row>
+              {(index + 1) !== items?.length && (
+                  <Divider className="modal-divider" />
+ 
+              )}
+             
+              </>
             ))}
           </Col>
         </Row>

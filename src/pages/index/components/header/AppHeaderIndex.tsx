@@ -14,10 +14,10 @@ export const AppHeaderIndex: FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { currentLang, setCurrentLang } = useLanguage();
   const isRtl = currentLang === "fa";
+  type Language = "en" | "fa";
 
-  const handleLanguageChange = () => {
-    const newLang: "fa" | "en" = isRtl ? "en" : "fa";
-    setCurrentLang(newLang);
+  const handleLanguageChange = (lang: Language) => {
+    setCurrentLang(lang);
   };
 
   return (
@@ -33,10 +33,28 @@ export const AppHeaderIndex: FC = () => {
           alt={search}
           onClick={() => setSearchOpen(true)}
         />
-        <p className="En_text" onClick={handleLanguageChange}>
-          {isRtl ? "EN" : "فا"}
-        </p>
-
+        <Menu
+              className="app-header__menu-Text"
+              mode="horizontal"
+              triggerSubMenuAction="hover"
+              selectable={false}
+              overflowedIndicator={null}
+            >
+              <Menu.SubMenu
+                key="b"
+                title={isRtl ? "فا" : "En"}
+                className="En_text"
+                popupClassName="lang-submenu-popup"
+              >
+                <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
+                  {" "}
+                  En
+                </Menu.Item>
+                <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
+                  فا{" "}
+                </Menu.Item>
+              </Menu.SubMenu>
+            </Menu>
         <img className="en_img" src={en} alt={en} />
       </Row>
       <Menu

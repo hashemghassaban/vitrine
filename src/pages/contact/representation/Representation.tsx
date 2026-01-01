@@ -71,7 +71,7 @@ export default function Representation() {
                   </div>
                 }
               >
-                <Title level={5} className="book-title">
+                <Title level={5} className="book-title" style={{ marginBottom:'35px', fontSize:'21px'}}>
                   {item.title}
                 </Title>
                 <Row>
@@ -79,7 +79,7 @@ export default function Representation() {
                     <p className="book-txt">{item.address}</p>
                   </Col>
                 </Row>
-                <Row justify={"space-between"} style={{marginInline:"10px"}}>
+                <Row justify={"space-between"} style={{marginInline:"10px" ,  marginBottom:'10px'}}>
                   <Col >{isFa ? "تلفن" : "Phone"}</Col>
                   <Col >
                     <a href={`tel:${item.phone}`} className="tel-link">

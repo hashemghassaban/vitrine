@@ -12,10 +12,12 @@
 
 .txt-col {
   display: flex;
-  justify-content: right;
+  justify-content: left;
+    text-align: left;
+    justify-content: flex-start;
 }
 .top-text-box {
-  margin-right: 100px;
+  margin-right: 30px;
   font-weight: 700;
   font-size: 23px;
   line-height: 45px;
@@ -39,7 +41,27 @@
   max-width: 480px;
   min-height: 60px;
 }
+//section3
+.service-title {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 23px;
+  line-height: 45px;
+  color: #767676;
+}
 
+.service-subtitle {
+  text-align: center;
+  font-size: 15px;
+  color: #000000;
+  max-width: 600px;
+  line-height: 31px;
+  margin-bottom: 5px;
+  font-weight: 300;
+}
 .top-image {
   width: 591px;
   height: 492px;
@@ -112,4 +134,35 @@
   .top-text {
     text-align: center;
   }
+}
+
+.ant-layout-rtl{
+  .txt-col {
+    display: flex;
+    justify-content: right;
+    text-align: right;
+}
+.top-title , .black-title-sec  , .black-text-sec  , .card-title  , .card-text{
+  text-align: right;
+}
+.top-text-box {
+
+      display: flex;
+    color: #767676;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.top-text-box {
+  margin-right: 30px;
+}
+.btn-more{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+.btn-more::before {
+
+  position: relative;
+  transform: rotate(0deg);
+}
 }
