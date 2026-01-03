@@ -88,7 +88,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
         >
           <Row>
             <div className="home__img">
-              <img src={img} alt="vitrine" />
+              <img src={img} alt="vitrine" onClick={() => push("/")} />
             </div>
             <img
               className="search__img"
