@@ -3,6 +3,8 @@ import { Row, Col, Typography, Image, Button , Divider } from "antd";
 import "./Search.less";
 import img from "../../assets/video-block/video-block.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import useNavigation from "../../hooks/useHistory";
 import projects from "../../helpers/project";
 const {  Paragraph } = Typography;
@@ -63,6 +65,7 @@ const Search: React.FC = () => {
           </Col>
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 };

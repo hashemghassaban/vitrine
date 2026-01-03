@@ -62,7 +62,7 @@ const loadMore = () => {
               sm={24}
               md={24}
               lg={14}
-              xl={14}
+              xl={12}
               className="blog__image-project "
               order={index % 2 === 0 ? 2 : 1} 
             >

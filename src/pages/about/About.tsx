@@ -5,6 +5,8 @@ import video from "../../assets/video-block/video-block.png";
 
 import "./About.less";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import play from "../../assets/about/play.png";
 import { useState } from "react";
 
@@ -105,6 +107,7 @@ export default function About() {
         </Col>
       </Row>
       </div>
+       <AppFooter />
     </>
   );
 }

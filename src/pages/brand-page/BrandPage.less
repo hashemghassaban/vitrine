@@ -1,6 +1,7 @@
 .brands-page {
   text-align: center;
   padding: 40px 20px;
+    margin-bottom: 80px;
 }
 
 .brands-title {
@@ -22,7 +23,7 @@
 }
 
 .brand-card {
-  text-align: right;
+  text-align: left;
   padding: 10px 20px;
   justify-content: center;
   display: flex;
@@ -47,6 +48,7 @@
   margin-bottom: 5px;
   margin-top: 50px;
   line-height: 45px;
+  text-align: left;
   color: #767676;
   cursor: pointer;
 }
@@ -56,6 +58,7 @@
   color: #737373;
   font-weight: 300;
   font-size: 15px;
+    text-align: left;
   line-height: 31px;
   max-width: 350px;
   margin: 0 auto;
@@ -69,6 +72,10 @@
   line-height: 45px;
   text-align: right;
   color: #010101 !important;
+          display: flex;
+    width: 100%;
+        flex-direction: row !important;
+    justify-content: flex-start!important;
 
   &:hover {
     color: black !important;
@@ -78,11 +85,18 @@
     content: "←";
     display: inline-block;
     transition: transform 0.3s ease;
+
+   transform: rotate(180deg);
+        top: -2px;
   }
 
-  &:hover::after {
-    transform: translateX(-5px);
-  }
+
+      
+
+    
+   &:hover::after {
+        transform: translateX(5px) rotate(180deg); 
+      }
 }
 
 /* ----------- ریسپانسیو ----------- */
@@ -111,4 +125,21 @@
   .brand-text {
     font-size: 13px;
   }
+}
+.ant-layout-rtl{
+  .brand-title ,  .brand-text , .brand-card{
+    text-align: right!important;
+  }
+  .brand-more{
+
+    flex-direction: row !important;
+    justify-content: flex-start!important;
+  }
+  .brand-more:after{
+    transform: rotate(0deg);
+        top: 0!important;
+  }
+  .brand-more:hover::after {
+        transform: translateX(-5px) rotate(0deg)!important; 
+      }
 }

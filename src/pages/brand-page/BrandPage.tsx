@@ -3,6 +3,8 @@ import { Row, Col, Button, Card } from "antd";
 import "./BrandPage.less";
 import brands from "../../helpers/brannds";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import useNavigation from "../../hooks/useHistory";
 const BrandPage: React.FC = () => {
 
@@ -42,6 +44,7 @@ const BrandPage: React.FC = () => {
           ))}
         </Row>
       </div>
+       <AppFooter />
     </>
   );
 };

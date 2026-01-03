@@ -4,6 +4,8 @@ import "./ServicePageSec.less";
 import img1 from "../../../assets/service-page/img1.png";
 import img2 from "../../../assets/service-page/img2.png";
 import img3 from "../../../assets/service-page/img3.png";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 const items = [
@@ -142,6 +144,7 @@ const ServicePageSec: React.FC = () => {
           </Row>
         </div>
       </div>
+      <AppFooter/>
     </>
   );
 };

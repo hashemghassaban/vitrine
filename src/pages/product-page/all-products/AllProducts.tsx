@@ -17,6 +17,8 @@ import img1 from "../../../assets/products/img1.jpg";
 import img2 from "../../../assets/products/img2.jpg";
 import img3 from "../../../assets/products/img2.jpg";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 import { CloseOutlined } from "@ant-design/icons";
 interface Brand {
   id: number;
@@ -611,6 +613,7 @@ const AllProducts: React.FC = () => {
           </Col>
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 };

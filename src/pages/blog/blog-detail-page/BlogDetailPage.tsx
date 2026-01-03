@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 import useNavigation from "../../../hooks/useHistory";
 import blogdata from "../../../helpers/blogdata";
 import { Button, Col, Row } from "antd";
@@ -17,39 +19,8 @@ export default function BlogDetailPage() {
 
       <div className="blog-details-container">
         {/* Content */}
-        <Row justify="center" gutter={[0, 32]}>
-          <Col xs={24} md={8} lg={7} className="sidebar">
-            <div className="slider-box">
-              <h3 className="sidebar-title">مقالات مرتبط</h3>
-
-              <div className="related-item">
-                <img src={another[0].img} alt="related" />
-                <p className="title-stiler">{another[0].title}</p>
-                <p>{another[0].text}</p>
-                <Button
-                  type="link"
-                  onClick={() => push(`/blog/${another[0].id}`)}
-                >
-                  خواندن مقاله
-                </Button>
-              </div>
-
-              <div className="related-item">
-                <img  onClick={() => push(`/blog/${another[0].id}`)} src={another[0].img} alt="related" />
-                <p   onClick={() => push(`/blog/${another[0].id}`)} className="title-stiler">{another[0].title}</p>
-                <p>{another[0].text}</p>
-                <Button
-                  type="link"
-                  onClick={() => push(`/blog/${another[0].id}`)}
-                >
-                  خواندن مقاله
-                </Button>
-              </div>
-            </div>
-          </Col>
-
-          {/* ستون بزرگ (محتوای مقاله) */}
-          <Col xs={24} md={16} lg={17} className="main-content">
+        <Row justify="center" gutter={[0, 100]}>
+           <Col xs={24} md={16} lg={17} className="main-content">
             <div className="main-box">
               <h1 className="title">{blog?.title}</h1>
 
@@ -103,8 +74,41 @@ export default function BlogDetailPage() {
               </p>
             </div>
           </Col>
+          <Col xs={24} md={8} lg={7} className="sidebar">
+            <div className="slider-box">
+              <h3 className="sidebar-title">مقالات مرتبط</h3>
+
+              <div className="related-item">
+                <img src={another[0].img} alt="related" />
+                <p className="title-stiler">{another[0].title}</p>
+                <p>{another[0].text}</p>
+                <Button
+                  type="link"
+                  onClick={() => push(`/blog/${another[0].id}`)}
+                >
+                  خواندن مقاله
+                </Button>
+              </div>
+
+              <div className="related-item">
+                <img  onClick={() => push(`/blog/${another[0].id}`)} src={another[0].img} alt="related" />
+                <p   onClick={() => push(`/blog/${another[0].id}`)} className="title-stiler">{another[0].title}</p>
+                <p>{another[0].text}</p>
+                <Button
+                  type="link"
+                  onClick={() => push(`/blog/${another[0].id}`)}
+                >
+                  خواندن مقاله
+                </Button>
+              </div>
+            </div>
+          </Col>
+
+          {/* ستون بزرگ (محتوای مقاله) */}
+         
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 }

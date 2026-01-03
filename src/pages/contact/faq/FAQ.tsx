@@ -1,5 +1,7 @@
 import { Row, Col, Typography, Collapse } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 import "./FAQ.less";
 import min from "../../../assets/faq/min.png";
 import plus from "../../../assets/faq/plus.png";
@@ -70,6 +72,7 @@ export default function FAQ() {
           </Collapse>
         </Col>
       </Row>
+      <AppFooter/>
     </>
   );
 }

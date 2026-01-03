@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Button } from "antd";
 import "./BrandProducts.less";
 import img1 from "../../../assets/blog/img1.png";
-
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import brands from "../../../helpers/brannds";
 import { useParams } from "react-router-dom";
@@ -65,6 +65,7 @@ const BrandProducts: React.FC = () => {
           </Row>
         </div>
       </div>
+      <AppFooter/>
     </>
   );
 };

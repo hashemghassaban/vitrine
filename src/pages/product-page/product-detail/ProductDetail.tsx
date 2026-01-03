@@ -5,6 +5,7 @@ import img2 from "../../../assets/products/img2.jpg";
 import img3 from "../../../assets/brand-row/brand5.png";
 import img4 from "../../../assets/products/image3.png";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState } from "react";
 import { VerticalAlignBottomOutlined } from "@ant-design/icons";
 import { useIsMobile } from "../../../helpers/useIsMobile";
@@ -198,6 +199,7 @@ export default function ProductDetail() {
           </Col>
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 }

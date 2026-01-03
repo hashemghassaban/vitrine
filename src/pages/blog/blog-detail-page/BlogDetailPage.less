@@ -1,5 +1,7 @@
 .blog-details-container {
   padding: 40px 60px;
+      background: #fff;
+       margin-bottom: 80px;
 
   /* ---------- Sidebar ---------- */
   .sidebar {
@@ -20,6 +22,7 @@
       text-align: right;
       color: #363636;
       padding-bottom: 30px;
+      text-align: left;
     }
 
     .related-item {
@@ -41,7 +44,7 @@
       .title-stiler {
         margin-bottom: 10px;
         color: #767676;
-
+        text-align: left;
         font-weight: 800;
         font-size: 23px;
         line-height: 45px;
@@ -49,11 +52,10 @@
 
       p {
         margin-bottom: 12px;
-
+  text-align: left;
         font-weight: 300;
         font-size: 13px;
         line-height: 27px;
-        text-align: right;
 
         color: #000000;
       }
@@ -67,6 +69,9 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
+                flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 100%;
         &:hover {
           color: black;
         }
@@ -76,11 +81,13 @@
         content: "←";
         display: inline-block;
         transition: transform 0.3s ease;
+             transform: rotate(180deg);
+
       }
 
       /* هاور = حرکت فلش به جلو */
       .ant-btn-link:hover::before {
-        transform: translateX(-5px); /* حرکت رو به جلو */
+        transform: translateX(-5px) rotate(180deg); /* حرکت رو به جلو */
       }
     
 
@@ -90,13 +97,13 @@
   /* ---------- Main Content ---------- */
   .main-content {
     text-align: right;
-
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 60px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+        padding-left: 50px !important;
+    padding-right: 100px !important;
+
 
     .main-box {
       max-width: 850px;
@@ -108,6 +115,7 @@
       margin-bottom: 15px;
       color: #363636;
       line-height: 45px;
+      text-align: left;
     }
 
     .meta {
@@ -115,18 +123,22 @@
       margin-bottom: 40px;
       font-weight: 300;
       font-size: 13px;
+            text-align: left;
+
     }
 
     .paragraph {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 30px;
       margin-bottom: 25px;
       font-weight: 300;
+            text-align: left;
+
     }
 
     .gray-box {
-      background: #f5f5f5;
-      padding: 20px;
+      background: #F5F5F5;
+      padding: 30px 50px;
       margin: 30px 0;
 
       ul {
@@ -136,6 +148,8 @@
         font-size: 21px;
         line-height: 45px;
         color: #767676 !important;
+            direction: ltr;
+      text-align: left;
 
         li {
           list-style: none;
@@ -236,4 +250,31 @@
       padding-right: 10px !important;
     }
   }
+}
+
+.ant-layout-rtl{
+    .title , .meta , .paragraph ,  .sidebar-title  , .title-stiler , .related-item p{
+      text-align: right!important;
+    }
+  .ant-btn-link{
+    flex-direction: row-reverse!important;
+  }
+    .main-content {
+    padding-right: 50px !important;
+    padding-left: 100px !important;
+    }
+    .gray-box ul{
+      direction: rtl!important;
+      text-align: right!important;
+    }
+        .ant-btn-link::before {
+     transform: rotate(0deg)!important; 
+        top: 0!important;
+      }
+
+      /* هاور = حرکت فلش به جلو */
+      .ant-btn-link:hover::before {
+    transform: translateX(-5px) rotate(0deg)!important; 
+      }
+  
 }

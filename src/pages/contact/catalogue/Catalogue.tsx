@@ -2,6 +2,8 @@ import { Row, Col, Card, Typography } from "antd";
 import "./Catalogue.less";
 
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 import download from "../../../assets/icon/download.png";
 import type { DocumentItem } from "../../../models/views/catalogueView";
 import { useLanguage } from "../../../contexts/useLanguage";
@@ -68,6 +70,7 @@ export default function Catalogue() {
           ))}
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 }
