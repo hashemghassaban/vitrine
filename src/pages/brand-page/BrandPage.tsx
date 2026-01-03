@@ -27,8 +27,12 @@ const BrandPage: React.FC = () => {
   return (
     <>
       <AppHeader
-        title={"معرفی پروژه"}
-        text={"لوکس‌ترین کامران کامرانیه"}
+        title={isFa ? "معرفی پروژه" : "Project Introduction"}
+        text={
+          isFa
+            ? "لوکس‌ترین کامران کامرانیه"
+            : "Kamran Kamrani, the ultimate in luxury"
+        }
         style={false}
       />
       <div className="brands-page">
