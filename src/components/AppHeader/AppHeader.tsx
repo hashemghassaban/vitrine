@@ -46,14 +46,27 @@ export const AppHeader: FC<AppHeaderProps> = ({
         {
           key: "menu-brands-main",
           title: { en: "Main Title", fa: "عنوان اصلی" },
+          path: "/brandPage",
         },
         { key: "menu-brands-sub1", title: { en: "Sub 1", fa: "زیرعنوان" } },
         { key: "menu-brands-sub2", title: { en: "Sub 2", fa: "زیرعنوان" } },
       ],
     },
-    { key: "menu-catalogues", title: { en: "Catalogues", fa: "کاتالوگ‌ها" } },
-    { key: "menu-services", title: { en: "Services", fa: "خدمات" } },
-    { key: "menu-projects", title: { en: "Projects", fa: "پروژه‌ها" } },
+    {
+      key: "menu-catalogues",
+      title: { en: "Catalogues", fa: "کاتالوگ‌ها" },
+      path: "/catalogue",
+    },
+    {
+      key: "menu-services",
+      title: { en: "Services", fa: "خدمات" },
+      path: "/servicePage",
+    },
+    {
+      key: "menu-projects",
+      title: { en: "Projects", fa: "پروژه‌ها" },
+      path: "/project",
+    },
     {
       key: "menu-representation",
       title: { en: "Representation", fa: "نمایندگی‌ها" },
@@ -119,7 +132,12 @@ export const AppHeader: FC<AppHeaderProps> = ({
               item.children ? (
                 <Menu.SubMenu key={item.key} title={item.title[currentLang]}>
                   {item.children.map((child) => (
-                    <Menu.Item key={child.key}>
+                    <Menu.Item
+                      key={child.key}
+                      onClick={() =>
+                        child.path ? push(child.path) : undefined
+                      }
+                    >
                       {child.title[currentLang]}
                     </Menu.Item>
                   ))}

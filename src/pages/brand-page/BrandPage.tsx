@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Button, Card } from "antd";
 import "./BrandPage.less";
-import brands from "../../helpers/brannds";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import useNavigation from "../../hooks/useHistory";
+import useBrands from "../../hooks/brand/useBrands";
+import type BrandView from "../../models/views/brandView";
+import { useLanguage } from "../../contexts/useLanguage";
 const BrandPage: React.FC = () => {
-
   const { push } = useNavigation();
+  const { currentLang } = useLanguage();
+  const { getList } = useBrands(currentLang);
+  const [brands, setBrands] = useState<BrandView[]>([]);
+
+  const isFa = currentLang === "fa";
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const { success, data } = await getList();
+      if (success && data) {
+        setBrands(data);
+      }
+    };
+    fetchBrands();
+  }, [currentLang]);
 
   return (
     <>
       <AppHeader
-        title={"معرفی پروژه"}
-        text={"لوکس‌ترین کامران کامرانیه"}
+        title={isFa ? "معرفی پروژه" : "Project Introduction"}
+        text={
+          isFa
+            ? "لوکس‌ترین کامران کامرانیه"
+            : "Kamran Kamrani, the ultimate in luxury"
+        }
         style={false}
       />
       <div className="brands-page">
@@ -30,14 +50,26 @@ const BrandPage: React.FC = () => {
             <Col xs={24} sm={12} lg={8} key={item.id}>
               <Card className="brand-card">
                 <div brand-box>
-                <img onClick={()=>(push(`/BrandProducts/${item.id}`))} src={item.logo} alt={item.title} className="brand-logo" />
+                  <img
+                    onClick={() => push(`/BrandProducts/${item.id}`)}
+                    src={item.logo}
+                    alt={item.title}
+                    className="brand-logo"
+                  />
                 </div>
-                <p onClick={()=>(push(`/BrandProducts/${item.id}`))} className="brand-title">{item.title}</p>
-
-                <p className="brand-text">{item.text}</p>
-
-                <Button onClick={()=>(push(`/BrandProducts/${item.id}`))} type="link" className="brand-more">
-                  مشاهده
+                <p
+                  onClick={() => push(`/BrandProducts/${item.id}`)}
+                  className="brand-title"
+                >
+                  {item.title}
+                </p>
+                <p className="brand-text">{item.excerpt}</p>
+                <Button
+                  onClick={() => push(`/BrandProducts/${item.id}`)}
+                  type="link"
+                  className={`brand-more ${!isFa ? "english" : ""}`}
+                >
+                  {isFa ? "مشاهده" : "View"}
                 </Button>
               </Card>
             </Col>

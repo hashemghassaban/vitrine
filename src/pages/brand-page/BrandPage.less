@@ -42,7 +42,7 @@
 }
 
 .brand-title {
-  text-align: right;
+  text-align: start;
   font-size: 19px;
   font-weight: 600;
   margin-bottom: 5px;
@@ -54,7 +54,7 @@
 }
 
 .brand-text {
-  text-align: right;
+  text-align: start;
   color: #737373;
   font-weight: 300;
   font-size: 15px;
@@ -70,7 +70,7 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 45px;
-  text-align: right;
+  text-align: start;
   color: #010101 !important;
           display: flex;
     width: 100%;
@@ -89,14 +89,21 @@
    transform: rotate(180deg);
         top: -2px;
   }
-
-
-      
-
-    
-   &:hover::after {
+ &:hover::after {
         transform: translateX(5px) rotate(180deg); 
       }
+  &.english {
+    &::after {
+      content: "→";
+      display: inline-block;
+      margin-right: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::after {
+      transform: translateX(+5px);
+    }
+  }
 }
 
 /* ----------- ریسپانسیو ----------- */
