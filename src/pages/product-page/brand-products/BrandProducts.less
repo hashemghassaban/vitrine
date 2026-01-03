@@ -60,10 +60,25 @@
         top: -2px;
       }
 
-    
  &:hover::after {
         transform: translateX(5px) rotate(180deg); 
       }
+  &.english {
+    &::before {
+      content: "←";
+      display: inline-block;
+      margin-right: 5px; 
+      transition: transform 0.3s ease;
+    }
+
+    &::after {
+      content: none; 
+    }
+
+    &:hover::before {
+      transform: translateX(-5px);
+    }
+  }
 }
 
 

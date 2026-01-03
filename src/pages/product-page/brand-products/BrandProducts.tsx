@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "antd";
-import "./BrandProducts.less";
-import img1 from "../../../assets/blog/img1.png";
-import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useParams } from "react-router-dom";
 import useBrand from "../../../hooks/brand/useBrandById";
 import type BrandView from "../../../models/views/brandView";
