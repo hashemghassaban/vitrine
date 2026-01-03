@@ -1,6 +1,8 @@
 import { Row, Col } from "antd";
 
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import play from "../../assets/about/play.png";
 import { useEffect, useState } from "react";
 import useAboutPage from "../../hooks/page/useAboutPage";
@@ -114,6 +116,7 @@ export default function About() {
           </Col>
         </Row>
       </div>
+       <AppFooter />
     </>
   );
 }

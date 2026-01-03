@@ -1,5 +1,7 @@
 import { Row, Col, Card, Typography } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+
 import { useEffect, useState } from "react";
 import type representationView from "../../../models/views/representationView";
 import { useLanguage } from "../../../contexts/useLanguage";
@@ -92,6 +94,7 @@ export default function Representation() {
           ))}
         </Row>
       </div>
+      <AppFooter/>
     </>
   );
 }

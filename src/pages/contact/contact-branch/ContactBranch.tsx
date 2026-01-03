@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import instagram from "../../../assets/footer/media1.png";
 import whatsapp from "../../../assets/footer/media2.png";
 import linkedin from "../../../assets/footer/media3.png";
@@ -266,6 +267,7 @@ const ContactBranch: React.FC = () => {
           </div>
         </div>
       </div>
+      <AppFooter/>
     </>
   );
 };

@@ -12,11 +12,12 @@
 }
 
 .title {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 800;
   margin-bottom: 20px;
   text-align: right;
   line-height: 45px;
+  text-align: left;
   color: #767676;
     max-width: 1000px;
 }
@@ -27,6 +28,7 @@
   max-width: 1000px;
   font-weight: 300;
   font-size: 15px;
+    text-align: left;
   line-height: 25px;
   color: #000000;
 }
@@ -41,7 +43,9 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 45px;
-
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
   color: #010101 !important;
 
   &:hover {
@@ -52,12 +56,13 @@
     content: "←";
     display: inline-block;
     transition: transform 0.3s ease;
-  }
+    transform: rotate(180deg);
+        top: -2px;
+      }
 
-  &:hover::after {
-    transform: translateX(-5px);
-  }
-  
+ &:hover::after {
+        transform: translateX(5px) rotate(180deg); 
+      }
   &.english {
     &::before {
       content: "←";
@@ -92,15 +97,15 @@
   padding: 40px;
   width: 100% !important;
   display: flex;
-  justify-content:flex-end;
+  justify-content:center;
 }
 
 .brand-logo {
-  width: 100% !important;
-  max-width: 460px !important;
-  height: 100% !important;
-  max-height: 160px !important;
-  object-fit: contain;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: inherit !important;
+    object-fit: none;
+    max-width: inherit !important;
 }
 
 /* --- Image Cards --- */
@@ -111,6 +116,7 @@
    max-width: 500px;
 border-bottom: 1px solid #D2D2D2;
 margin-bottom: 15px;
+
 }
 
 .img-card img {
@@ -118,16 +124,19 @@ margin-bottom: 15px;
   max-width: 500px;
   height: 208px;
   object-fit: cover;
+  cursor: pointer;
  
 }
 
 .card-title {
 font-weight: 800;
 font-size: 23px;
-line-height: 45px;
+line-height: 17px;
 color: #767676;
 cursor: pointer;
   text-align: left;
+  height: 45px;
+  margin-top: 0!important;
 
 }
 
@@ -140,12 +149,14 @@ cursor: pointer;
   text-align: left;
 }
 .card-arrow {
-    margin-top: 8px;
   font-size: 20px;
+      transform: rotate(180deg);
+    position: relative;
+    top: -7px;
 
   &:hover {
     color: black !important;
-    transform: translateX(-5px);
+    transform: translateX(5px) rotate(180deg);
     cursor: pointer;
   }
 }
@@ -163,11 +174,30 @@ cursor: pointer;
 
 .ant-layout-rtl{
 
-.top-title , .black-title-sec  , .black-text-sec  , .card-title  , .card-text{
+.top-title , .text ,.black-title-sec  , .black-text-sec  , .card-title  , .card-text{
   text-align: right;
 }
 .top-text-box {
   margin-right: 30px;
+}
+.btn-more-brand-products{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row!important;
+}
+.btn-more-brand-products::before {
+
+  position: relative;
+  transform: rotate(0deg);
+}
+.card-arrow {
+  font-size: 20px;
+      transform: rotate(0deg);
+    top: -0;
+
+  &:hover {
+    transform: translateX(-5px) rotate(0deg);
+  }
 }
 
 }

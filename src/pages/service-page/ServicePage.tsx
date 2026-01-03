@@ -9,6 +9,8 @@ import img5 from "../../assets/service-page/img5.png";
 import img6 from "../../assets/service-page/img6.png";
 import img7 from "../../assets/service-page/img7.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 const items = [
   {
     id: 1,
@@ -187,6 +189,7 @@ const ServicePage: React.FC = () => {
           </Row>
         </div>
       </div>
+      <AppFooter/>
     </>
   );
 };

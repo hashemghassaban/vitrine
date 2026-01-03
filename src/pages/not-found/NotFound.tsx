@@ -1,6 +1,8 @@
 import { Button } from "antd";
 import "./NotFound.less";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import useNavigation from "../../hooks/useHistory";
 
 const NotFound = () => {
@@ -19,6 +21,7 @@ const { push } = useNavigation();
         </div>
       </div>
     </div>
+<AppFooter/>
     
     </>
 

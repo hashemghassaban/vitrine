@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button, Card } from "antd";
 import "./BrandPage.less";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../components/AppFooter/AppFooter";
+
 import useNavigation from "../../hooks/useHistory";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
@@ -74,6 +76,7 @@ const BrandPage: React.FC = () => {
           ))}
         </Row>
       </div>
+       <AppFooter />
     </>
   );
 };

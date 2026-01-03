@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useParams } from "react-router-dom";
 import useBrand from "../../../hooks/brand/useBrandById";
 import type BrandView from "../../../models/views/brandView";
@@ -83,6 +84,7 @@ const BrandProducts: React.FC = () => {
           </Row>
         </div>
       </div>
+      <AppFooter/>
     </>
   );
 };

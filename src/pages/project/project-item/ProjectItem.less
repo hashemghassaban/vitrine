@@ -18,8 +18,8 @@
 
 
 .interior-page-container {
-  padding: 20px;
-  background-color: #f5f5f5;
+    padding: 20px 70px;
+    background: #F5F5F5;
 
   /* استایل تب‌ها */
   .interior-tabs {
@@ -53,15 +53,23 @@
       color: #fff;
     }
   }
-
+.content-block-project  .ant-row {
+    justify-content: space-between;
+    margin: 0 !important;
+    width: 100%;
+}
   /* محتوای اصلی */
   .content-block-project {
     margin-bottom: 80px;
     width: 100%;
+    display: flex;
+        justify-content: flex-end;
+
 
     .blog__image-project {
       display: flex;
       align-items: center;
+      
     }
 
     .blog__content-project {
@@ -72,10 +80,10 @@
     .img-box-project {
       display: flex;
       width: 100%;
-      justify-content: center !important;
+      justify-content: space-between !important;
       img {
         height: 450px;
-        width: 810px;
+        width: 100%;
         object-fit: cover;
         transition: transform 0.4s ease;
         cursor: pointer;
@@ -87,14 +95,14 @@
 
     .text-box-project {
       max-width: fit-content;
-      padding-right: 100px;
+      // padding-left: 60px;
     }
       .title-text-box-project {
         margin-bottom: 35px;
         font-style: normal;
         font-weight: 800;
         font-size: 23px;
-        text-align: right;
+        text-align: left;
         color: #767676;
           cursor: pointer;
       }
@@ -111,26 +119,29 @@
         display: grid;
         grid-template-columns: 80px 1fr;
         align-items: start;
-        margin-bottom: 12px;
+        margin-bottom: 0;
 
         .title-text-project {
           color: #767676;
           font-weight: 700;
           font-size: 18px;
           line-height: 45px;
+          margin: 0;
         }
 
         .dec-text-project {
           font-weight: 300;
           font-size: 15px;
           line-height: 45px;
-          text-align: right;
+          text-align: left;
           color: #6b6b6b;
+                  margin: 0;
         }
       }
 
       .dec-text-project-box {
         width: 400px;
+            margin-top: 25px;
       }
       .text-project {
         font-style: normal;
@@ -156,18 +167,20 @@
         content: "←";
         display: inline-block;
         transition: transform 0.3s ease;
+               position: relative;
+    transform: rotate(180deg);
+        top: -2px;
       }
 
     
       .ant-btn-link:hover::after {
-        transform: translateX(-5px); 
+        transform: translateX(5px) rotate(180deg); 
       }
     }
 
 
     .even-text-box-project{
     max-width: fit-content;
-    padding-right: 210px;
     }
   
 
@@ -179,6 +192,7 @@
     font-size: 17px;
     line-height: 45px;
     color: #818181;
+    box-shadow: none!important;
   }
 
   /* واکنش‌گرایی برای موبایل */
@@ -190,4 +204,20 @@
       }
     }
   }
+}
+
+.ant-layout-rtl{
+  .title-text-box-project {
+    text-align: right!important;
+  }
+  .dec-text-project{
+ text-align: right!important;
+  }
+  .content-block-project .ant-btn-link::after{
+    transform: rotate(0deg);
+        top: 0!important;
+  }
+  .ant-btn-link:hover::after {
+        transform: translateX(-5px) rotate(0deg)!important; 
+      }
 }

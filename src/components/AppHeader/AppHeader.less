@@ -292,9 +292,10 @@
 }
 
 .box-page2 {
+  text-align: left;
   display: flex;
   justify-content: flex-start;
-  padding-inline: 170px;
+  padding-left: 55px;
   flex-direction: column;
 
   .title-page2 {
@@ -302,6 +303,7 @@
     font-weight: 400;
     font-size: 27px;
     line-height: 3px;
+    text-align: left;
     color: #c2c2c2;
     padding-bottom: 50px;
     z-index: 2;
@@ -318,11 +320,11 @@
   }
 }
 .ant-layout-rtl {
-  .box-page{
+  .box-page ,  .box-page2{
         padding-left: 0;
             padding-right: 55px;
   }
-  .box-page .title-page{
+  .box-page .title-page ,  .box-page .text-page ,  .box-page2 .title-page2  , .box-page2  .text-page2{
         text-align: right;
   }
 }

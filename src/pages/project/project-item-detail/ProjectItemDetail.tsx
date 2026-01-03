@@ -43,6 +43,33 @@ const [showVideo, setShowVideo] = useState(false);
       <div className="blog-details-container-detail">
         <div className="content-block-detail" key={project?.id}>
           <Row justify="center" align="middle" gutter={[0, 24]}>
+             <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={11}
+              xl={11}
+              className="blog__content-detail"
+            >
+              <div className="text-box-detail">
+                <h2 className="title-text-box-detail">{project?.title}</h2>
+                <div className="item-box-detail-detail">
+                  <p className="title-text-detail">{project?.data1[0]}</p>
+                  <p className="dec-text-detail">{project?.data1[1]}</p>
+                </div>
+                <div className="item-box-detail-detail">
+                  <p className="title-text-detail">{project?.data2[0]}</p>
+                  <p className="dec-text-detail">{project?.data2[1]}</p>
+                </div>
+                <div className="item-box-detail-detail">
+                  <p className="title-text-detail">{project?.data3[0]}</p>
+                  <p className="dec-text-detail">{project?.data3[1]}</p>
+                </div>
+                <p className="title-dec-box-detail">
+                  {project?.text} {project?.text} {project?.text}
+                </p>
+              </div>
+            </Col>
             <Col
               xs={24}
               sm={24}
@@ -76,41 +103,15 @@ const [showVideo, setShowVideo] = useState(false);
                 <div className="custom-bottom-arrows">
                   <button className="icon-arrow-btn" onClick={prev} disabled={current === 0}>
              
-                    <span  className="icon-arrow"> ← </span>
+                    <span  className="icon-arrow">  →</span>
                   </button>
                   <button  className="icon-arrow-btn" onClick={next} disabled={current === 3}>
-                       <span  className="icon-arrow"> → </span>
+                       <span  className="icon-arrow"> ← </span>
                   </button>
                 </div>
               </div>
             </Col>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={11}
-              xl={11}
-              className="blog__content-detail"
-            >
-              <div className="text-box-detail">
-                <h2 className="title-text-box-detail">{project?.title}</h2>
-                <div className="item-box-detail-detail">
-                  <p className="title-text-detail">{project?.data1[0]}</p>
-                  <p className="dec-text-detail">{project?.data1[1]}</p>
-                </div>
-                <div className="item-box-detail-detail">
-                  <p className="title-text-detail">{project?.data2[0]}</p>
-                  <p className="dec-text-detail">{project?.data2[1]}</p>
-                </div>
-                <div className="item-box-detail-detail">
-                  <p className="title-text-detail">{project?.data3[0]}</p>
-                  <p className="dec-text-detail">{project?.data3[1]}</p>
-                </div>
-                <p className="title-dec-box-detail">
-                  {project?.text} {project?.text} {project?.text}
-                </p>
-              </div>
-            </Col>
+           
           </Row>
         </div>
 
