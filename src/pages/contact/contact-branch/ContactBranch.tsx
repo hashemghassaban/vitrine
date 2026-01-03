@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
-import media1 from "../../../assets/footer/media1.png";
-import media2 from "../../../assets/footer/media2.png";
-import media3 from "../../../assets/footer/media3.png";
-import media4 from "../../../assets/footer/media4.png";
-import media5 from "../../../assets/footer/media5.png";
-import media6 from "../../../assets/footer/media6.png";
+import instagram from "../../../assets/footer/media1.png";
+import whatsapp from "../../../assets/footer/media2.png";
+import linkedin from "../../../assets/footer/media3.png";
+import telegram from "../../../assets/footer/media4.png";
+import facebook from "../../../assets/footer/media5.png";
+import youtube from "../../../assets/footer/media6.png";
 import { Input, message, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -16,9 +16,17 @@ import type DepartmentView from "../../../models/views/departmentView";
 import type contractBranchDTO from "../../../models/dtos/contractBranchDTO";
 import useContactBranch from "../../../hooks/contact/useContactBranch";
 import { useLanguage } from "../../../contexts/useLanguage";
+import useSetting from "../../../hooks/setting/useSetting";
+import type { SettingView } from "../../../models/views/settingView";
+
 const ContactBranch: React.FC = () => {
-  const [departments, setDepartments] = useState<DepartmentView[]>([]);
+  const { currentLang } = useLanguage();
+  const { getSetting } = useSetting(currentLang);
+  const { getList } = useDepartment(currentLang);
   const { submitContractForm } = useContactBranch();
+
+  const [setting, setSetting] = useState<SettingView | null>(null);
+  const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<contractBranchDTO>({
     full_name: null,
@@ -27,8 +35,7 @@ const ContactBranch: React.FC = () => {
     content: null,
     department_id: null,
   });
-  const { currentLang } = useLanguage();
-  const { getList } = useDepartment(currentLang);
+
   const isFa = currentLang === "fa";
 
   const fetchDepartments = async () => {
@@ -38,8 +45,16 @@ const ContactBranch: React.FC = () => {
     }
   };
 
+  const fetchSettings = async () => {
+    const { success, data } = await getSetting();
+    if (success && data) {
+      setSetting(data);
+    }
+  };
+
   useEffect(() => {
     fetchDepartments();
+    fetchSettings();
   }, [currentLang]);
 
   const handleInputChange = (field: keyof contractBranchDTO, value: any) => {
@@ -67,7 +82,7 @@ const ContactBranch: React.FC = () => {
     const phoneRegex = /^[\d\u06F0-\u06F9\s\-\+]+$/;
     return phoneRegex.test(phone) && phone.replace(/\D/g, "").length >= 10;
   };
-
+  const mapSrc = setting?.google_map_address?.match(/src="([^"]+)"/)?.[1] || "";
   const onSubmit = async () => {
     try {
       const isEmpty =
@@ -128,24 +143,37 @@ const ContactBranch: React.FC = () => {
       <div className="contact-branch-container">
         <div className="contact-content">
           <div className="header-section">
-            <h1 className="title">/ نشانی</h1>
-            <p className="description">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-            </p>
+            <h1 className="title">{isFa ? " نشانی/" : "/Address"} </h1>
+            <p className="description">{setting?.address}</p>
           </div>
 
           <div className="info-item contact-info">
-            <p className="info-text">/تلفن</p>
-            <span>۰۲۱ - ۲۲۳۳ ۴۴ ۵۵</span>
+            <p className="info-text">{isFa ? "تلفن/" : "/phone"} </p>
+            <span> {setting?.tel}</span>
           </div>
 
           <div className="action-icons">
-            <img src={media1} className="action-icon" />
-            <img src={media2} className="action-icon" />
-            <img src={media3} className="action-icon" />
-            <img src={media4} className="action-icon" />
-            <img src={media5} className="action-icon" />
-            <img src={media6} className="action-icon" />
+            <a href={setting?.instagram_url} target="_blank">
+              <img src={instagram} className="action-icon" alt="Instagram" />
+            </a>
+            <a href={setting?.whatsapp_url} target="_blank">
+              <img src={whatsapp} className="action-icon" alt="WhatsApp" />
+            </a>
+            <a href={setting?.linkedin_url} target="_blank">
+              <img src={linkedin} className="action-icon" alt="linkedin" />
+            </a>
+            <a href={setting?.telegram_url} target="_blank">
+              <img src={telegram} className="action-icon" alt="telegram" />
+            </a>
+            <a href={setting?.facebook_url} target="_blank">
+              <img src={facebook} className="action-icon" alt="facebook" />
+            </a>
+            {/* <a href={setting?.twitter_url} target="_blank">
+              <img src={twitter} className="action-icon" alt="twitter" />
+            </a> */}
+            <a href={setting?.youtube_url} target="_blank">
+              <img src={youtube} className="action-icon" alt="youtube" />
+            </a>
           </div>
 
           <div className="form-section">
@@ -225,8 +253,8 @@ const ContactBranch: React.FC = () => {
 
         <div className="map-section">
           <iframe
-            title="شعبه ۱"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.874451075304!2d51.422124684728!3d35.704974980188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e0163a9b6c4b1%3A0x8f3c8b9e0c5e5f5e!2sTehran%2C%20Iran!5e0!3m2!1sen!2s!4v1698765432100"
+            title={setting?.city}
+            src={mapSrc}
             width="100%"
             height="100%"
             style={{ border: 0 }}
