@@ -1,75 +1,111 @@
-import React from "react";
-import { Row, Col, Typography, Image, Button , Divider } from "antd";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Typography, Image, Button, Divider } from "antd";
 import "./Search.less";
 import img from "../../assets/video-block/video-block.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import useNavigation from "../../hooks/useHistory";
-import projects from "../../helpers/project";
-const {  Paragraph } = Typography;
+import type { SearchItemView } from "../../models/views/searchView";
+import useSearch from "../../hooks/search/useSearch";
+import { useLanguage } from "../../contexts/useLanguage";
+import { useSearchParams } from "react-router-dom";
+import { cleanText } from "../../helpers/cleanText";
+const { Paragraph } = Typography;
 
 const Search: React.FC = () => {
-  const items = [1, 2];
   const { push } = useNavigation();
+  const [items, setItems] = useState<SearchItemView[]>([]);
+  const { currentLang } = useLanguage();
+  const { search } = useSearch(currentLang);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("s");
+  const isFa = currentLang === "fa";
+
+  useEffect(() => {
+    if (!query) return;
+
+    const fetchSearch = async () => {
+      const { success, data } = await search(query);
+      if (success && data) {
+        setItems(data);
+      }
+    };
+
+    setItems([]);
+    fetchSearch();
+  }, [query, currentLang]);
+
+  if (!query) {
+    return (
+      <>
+        <AppHeader noBackground title={isFa ? "جستجو" : "Search"} />
+        <div className="search-results-container">
+          <p style={{ textAlign: "center" }}>
+            {isFa
+              ? "عبارتی برای جستجو وارد نشده است"
+              : "No search query provided"}
+          </p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-      <AppHeader noBackground title={"نتایج جستجو"} />
+      <AppHeader noBackground title={isFa ? "نتایج جستجو" : "Search results"} />
       <div className="search-results-container">
-        <Row justify="center"   align="middle" >
+        <Row justify="center" align="middle">
           <Col xs={22} sm={20} md={18} lg={16} xl={17}>
-            <p  className="results-title">
-            ۳ نتیجه در جستجوی ویترین
+            <p className="results-title">
+              {" "}
+              {isFa
+                ? `${items.length} نتیجه در جستجوی ویترین`
+                : `${items.length} results for search `}
             </p>
-            {items.map((item , index) => (
-              <>
-              <Row
-             
-                key={item}
-                gutter={[20, 16]}
-                className="result-item"
-                align="middle"
-              >
-                 <Col xs={24} md={8}  lg={8} xl={5} className="image-col">
-                  <Image onClick={() => push(`/project/${projects[0].id}`)}
-                    src={img}
-                    alt="thumbnail"
-                    preview={false}
-                    className="result-image"
-                  />
-                </Col>
-                <Col xs={24} md={16}  lg={16} xl={19}>
-                  <h2  className="item-title" onClick={() => push(`/project/${projects[0].id}`)}>
-                    معرفی شهروند ویترین
-                  </h2>
 
-                  <Paragraph className="item-text">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                    با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه
-                    و مجله در ستون و سطر آنچنان که لازم است.
-                  </Paragraph>
-                <Button  className="more-search" type="link" onClick={() => push(`/project/${projects[0].id}`)} >
-                 ادامه مطلب
-                </Button>
-                </Col>
+            {items.map((item, index) => (
+              <React.Fragment key={item.id}>
+                <Row gutter={[20, 16]} className="result-item" align="middle">
+                  <Col xs={24} md={8} xl={5}>
+                    <Image
+                      src={item.thumbnail || img}
+                      alt={item.title}
+                      preview={false}
+                      className="result-image"
+                      onClick={() => push(`/${item.type}/${item.id}`)}
+                    />
+                  </Col>
 
-               
-              </Row>
-              {(index + 1) !== items?.length && (
-                  <Divider className="modal-divider" />
- 
-              )}
-             
-              </>
+                  <Col xs={24} md={16} xl={19}>
+                    <h2
+                      className="item-title"
+                      onClick={() => push(`/${item.type}/${item.id}`)}
+                    >
+                      {item.title}
+                    </h2>
+
+                    <Paragraph className="item-text">
+                      {cleanText(item.content).slice(0, 150)}...
+                    </Paragraph>
+
+                    <Button
+                      className="more-search"
+                      type="link"
+                      onClick={() => push(`/${item.type}/${item.id}`)}
+                    >
+                      {isFa ? " ادامه مطلب" : "Read more"}
+                    </Button>
+                  </Col>
+                </Row>
+              </React.Fragment>
             ))}
           </Col>
         </Row>
       </div>
-      <AppFooter/>
+      <AppFooter />
     </>
   );
 };
 
 export default Search;
-
-

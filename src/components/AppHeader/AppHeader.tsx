@@ -24,13 +24,21 @@ export const AppHeader: FC<AppHeaderProps> = ({
 }) => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState(""); 
   const { currentLang, setCurrentLang } = useLanguage();
   const isRtl = currentLang === "fa";
+
   type Language = "en" | "fa";
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
+  };
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      push(`/search?s=${encodeURIComponent(searchQuery)}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
   };
 
   const menuItems = [
@@ -173,8 +181,15 @@ export const AppHeader: FC<AppHeaderProps> = ({
       {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
-          <Input placeholder="جستجو" className="search-input" autoFocus />
-
+       <Input
+            placeholder= {isRtl ? "جستجو" : "Search"}
+            className="search-input"
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch} 
+          />
+                      
           <button className="close-btn" onClick={() => setSearchOpen(false)}>
             ✕
           </button>

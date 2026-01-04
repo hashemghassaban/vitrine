@@ -13,6 +13,7 @@
     "@ant-design/icons": "^6.1.0",
     "antd": "^5.28.1",
     "axios": "^1.13.2",
+    "html-react-parser": "^5.2.11",
     "less-loader": "^12.3.0",
     "react": "^19.2.0",
     "react-device-detect": "^2.2.3",
