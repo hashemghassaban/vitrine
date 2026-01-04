@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Typography, Image, Button, Divider } from "antd";
+import { Row, Col, Typography, Image, Button } from "antd";
 import "./Search.less";
 import img from "../../assets/video-block/video-block.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
@@ -64,7 +64,7 @@ const Search: React.FC = () => {
                 : `${items.length} results for search `}
             </p>
 
-            {items.map((item, index) => (
+            {items.map((item) => (
               <React.Fragment key={item.id}>
                 <Row gutter={[20, 16]} className="result-item" align="middle">
                   <Col xs={24} md={8} xl={5}>
