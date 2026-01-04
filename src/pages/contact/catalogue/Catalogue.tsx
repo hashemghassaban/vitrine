@@ -35,7 +35,7 @@ export default function Catalogue() {
       <div className="showcase-container">
         <Row justify="center">
           <h2 className="title">
-            {isFa ? "نمایندگی‌های فروش ویترین" : "Vitrin Sales Representatives"}
+            {isFa ? "کاتالوگ‌ها" : "Catalogues"}
           </h2>
         </Row>
         <Row gutter={[24, 24]} justify="center">
