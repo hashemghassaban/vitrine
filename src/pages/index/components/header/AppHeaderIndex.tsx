@@ -13,11 +13,19 @@ export const AppHeaderIndex: FC = () => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
   const { currentLang, setCurrentLang } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState("");
   const isRtl = currentLang === "fa";
   type Language = "en" | "fa";
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
+  };
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      push(`/search?s=${encodeURIComponent(searchQuery)}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
   };
 
   const menuItems = [
@@ -141,7 +149,14 @@ export const AppHeaderIndex: FC = () => {
       {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
-          <Input placeholder="جستجو" className="search-input" autoFocus />
+          <Input
+            placeholder={isRtl ? "جستجو" : "Search"}
+            className="search-input"
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch}
+          />
 
           <button className="close-btn" onClick={() => setSearchOpen(false)}>
             ✕
