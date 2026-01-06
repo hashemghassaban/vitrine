@@ -57,7 +57,12 @@ export default function About() {
           <Col xs={24} lg={12} className="article-col">
             <div className="article-div">
               <h2 className="article-title">{page?.title}</h2>
-              <p className="article-text">{page?.content}</p>
+              <p
+                className="article-text"
+                dangerouslySetInnerHTML={{
+                  __html: page?.content ?? "",
+                }}
+              ></p>
             </div>
           </Col>
           <Col xs={24} lg={12}>
