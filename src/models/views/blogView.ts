@@ -1,15 +1,25 @@
+export interface BlogCategoryView {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+}
+
 export interface BlogItemView {
   id: number;
   title: string;
   slug: string;
-  content?: string | null;
-  thumbnail?: string | null;
-  category_id?: number | null;
-  comments_count: number;
-}
-export interface BlogCategoryView {
+  content: string;
   category_id: number;
-  title: string;
-  slug: string;
+  comments_count: number;
   image: string;
+  thumbnail: string;
+  seo: BlogItemSEOView;
+}
+
+export interface BlogItemSEOView {
+  meta_keywords: null;
+  meta_description: string;
+  nofollow: number;
+  page_title: string;
 }

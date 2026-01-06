@@ -1,72 +1,100 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Tabs, Button, Row, Col } from "antd";
-
 import "./InteriorPage.less";
-import img1 from "../../../assets/blog/img1.png";
-import img2 from "../../../assets/blog/img2.png";
 import { AppButton } from "../../../components/AppButton/AppButton";
 import useNavigation from "../../../hooks/useHistory";
-
-interface TabItem {
-  key: string;
-  label: string;
-}
-
-interface ContentBlock {
-  id: number;
-  category: string;
-  title: string;
-  text: string;
-  img: string;
-}
+import useBlog from "../../../hooks/blog/useBlog";
+import type { BlogItemView } from "../../../models/views/blogView";
+import type { BlogCategoryView } from "../../../models/views/blogView";
+import { useLanguage } from "../../../contexts/useLanguage";
+import truncate from "truncate-html";
 
 export default function InteriorPage() {
-  const [activeTab, setActiveTab] = useState<string>("1");
   const { push } = useNavigation();
+  const { currentLang } = useLanguage();
+  const { getPosts, getCategories } = useBlog(currentLang);
+  const [categories, setCategories] = useState<BlogCategoryView[]>([]);
+  const [posts, setPosts] = useState<BlogItemView[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const isFa = currentLang === "fa";
+  const [visibleCount, setVisibleCount] = useState(2);
+  const [animatedItems, setAnimatedItems] = useState<number[]>([]);
 
-  const tabItems: TabItem[] = [
-    { key: "1", label: "طراحی داخلی" },
-    { key: "2", label: "دسته بندی یک" },
-    { key: "3", label: "دسته بندی دو" },
-  ];
+  const fetchPost = async () => {
+    const { success, data } = await getPosts(+activeTab);
+    if (success && data) {
+      setPosts(data);
+    }
+  };
 
-  const contentBlocks: ContentBlock[] = [
-    {
-      id: 1,
-      category: "2",
-      title: "معرفی شوروم ویترین",
-      text: "لورم ایپسوم متن ساختگی برای صنعت چاپ و صفحه‌آرایی. استفاده شده برای تکمیل گرافیک در صفحات وب.",
-      img: img1,
-    },
-    {
-      id: 2,
-      category: "3",
-      title: "معرفی شوروم ویترین",
-      text: "لورم ایپسوم متن ساختگی برای صنعت چاپ و صفحه‌آرایی. استفاده شده برای تکمیل گرافیک در صفحات وب.",
-      img: img2,
-    },
-  ];
+  const fetchCategories = async () => {
+    const { success: catSuccess, data: catData } = await getCategories();
+    if (catSuccess && catData) {
+      setCategories(catData);
+    }
+  };
 
-  // فیلتر محتوا بر اساس تب فعال
+  useEffect(() => {
+    fetchCategories();
+  }, [currentLang]);
+
+  useEffect(() => {
+    fetchPost();
+  }, [activeTab, currentLang]);
+
   const filteredContent =
-    activeTab === "1"
-      ? contentBlocks
-      : contentBlocks.filter((block) => block.category === activeTab);
+    activeTab === "all"
+      ? posts
+      : posts.filter((p) => p.category_id === +activeTab);
+  const visibleBlog = filteredContent.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredContent.length;
+
+  const loadMore = () => {
+    const newItems = filteredContent.slice(visibleCount, visibleCount + 2);
+    setVisibleCount((prev) => prev + 2);
+    setAnimatedItems((prev) => [...prev, ...newItems.map((i) => i.id)]);
+  };
+
+  const tabItems = useMemo(() => {
+    const categoriesMap = new Map<number, string>();
+
+    categories.forEach((p) => {
+      if (p) {
+        categoriesMap.set(p.id, p.title);
+      }
+    });
+
+    return [
+      { key: "all", label: isFa ? "همه" : "All" },
+      ...Array.from(categoriesMap.entries()).map(([id, title]) => ({
+        key: String(id),
+        label: title,
+      })),
+    ];
+  }, [categories]);
 
   return (
     <div className="interior-page-container">
-      <Row justify="center" align="middle" style={{overflow:"auto"}}>
+      <Row justify="center" align="middle" style={{ overflow: "auto" }}>
         <Tabs
           activeKey={activeTab}
           onChange={(key) => setActiveTab(key)}
-          items={tabItems.map((tab) => ({ key: tab.key, label: tab.label }))}
+          items={tabItems.map((tab) => ({
+            key: tab.key,
+            label: tab.label,
+          }))}
           className="interior-tabs"
         />
       </Row>
 
-      {filteredContent.map((block, index) => (
-        <div className="content-block" key={block.id}>
-          <Row align="middle" gutter={[12,50]}>
+      {visibleBlog.map((block, index) => (
+        <div
+          className={`content-block ${
+            animatedItems.includes(block.id) ? "ease-in-item" : ""
+          }`}
+          key={block.id}
+        >
+          <Row align="middle" gutter={[12, 50]}>
             <Col
               xs={24}
               sm={24}
@@ -74,10 +102,14 @@ export default function InteriorPage() {
               lg={12}
               xl={12}
               className="blog__image"
-              order={index % 2 === 0 ? 1 : 2} 
+              order={index % 2 === 0 ? 1 : 2}
             >
               <div className="img-box">
-                <img src={block.img} alt={`pic${block.id}`}  onClick={() => push(`/blog/${block.id}`)}/>
+                <img
+                  src={block.image}
+                  alt={`pic${block.id}`}
+                  onClick={() => push(`/blog/${block.id}`)}
+                />
               </div>
             </Col>
             <Col
@@ -86,24 +118,44 @@ export default function InteriorPage() {
               md={24}
               lg={12}
               xl={12}
-              className={` ${index % 2 === 1 ? "even-content" : "blog__content"}` }
+              className={` ${
+                index % 2 === 1 ? "even-content" : "blog__content"
+              }`}
               order={index % 2 === 0 ? 2 : 1}
             >
               <div className="text-box">
-                <h2  onClick={() => push(`/blog/${block.id}`)} className="h2-box">{block.title}  </h2>
-                <p  className="p-box"> {block.text} {block.text}</p>
-                <Button type="link" onClick={() => push(`/blog/${block.id}`)}>
-                  خواندن مقاله 
+                <h2
+                  onClick={() => push(`/blog/${block.id}`)}
+                  className="h2-box"
+                >
+                  {block.title}
+                </h2>
+                <p className="p-box">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: truncate(block.content, 120, { ellipsis: "..." }),
+                    }}
+                  ></div>
+                </p>
+                <Button
+                  className={` ${!isFa ? "english" : ""}`}
+                  type="link"
+                  onClick={() => push(`/blog/${block.id}`)}
+                >
+                  {isFa ? "خواندن مقاله" : "Read the article"}
                 </Button>
               </div>
             </Col>
           </Row>
         </div>
       ))}
-
-      <Row justify="center">
-        <AppButton className="blog__Button">مقاله‌های بعدی</AppButton>
-      </Row>
+      {hasMore && (
+        <Row justify="center">
+          <AppButton onclick={loadMore} className="blog__Button">
+            {isFa ? " مقاله‌های بعدی" : "Next articles"}
+          </AppButton>
+        </Row>
+      )}
     </div>
   );
 }
