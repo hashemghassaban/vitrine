@@ -1,5 +1,3 @@
-
-
 export interface ProjectCategoryView {
   id: number;
   title: string;
@@ -41,10 +39,10 @@ export interface ProjectItemView {
   featured: boolean;
   link: string;
   created_at: string;
+  location: ProjectLocationView;
+  developer: DeveloperView | null;
+  architect: ArchitectView | null;
 }
-
-
-
 
 export interface ProjectLocationView {
   id: number;
@@ -92,12 +90,22 @@ export interface ProjectDetailView {
   meta_keywords: string | null;
   meta_description: string | null;
   page_title: string | null;
-  developer: string | null;
-  architect: string | null;
+  developer: DeveloperView | null;
+  architect: ArchitectView | null;
   tags: ProjectTagView[];
   products: ProjectProductView[];
   media: any[];
   comments_count: number;
   hits: number;
   updated_at: string;
+}
+
+export interface DeveloperView {
+  link: string;
+  name: string;
+}
+
+export interface ArchitectView {
+  link: string;
+  name: string;
 }

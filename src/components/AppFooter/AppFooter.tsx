@@ -3,12 +3,12 @@ import { Col, Row, Layout, Input, message } from "antd";
 import { FooterMenu } from "./FooterMenu/FooterMenu";
 import img from "../../assets/footer/img1.png";
 import mail from "../../assets/footer/mail.png";
-import media1 from "../../assets/footer/media1.png";
-import media2 from "../../assets/footer/media2.png";
-import media3 from "../../assets/footer/media3.png";
-import media4 from "../../assets/footer/media4.png";
-import media5 from "../../assets/footer/media5.png";
-import media6 from "../../assets/footer/media6.png";
+import ico_instagram from "../../assets/footer/media1.png";
+import ico_whatsapp from "../../assets/footer/media2.png";
+import ico_linkedin from "../../assets/footer/media3.png";
+import ico_telegram from "../../assets/footer/media4.png";
+import ico_facebook from "../../assets/footer/media5.png";
+import ico_youtube from "../../assets/footer/media6.png";
 import en from "../../assets/footer/en.png";
 import media7 from "../../assets/footer/media7.png";
 import media8 from "../../assets/footer/media8.png";
@@ -74,13 +74,14 @@ export const AppFooter: React.FC = () => {
     setIndexData(null);
     fetchIndex();
   }, [currentLang]);
+
   const menuMedia = [
-    { url: data?.settings.instagram_url, img: media1 },
-    { url: data?.settings.twitter_url, img: media2 },
-    { url: data?.settings.twitter_url, img: media3 },
-    { url: data?.settings.telegram_url, img: media4 },
-    { url: data?.settings.facebook_url, img: media5 },
-    { url: data?.settings.twitter_url, img: media6 },
+    { url: data?.settings.instagram_url, img: ico_instagram },
+    { url: data?.settings.whatsapp_url, img: ico_whatsapp },
+    { url: data?.settings.linkedin_url, img: ico_linkedin },
+    { url: data?.settings.telegram_url, img: ico_telegram },
+    { url: data?.settings.facebook_url, img: ico_facebook },
+    { url: data?.settings.twitter_url, img: ico_youtube },
   ];
 
   const handleBackToTop = () => {
@@ -121,7 +122,6 @@ export const AppFooter: React.FC = () => {
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__col">
               <div className="app-footer__subscribe">
                 <h2 className="app-footer__subscribe_title">
-                  {" "}
                   {isFa ? "عضویت در خبرنامه" : "Subscribe to the newsletter"}
                 </h2>
                 <div className="">
@@ -138,7 +138,6 @@ export const AppFooter: React.FC = () => {
                 </div>
 
                 <p className="app-footer__subscribe_title">
-                  {" "}
                   {isFa ? "شبکه های اجتماعی" : "social media"}
                 </p>
                 <div className="footer_media_content">
@@ -162,10 +161,12 @@ export const AppFooter: React.FC = () => {
                         : () => handleLanguageChange("en")
                     }
                   >
-                    {currentLang === "en" ? "فا" : "En"}{" "}
+                    {currentLang === "en" ? "فا" : "En"}
                     <img src={en} alt="en" />
                   </p>
-                  <p className="footer_en_text">{isFa?"انتخاب زبان":"Language selection"}</p>
+                  <p className="footer_en_text">
+                    {isFa ? "انتخاب زبان" : "Language selection"}
+                  </p>
                 </div>
               </div>
             </Col>
@@ -174,8 +175,12 @@ export const AppFooter: React.FC = () => {
 
         {/* آیکون‌های رسانه و تماس */}
         <Row justify="end" className="contact">
-          <img src={media8} alt="media8" />
-          <img src={media7} alt="media7" />
+          <a href={data?.settings.whatsapp_url}>
+            <img src={media8} alt="media8" />
+          </a>
+          <a href={data?.settings.whatsapp_url}>
+            <img src={media7} alt="media7" />
+          </a>
         </Row>
 
         {/* کپی رایت و Back-to-top */}

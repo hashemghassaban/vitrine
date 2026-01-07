@@ -1,22 +1,22 @@
 import useAxious from "../../helpers/axiosInstance";
 import type ServerResult from "../../models/ServerResult";
-import type { PageView } from "../../models/views/pageView";
+import type { AimItemView } from "../../models/views/aimView";
 
-const useAboutPage = (currentLang: string) => {
+const useAim = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
-  async function getAbout() {
+  async function getList() {
     const isFa = currentLang === "fa";
-    let result = "";
     let success = false;
-    let data: PageView | null = null;
-    const slug = currentLang === "fa" ? "درباره-ما" : "about-us";
+    let result = "";
+    let data: AimItemView[] = [];
+
     await axiosAuthInstance
-      .get<ServerResult<PageView>>(`/page/${slug}`)
+      .get<ServerResult<AimItemView[]>>("/aim")
       .then((res) => {
         if (res.data.success) {
           success = true;
-          data = res.data.data;
+          data = res.data.data ?? [];
         } else {
           result = res.data.message;
         }
@@ -33,8 +33,8 @@ const useAboutPage = (currentLang: string) => {
   }
 
   return {
-    getAbout,
+    getList,
   };
 };
 
-export default useAboutPage;
+export default useAim;
