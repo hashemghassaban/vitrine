@@ -49,7 +49,6 @@ const Pages = () => {
       <Route path="/project" element={<Project />} />
       <Route path="/project/:id" element={<ProjectItemDetail />} />
       <Route path="/brands" element={<BrandPage />} />
-      {/* <Route path="/servicePage" element={<ServicePage />} /> اقای گودرزوند فرمودند این صفحه حذف شده است */}
       <Route path="/services" element={<ServicePageSec />} />
       <Route path="/brandProducts/:id" element={<BrandProducts />} />
       <Route path="/allProducts" element={<AllProducts />} />
