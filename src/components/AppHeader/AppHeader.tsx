@@ -54,7 +54,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
         {
           key: "menu-brands-main",
           title: { en: "Main Title", fa: "عنوان اصلی" },
-          path: "/brandPage",
+          path: "/brands",
         },
         { key: "menu-brands-sub1", title: { en: "Sub 1", fa: "زیرعنوان" } },
         { key: "menu-brands-sub2", title: { en: "Sub 2", fa: "زیرعنوان" } },
@@ -68,7 +68,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     {
       key: "menu-services",
       title: { en: "Services", fa: "خدمات" },
-      path: "/servicePage",
+      path: "/services",
     },
     {
       key: "menu-projects",

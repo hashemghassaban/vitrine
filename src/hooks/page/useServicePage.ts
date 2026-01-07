@@ -2,15 +2,15 @@ import useAxious from "../../helpers/axiosInstance";
 import type ServerResult from "../../models/ServerResult";
 import type { PageView } from "../../models/views/pageView";
 
-const useAboutPage = (currentLang: string) => {
+const useServicePage = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
-  async function getAbout() {
+  async function getService() {
     const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: PageView | null = null;
-    const slug = currentLang === "fa" ? "درباره-ما" : "about-us";
+    const slug = currentLang === "fa" ? "خدمات" : "خدمات";
     await axiosAuthInstance
       .get<ServerResult<PageView>>(`/page/${slug}`)
       .then((res) => {
@@ -33,8 +33,8 @@ const useAboutPage = (currentLang: string) => {
   }
 
   return {
-    getAbout,
+    getService,
   };
 };
 
-export default useAboutPage;
+export default useServicePage;

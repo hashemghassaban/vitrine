@@ -15,7 +15,6 @@ import Search from "./search/Search";
 import Project from "./project/Project";
 import ProjectItemDetail from "./project/project-item-detail/ProjectItemDetail";
 import BrandPage from "./brand-page/BrandPage";
-import ServicePage from "./service-page/ServicePage";
 import ServicePageSec from "./service-page/service-page-sec/ServicePageSec";
 import BrandProducts from "./product-page/brand-products/BrandProducts";
 import AllProducts from "./product-page/all-products/AllProducts";
@@ -49,12 +48,12 @@ const Pages = () => {
       <Route path="/search" element={<Search />} />
       <Route path="/project" element={<Project />} />
       <Route path="/project/:id" element={<ProjectItemDetail />} />
-      <Route path="/brandPage" element={<BrandPage />} />
-      <Route path="/servicePage" element={<ServicePage />} />
-      <Route path="/servicePageSec" element={<ServicePageSec />} />
+      <Route path="/brands" element={<BrandPage />} />
+      {/* <Route path="/servicePage" element={<ServicePage />} /> اقای گودرزوند فرمودند این صفحه حذف شده است */}
+      <Route path="/services" element={<ServicePageSec />} />
       <Route path="/brandProducts/:id" element={<BrandProducts />} />
       <Route path="/allProducts" element={<AllProducts />} />
-      <Route path="/productDetail" element={<ProductDetail />} />
+      <Route path="/products/:id" element={<ProductDetail />} />
     </Routes>
   );
 };
