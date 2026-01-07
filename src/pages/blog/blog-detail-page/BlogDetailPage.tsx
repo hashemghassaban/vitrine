@@ -1,114 +1,103 @@
 import { useParams } from "react-router-dom";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
-import { AppFooter } from "../../../components/AppFooter/AppFooter";
-
 import useNavigation from "../../../hooks/useHistory";
-import blogdata from "../../../helpers/blogdata";
 import { Button, Col, Row } from "antd";
 import "./BlogDetailPage.less";
+import { useLanguage } from "../../../contexts/useLanguage";
+import type { BlogItemView } from "../../../models/views/blogView";
+import useBlog from "../../../hooks/blog/useBlog";
+import { useEffect, useState } from "react";
+import truncate from "truncate-html";
 
 export default function BlogDetailPage() {
-  const { id } = useParams();
-  const blog = blogdata.find((b) => b.id === Number(id));
-  const another = blogdata.filter((b) => b.id !== Number(id));
   const { push } = useNavigation();
+  const { id } = useParams<{ id: string }>();
+  const { currentLang } = useLanguage();
+  const { getPostById, getPosts } = useBlog(currentLang);
+  const [blog, setBlog] = useState<BlogItemView | null>(null);
+  const [related, setRelated] = useState<BlogItemView[]>([]);
+  const [loading, setLoading] = useState(true);
+  const isFa = currentLang === "fa";
+
+  const fetchData = async () => {
+    setLoading(true);
+    const { success, data } = await getPostById(Number(id));
+    if (success && data) {
+      setBlog(data);
+      if (data.category_id) {
+        const relatedRes = await getPosts(data.category_id);
+        if (relatedRes.success) {
+          setRelated(
+            relatedRes.data.filter((b) => b.id !== data.id).slice(0, 2)
+          );
+        }
+      }
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    fetchData();
+  }, [id, currentLang]);
 
   return (
     <>
       <AppHeader />
 
-      <div className="blog-details-container">
-        {/* Content */}
-        <Row justify="center" gutter={[0, 100]}>
-           <Col xs={24} md={16} lg={17} className="main-content">
-            <div className="main-box">
-              <h1 className="title">{blog?.title}</h1>
+      {!loading && (
+        <div className="blog-details-container">
+          {/* Content */}
+          <Row justify="center" gutter={[0, 32]}>
+            <Col xs={24} md={8} lg={7} className="sidebar">
+              <div className="slider-box">
+                <h3 className="sidebar-title">
+                  {isFa ? " مقالات مرتبط" : "Related articles"}
+                </h3>
 
-              <p className="meta">
-                {blog?.date} / {blog?.hour}
-              </p>
-              <p className="paragraph">
-                {blog?.text} {blog?.text}
-              </p>
-
-              <p className="paragraph">
-                {blog?.text} {blog?.text}
-              </p>
-
-      
-              <div className="gray-box">
-                <ul>
-                  <li>فهرست مطالب</li>
-                  {blog?.titles.map((title, i) => (
-                    <li
-                      key={i}
-                      onClick={() => {
-                        const el = document.getElementById(`section-${i}`);
-                        el?.scrollIntoView({
-                          behavior: "smooth",
-                          block: "start",
-                        });
+                {related.map((item) => (
+                  <div key={item.id} className="related-item">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      onClick={() => push(`/blog/${item.id}`)}
+                    />
+                    <p className="title-stiler">{item.title}</p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: truncate(item.content, 120, {
+                          ellipsis: "...",
+                        }),
                       }}
-                      className="toc-item"
+                    ></div>
+                    <Button
+                      type="link"
+                      onClick={() => push(`/blog/${item.id}`)}
                     >
-                      {title}
-                    </li>
-                  ))}
-                </ul>
+                      {isFa ? "خواندن مقاله" : "Read the article"}
+                    </Button>
+                  </div>
+                ))}
               </div>
+            </Col>
 
-              <p id={`section-0`} className="paragraph">
-                {blog?.text} {blog?.text}
-                 {blog?.text} {blog?.text}
-              </p>
-
-              {/* عکس اصلی */}
-              <img src={blog?.img} className="main-image" alt="main" />
-              <p  id={`section-1`} className="paragraph">
-                {blog?.text} {blog?.text}
-                {blog?.text} {blog?.text}
-              </p>
-               <p  id={`section-2`} className="paragraph">
-                {blog?.text} {blog?.text}
-                {blog?.text} {blog?.text}
-              </p>
-            </div>
-          </Col>
-          <Col xs={24} md={8} lg={7} className="sidebar">
-            <div className="slider-box">
-              <h3 className="sidebar-title">مقالات مرتبط</h3>
-
-              <div className="related-item">
-                <img src={another[0].img} alt="related" />
-                <p className="title-stiler">{another[0].title}</p>
-                <p>{another[0].text}</p>
-                <Button
-                  type="link"
-                  onClick={() => push(`/blog/${another[0].id}`)}
-                >
-                  خواندن مقاله
-                </Button>
+            <Col xs={24} md={16} lg={17} className="main-content">
+              <div className="main-box">
+                <h1 className="title">{blog?.title}</h1>
+                {/* <p className="meta">{blog?.comments_count} / 10</p> */}
+                {/* عکس اصلی */}
+                <img src={blog?.image} className="main-image" alt="main" />
+                <div
+                  className="paragraph"
+                  dangerouslySetInnerHTML={{
+                    __html: blog?.content ?? "",
+                  }}
+                ></div>
               </div>
-
-              <div className="related-item">
-                <img  onClick={() => push(`/blog/${another[0].id}`)} src={another[0].img} alt="related" />
-                <p   onClick={() => push(`/blog/${another[0].id}`)} className="title-stiler">{another[0].title}</p>
-                <p>{another[0].text}</p>
-                <Button
-                  type="link"
-                  onClick={() => push(`/blog/${another[0].id}`)}
-                >
-                  خواندن مقاله
-                </Button>
-              </div>
-            </div>
-          </Col>
-
-          {/* ستون بزرگ (محتوای مقاله) */}
-         
-        </Row>
-      </div>
-      <AppFooter/>
+            </Col>
+          </Row>
+        </div>
+      )}
     </>
   );
 }
