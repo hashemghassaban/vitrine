@@ -79,6 +79,10 @@ export interface SiteSettingsView {
   telegram_url: string;
   instagram_url: string;
   twitter_url: string;
+  whatsapp_url: string;
+  linkedin_url: string;
+  youtube_url: string;
+  aparat_url: string;
 }
 
 export interface SliderItemView {
