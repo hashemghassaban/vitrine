@@ -31,6 +31,7 @@ export const Showcase: React.FC = () => {
     { img: img07, img2: imgh7, name: "اکسسوری" },
     { img: img08, img2: imgh8, name: "سردوش" },
     { img: img09, img2: imgh9, name: "کابینت" },
+    
   ];
 
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -50,12 +51,16 @@ export const Showcase: React.FC = () => {
               onMouseLeave={() => setHoverIndex(null)}
             >
               <div className="img-wrapper">
-                <img
+                <a href="#" > 
+ <img
                   src={hoverIndex === i ? item.img2 : item.img}
                   alt={item.name}
                   className={hoverIndex === i ? "hovered" : ""}
                 />
                 <p className={hoverIndex === i ? "show-text" : ""}>{item.name}</p>
+
+                </a>
+               
               </div>
             </div>
           ))}

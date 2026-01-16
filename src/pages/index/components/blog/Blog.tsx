@@ -19,11 +19,15 @@ export const Blog: React.FC = () => {
 
       <Row  className="blog__Row" align="middle" gutter={[24, 24]}>
         <Col xs={24} sm={24} md={24} lg={13} xl={13} className="blog__image">
-          <img src={img1} alt="blog" />
+        <a href="#">
+ <img src={img1} alt="blog" />
+
+        </a>
+         
         </Col>
         <Col xs={24} sm={24} md={24} lg={11} xl={11} className="blog__content">
           <div className="blog__box1"  >
-          <p className="blog__title">معرفی شوروم ویترین</p>
+          <a href="#" className="blog__title">معرفی شوروم ویترین</a>
           <p className="blog__text">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
             استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله.
@@ -38,7 +42,7 @@ export const Blog: React.FC = () => {
       <Row className="blog__Row2" align="middle" gutter={[24, 24]}>
         <Col xs={24} sm={24} md={24} lg={11} xl={11} className="blog__content2">
         <div className="blog__box2"  >
-          <p className="blog__title">معرفی شوروم ویترین</p>
+             <a href="#"className="blog__title">معرفی شوروم ویترین</a>
           <p className="blog__text">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
             استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله.
@@ -50,7 +54,9 @@ export const Blog: React.FC = () => {
           </div>
         </Col>
         <Col xs={24} sm={24} md={24} lg={13} xl={13} className="blog__image">
+         <a href="#">
           <img src={img2} alt="blog" />
+         </a>
         </Col>
       </Row>
 

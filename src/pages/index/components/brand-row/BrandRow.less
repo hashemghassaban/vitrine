@@ -1,6 +1,6 @@
 .brand-section {
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .brand-title {
@@ -14,7 +14,7 @@
 }
 
 /* Container Flex */
-.brand-scale-container {
+.brand-section{
   width: 100%;
   overflow-x: auto; /* اسکرول افقی فعال */
   overflow-y: hidden;
@@ -26,6 +26,11 @@
   display: none; /* Chrome/Safari/Opera */
 }
 
+.brand-scale-container{
+  position: relative;
+  width: 100%!important;
+      height: 100px;
+}
 .brand-scale-row {
   display: flex;
   flex-wrap: nowrap; 
@@ -100,3 +105,9 @@
     width: 60px !important;
   }
 }
+
+
+
+      .brand-section .slick-list , .brand-section .slick-slider , .brand-section .slick-slide ,.home__content , .brand-section .slick-track{
+        height: 100%;
+      }

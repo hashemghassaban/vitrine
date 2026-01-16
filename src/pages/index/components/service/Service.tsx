@@ -21,7 +21,7 @@ export const Service: React.FC = () => {
           xl={7}
           className="service__content fade-in"
         >
-          <p className="service__title">این پروژه سوپرلوکس با محصولات</p>
+          <a href="#" className="service__title">این پروژه سوپرلوکس با محصولات</a>
 
           <p className="service__text">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
@@ -32,7 +32,11 @@ export const Service: React.FC = () => {
         </Col>
 
         <Col xs={24} sm={24} md={12} lg={14} xl={17} className="service__image">
+        <a href="#" >
           <img src={img} alt="service" className="service-img" />
+
+
+        </a>
         </Col>
       </Row>
     </section>

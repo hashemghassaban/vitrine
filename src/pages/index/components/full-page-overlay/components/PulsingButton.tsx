@@ -54,7 +54,9 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
           margin: 0,
         }}
       >
+        <a href="#"  style={{color:'#fff'}}>
         ویترین پلاس
+        </a>
       </Title>
       <AppButton
         style={{

@@ -10,10 +10,13 @@ export const FullPageOverlay: React.FC = () => {
     {
       img: image8,
       buttons: [{ id: 1, x: 52, y: 40 }],
+            content : [{title:'محصولات لوکس' , description : 'شوروم ساختمانی ویترین ', x: 8, y: 35 }]
     },
     {
       img: image7,
       buttons: [{ id: 1, x: 40, y: 35 }],
+            content : [{title:'محصولات لوکس' , description : 'شوروم ساختمانی ویترین ', x: 70, y: 35 }]
+
     },
     ,
     {
@@ -22,6 +25,8 @@ export const FullPageOverlay: React.FC = () => {
         { id: 1, x: 35, y: 35 },
         { id: 1, x: 65, y: 35 },
       ],
+            content : [{title:'محصولات لوکس' , description : 'شوروم ساختمانی ویترین ', x: 8, y: 35 }]
+
     },
     ,
   ];
@@ -32,6 +37,21 @@ export const FullPageOverlay: React.FC = () => {
         <div key={index} className="overlay-section">
           <img src={item?.img} alt={`overlay-${index}`} />
           <div style={{ display: "inline-block" }}>
+              {item?.content.map((subject, i) => (
+            <div className="content" style={{
+                  left: `${subject.x}%`,
+                  top: `${subject.y}%`,
+                }}>
+              <h4 style={{
+            
+                  color:index == 0 ?'#000' : '#fff'
+                }}>{subject.title}</h4>
+              <p style={{
+            
+                  color:index == 0 ?'#000' : '#fff'
+                }}>{subject.description}</p>
+            </div>
+             ))}
             {item?.buttons.map((btn, bIndex) => (
               <PulseCircleButton
                 key={bIndex}
