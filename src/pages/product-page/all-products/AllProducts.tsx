@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -13,43 +13,27 @@ import {
 } from "antd";
 import "./AllProducts.less";
 import imgb from "../../../assets/blog/img1.png";
-import img1 from "../../../assets/products/img1.jpg";
-import img2 from "../../../assets/products/img2.jpg";
-import img3 from "../../../assets/products/img2.jpg";
+import useNavigation from "../../../hooks/useHistory";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 
+import { useLanguage } from "../../../contexts/useLanguage";
+import useProducts from "../../../hooks/products/useProducts";
+import type { ProductView } from "../../../models/views/productView";
 import { CloseOutlined } from "@ant-design/icons";
+import useBrands from "../../../hooks/brand/useBrands";
+import type BrandView from "../../../models/views/brandView";
 interface Brand {
   id: number;
   nameFa: string;
   nameEn: string;
 }
 
-const brandsData: Brand[] = [
-  { id: 1, nameFa: "آبادانا", nameEn: "comin soon" },
-  { id: 2, nameFa: "دینا", nameEn: "comin soon" },
-  { id: 3, nameFa: "دیانا", nameEn: "comin soon" },
-  { id: 4, nameFa: "آبادانا", nameEn: "comin soon" },
-];
 const colData: Brand[] = [
   { id: 1, nameFa: "آبادانا", nameEn: "comin soon" },
   { id: 2, nameFa: "دینا", nameEn: "comin soon" },
 ];
 const AllProducts: React.FC = () => {
-  const products = [
-    { img: img1, title: "عنوان تست دوش", code: "comin soon" },
-    { img: img2, title: "عنوان تست دوش", code: "comin soon" },
-    { img: img3, title: "عنوان تست دوش", code: "comin soon" },
-    { img: img1, title: "عنوان تست دوش", code: "comin soon" },
-    { img: img2, title: "عنوان تست دوش", code: "CATER 5004" },
-    { img: img3, title: "عنوان تست دوش", code: "CATER 5005" },
-    { img: img1, title: "عنوان تست دوش", code: "CATER 5000" },
-    { img: img2, title: "عنوان تست دوش", code: "CATER 5001" },
-    { img: img2, title: "عنوان تست دوش", code: "CATER 5004" },
-    { img: img3, title: "عنوان تست دوش", code: "CATER 5005" },
-  ];
-  const [visibleCount, setVisibleCount] = useState(8);
   type MenuItem = Required<MenuProps>["items"][number];
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
@@ -361,7 +345,35 @@ const AllProducts: React.FC = () => {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
 
-  const filteredBrands = brandsData.filter((b) => b.nameFa.includes(search));
+  const { currentLang } = useLanguage();
+  const { getListProducts } = useProducts(currentLang);
+  
+  const [product, setProducts] = useState<ProductView[]>([]);
+  const [visibleCount, setVisibleCount] = useState(8);
+  
+  const { getList } = useBrands(currentLang);
+  const [brands, setBrands] = useState<BrandView[]>([]);
+  const filteredBrands = brands.filter((b) => b.title.includes(search));
+  const isFa = currentLang === "fa";
+  const { push } = useNavigation();
+  const fetchBrands = async () => {
+    const { success, data } = await getList();
+    if (success && data) {
+      setBrands(data);
+    }
+  };
+
+  const fetchProducts = async () => {
+    const { success, data } = await getListProducts(20);
+    if (success) {
+      setProducts(data);
+    }
+  };
+  useEffect(() => {
+    setProducts([]);
+    fetchProducts();
+    fetchBrands();
+  }, [currentLang]);
 
   const toggleBrand = (id: number) => {
     setSelected((prev) =>
@@ -375,16 +387,16 @@ const AllProducts: React.FC = () => {
 
   const filteredProducts =
     selected.length === 0
-      ? products
-      : products.filter((item) =>
+      ? product
+      : product.filter((item) =>
           selected.some((id) => {
-            const b = brandsData.find((x) => x.id === id);
-            return b && item.code === b.nameEn;
+            const b = brands.find((x) => x.id === id);
+            return b && item.brand.id === b.id;
           })
         );
   return (
     <>
-      <AppHeader title={"شیرآلات ویترین"}  text={"خانه > محصولات > شیرآلات"} />
+      <AppHeader title={"شیرآلات ویترین"} text={"خانه > محصولات > شیرآلات"} />
       <div className="products-container">
         <Row gutter={[0, 20]}>
           <Col xs={24} lg={7}>
@@ -406,12 +418,12 @@ const AllProducts: React.FC = () => {
                 <h3 className="filter-title mt-30">فیلترها</h3>
                 <div className="selected-tags">
                   {selected.map((id) => {
-                    const b = brandsData.find((x) => x.id === id);
+                    const b = brands.find((x) => x.id === id);
                     if (!b) return null;
                     return (
                       <Tag key={id} onClose={() => removeFilter(id)}>
                         <div className="pulse-tag">
-                          {b.nameEn}
+                          {b.title}
                           <button
                             onClick={() => removeFilter(id)}
                             className="pulse-button"
@@ -448,10 +460,10 @@ const AllProducts: React.FC = () => {
                                   checked={selected.includes(b.id)}
                                   onChange={() => toggleBrand(b.id)}
                                 >
-                                  {b.nameFa}
+                                  {b.title}
                                 </Checkbox>
                               </div>
-                              <p> {b.nameEn} </p>
+                              <p> {b.title} </p>
                             </div>
                           </Menu.Item>
                           {index !== filteredBrands.length - 1 && (
@@ -533,7 +545,7 @@ const AllProducts: React.FC = () => {
           </Col>
 
           <Col xs={24} lg={17}>
-            <p className="count">۶ محصول پیدا شد</p>
+            <p className="count">{filteredProducts.length} محصول پیدا شد</p>
 
             <Row gutter={[20, 30]}>
               {filteredProducts.slice(0, visibleCount).map((item, i) => (
@@ -541,9 +553,10 @@ const AllProducts: React.FC = () => {
                   <Card
                     hoverable
                     className="showcase-card-product"
+                    onClick={() => push(`/products/${item.id}`)}
                     cover={
                       <img
-                        src={item.img}
+                        src={item?.image}
                         alt="product"
                         className="img-card-product"
                       />
@@ -551,13 +564,13 @@ const AllProducts: React.FC = () => {
                   >
                     <div className="selected-tags-item">
                       {selected.map((id) => {
-                        const b = brandsData.find((x) => x.id === id);
+                        const b = brands.find((x) => x.id === id);
 
                         if (!b) return null;
-                        if (item.code !== b.nameEn) return null;
+                        if (item.id !== b.id) return null;
                         return (
                           <Tag key={id} onClose={() => removeFilter(id)}>
-                            <div className="pulse-tag">{b.nameEn}</div>
+                            <div className="pulse-tag">{b.title}</div>
                           </Tag>
                         );
                       })}
@@ -568,7 +581,7 @@ const AllProducts: React.FC = () => {
               ))}
             </Row>
 
-            {visibleCount < products.length && (
+            {visibleCount < product.length && (
               <div className="load-more-box">
                 <button
                   className="load-more"
@@ -613,7 +626,7 @@ const AllProducts: React.FC = () => {
           </Col>
         </Row>
       </div>
-      <AppFooter/>
+      <AppFooter />
     </>
   );
 };
