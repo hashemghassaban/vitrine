@@ -8,6 +8,7 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useProjectDetail from "../../../hooks/project/useProjectById";
 import type { ProjectDetailView } from "../../../models/views/projectView";
 import projects from "../../../helpers/project";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 const { Title } = Typography;
 
@@ -18,6 +19,7 @@ export default function ProjectItemDetail() {
   const [project, setProject] = useState<ProjectDetailView | null>(null);
   const [current, setCurrent] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
+  const { t } = useTranslate();
 
   const isFa = currentLang === "fa";
 
@@ -58,7 +60,7 @@ export default function ProjectItemDetail() {
   return (
     <>
       <AppHeader
-        title={isFa ? "معرفی پروژه" : "Project Introduction"}
+        title={t("site.proje1")}
         text={project?.page_title ?? "page_title مقدار دهی نشده است"}
         style={false}
       />
@@ -153,13 +155,10 @@ export default function ProjectItemDetail() {
 
         <div className="product-card-detail">
           <Title level={3} className="title-detail">
-            معرفی شوروم ویترین
+            {t("site.proje2")}
           </Title>
           <p className="two-lines-detail">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            استفاده از طراحان گرافیک است لورم ایپسوم <br />
-            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از
-            طراحان گرافیک است.{" "}
+            {t("site.proje3")}
           </p>
           <Row gutter={[24, 24]} justify="center">
             {project?.products.map((item) => (
@@ -184,13 +183,10 @@ export default function ProjectItemDetail() {
           </Row>
           <div className="product-card-detail">
             <Title level={3} className="title-detail">
-              معرفی شوروم ویترین
+             {t("site.proje4")}
             </Title>
             <p className="two-lines-detail">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-              استفاده از طراحان گرافیک است لورم ایپسوم <br />
-              متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از
-              طراحان گرافیک است.{" "}
+              {t("site.proje5")}
             </p>
           </div>
         </div>

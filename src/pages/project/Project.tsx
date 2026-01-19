@@ -2,21 +2,14 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import ProjectItem from "./project-item/ProjectItem";
-import { useLanguage } from "../../contexts/useLanguage";
+import { useTranslate } from "../../i18n/useTranslate";
 
 function Project() {
-  const { currentLang } = useLanguage();
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
   return (
     <>
       <Layout>
-        <AppHeader
-          title={
-            isFa
-              ? "پروژه‌های اجرا شده با ویترین"
-              : "Vitrine executed projects"
-          }
-        />
+        <AppHeader title={t("site.projectlist1")} />
         <Content>
           <ProjectItem />
         </Content>
