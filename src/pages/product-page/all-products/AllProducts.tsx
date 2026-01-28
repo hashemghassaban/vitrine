@@ -347,14 +347,13 @@ const AllProducts: React.FC = () => {
 
   const { currentLang } = useLanguage();
   const { getListProducts } = useProducts(currentLang);
-  
+
   const [product, setProducts] = useState<ProductView[]>([]);
   const [visibleCount, setVisibleCount] = useState(8);
-  
+
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
   const filteredBrands = brands.filter((b) => b.title.includes(search));
-  const isFa = currentLang === "fa";
   const { push } = useNavigation();
   const fetchBrands = async () => {
     const { success, data } = await getList();

@@ -18,6 +18,7 @@ import { useLanguage } from "../../contexts/useLanguage";
 import type { IndexDataView } from "../../models/views/indexView";
 import useIndex from "../../hooks/index/useIndex";
 import useNewsletter from "../../hooks/newsletter/useNewsletter";
+import { useTranslate } from "../../i18n/useTranslate";
 
 export const AppFooter: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -27,6 +28,8 @@ export const AppFooter: React.FC = () => {
 
   const { currentLang, setCurrentLang } = useLanguage();
   const isFa = currentLang === "fa";
+
+  const { t } = useTranslate();
 
   type Language = "en" | "fa";
 
@@ -97,27 +100,25 @@ export const AppFooter: React.FC = () => {
             {/* لوگو و متن */}
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__logo">
               <img className="app-footer__logo_img" src={img} alt="Logo" />
-              <p className="app-footer_title">شوروم لوکس ویترین</p>
+              <p className="app-footer_title">{t("site.footerblock6")}</p>
               <p className="app-footer_text">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                طراحی.
+                {t("site.footerblock7")}
               </p>
             </Col>
 
             {/* منوها */}
             <Col className="menu__col" xs={12} sm={12} md={12} lg={4}>
               <FooterMenu
-                links={data?.links.filter((c) => c.type == "right")}
-                title={isFa ? "دسترسی‌ها" : "Accesses"}
+                links={data?.links.filter((c) => c.type == "left")}
+                title={t("site.footerblock4")}
               />
             </Col>
             <Col className="menu__col" xs={12} sm={12} md={12} lg={4}>
               <FooterMenu
-                links={data?.links.filter((c) => c.type == "left")}
-                title={isFa ? "خدمات" : "Services"}
+                links={data?.links.filter((c) => c.type == "right")}
+                title={t("site.footerblock5")}
               />
             </Col>
-
             {/* عضویت و شبکه‌ها */}
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__col">
               <div className="app-footer__subscribe">
@@ -190,7 +191,7 @@ export const AppFooter: React.FC = () => {
           </div>
           <span>
             <a className="app-footer__copyright_text" href="#">
-              Coppyright 2025 Vitrin Iran : All Right
+              {t("site.footerblock8")}
             </a>
           </span>
         </div>

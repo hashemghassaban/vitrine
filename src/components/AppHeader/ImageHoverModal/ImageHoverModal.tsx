@@ -1,5 +1,7 @@
 import { type FC, useState } from "react";
 import { Divider, Modal, Row } from "antd";
+import { useTranslate } from "../../../i18n/useTranslate";
+
 import "./ImageHoverModal.less";
 import img from "../../../assets/header/hoverm-modal/img.png";
 import img1 from "../../../assets/header/hoverm-modal/img1.png";
@@ -17,13 +19,13 @@ import img6 from "../../../assets/header/hoverm-modal/img6.png";
 import img7 from "../../../assets/header/hoverm-modal/img7.png";
 import img8 from "../../../assets/header/hoverm-modal/img8.png";
 
-
 interface Props {
   triggerImg: string;
 }
 
 export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslate();
 
   const menuCategories = [
     {
@@ -39,9 +41,9 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
     {
       icon: img2,
       title: "روشویی",
-      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان" , "زیرعنوان"],
+      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان"],
     },
-      {
+    {
       icon: img5,
       title: "حوله خشک‌کن",
       items: ["زیرعنوان", "زیرعنوان"],
@@ -49,20 +51,20 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
     {
       icon: img3,
       title: "وان",
-      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", ],
+      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان"],
     },
-       {
+    {
       icon: img6,
       title: " دوش",
-      items: ["زیرعنوان", "زیرعنوان","زیرعنوان", "زیرعنوان"],
+      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان"],
     },
     {
       icon: img,
       title: "مبلمان سرویس",
-      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", ],
+      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان"],
     },
 
-      {
+    {
       icon: img7,
       title: " اکسسوری",
       items: ["زیرعنوان", "زیرعنوان"],
@@ -70,12 +72,8 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
     {
       icon: img8,
       title: "توالت",
-      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان" , "زیرعنوان"],
+      items: ["زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان", "زیرعنوان"],
     },
-    
-  
-
-  
   ];
 
   return (
@@ -103,32 +101,31 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
       >
         <div className="img-hover-modal-box">
           <Row className="modal-title">
-            <p> محصول را انتخاب کنید</p>
+            <p>{t("site.menuhead")}</p>
           </Row>
 
           <Divider className="modal-divider" />
 
-         <div className="menu-grid">
-  {menuCategories.map((category, index) => (
-    <div key={index} className="menu-column">
-      <h3 className="menu-column-title">
-        <img src={category.icon} alt="icon" />
-        {category.title}
-      </h3>
+          <div className="menu-grid">
+            {menuCategories.map((category, index) => (
+              <div key={index} className="menu-column">
+                <h3 className="menu-column-title">
+                  <img src={category.icon} alt="icon" />
+                  {category.title}
+                </h3>
 
-      <ul className="menu-items">
-        {category.items.map((item, i) => (
-          <li key={i}>
-            <a href="#" className="menu-item-link">
-              {item}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  ))}
-</div>
-
+                <ul className="menu-items">
+                  {category.items.map((item, i) => (
+                    <li key={i}>
+                      <a href="#" className="menu-item-link">
+                        {item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </Modal>
     </div>

@@ -25,11 +25,9 @@ export default function ProductDetail() {
   const { getListProducts, getProductById } = useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
-  const [loading, setLoading] = useState(true);
   const isFa = currentLang === "fa";
   const thumbnails = [product?.image ?? "", product?.thumbnail ?? ""];
   const fetchData = async () => {
-    setLoading(true);
     const { success, data } = await getProductById(Number(id));
     if (success && data) {
       setproduct(data);
@@ -46,7 +44,6 @@ export default function ProductDetail() {
         }
       }
     }
-    setLoading(false);
   };
   useEffect(() => {
     if (!id) return;

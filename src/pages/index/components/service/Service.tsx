@@ -4,12 +4,9 @@ import { AppButton } from "../../../../components/AppButton/AppButton";
 
 import "./Service.less";
 import { useIndexContext } from "../../../../contexts/indexContext";
-import { useLanguage } from "../../../../contexts/useLanguage";
 
 export const Service: React.FC = () => {
     const { indexData } = useIndexContext();
-  const { currentLang } = useLanguage();
-  const isFa = currentLang === "fa";
   const servicePage = indexData?.pages[2];
 
   return (

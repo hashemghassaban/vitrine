@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import "./Showcase.less";
 import { useIndexContext } from "../../../../contexts/indexContext";
-import { useLanguage } from "../../../../contexts/useLanguage";
+import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const Showcase: React.FC = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const { indexData } = useIndexContext();
-  const { currentLang } = useLanguage();
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   return (
     <section className="showcase">
       <h2 className="showcase__title">
-        {isFa ? " دسته‌بندی محصولات" : "Product categories"}
+        {t("site.categoriesindex1")}
       </h2>
       <p className="showcase__subtitle">
-        {isFa ? "محصولات آشپزخانه و حمام" : "Kitchen and Bathroom Products"}
+        {t("site.categoriesindex2")}
       </p>
 
       <div className="infinite-slider">
