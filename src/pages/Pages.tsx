@@ -51,7 +51,7 @@ const Pages = () => {
       <Route path="/brands" element={<BrandPage />} />
       <Route path="/services" element={<ServicePageSec />} />
       <Route path="/brandProducts/:id" element={<BrandProducts />} />
-      <Route path="/allProducts" element={<AllProducts />} />
+      <Route path="/products" element={<AllProducts />} />
       <Route path="/products/:id" element={<ProductDetail />} />
     </Routes>
   );

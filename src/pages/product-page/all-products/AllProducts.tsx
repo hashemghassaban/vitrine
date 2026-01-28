@@ -23,6 +23,11 @@ import type { ProductView } from "../../../models/views/productView";
 import { CloseOutlined } from "@ant-design/icons";
 import useBrands from "../../../hooks/brand/useBrands";
 import type BrandView from "../../../models/views/brandView";
+import useIndex from "../../../hooks/index/useIndex";
+import type {
+  IndexDataView,
+  ProductCategoryView,
+} from "../../../models/views/indexView";
 interface Brand {
   id: number;
   nameFa: string;
@@ -33,8 +38,30 @@ const colData: Brand[] = [
   { id: 1, nameFa: "آبادانا", nameEn: "comin soon" },
   { id: 2, nameFa: "دینا", nameEn: "comin soon" },
 ];
+
+type MenuItem = Required<MenuProps>["items"][number];
+
+const buildMenuItems = (
+  categories: ProductCategoryView[],
+  openKeys: string[],
+): MenuItem[] => {
+  return categories.map((cat) => ({
+    key: cat.slug,
+    label: (
+      <div className="menu-label">
+        {cat.children?.length > 0 && (
+          <span>{openKeys.includes(String(cat.id)) ? "↓" : "←"}</span>
+        )}
+        <span>{cat.title}</span>
+      </div>
+    ),
+    children:
+      cat.children && cat.children.length > 0
+        ? [{ type: "divider" }, ...buildMenuItems(cat.children, openKeys)]
+        : undefined,
+  }));
+};
 const AllProducts: React.FC = () => {
-  type MenuItem = Required<MenuProps>["items"][number];
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     setOpenKeys(keys);
@@ -44,307 +71,13 @@ const AllProducts: React.FC = () => {
     /* --------------menu-------------*/
   }
 
-  const items: MenuItem[] = [
-    {
-      key: "sub1",
-      label: "همه کالا",
-    },
-
-    {
-      type: "divider",
-    },
-
-    {
-      key: "s1",
-      label: (
-        <div className="menu-label">
-          {openKeys.includes("s1") ? (
-            <span> &#8595;</span>
-          ) : (
-            <span>&#8592;</span>
-          )}
-          <span>ابزار</span>
-        </div>
-      ),
-      children: [
-        {
-          type: "divider",
-        },
-        {
-          key: "sub1",
-          label: (
-            <div className="menu-label">
-              {openKeys.includes("sub1") ? (
-                <span> &#8595;</span>
-              ) : (
-                <span>&#8592;</span>
-              )}
-              <span>لوازم</span>
-            </div>
-          ),
-          children: [
-            {
-              type: "divider",
-            },
-            {
-              key: "m1",
-              label: (
-                <div className="menu-label">
-                  {openKeys.includes("m1") ? (
-                    <span> &#8595;</span>
-                  ) : (
-                    <span>&#8592;</span>
-                  )}
-                  <span>تجهیزات</span>
-                </div>
-              ),
-              children: [
-                {
-                  type: "divider",
-                },
-                {
-                  key: "1",
-                  label: (
-                    <div className="menu-label">
-                      {openKeys.includes("1") ? (
-                        <span> &#8595;</span>
-                      ) : (
-                        <span>&#8592;</span>
-                      )}
-                      <span>تجهیزات</span>
-                    </div>
-                  ),
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      type: "divider",
-    },
-
-    {
-      key: "s2",
-      label: (
-        <div className="menu-label">
-          {openKeys.includes("s2") ? (
-            <span> &#8595;</span>
-          ) : (
-            <span>&#8592;</span>
-          )}
-          <span>ابزار</span>
-        </div>
-      ),
-      children: [
-        {
-          type: "divider",
-        },
-        {
-          key: "sub2",
-          label: (
-            <div className="menu-label">
-              {openKeys.includes("sub2") ? (
-                <span> &#8595;</span>
-              ) : (
-                <span>&#8592;</span>
-              )}
-              <span>لوازم</span>
-            </div>
-          ),
-          children: [
-            {
-              type: "divider",
-            },
-            {
-              key: "m2",
-              label: (
-                <div className="menu-label">
-                  {openKeys.includes("m2") ? (
-                    <span> &#8595;</span>
-                  ) : (
-                    <span>&#8592;</span>
-                  )}
-                  <span>تجهیزات</span>
-                </div>
-              ),
-              children: [
-                {
-                  type: "divider",
-                },
-                {
-                  key: "2",
-                  label: (
-                    <div className="menu-label">
-                      {openKeys.includes("2") ? (
-                        <span> &#8595;</span>
-                      ) : (
-                        <span>&#8592;</span>
-                      )}
-                      <span>تجهیزات</span>
-                    </div>
-                  ),
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      type: "divider",
-    },
-
-    {
-      key: "s3",
-      label: (
-        <div className="menu-label">
-          {openKeys.includes("s3") ? (
-            <span> &#8595;</span>
-          ) : (
-            <span>&#8592;</span>
-          )}
-          <span>ابزار</span>
-        </div>
-      ),
-      children: [
-        {
-          type: "divider",
-        },
-        {
-          key: "sub3",
-          label: (
-            <div className="menu-label">
-              {openKeys.includes("sub3") ? (
-                <span> &#8595;</span>
-              ) : (
-                <span>&#8592;</span>
-              )}
-              <span>لوازم</span>
-            </div>
-          ),
-          children: [
-            {
-              type: "divider",
-            },
-            {
-              key: "m3",
-              label: (
-                <div className="menu-label">
-                  {openKeys.includes("m3") ? (
-                    <span> &#8595;</span>
-                  ) : (
-                    <span>&#8592;</span>
-                  )}
-                  <span>تجهیزات</span>
-                </div>
-              ),
-              children: [
-                {
-                  type: "divider",
-                },
-                {
-                  key: "3",
-                  label: (
-                    <div className="menu-label">
-                      {openKeys.includes("3") ? (
-                        <span> &#8595;</span>
-                      ) : (
-                        <span>&#8592;</span>
-                      )}
-                      <span>تجهیزات</span>
-                    </div>
-                  ),
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      type: "divider",
-    },
-
-    {
-      key: "s4",
-      label: (
-        <div className="menu-label">
-          {openKeys.includes("s4") ? (
-            <span> &#8595;</span>
-          ) : (
-            <span>&#8592;</span>
-          )}
-          <span>ابزار</span>
-        </div>
-      ),
-      children: [
-        {
-          type: "divider",
-        },
-        {
-          key: "sub4",
-          label: (
-            <div className="menu-label">
-              {openKeys.includes("sub4") ? (
-                <span> &#8595;</span>
-              ) : (
-                <span>&#8592;</span>
-              )}
-              <span>لوازم</span>
-            </div>
-          ),
-          children: [
-            {
-              type: "divider",
-            },
-            {
-              key: "m4",
-              label: (
-                <div className="menu-label">
-                  {openKeys.includes("m4") ? (
-                    <span> &#8595;</span>
-                  ) : (
-                    <span>&#8592;</span>
-                  )}
-                  <span>تجهیزات</span>
-                </div>
-              ),
-              children: [
-                {
-                  type: "divider",
-                },
-                {
-                  key: "4",
-                  label: (
-                    <div className="menu-label">
-                      {openKeys.includes("4") ? (
-                        <span> &#8595;</span>
-                      ) : (
-                        <span>&#8592;</span>
-                      )}
-                      <span>تجهیزات</span>
-                    </div>
-                  ),
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
   {
     /* --------------filter-brand-------------*/
   }
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
-
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProductCategoryView>();
   const { currentLang } = useLanguage();
   const { getListProducts } = useProducts(currentLang);
 
@@ -355,6 +88,15 @@ const AllProducts: React.FC = () => {
   const [brands, setBrands] = useState<BrandView[]>([]);
   const filteredBrands = brands.filter((b) => b.title.includes(search));
   const { push } = useNavigation();
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
+  const { getIndex } = useIndex(currentLang);
+  const fetchIndex = async () => {
+    const { success, data } = await getIndex();
+    if (success && data) {
+      setIndexData(data);
+    }
+  };
+
   const fetchBrands = async () => {
     const { success, data } = await getList();
     if (success && data) {
@@ -372,11 +114,15 @@ const AllProducts: React.FC = () => {
     setProducts([]);
     fetchProducts();
     fetchBrands();
+    setIndexData(null);
+    fetchIndex();
   }, [currentLang]);
+
+  const items = buildMenuItems(data?.product_categories ?? [], openKeys);
 
   const toggleBrand = (id: number) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
 
@@ -384,6 +130,30 @@ const AllProducts: React.FC = () => {
     setSelected((prev) => prev.filter((i) => i !== id));
   };
 
+  const findCategoryById = (
+    categories: ProductCategoryView[],
+    id: string,
+  ): ProductCategoryView | undefined => {
+    for (const cat of categories) {
+      if (String(cat.id) === id) return cat;
+      if (cat.children) {
+        const found = findCategoryById(cat.children, id);
+        if (found) return found;
+      }
+    }
+  };
+  const findCategoryBySlug = (
+    categories: ProductCategoryView[],
+    slug: string,
+  ): ProductCategoryView | undefined => {
+    for (const cat of categories) {
+      if (cat.slug === slug) return cat;
+      if (cat.children?.length) {
+        const found = findCategoryBySlug(cat.children, slug);
+        if (found) return found;
+      }
+    }
+  };
   const filteredProducts =
     selected.length === 0
       ? product
@@ -391,11 +161,15 @@ const AllProducts: React.FC = () => {
           selected.some((id) => {
             const b = brands.find((x) => x.id === id);
             return b && item.brand.id === b.id;
-          })
+          }),
         );
   return (
     <>
-      <AppHeader title={"شیرآلات ویترین"} text={"خانه > محصولات > شیرآلات"} />
+      <AppHeader
+        categoryBackground={selectedCategory?.image_link}
+        title={!!selectedCategory ? selectedCategory?.title : "محصولات"}
+        text={`خانه > محصولات ${!!selectedCategory ?`> ${selectedCategory?.title}`:""}`}
+      />
       <div className="products-container">
         <Row gutter={[0, 20]}>
           <Col xs={24} lg={7}>
@@ -409,6 +183,13 @@ const AllProducts: React.FC = () => {
                   expandIcon={null}
                   defaultSelectedKeys={["1"]}
                   defaultOpenKeys={["sub1"]}
+                  onSelect={({ key }) => {
+                    const cat = findCategoryBySlug(
+                      data?.product_categories ?? [],
+                      key,
+                    );
+                    setSelectedCategory(cat);
+                  }}
                   mode="inline"
                   items={items}
                 />

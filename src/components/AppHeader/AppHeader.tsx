@@ -1,44 +1,68 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { Input, Menu, Row } from "antd";
 import { Container } from "../Container/Container";
 import useNavigation from "../../hooks/useHistory";
 import img from "../../assets/header/header.png";
 import search from "../../assets/header/search.png";
 import en from "../../assets/header/en.png";
-
+import defaultBg from "../../assets/header/back.png";
 import "./AppHeader.less";
 import { ImageHoverModal } from "./ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../contexts/useLanguage";
+import useBrands from "../../hooks/brand/useBrands";
+import type BrandView from "../../models/views/brandView";
 
 interface AppHeaderProps {
   noBackground?: boolean;
   title?: String;
   text?: String;
   style?: boolean;
+  categoryBackground?: string;
 }
 export const AppHeader: FC<AppHeaderProps> = ({
   noBackground,
   title,
   text,
   style = true,
+  categoryBackground,
 }) => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
   const { currentLang, setCurrentLang } = useLanguage();
   const isRtl = currentLang === "fa";
 
   type Language = "en" | "fa";
 
+  const [brands, setBrands] = useState<BrandView[]>([]);
+  const { getList } = useBrands(currentLang);
+  const fetchIndex = async () => {
+    const { success, data } = await getList();
+    if (success && data) {
+      setBrands(data);
+    }
+  };
+  useEffect(() => {
+    fetchIndex();
+  }, [currentLang]);
+
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
   };
+
   const handleSearch = () => {
     if (searchQuery.trim()) {
       push(`/search?s=${encodeURIComponent(searchQuery)}`);
       setSearchOpen(false);
       setSearchQuery("");
     }
+  };
+  const headerBackground = {
+    backgroundImage: `url(${
+      categoryBackground && categoryBackground.trim()
+        ? categoryBackground
+        : defaultBg
+    })`,
   };
 
   const menuItems = [
@@ -50,15 +74,32 @@ export const AppHeader: FC<AppHeaderProps> = ({
     {
       key: "menu-brands",
       title: { en: "Brands", fa: "برندها" },
-      children: [
-        {
-          key: "menu-brands-main",
-          title: { en: "Main Title", fa: "عنوان اصلی" },
-          path: "/brands",
-        },
-        { key: "menu-brands-sub1", title: { en: "Sub 1", fa: "زیرعنوان" } },
-        { key: "menu-brands-sub2", title: { en: "Sub 2", fa: "زیرعنوان" } },
-      ],
+      children:
+        brands?.length > 0
+          ? [
+              {
+                key: "menu-brands-all",
+                title: { en: "All Brands", fa: "همه برندها" },
+                path: "/brands",
+              },
+
+              ...brands.map((brand, index) => ({
+                key: `brand-${brand.title}-${index}`,
+                title: {
+                  en: brand.title,
+                  fa: brand.title,
+                },
+                path: `/brandProducts/${brand.id}`,
+                image: brand.image,
+              })),
+            ]
+          : [
+              {
+                key: "menu-brands-main",
+                title: { en: "Brands", fa: "برندها" },
+                path: "/brands",
+              },
+            ],
     },
     {
       key: "menu-catalogues",
@@ -93,6 +134,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
           className={`app-header_container ${noBackground ? "no-bg" : ""}`}
+          style={headerBackground}
         >
           <Row>
             <div className="home__img">
@@ -162,7 +204,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 >
                   {item.title[currentLang]}
                 </Menu.Item>
-              )
+              ),
             )}
           </Menu>
           {style ? (
@@ -181,15 +223,15 @@ export const AppHeader: FC<AppHeaderProps> = ({
       {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
-       <Input
-            placeholder= {isRtl ? "جستجو" : "Search"}
+          <Input
+            placeholder={isRtl ? "جستجو" : "Search"}
             className="search-input"
             autoFocus
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onPressEnter={handleSearch} 
+            onPressEnter={handleSearch}
           />
-                      
+
           <button className="close-btn" onClick={() => setSearchOpen(false)}>
             ✕
           </button>
