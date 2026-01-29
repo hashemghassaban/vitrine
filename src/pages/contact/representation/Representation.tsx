@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type representationView from "../../../models/views/representationView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import useRepresentation from "../../../hooks/contact/useRepresentation";
+import { useTranslate } from "../../../i18n/useTranslate";
 import "./representation.less";
 
 const { Title } = Typography;
@@ -15,14 +16,13 @@ export default function Representation() {
   const { currentLang } = useLanguage();
   const { getList } = useRepresentation(currentLang);
   const isFa = currentLang === "fa";
-
   const fetchRepresentations = async () => {
     const { success, data } = await getList();
     if (success && data) {
       setRepresentations(data);
     }
   };
-
+  const { t } = useTranslate();
   useEffect(() => {
     setRepresentations([]);
     fetchRepresentations();
@@ -33,7 +33,7 @@ export default function Representation() {
       <AppHeader />
       <div className="showcase-container">
         <Title level={3} className="title-page">
-          {isFa ? "نمایندگی‌های فروش ویترین" : "Vitrin Sales Representatives"}
+          {t("site.agents1")}
         </Title>
 
         <Row gutter={[24, 24]} justify="center">
@@ -73,7 +73,11 @@ export default function Representation() {
                   </div>
                 }
               >
-                <Title level={5} className="book-title" style={{ marginBottom:'35px', fontSize:'21px'}}>
+                <Title
+                  level={5}
+                  className="book-title"
+                  style={{ marginBottom: "35px", fontSize: "21px" }}
+                >
                   {item.title}
                 </Title>
                 <Row>
@@ -81,9 +85,12 @@ export default function Representation() {
                     <p className="book-txt">{item.address}</p>
                   </Col>
                 </Row>
-                <Row justify={"space-between"} style={{marginInline:"10px" ,  marginBottom:'10px'}}>
-                  <Col >{isFa ? "تلفن" : "Phone"}</Col>
-                  <Col >
+                <Row
+                  justify={"space-between"}
+                  style={{ marginInline: "10px", marginBottom: "10px" }}
+                >
+                  <Col>{isFa ? "تلفن" : "Phone"}</Col>
+                  <Col>
                     <a href={`tel:${item.phone}`} className="tel-link">
                       {item.phone}
                     </a>
@@ -94,7 +101,7 @@ export default function Representation() {
           ))}
         </Row>
       </div>
-      <AppFooter/>
+      <AppFooter />
     </>
   );
 }

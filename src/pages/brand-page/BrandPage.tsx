@@ -8,12 +8,14 @@ import useNavigation from "../../hooks/useHistory";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
 import { useLanguage } from "../../contexts/useLanguage";
+import { useTranslate } from "../../i18n/useTranslate";
+
 const BrandPage: React.FC = () => {
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
-
+  const { t } = useTranslate();
   const isFa = currentLang === "fa";
 
   useEffect(() => {
@@ -29,21 +31,14 @@ const BrandPage: React.FC = () => {
   return (
     <>
       <AppHeader
-        title={isFa ? "معرفی پروژه" : "Project Introduction"}
-        text={
-          isFa
-            ? "لوکس‌ترین کامران کامرانیه"
-            : "Kamran Kamrani, the ultimate in luxury"
-        }
+        title={t("site.brandpage1")}
+        text={t("site.brandpage2")}
         style={false}
       />
       <div className="brands-page">
-        <h2 className="brands-title">معرفی شوروم ویترین</h2>
+        <h2 className="brands-title">{t("site.brandpage3")}</h2>
 
-        <p className="brands-subtitle">
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و طراحی.
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و طراحی.
-        </p>
+        <p className="brands-subtitle">{t("site.brandpage4")}</p>
 
         <Row gutter={[0, 48]} className="brands-grid">
           {brands.map((item) => (
@@ -76,7 +71,7 @@ const BrandPage: React.FC = () => {
           ))}
         </Row>
       </div>
-       <AppFooter />
+      <AppFooter />
     </>
   );
 };

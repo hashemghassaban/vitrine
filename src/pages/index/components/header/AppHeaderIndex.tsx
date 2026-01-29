@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { Input, Menu, Row } from "antd";
 import { Container } from "../../../../components/Container/Container";
 import useNavigation from "../../../../hooks/useHistory";
@@ -9,13 +9,31 @@ import { ImageHoverModal } from "../../../../components/AppHeader/ImageHoverModa
 import { useLanguage } from "../../../../contexts/useLanguage";
 import "./AppHeaderIndex.less";
 
+import useIndex from "../../../../hooks/index/useIndex";
+import type { IndexDataView } from "../../../../models/views/indexView";
 export const AppHeaderIndex: FC = () => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
   const { currentLang, setCurrentLang } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
   const isRtl = currentLang === "fa";
   type Language = "en" | "fa";
+
+   const { getIndex } = useIndex(currentLang);
+    const fetchIndex = async () => {
+      const { success, data } = await getIndex();
+      if (success && data) {
+        setIndexData(data);
+      }
+    };
+      useEffect(() => {
+        setIndexData(null);
+        fetchIndex();
+      }, [currentLang]);
+
+
+
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
@@ -34,18 +52,35 @@ export const AppHeaderIndex: FC = () => {
       title: { en: "Products", fa: "محصولات" },
       type: "imageHover",
     },
-    {
+ {
       key: "menu-brands",
       title: { en: "Brands", fa: "برندها" },
-      children: [
-        {
-          key: "menu-brands-main",
-          title: { en: "Main Title", fa: "عنوان اصلی" },
-          path: "/brands",
-        },
-        { key: "menu-brands-sub1", title: { en: "Sub 1", fa: "زیرعنوان" } },
-        { key: "menu-brands-sub2", title: { en: "Sub 2", fa: "زیرعنوان" } },
-      ],
+      children: data?.brands?.length
+        ? [
+            {
+              key: "menu-brands-all",
+              title: { en: "All Brands", fa: "همه برندها" },
+              path: "/brands",
+            },
+          
+            ...data.brands.map((brand, index) => ({
+              key: `brand-${brand.title}-${index}`,
+              title: { 
+                en: brand.title, 
+                fa: brand.title 
+              },
+              path: `/BrandProducts/${encodeURIComponent(brand.title)}`,
+              image: brand.image, 
+            })),
+          ]
+        : [
+         
+            {
+              key: "menu-brands-main",
+              title: { en: "Brands", fa: "برندها" },
+              path: "/brands",
+            },
+          ],
     },
     {
       key: "menu-catalogues",

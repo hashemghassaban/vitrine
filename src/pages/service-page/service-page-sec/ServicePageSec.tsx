@@ -8,6 +8,7 @@ import type { PageView } from "../../../models/views/pageView";
 import useServicePage from "../../../hooks/page/useServicePage";
 import useAim from "../../../hooks/page/useAim";
 import type { AimItemView } from "../../../models/views/aimView";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 const ServicePageSec: React.FC = () => {
   const { currentLang } = useLanguage();
@@ -16,6 +17,7 @@ const ServicePageSec: React.FC = () => {
   const { getList } = useAim(currentLang);
   const [items, setItems] = useState<AimItemView[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslate();
 
   const isFa = currentLang === "fa";
 
@@ -51,11 +53,7 @@ const ServicePageSec: React.FC = () => {
   return (
     <>
       <AppHeader
-        title={
-          isFa
-            ? "خدمات مشاوره و طراحی ویترین"
-            : "Vitrine consulting and design services"
-        }
+        title={t("site.servicetitlenew")}
       />
 
       {!loading ? (
