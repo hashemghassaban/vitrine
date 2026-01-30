@@ -5,6 +5,7 @@ import image10 from "../../../../../assets/full-page-overlay/image10.jpg";
 import { AppButton } from "../../../../../components/AppButton/AppButton";
 import { useIndexContext } from "../../../../../contexts/indexContext";
 import useNavigation from "../../../../../hooks/useHistory";
+import { useTranslate } from "../../../../../i18n/useTranslate";
 
 const { Title } = Typography;
 
@@ -27,6 +28,8 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
     (product) => product.id == product_id
   );
   const { push } = useNavigation();
+  const { t } = useTranslate();
+  
   const content = (
     <div
       className="content_style"
@@ -78,7 +81,7 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
         }}
         onclick={() => push(`${data?.children[0]?.icon_link}`)}
       >
-        مشاهده
+        {t("local_view")}
       </AppButton>
     </div>
   );

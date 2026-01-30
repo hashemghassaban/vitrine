@@ -13,6 +13,8 @@ import logo from "../../../../assets/header/header.png";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import search from "../../../../assets/header/search.png";
 import PulseCircleButton from "../full-page-overlay/components/PulsingButton";
+import type { Language } from "../../../../i18n/LanguageType";
+import { useTranslate } from "../../../../i18n/useTranslate";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -67,13 +69,14 @@ const HomeMobile: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  const { t } = useTranslate();
   const handleLanguageChange = () => {
-    const newLang: "fa" | "en" = isRtl ? "en" : "fa";
+    const newLang: Language =
+      currentLang == "en" ? "fa" : currentLang == "fa" ? "ar" : "en";
     setCurrentLang(newLang);
   };
 
-  const { currentLang, setCurrentLang, isRtl } = useLanguage();
+  const { currentLang, setCurrentLang } = useLanguage();
   const [openKeys, setOpenKeys] = useState<string[]>(["sub1"]);
 
   useEffect(() => {
@@ -154,7 +157,7 @@ const HomeMobile: React.FC = () => {
               <div className="drawer_header">
                 <div className="en_box">
                   <p className="en_text_mobile" onClick={handleLanguageChange}>
-                    {isRtl ? "EN" : "فا"}
+                    {t("local_currentLang")}
                   </p>
                   <img className="en_img_mobile" src={en} alt={en} />
                 </div>
@@ -166,7 +169,7 @@ const HomeMobile: React.FC = () => {
 
               <Input
                 className="search_box_mobile"
-                placeholder="جستجو"
+                placeholder={t("local_search")}
                 suffix={<img src={search} alt={search} />}
               />
               <Menu
