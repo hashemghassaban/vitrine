@@ -7,6 +7,7 @@ import useBrand from "../../../hooks/brand/useBrandById";
 import type BrandView from "../../../models/views/brandView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import "./BrandProducts.less";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 const BrandProducts: React.FC = () => {
   const { id } = useParams();
@@ -15,8 +16,8 @@ const BrandProducts: React.FC = () => {
   const [brand, setBrand] = useState<BrandView | null>(null);
   const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslate();
 
-  const isFa = currentLang === "fa";
   const fetchBrand = async () => {
     if (!id) return;
     setLoading(true);
@@ -59,11 +60,11 @@ const BrandProducts: React.FC = () => {
                   <Button
                     type="link"
                     className={`btn-more-brand-products ${
-                      !isFa ? "english" : ""
+                      currentLang == "en" ? "english" : ""
                     }`}
                     onClick={() => setShowMore(true)}
                   >
-                    {isFa ? "بیشتر" : "More"}
+                    {t("local_more")}
                   </Button>
                 ) : (
                   <p>{brand?.description}</p>

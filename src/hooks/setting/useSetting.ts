@@ -6,7 +6,6 @@ const useSetting = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getSetting() {
-    const isFa = currentLang === "fa";
     let success = false;
     let result = "";
     let data: SettingView | null = null;
@@ -22,7 +21,7 @@ const useSetting = (currentLang: string) => {
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

@@ -1,12 +1,13 @@
 import { useLanguage } from "../../contexts/useLanguage";
 import useAxious from "../../helpers/axiosInstance";
+import { useTranslate } from "../../i18n/useTranslate";
 import type ContractBranchDTO from "../../models/dtos/contractBranchDTO";
 import type ServerResult from "../../models/ServerResult";
 
 const useContactBranch = () => {
   const { currentLang } = useLanguage();
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   async function submitContractForm(dto: ContractBranchDTO) {
     let result = "";
@@ -16,15 +17,13 @@ const useContactBranch = () => {
       .then((res) => {
         if (res.data.success) {
           success = true;
-          result = isFa
-            ? "پیام شما با موفقیت ارسال شد."
-            : "Your message was sent successfully.";
+          result = t("local_sentMessage");
         } else {
           result = res.data.message;
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در انجام عمیات" : "Operation failed";
+        result = "Operation failed";
       });
     return {
       success,

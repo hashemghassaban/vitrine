@@ -49,4 +49,52 @@ export type TranslationKey =
   | "site.footerblock6"
   | "site.footerblock7"
   | "site.footerblock8"
+
+  //----local
+  | "local_currentLang"
+  | "local_search"
+  | "local_sentMessage"
+  | "local_sentEmail"
+  | "local_readMore"
+  | "local_searchResults1"
+  | "local_searchResults2"
+  | "local_noSearchQuery"
+  | "local_invalidEmailAddress"
+  | "local_newsletterSubscribtion"
+  | "local_socialMedia"
+  | "local_languageSelection"
+  | "local_all"
+  | "local_view"
+  | "local_download"
+  | "local_phone"
+  | "local_more"
+  //product
+  | "local_getCatalog"
+  | "local_relatedProducts"
+  //project
+  | "local_architect"
+  | "local_constructor"
+  | "local_location"
+
+  //ServicePageSec
+  | "local_completedProjects"
+  //BlogDetailPage
+  | "local_relatedArticles"
+  | "local_readArticle"
+  | "local_nextArticles"
+  //contactBranch
+  | "local_completeTheForm"
+  | "local_invalidEmail"
+  | "local_invalidPhone"
+  | "local_contactVitrine"
+  | "local_contactAddress"
+  | "local_contactPhone"
+  | "local_contactEmail"
+  | "local_contactFullName"
+  | "local_contactPhoneNumber"
+  | "local_contactSelectDepartment"
+  | "local_contactMessageContent"
+  | "local_contactSendMessage"
+
   ;
+//----local

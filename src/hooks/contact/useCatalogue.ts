@@ -6,7 +6,6 @@ const useDocuments = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getList() {
-    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: DocumentItem[] = [];
@@ -18,7 +17,7 @@ const useDocuments = (currentLang: string) => {
         data = res.data.data;
       })
       .catch(() => {
-        result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

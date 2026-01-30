@@ -8,6 +8,7 @@ import type { BlogItemView } from "../../../models/views/blogView";
 import useBlog from "../../../hooks/blog/useBlog";
 import { useEffect, useState } from "react";
 import truncate from "truncate-html";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 export default function BlogDetailPage() {
   const { push } = useNavigation();
@@ -17,7 +18,7 @@ export default function BlogDetailPage() {
   const [blog, setBlog] = useState<BlogItemView | null>(null);
   const [related, setRelated] = useState<BlogItemView[]>([]);
   const [loading, setLoading] = useState(true);
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -28,7 +29,7 @@ export default function BlogDetailPage() {
         const relatedRes = await getPosts(data.category_id);
         if (relatedRes.success) {
           setRelated(
-            relatedRes.data.filter((b) => b.id !== data.id).slice(0, 2)
+            relatedRes.data.filter((b) => b.id !== data.id).slice(0, 2),
           );
         }
       }
@@ -51,9 +52,7 @@ export default function BlogDetailPage() {
           <Row justify="center" gutter={[0, 32]}>
             <Col xs={24} md={8} lg={7} className="sidebar">
               <div className="slider-box">
-                <h3 className="sidebar-title">
-                  {isFa ? " مقالات مرتبط" : "Related articles"}
-                </h3>
+                <h3 className="sidebar-title">{t("local_relatedArticles")}</h3>
 
                 {related.map((item) => (
                   <div key={item.id} className="related-item">
@@ -74,7 +73,7 @@ export default function BlogDetailPage() {
                       type="link"
                       onClick={() => push(`/blog/${item.id}`)}
                     >
-                      {isFa ? "خواندن مقاله" : "Read the article"}
+                      {t("local_readArticle")}
                     </Button>
                   </div>
                 ))}

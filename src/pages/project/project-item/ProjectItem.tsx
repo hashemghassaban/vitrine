@@ -9,13 +9,13 @@ import type {
   ProjectItemView,
 } from "../../../models/views/projectView";
 import { useLanguage } from "../../../contexts/useLanguage";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 export default function ProjectItem() {
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { getList, getCategories } = useProjects(currentLang);
-  const isFa = currentLang === "fa";
-
+  const { t } = useTranslate();
   const [projects, setProjects] = useState<ProjectItemView[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [visibleCount, setVisibleCount] = useState(2);
@@ -71,7 +71,7 @@ export default function ProjectItem() {
     });
 
     return [
-      { key: "all", label: isFa ? "همه" : "All" },
+      { key: "all", label: t("local_all") },
       ...Array.from(categoriesMap.entries()).map(([id, title]) => ({
         key: String(id),
         label: title,
@@ -142,7 +142,7 @@ export default function ProjectItem() {
                     </h2>
                     <div className="item-box-project ">
                       <p className="title-text-project ">
-                        {isFa ? "معمار" : "Architect"}
+                        {t("local_architect")}
                       </p>
                       <p className="dec-text-project ">
                         {block.architect?.name}
@@ -150,7 +150,7 @@ export default function ProjectItem() {
                     </div>
                     <div className="item-box-project ">
                       <p className="title-text-project ">
-                        {isFa ? "سازنده" : "Constructor"}
+                        {t("local_constructor")}
                       </p>
                       <p className="dec-text-project ">
                         {block.developer?.name}
@@ -158,12 +158,14 @@ export default function ProjectItem() {
                     </div>
                     <div className="item-box-project ">
                       <p className="title-text-project ">
-                        {isFa ? "لوکیشن" : "Location"}
+                        {t("local_location")}
                       </p>
                       <p className="dec-text-project ">
-                        {isFa
+                        {currentLang == "fa"
                           ? block.location?.title_fa
-                          : block.location?.title_en}
+                          : currentLang == "en"
+                            ? block.location?.title_en
+                            : block.location?.title_ar}
                       </p>
                     </div>
                     <div className="dec-text-project-box">
@@ -175,11 +177,11 @@ export default function ProjectItem() {
                       ></p>
                     </div>
                     <Button
-                      className={` ${!isFa ? "english" : ""}`}
+                      className={` ${currentLang == "en" ? "english" : ""}`}
                       type="link"
                       onClick={() => push(`/project/${block.id}`)}
                     >
-                      {isFa ? "مشاهده" : "View"}
+                      {t("local_view")}
                     </Button>
                   </div>
                 </Col>
@@ -190,7 +192,7 @@ export default function ProjectItem() {
           {hasMore && (
             <Row justify="center">
               <AppButton className="blog__Button-project" onclick={loadMore}>
-                {isFa ? " مقاله‌های بعدی" : "Next articles"}
+                {t("local_nextArticles")}
               </AppButton>
             </Row>
           )}

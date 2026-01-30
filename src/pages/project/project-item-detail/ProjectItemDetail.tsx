@@ -21,8 +21,6 @@ export default function ProjectItemDetail() {
   const [showVideo, setShowVideo] = useState(false);
   const { t } = useTranslate();
 
-  const isFa = currentLang === "fa";
-
   const carouselRef = useRef<any>(null);
 
   const prev = () => {
@@ -78,27 +76,23 @@ export default function ProjectItemDetail() {
             >
               <div className="text-box-detail">
                 <div className="item-box-detail-detail">
-                  <p className="title-text-detail">
-                    {isFa ? "معمار" : "Architect"}
-                  </p>
+                  <p className="title-text-detail">{t("local_architect")}</p>
                   <p className="dec-text-detail">{project?.architect?.name}</p>
                 </div>
                 <div className="item-box-detail-detail">
-                  <p className="title-text-detail">
-                    {isFa ? "سازنده" : "Constructor"}
-                  </p>
+                  <p className="title-text-detail">{t("local_constructor")}</p>
                   <p className="dec-text-detail">
                     {project?.developer?.name ?? ""}
                   </p>
                 </div>
                 <div className="item-box-detail-detail">
-                  <p className="title-text-detail">
-                    {isFa ? "لوکیشن" : "Location"}
-                  </p>
+                  <p className="title-text-detail">{t("local_location")}</p>
                   <p className="dec-text-detail">
-                    {isFa
+                    {currentLang == "fa"
                       ? project?.location?.title_fa
-                      : project?.location?.title_en}
+                      : currentLang == "en"
+                        ? project?.location?.title_en
+                        : project?.location?.title_ar}
                   </p>
                 </div>
                 <p
@@ -157,9 +151,7 @@ export default function ProjectItemDetail() {
           <Title level={3} className="title-detail">
             {t("site.proje2")}
           </Title>
-          <p className="two-lines-detail">
-            {t("site.proje3")}
-          </p>
+          <p className="two-lines-detail">{t("site.proje3")}</p>
           <Row gutter={[24, 24]} justify="center">
             {project?.products.map((item) => (
               <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
@@ -183,11 +175,9 @@ export default function ProjectItemDetail() {
           </Row>
           <div className="product-card-detail">
             <Title level={3} className="title-detail">
-             {t("site.proje4")}
+              {t("site.proje4")}
             </Title>
-            <p className="two-lines-detail">
-              {t("site.proje5")}
-            </p>
+            <p className="two-lines-detail">{t("site.proje5")}</p>
           </div>
         </div>
       </div>

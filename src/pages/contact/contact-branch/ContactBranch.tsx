@@ -19,6 +19,7 @@ import useContactBranch from "../../../hooks/contact/useContactBranch";
 import { useLanguage } from "../../../contexts/useLanguage";
 import useSetting from "../../../hooks/setting/useSetting";
 import type { SettingView } from "../../../models/views/settingView";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 const ContactBranch: React.FC = () => {
   const { currentLang } = useLanguage();
@@ -36,8 +37,7 @@ const ContactBranch: React.FC = () => {
     content: null,
     department_id: null,
   });
-
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   const fetchDepartments = async () => {
     const { success, data } = await getList();
@@ -93,23 +93,17 @@ const ContactBranch: React.FC = () => {
         !formData.content ||
         !formData.department_id;
       if (isEmpty) {
-        showMessage(
-          isFa ? "لطفا فرم را تکمیل کنید." : "Please complete the form."
-        );
+        showMessage(t("local_completeTheForm"));
         return;
       }
 
       if (formData.email && !validateEmail(formData.email)) {
-        showMessage(
-          isFa ? "ایمیل وارد شده نامعتبر است." : "Invalid email address."
-        );
+        showMessage(t("local_invalidEmail"));
         return;
       }
 
       if (formData.phone && !validatePhone(formData.phone)) {
-        showMessage(
-          isFa ? "شماره تماس وارد شده نامعتبر است" : "Invalid phone number."
-        );
+        showMessage(t("local_invalidPhone"));
         return;
       }
 
@@ -137,19 +131,16 @@ const ContactBranch: React.FC = () => {
   return (
     <>
       {contextHolder}
-      <AppHeader
-        noBackground
-        title={isFa ? "تماس با ویترین" : "Contact Vitrine"}
-      />
+      <AppHeader noBackground title={t("local_contactVitrine")} />
       <div className="contact-branch-container">
         <div className="contact-content">
           <div className="header-section">
-            <h1 className="title">{isFa ? " نشانی/" : "/Address"} </h1>
+            <h1 className="title">{t("local_contactAddress")} </h1>
             <p className="description">{setting?.address}</p>
           </div>
 
           <div className="info-item contact-info">
-            <p className="info-text">{isFa ? "تلفن/" : "/phone"} </p>
+            <p className="info-text">{t("local_contactPhone")} </p>
             <span> {setting?.tel}</span>
           </div>
 
@@ -182,7 +173,7 @@ const ContactBranch: React.FC = () => {
               <div className="input-group half">
                 <Input
                   className=" input-text"
-                  placeholder={isFa ? "آدرس ایمیل" : "email"}
+                  placeholder={t("local_contactEmail")}
                   variant="underlined"
                   value={formData.email || ""}
                   onChange={(e) => handleInputChange("email", e.target.value)}
@@ -191,7 +182,7 @@ const ContactBranch: React.FC = () => {
               <div className="input-group half">
                 <Input
                   className=" input-text"
-                  placeholder={isFa ? "نام و نام خانوادگی *" : "Full Name *"}
+                  placeholder={t("local_contactFullName")}
                   variant="underlined"
                   value={formData.full_name || ""}
                   onChange={(e) =>
@@ -205,7 +196,7 @@ const ContactBranch: React.FC = () => {
               <div className="input-group half">
                 <Input
                   className=" input-text"
-                  placeholder={isFa ? "شماره تماس" : "Phone Number"}
+                  placeholder={t("local_contactPhoneNumber")}
                   variant="underlined"
                   value={formData.phone || ""}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
@@ -214,7 +205,7 @@ const ContactBranch: React.FC = () => {
               <div className="input-group half">
                 <Select
                   className=" input-text"
-                  placeholder={isFa ? "انتخاب دپارتمان" : "Select Department"}
+                  placeholder={t("local_contactSelectDepartment")}
                   variant="underlined"
                   value={formData.department_id}
                   onChange={(value) =>
@@ -232,7 +223,7 @@ const ContactBranch: React.FC = () => {
                 <TextArea
                   className=" input-text"
                   rows={4}
-                  placeholder={isFa ? "موضوع تماس و پیام شما *" : "Message *"}
+                  placeholder={t("local_contactMessageContent")}
                   variant="underlined"
                   value={formData.content || ""}
                   onChange={(e) => handleInputChange("content", e.target.value)}
@@ -246,7 +237,7 @@ const ContactBranch: React.FC = () => {
                 onClick={onSubmit}
                 disabled={isSubmitting}
               >
-                {isFa ? "ارسال پیام" : "Send Message"} <ArrowLeftOutlined />
+                {t("local_contactSendMessage")} <ArrowLeftOutlined />
               </button>
             </div>
           </div>
@@ -267,7 +258,7 @@ const ContactBranch: React.FC = () => {
           </div>
         </div>
       </div>
-      <AppFooter/>
+      <AppFooter />
     </>
   );
 };

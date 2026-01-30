@@ -6,7 +6,6 @@ const useNews = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getList(perPage = 15) {
-    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: NewsView[] = [];
@@ -18,7 +17,7 @@ const useNews = (currentLang: string) => {
         data = res.data.data;
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت اخبار" : "Failed to load news";
+        result = "Failed to load news";
       });
 
     return {

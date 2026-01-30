@@ -8,6 +8,7 @@ import type { BlogItemView } from "../../../models/views/blogView";
 import type { BlogCategoryView } from "../../../models/views/blogView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import truncate from "truncate-html";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 export default function InteriorPage() {
   const { push } = useNavigation();
@@ -16,9 +17,9 @@ export default function InteriorPage() {
   const [categories, setCategories] = useState<BlogCategoryView[]>([]);
   const [posts, setPosts] = useState<BlogItemView[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
-  const isFa = currentLang === "fa";
   const [visibleCount, setVisibleCount] = useState(2);
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
+  const { t } = useTranslate();
 
   const fetchPost = async () => {
     const { success, data } = await getPosts(+activeTab);
@@ -65,7 +66,7 @@ export default function InteriorPage() {
     });
 
     return [
-      { key: "all", label: isFa ? "همه" : "All" },
+      { key: "all", label: t("local_all") },
       ...Array.from(categoriesMap.entries()).map(([id, title]) => ({
         key: String(id),
         label: title,
@@ -138,11 +139,11 @@ export default function InteriorPage() {
                   ></div>
                 </p>
                 <Button
-                  className={` ${!isFa ? "english" : ""}`}
+                  className={` ${currentLang == "en" ? "english" : ""}`}
                   type="link"
                   onClick={() => push(`/blog/${block.id}`)}
                 >
-                  {isFa ? "خواندن مقاله" : "Read the article"}
+                  {t("local_readArticle")}
                 </Button>
               </div>
             </Col>
@@ -152,7 +153,7 @@ export default function InteriorPage() {
       {hasMore && (
         <Row justify="center">
           <AppButton onclick={loadMore} className="blog__Button">
-            {isFa ? " مقاله‌های بعدی" : "Next articles"}
+            {t("local_nextArticles")}
           </AppButton>
         </Row>
       )}
