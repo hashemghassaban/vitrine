@@ -1,5 +1,5 @@
 .showcase {
-  margin: 120px 0;
+  margin: 200px 0 0; 
   text-align: center;
 
   .showcase__title {
@@ -28,7 +28,7 @@
 
   .slider-track {
     display: inline-flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .slide-item {
@@ -37,10 +37,13 @@
     align-items: center;
     padding: 10px 80px;
     white-space: nowrap;
+    flex: 11.1%;
+    max-width: 11.1%;
 
  .img-wrapper {
   position: relative;
   display: flex;
+  height: 150px!important;
   flex-direction: column;
   align-items: center;
 
@@ -57,7 +60,7 @@
 
   p {
     position: relative; 
-    margin-top: 10px;  
+    margin-top: 15px;  
     font-size: 15px;
     color: #888;
     opacity: 0;

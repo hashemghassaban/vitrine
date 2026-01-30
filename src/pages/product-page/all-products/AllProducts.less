@@ -1,5 +1,5 @@
 .products-container {
-  padding: 40px 50px;
+  padding: 40px 5%;
   max-width: 1850px;
   margin: auto;
      margin-bottom: 80px;
@@ -20,19 +20,18 @@ color: #010101;
   background: #f5f5f5;
   overflow: hidden;
   max-width: 265px;
-  height: 348px;
+  height: auto;
   transition: all 0.3s ease;
   border-radius: 0px;
 
   &:hover {
-    transform: translateY(-3px);
     box-shadow: none;
   }
 
   .img-card-product {
     object-fit: cover;
     border-radius: 0px;
-    padding: 10px;
+    padding: 5px;
 
   }
 
@@ -51,6 +50,7 @@ padding-top: 3px !important;
  }
 
 .selected-tags-item{
+  margin: 0!important;
 
   .ant-tag {
     border: none;
@@ -67,10 +67,11 @@ padding-top: 3px !important;
 .product-title-product {
 margin-bottom: 5px;
 font-weight: 700;
-font-size: 14px;
-line-height: 31px;
+font-size: 14px!important;
+line-height: 31px!important;
 text-align: right;
-color: #010101;
+color: #010101!important;
+padding: 0!important;
 
 
 }
@@ -126,7 +127,15 @@ color: #010101;
   font-size: 14px;
   line-height: 45px;
   color: #868686;
-  padding: 0 !important;
+}
+
+.menu-item-product > li {
+  padding-right: 0 !important;
+}
+.menu-item-product > li {
+  > .ant-menu-submenu-title {
+    padding-right: 0 !important;
+  }
 }
 
 .menu-item-product .ant-menu-submenu-expand-icon,
@@ -214,11 +223,13 @@ color: #010101;
 .selected-tags {
   margin-bottom: 16px;
   .ant-tag {
-    border: none;
+ border: none;
     background: #f5f5f5;
-    padding: 6px 10px;
+    padding: 0 10px;
     border-radius: 0px;
     font-size: 13px;
+    height: 26px;
+    line-height: 26px;
   }
 }
 
@@ -229,13 +240,14 @@ color: #010101;
 }
 
 .pulse-button {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 }
 
 .plus-icon {
-  font-size: 18px;
-  color: #000000;
+font-size: 12px;
+    color: #000;
+    font-weight: normal;
 }
 .brand-list-title {
   color: #000 !important;
@@ -280,7 +292,8 @@ color: #010101;
   font-size: 14px;
   line-height: 45px;
   color: #868686;
-  padding: 0;
+
+
 }
 
 .menu-item-product-brand .ant-menu-submenu-expand-icon,

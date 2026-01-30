@@ -386,8 +386,8 @@ const AllProducts: React.FC = () => {
     <>
       <AppHeader title={"شیرآلات ویترین"}  text={"خانه > محصولات > شیرآلات"} />
       <div className="products-container">
-        <Row gutter={[0, 20]}>
-          <Col xs={24} lg={7}>
+        <Row gutter={[0, 25]}>
+          <Col xs={24} lg={6}>
             <div className="filters-box">
               <h3 className="filter-title">دسته‌بندی‌ها</h3>
               <div className="menu-scroll-container">
@@ -532,7 +532,7 @@ const AllProducts: React.FC = () => {
             </div>
           </Col>
 
-          <Col xs={24} lg={17}>
+          <Col xs={24} lg={18} style={{paddingRight:'80px'}}>
             <p className="count">۶ محصول پیدا شد</p>
 
             <Row gutter={[20, 30]}>

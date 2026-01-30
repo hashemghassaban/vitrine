@@ -14,8 +14,9 @@ export const ExploreSection: FC = () => {
         </p>
         <p className="explore__subtitle">از پروموشن‌های منحصربه‌فرد</p>
         <a className="explore__more" href="">
-          <ArrowLeftOutlined></ArrowLeftOutlined>
           بیشتر
+                    <ArrowLeftOutlined></ArrowLeftOutlined>
+
         </a>
       </div>
     </section>
