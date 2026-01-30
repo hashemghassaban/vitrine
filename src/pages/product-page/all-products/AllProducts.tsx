@@ -104,19 +104,19 @@ const AllProducts: React.FC = () => {
     }
   };
 
-  const fetchProducts = async () => {
-    const { success, data } = await getListProducts(20);
-    if (success) {
-      setProducts(data);
-    }
-  };
-  useEffect(() => {
-    setProducts([]);
-    fetchProducts();
-    fetchBrands();
-    setIndexData(null);
-    fetchIndex();
-  }, [currentLang]);
+  // const fetchProducts = async () => {
+  //   const { success, data } = await getListProducts(20);
+  //   if (success) {
+  //     setProducts(data);
+  //   }
+  // };
+  // useEffect(() => {
+  //   setProducts([]);
+  //   fetchProducts();
+  //   fetchBrands();
+  //   setIndexData(null);
+  //   fetchIndex();
+  // }, [currentLang]);
 
   const items = buildMenuItems(data?.product_categories ?? [], openKeys);
 
