@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { Input, Menu, Row } from "antd";
 import { Container } from "../../../../components/Container/Container";
 import useNavigation from "../../../../hooks/useHistory";
@@ -9,22 +9,112 @@ import { ImageHoverModal } from "../../../../components/AppHeader/ImageHoverModa
 import { useLanguage } from "../../../../contexts/useLanguage";
 import "./AppHeaderIndex.less";
 
+import useIndex from "../../../../hooks/index/useIndex";
+import type { IndexDataView } from "../../../../models/views/indexView";
 export const AppHeaderIndex: FC = () => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
   const { currentLang, setCurrentLang } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
   const isRtl = currentLang === "fa";
   type Language = "en" | "fa";
+
+   const { getIndex } = useIndex(currentLang);
+    const fetchIndex = async () => {
+      const { success, data } = await getIndex();
+      if (success && data) {
+        setIndexData(data);
+      }
+    };
+      useEffect(() => {
+        setIndexData(null);
+        fetchIndex();
+      }, [currentLang]);
+
+
+
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
   };
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      push(`/search?s=${encodeURIComponent(searchQuery)}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  const menuItems = [
+    {
+      key: "menu-products",
+      title: { en: "Products", fa: "محصولات" },
+      type: "imageHover",
+    },
+ {
+      key: "menu-brands",
+      title: { en: "Brands", fa: "برندها" },
+      children: data?.brands?.length
+        ? [
+            {
+              key: "menu-brands-all",
+              title: { en: "All Brands", fa: "همه برندها" },
+              path: "/brands",
+            },
+          
+            ...data.brands.map((brand, index) => ({
+              key: `brand-${brand.title}-${index}`,
+              title: { 
+                en: brand.title, 
+                fa: brand.title 
+              },
+              path: `/BrandProducts/${encodeURIComponent(brand.title)}`,
+              image: brand.image, 
+            })),
+          ]
+        : [
+         
+            {
+              key: "menu-brands-main",
+              title: { en: "Brands", fa: "برندها" },
+              path: "/brands",
+            },
+          ],
+    },
+    {
+      key: "menu-catalogues",
+      title: { en: "Catalogues", fa: "کاتالوگ‌ها" },
+      path: "/catalogue",
+    },
+    {
+      key: "menu-services",
+      title: { en: "Services", fa: "خدمات" },
+      path: "/services",
+    },
+    {
+      key: "menu-projects",
+      title: { en: "Projects", fa: "پروژه‌ها" },
+      path: "/project",
+    },
+    {
+      key: "menu-representation",
+      title: { en: "Representation", fa: "نمایندگی‌ها" },
+      path: "/representation",
+    },
+    { key: "menu-about", title: { en: "About", fa: "درباره" }, path: "/about" },
+    {
+      key: "menu-contact",
+      title: { en: "Contact", fa: "تماس" },
+      path: "/contactBranch",
+    },
+  ];
 
   return (
     <Container className="app-header_containers">
       <Row>
         <div className="home__img">
-          <img src={img} alt="vitrine" />
+          <img src={img} alt="vitrine" onClick={() => push("/")} />
         </div>
 
         <img
@@ -34,27 +124,27 @@ export const AppHeaderIndex: FC = () => {
           onClick={() => setSearchOpen(true)}
         />
         <Menu
-              className="app-header__menu-Text"
-              mode="horizontal"
-              triggerSubMenuAction="hover"
-              selectable={false}
-              overflowedIndicator={null}
-            >
-              <Menu.SubMenu
-                key="b"
-                title={isRtl ? "فا" : "En"}
-                className="En_text"
-                popupClassName="lang-submenu-popup"
-              >
-                <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
-                  {" "}
-                  En
-                </Menu.Item>
-                <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
-                  فا{" "}
-                </Menu.Item>
-              </Menu.SubMenu>
-            </Menu>
+          className="app-header__menu-Text"
+          mode="horizontal"
+          triggerSubMenuAction="hover"
+          selectable={false}
+          overflowedIndicator={null}
+        >
+          <Menu.SubMenu
+            key="b"
+            title={isRtl ? "فا" : "En"}
+            className="En_text"
+            popupClassName="lang-submenu-popup"
+          >
+            <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
+              {" "}
+              En
+            </Menu.Item>
+            <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
+              فا{" "}
+            </Menu.Item>
+          </Menu.SubMenu>
+        </Menu>
         <img className="en_img" src={en} alt={en} />
       </Row>
       <Menu
@@ -64,51 +154,44 @@ export const AppHeaderIndex: FC = () => {
         selectable={false}
         overflowedIndicator={null}
       >
-        <Menu.Item key="products" title="محصولات">
-          <ImageHoverModal triggerImg="محصولات" />
-        </Menu.Item>
-        <Menu.SubMenu key="b" title=" برندها">
-          <Menu.Item key="b-1">عنوان اصلی</Menu.Item>
-          <Menu.Item key="b-2">زیرعنوان </Menu.Item>
-          <Menu.Item key="b-3">زیرعنوان </Menu.Item>
-        </Menu.SubMenu>
-
-        <Menu.Item key="k" title="کاتالوگ ها">
-          کاتالوگ ها
-        </Menu.Item>
-
-        <Menu.Item key="kh" title="خدمات">
-          خدمات
-        </Menu.Item>
-
-        <Menu.Item key="projects" title="پروژه‌ها">
-          پروژه ها
-        </Menu.Item>
-
-        <Menu.Item
-          key="services"
-          title="نمایندگی‌ها"
-          onClick={() => push(`/representation`)}
-        >
-          نمایندگی‌ها
-        </Menu.Item>
-
-        <Menu.Item key="about" title="درباره" onClick={() => push("/about")}>
-          درباره
-        </Menu.Item>
-
-        <Menu.Item
-          key="home"
-          title="تماس"
-          onClick={() => push("/contactBranch")}
-        >
-          تماس
-        </Menu.Item>
+        {menuItems.map((item) =>
+          item.children ? (
+            <Menu.SubMenu key={item.key} title={item.title[currentLang]}>
+              {item.children.map((child) => (
+                <Menu.Item
+                  key={child.key}
+                  onClick={() => (child.path ? push(child.path) : undefined)}
+                >
+                  {child.title[currentLang]}
+                </Menu.Item>
+              ))}
+            </Menu.SubMenu>
+          ) : item.type === "imageHover" ? (
+            <Menu.Item key={item.key} title={item.title[currentLang]}>
+              <ImageHoverModal triggerImg={item.title[currentLang]} />
+            </Menu.Item>
+          ) : (
+            <Menu.Item
+              key={item.key}
+              title={item.title[currentLang]}
+              onClick={() => (item.path ? push(item.path) : undefined)}
+            >
+              {item.title[currentLang]}
+            </Menu.Item>
+          )
+        )}
       </Menu>
       {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
-          <Input placeholder="جستجو" className="search-input" autoFocus />
+          <Input
+            placeholder={isRtl ? "جستجو" : "Search"}
+            className="search-input"
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch}
+          />
 
           <button className="close-btn" onClick={() => setSearchOpen(false)}>
             ✕

@@ -4,6 +4,7 @@ import image8 from "../../../../assets/full-page-overlay/image8.jpg";
 import image7 from "../../../../assets/full-page-overlay/image7.jpg";
 import image9 from "../../../../assets/full-page-overlay/image9.jpg";
 import PulseCircleButton from "./components/PulsingButton";
+import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const FullPageOverlay: React.FC = () => {
   const images = [
@@ -33,7 +34,7 @@ export const FullPageOverlay: React.FC = () => {
 
   return (
     <div className="overlay-container">
-      {images.map((item, index) => (
+      {getImages().map((item, index) => (
         <div key={index} className="overlay-section">
           <img src={item?.img} alt={`overlay-${index}`} />
           <div style={{ display: "inline-block" }}>

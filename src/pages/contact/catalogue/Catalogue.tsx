@@ -8,6 +8,7 @@ import download from "../../../assets/icon/download.png";
 import type { DocumentItem } from "../../../models/views/catalogueView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import useDocuments from "../../../hooks/contact/useCatalogue";
+import { useTranslate } from "../../../i18n/useTranslate";
 import { useEffect, useState } from "react";
 const { Title } = Typography;
 
@@ -15,6 +16,7 @@ export default function Catalogue() {
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useDocuments(currentLang);
+  const { t } = useTranslate();
   const isFa = currentLang === "fa";
 
   const fetchDocuments = async () => {
@@ -35,7 +37,7 @@ export default function Catalogue() {
       <div className="showcase-container">
         <Row justify="center">
           <h2 className="title">
-            {isFa ? "نمایندگی‌های فروش ویترین" : "Vitrin Sales Representatives"}
+            {t("site.catalog1")}
           </h2>
         </Row>
         <Row gutter={[24, 24]} justify="center">

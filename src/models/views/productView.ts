@@ -1,20 +1,20 @@
 import type BrandView from "./brandView";
 
-export default interface ProductView {
+export  interface ProductView {
   id: number;
   title: string;
   slug: string;
   code: string;
   thumbnail: string;
   image: string;
-  seo: SEO;
-  category: Category;
+  seo: SEOView;
+  category: CategoryView;
   brand: BrandView;
-  collection: Collection;
-  feature_values: FeatureValue[];
+  collection: CollectionView;
+  feature_values: FeatureValueView[];
 }
 
-export interface Category {
+export interface CategoryView {
   id: number;
   title: string;
   slug: string;
@@ -22,20 +22,20 @@ export interface Category {
   icon: string;
   description: string;
   excerpt: string;
-  seo: SEO;
+  seo: SEOView;
   parent_id: number;
   depth: number;
   state: string;
 }
 
-export interface SEO {
+export interface SEOView {
   meta_keywords: string;
   meta_description: string;
   nofollow: string;
   page_title: string;
 }
 
-export interface Collection {
+export interface CollectionView {
   id: number;
   title: string;
   main_image: string;
@@ -48,11 +48,41 @@ export interface Collection {
   page_title: string;
 }
 
-export interface FeatureValue {
+export interface FeatureValueView {
   id: number;
   feature_id: number;
   feature_title: string;
   value: string;
   order: number;
   state: number;
+}
+
+export interface MediaView {
+  id?: number;
+  url?: string;
+  type?: string;
+}
+export interface ProductDetailView {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  price: string;
+  code: string;
+  call_us: boolean;
+  category_path: string;
+  comments_count: number;
+  thumbnail: string;
+  image: string;
+  brochures: string[];
+
+  seo: SEOView;
+  media: MediaView[];
+
+  category: CategoryView;
+  brand: BrandView;
+  collection: CollectionView;
+
+  features: FeatureValueView[];
 }

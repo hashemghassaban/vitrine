@@ -10,27 +10,50 @@ import { Showcase } from "./components/showcase/Showcase";
 import { VideoBlock } from "./components/video-block/VideoBlock";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 import { FullPageOverlay } from "./components/full-page-overlay/FullPageOverlay";
-
+import { useEffect, useState } from "react";
+import useIndex from "../../hooks/index/useIndex";
+import type { IndexDataView } from "../../models/views/indexView";
 import { useIsMobile } from "../../helpers/useIsMobile";
 import HomeMobile from "./components/home_mobile/HomeMobile";
+import { useLanguage } from "../../contexts/useLanguage";
+import { IndexProvider } from "../../contexts/indexContext";
+
 function Index() {
   const isMobile = useIsMobile();
+  const [indexData, setIndexData] = useState<IndexDataView | null>(null);
+
+  const { currentLang } = useLanguage();
+  const { getIndex } = useIndex(currentLang);
+  const fetchIndex = async () => {
+    const { success, data } = await getIndex();
+    if (success && data) {
+      setIndexData(data);
+    }
+  };
+
+  useEffect(() => {
+    setIndexData(null);
+    fetchIndex();
+  }, [currentLang]);
+
   return (
     <>
-      <Layout>
-        <Content>
-          {isMobile ? <HomeMobile /> : <Home />  }
-          <BrandRow />
-          <BusinessPlan />
-          <VideoBlock />
-          <Showcase />
-          {!isMobile && <FullPageOverlay />}
-          <Service />
-          <Blog />
-          <ExploreSection />
-        </Content>
-        <AppFooter />
-      </Layout>
+      <IndexProvider value={{ indexData }}>
+        <Layout>
+          <Content>
+            {isMobile ? <HomeMobile /> : <Home />}
+            <BrandRow />
+            <BusinessPlan />
+            <VideoBlock />
+            <Showcase />
+            {!isMobile && <FullPageOverlay />}
+            <Service />
+            <Blog />
+            <ExploreSection />
+          </Content>
+          <AppFooter />
+        </Layout>
+      </IndexProvider>
     </>
   );
 }

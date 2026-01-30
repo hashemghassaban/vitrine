@@ -1,31 +1,32 @@
-import type { FC } from 'react';
-import { Menu } from 'antd';
-import useNavigation  from "../../../hooks/useHistory";
+import type { FC } from "react";
+import { Menu } from "antd";
+import useNavigation from "../../../hooks/useHistory";
 import "./FooterMenu.less";
-
-interface MenuItem {
-  url: string;
-  text: string;
-}
+import type { MenuLinkView } from "../../../models/views/indexView";
 
 interface FooterMenuProps {
   title: string;
-  menu: MenuItem[];
+  links?: MenuLinkView[];
 }
 
-export const FooterMenu: FC<FooterMenuProps> = ({ title, menu }) => {
+export const FooterMenu: FC<FooterMenuProps> = ({ title, links }) => {
   const { Item } = Menu;
-   const { push } = useNavigation();
+  const { push } = useNavigation();
   return (
     <div className="footer-menu">
       <h2 className="footer-menu__title">{title}</h2>
       <Menu>
-        {menu.map((item, index) => (
-          <Item  key={title + index}>
-          <a  className="footer-menu__item" href={`#${item.url}`}   onClick={() => push(item.url)}> {item.text}</a>
+        {links?.map((item, index) => (
+          <Item key={title + index}>
+            <a
+              className="footer-menu__item"
+              onClick={() => push(item.url)}
+            >
+              {item.title}
+            </a>
           </Item>
         ))}
       </Menu>
     </div>
-  )
-}
+  );
+};

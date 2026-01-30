@@ -4,19 +4,18 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import InteriorPage from "./interior-page/InteriorPage";
-import { useLanguage } from "../../contexts/useLanguage";
+import { useTranslate } from "../../i18n/useTranslate";
 
 function Blog() {
-  const { currentLang } = useLanguage();
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   return (
     <>
       <Layout>
         <AppHeader
           noBackground
-          title={isFa ? "مقالات" : "Blogs"}
-          // text={"دسته‌بندی یک و دسته‌بندی دیگر"}
+          title={t("site.blog11")}
+          text={t("site.blog22")}
         />
         <Content>
           <InteriorPage />

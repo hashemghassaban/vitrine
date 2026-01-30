@@ -3,26 +3,34 @@ import { Popover, Typography } from "antd";
 import "./PulsingButton.less";
 import image10 from "../../../../../assets/full-page-overlay/image10.jpg";
 import { AppButton } from "../../../../../components/AppButton/AppButton";
+import { useIndexContext } from "../../../../../contexts/indexContext";
+import useNavigation from "../../../../../hooks/useHistory";
+
 const { Title } = Typography;
 
 interface PulsingButtonProps {
   style?: CSSProperties;
   className?: string;
   onClick?: () => void;
+  product_id?: number;
 }
 
 const PulsingButton: React.FC<PulsingButtonProps> = ({
   style,
   className = "",
   onClick,
+  product_id,
 }) => {
   const [open, setOpen] = useState(false);
-
+  const { indexData } = useIndexContext();
+  const data = indexData?.product_categories.find(
+    (product) => product.id == product_id
+  );
+  const { push } = useNavigation();
   const content = (
     <div
-    className="content_style"
+      className="content_style"
       style={{
-       
         backgroundImage: `url(${image10})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -68,6 +76,7 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
           backgroundColor: "transparent",
           color: "white",
         }}
+        onclick={() => push(`${data?.children[0]?.icon_link}`)}
       >
         مشاهده
       </AppButton>

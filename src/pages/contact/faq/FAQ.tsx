@@ -9,6 +9,7 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import type FaqView from "../../../models/views/faqView";
 import { useEffect, useState } from "react";
 import useFaq from "../../../hooks/contact/useFaq";
+import { useTranslate } from "../../../i18n/useTranslate";
 const { Title } = Typography;
 const { Panel } = Collapse;
 
@@ -16,7 +17,7 @@ export default function FAQ() {
   const [faq, setFaq] = useState<FaqView[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useFaq(currentLang);
-  const isFa = currentLang === "fa";
+  const { t } = useTranslate();
 
   const fetchFaq = async () => {
     const { success, data } = await getList();
@@ -32,11 +33,11 @@ export default function FAQ() {
 
   return (
     <>
-      <AppHeader noBackground title={"پرسش‌های متداول"} />
+      <AppHeader noBackground title={t("site.faq11")} />
       <Row justify="center" align="middle" className="faq-row">
         <Col xs={24} sm={20} md={18}  className="faq-col">
           <Title level={3} className="faq-title">
-            {isFa ? "پرسش‌های متداول" : "Frequently Asked Questions (FAQ)"}
+            {t("site.faq22")}
           </Title>
 
           <Collapse

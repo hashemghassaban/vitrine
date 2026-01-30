@@ -2,19 +2,16 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import ProjectItem from "./project-item/ProjectItem";
-
-
+import { useTranslate } from "../../i18n/useTranslate";
 
 function Project() {
-
-
+  const { t } = useTranslate();
   return (
     <>
       <Layout>
-        <AppHeader title={"پروژه‌های اجرا شده با ویترین"} />
+        <AppHeader title={t("site.projectlist1")} />
         <Content>
-         
-        <ProjectItem />
+          <ProjectItem />
         </Content>
       </Layout>
     </>

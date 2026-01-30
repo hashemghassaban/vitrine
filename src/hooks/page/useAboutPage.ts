@@ -14,7 +14,6 @@ const useAboutPage = (currentLang: string) => {
     await axiosAuthInstance
       .get<ServerResult<PageView>>(`/page/${slug}`)
       .then((res) => {
-        console.log("res", res);
         if (res.data.success) {
           success = true;
           data = res.data.data;
