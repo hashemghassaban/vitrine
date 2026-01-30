@@ -73,8 +73,7 @@ const HomeMobile: React.FC = () => {
     setCurrentLang(newLang);
   };
 
-  const { currentLang, setCurrentLang } = useLanguage();
-  const isRtl = currentLang === "fa";
+  const { currentLang, setCurrentLang, isRtl } = useLanguage();
   const [openKeys, setOpenKeys] = useState<string[]>(["sub1"]);
 
   useEffect(() => {

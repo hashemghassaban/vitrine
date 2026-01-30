@@ -16,6 +16,7 @@ import type {
 } from "../../../models/views/productView";
 import useProducts from "../../../hooks/products/useProducts";
 import truncate from "truncate-html";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 export default function ProductDetail() {
   const [mainImage, setMainImage] = useState(img1);
@@ -25,8 +26,9 @@ export default function ProductDetail() {
   const { getListProducts, getProductById } = useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
-  const isFa = currentLang === "fa";
   const thumbnails = [product?.image ?? "", product?.thumbnail ?? ""];
+  const { t } = useTranslate();
+  
   const fetchData = async () => {
     const { success, data } = await getProductById(Number(id));
     if (success && data) {
@@ -153,11 +155,11 @@ export default function ProductDetail() {
               {product?.brochures.map((item) => (
                 <div className="download-content">
                   <p className="download-title">
-                    {isFa ? " دریافت کاتالوگ" : "Get the catalog"}
+                    {t("local_getCatalog")}
                   </p>
                   <a href={item} className="download-text">
                     <VerticalAlignBottomOutlined />
-                    {isFa ? "دانلود" : "Download"}
+                    {t("local_download")}
                   </a>
                 </div>
               ))}
@@ -165,7 +167,7 @@ export default function ProductDetail() {
 
             <div className="other-box">
               <h2 className="other-title">
-                {isFa ? "محصولات مرتبط" : "Related products"}
+                {t("local_relatedProducts")}
               </h2>
 
               <Row className="other-box-row" gutter={[16, 24]} justify="center">

@@ -15,7 +15,6 @@ export default function Representation() {
   const [repres, setRepresentations] = useState<representationView[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useRepresentation(currentLang);
-  const isFa = currentLang === "fa";
   const fetchRepresentations = async () => {
     const { success, data } = await getList();
     if (success && data) {
@@ -89,7 +88,7 @@ export default function Representation() {
                   justify={"space-between"}
                   style={{ marginInline: "10px", marginBottom: "10px" }}
                 >
-                  <Col>{isFa ? "تلفن" : "Phone"}</Col>
+                  <Col>{t("local_phone")}</Col>
                   <Col>
                     <a href={`tel:${item.phone}`} className="tel-link">
                       {item.phone}

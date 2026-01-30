@@ -6,7 +6,6 @@ const useAboutPage = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getAbout() {
-    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: PageView | null = null;
@@ -22,7 +21,7 @@ const useAboutPage = (currentLang: string) => {
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت اطلاعات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

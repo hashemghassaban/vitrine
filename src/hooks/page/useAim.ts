@@ -6,7 +6,6 @@ const useAim = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getList() {
-    const isFa = currentLang === "fa";
     let success = false;
     let result = "";
     let data: AimItemView[] = [];
@@ -22,7 +21,7 @@ const useAim = (currentLang: string) => {
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت اطلاعات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

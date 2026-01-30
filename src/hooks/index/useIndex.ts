@@ -9,7 +9,6 @@ const useIndex = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getIndex() {
-    const isFa = currentLang === "fa";
     const cacheKey = `${CACHE_PREFIX}${currentLang}`;
 
     let result = "";
@@ -38,12 +37,10 @@ const useIndex = (currentLang: string) => {
         JSON.stringify({
           data,
           timestamp: Date.now(),
-        })
+        }),
       );
     } catch {
-      result = isFa
-        ? "خطا در دریافت اطلاعات صفحه اصلی"
-        : "Failed to load index data";
+      result = "Failed to load index data";
     }
 
     return {

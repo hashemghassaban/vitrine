@@ -11,6 +11,7 @@ import useSearch from "../../hooks/search/useSearch";
 import { useLanguage } from "../../contexts/useLanguage";
 import { useSearchParams } from "react-router-dom";
 import { cleanText } from "../../helpers/cleanText";
+import { useTranslate } from "../../i18n/useTranslate";
 const { Paragraph } = Typography;
 
 const Search: React.FC = () => {
@@ -20,8 +21,7 @@ const Search: React.FC = () => {
   const { search } = useSearch(currentLang);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("s");
-  const isFa = currentLang === "fa";
-
+  const { t } = useTranslate();
   useEffect(() => {
     if (!query) return;
 
@@ -39,13 +39,9 @@ const Search: React.FC = () => {
   if (!query) {
     return (
       <>
-        <AppHeader noBackground title={isFa ? "جستجو" : "Search"} />
+        <AppHeader noBackground title={t("local_search")} />
         <div className="search-results-container">
-          <p style={{ textAlign: "center" }}>
-            {isFa
-              ? "عبارتی برای جستجو وارد نشده است"
-              : "No search query provided"}
-          </p>
+          <p style={{ textAlign: "center" }}>{t("local_noSearchQuery")}</p>
         </div>
       </>
     );
@@ -53,15 +49,12 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <AppHeader noBackground title={isFa ? "نتایج جستجو" : "Search results"} />
+      <AppHeader noBackground title={t("local_searchResults1")} />
       <div className="search-results-container">
         <Row justify="center" align="middle">
           <Col xs={22} sm={20} md={18} lg={16} xl={17}>
             <p className="results-title">
-              {" "}
-              {isFa
-                ? `${items.length} نتیجه در جستجوی ویترین`
-                : `${items.length} results for search `}
+              {`${items.length} ${t("local_searchResults2")}`}
             </p>
 
             {items.map((item) => (
@@ -94,7 +87,7 @@ const Search: React.FC = () => {
                       type="link"
                       onClick={() => push(`/${item.type}/${item.id}`)}
                     >
-                      {isFa ? " ادامه مطلب" : "Read more"}
+                      {t("local_readMore")}
                     </Button>
                   </Col>
                 </Row>

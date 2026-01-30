@@ -6,7 +6,6 @@ const useServicePage = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getService() {
-    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: PageView | null = null;
@@ -22,7 +21,7 @@ const useServicePage = (currentLang: string) => {
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت اطلاعات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

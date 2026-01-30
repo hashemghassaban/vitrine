@@ -1,8 +1,7 @@
 import { getTranslations } from "./translationStore";
 import { useLanguage } from "../contexts/useLanguage";
 import type { TranslationKey } from "./translationKeys";
-
-type Lang = "fa" | "en" | "ar";
+import type { Language } from "./LanguageType";
 
 export const useTranslate = () => {
   const { currentLang } = useLanguage();
@@ -16,7 +15,7 @@ export const useTranslate = () => {
       return key;
     }
 
-    return item[currentLang as Lang] || key;
+    return item[currentLang as Language] || key;
   };
 
   return { t };

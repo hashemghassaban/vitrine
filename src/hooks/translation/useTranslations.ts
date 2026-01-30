@@ -9,7 +9,6 @@ const useTranslations = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getTranslations() {
-    const isFa = currentLang === "fa";
     let success = false;
     let result = "";
     let data: TranslationView[] | null = null;
@@ -37,14 +36,14 @@ const useTranslations = (currentLang: string) => {
             JSON.stringify({
               data,
               timestamp: Date.now(),
-            })
+            }),
           );
         } else {
           result = res.data.message;
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+        result = "Operation failed";
       });
 
     return {

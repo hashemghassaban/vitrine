@@ -5,12 +5,12 @@ import React, {
   type ReactNode,
   useEffect,
 } from "react";
-
-type Language = "fa" | "en";
+import type { Language } from "../i18n/LanguageType";
 
 interface LanguageContextType {
   currentLang: Language;
   setCurrentLang: React.Dispatch<React.SetStateAction<Language>>;
+  isRtl: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -21,7 +21,7 @@ const getInitialLanguage = (): Language => {
   }
   try {
     const savedLanguage = localStorage.getItem('app-language') as Language;
-    return savedLanguage === 'fa' || savedLanguage === 'en' ? savedLanguage : 'fa';
+    return savedLanguage === 'fa' || savedLanguage === 'en'|| savedLanguage === 'ar' ? savedLanguage : 'fa';
   } catch (error) {
     console.warn("Failed to read language from localStorage:", error);
     return 'fa';
@@ -44,7 +44,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
     }
   }, [currentLang]);
   
-  const value: LanguageContextType = { currentLang, setCurrentLang };
+  const isRtl = currentLang === "fa" || currentLang === "ar";
+  const value: LanguageContextType = { currentLang, setCurrentLang, isRtl };
 
   return (
     <LanguageContext.Provider value={value}>

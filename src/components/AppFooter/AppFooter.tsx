@@ -19,6 +19,7 @@ import type { IndexDataView } from "../../models/views/indexView";
 import useIndex from "../../hooks/index/useIndex";
 import useNewsletter from "../../hooks/newsletter/useNewsletter";
 import { useTranslate } from "../../i18n/useTranslate";
+import type { Language } from "../../i18n/LanguageType";
 
 export const AppFooter: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -27,11 +28,8 @@ export const AppFooter: React.FC = () => {
   const { sendEmail } = useNewsletter();
 
   const { currentLang, setCurrentLang } = useLanguage();
-  const isFa = currentLang === "fa";
 
   const { t } = useTranslate();
-
-  type Language = "en" | "fa";
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
@@ -59,9 +57,7 @@ export const AppFooter: React.FC = () => {
 
   const handleSendEmail = async () => {
     if (email && !validateEmail(email)) {
-      showMessage(
-        isFa ? "ایمیل وارد شده نامعتبر است." : "Invalid email address."
-      );
+      showMessage(t("local_invalidEmailAddress"));
       return;
     }
     const resp = await sendEmail(email);
@@ -101,9 +97,7 @@ export const AppFooter: React.FC = () => {
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__logo">
               <img className="app-footer__logo_img" src={img} alt="Logo" />
               <p className="app-footer_title">{t("site.footerblock6")}</p>
-              <p className="app-footer_text">
-                {t("site.footerblock7")}
-              </p>
+              <p className="app-footer_text">{t("site.footerblock7")}</p>
             </Col>
 
             {/* منوها */}
@@ -123,7 +117,7 @@ export const AppFooter: React.FC = () => {
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__col">
               <div className="app-footer__subscribe">
                 <h2 className="app-footer__subscribe_title">
-                  {isFa ? "عضویت در خبرنامه" : "Subscribe to the newsletter"}
+                  {t("local_newsletterSubscribtion")}
                 </h2>
                 <div className="">
                   <Input
@@ -139,7 +133,7 @@ export const AppFooter: React.FC = () => {
                 </div>
 
                 <p className="app-footer__subscribe_title">
-                  {isFa ? "شبکه های اجتماعی" : "social media"}
+                  {t("local_socialMedia")}
                 </p>
                 <div className="footer_media_content">
                   {menuMedia.map((item, index) => (
@@ -159,14 +153,16 @@ export const AppFooter: React.FC = () => {
                     onClick={
                       currentLang === "en"
                         ? () => handleLanguageChange("fa")
-                        : () => handleLanguageChange("en")
+                        : currentLang === "fa"
+                          ? () => handleLanguageChange("ar")
+                          : () => handleLanguageChange("en")
                     }
                   >
-                    {currentLang === "en" ? "فا" : "En"}
+                    {t("local_currentLang")}
                     <img src={en} alt="en" />
                   </p>
                   <p className="footer_en_text">
-                    {isFa ? "انتخاب زبان" : "Language selection"}
+                    {t("local_languageSelection")}
                   </p>
                 </div>
               </div>

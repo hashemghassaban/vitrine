@@ -2,11 +2,10 @@ import useAxious from "../../helpers/axiosInstance";
 import type DepartmentView from "../../models/views/departmentView";
 import type ServerResult from "../../models/ServerResult";
 
-const useDepartment = (currentLang:string) => {
+const useDepartment = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getList() {
-    const isFa = currentLang === "fa";
     let result = "";
     let success = false;
     let data: DepartmentView[] = [];
@@ -21,7 +20,7 @@ const useDepartment = (currentLang:string) => {
         }
       })
       .catch(() => {
-        result = isFa ? "خطا در انجام عمیات" : "Operation failed";
+        result = "Operation failed";
       });
     return {
       success,

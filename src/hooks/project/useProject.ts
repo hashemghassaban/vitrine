@@ -7,7 +7,6 @@ import type {
 
 const useProjects = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
   async function getList(perPage: number = 12) {
     let result = "";
     let success = false;
@@ -22,14 +21,14 @@ const useProjects = (currentLang: string) => {
                 per_page: perPage,
               },
             }
-          : {}
+          : {},
       )
       .then((res) => {
         success = true;
         data = res.data.data;
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت پروژه‌ها" : "Failed to load projects";
+        result = "Failed to load projects";
       });
 
     return {
@@ -49,9 +48,7 @@ const useProjects = (currentLang: string) => {
       success = true;
       data = res.data.data;
     } catch {
-      result = isFa
-        ? "خطا در دریافت دسته‌بندی‌ها"
-        : "Failed to load categories";
+      result = "Failed to load categories";
     }
 
     return { success, data, result };

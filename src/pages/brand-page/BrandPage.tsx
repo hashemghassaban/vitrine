@@ -16,7 +16,6 @@ const BrandPage: React.FC = () => {
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { t } = useTranslate();
-  const isFa = currentLang === "fa";
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -62,9 +61,9 @@ const BrandPage: React.FC = () => {
                 <Button
                   onClick={() => push(`/BrandProducts/${item.id}`)}
                   type="link"
-                  className={`brand-more ${!isFa ? "english" : ""}`}
+                  className={`brand-more ${currentLang == "en" ? "english" : ""}`}
                 >
-                  {isFa ? "مشاهده" : "View"}
+                  {t("local_view")}
                 </Button>
               </Card>
             </Col>

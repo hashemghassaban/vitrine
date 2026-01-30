@@ -4,7 +4,6 @@ import type { NewsView } from "../../models/views/newsView";
 
 const useNewsById = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
 
   async function getById(id: number) {
     let success = false;
@@ -12,12 +11,12 @@ const useNewsById = (currentLang: string) => {
     let result = "";
     try {
       const res = await axiosAuthInstance.get<ServerResult<NewsView>>(
-        `/news/${id}`
+        `/news/${id}`,
       );
       success = true;
       data = res.data.data;
     } catch {
-      result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+      result = "Operation failed";
     }
 
     return { success, data, result };

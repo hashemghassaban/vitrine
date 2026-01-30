@@ -1,10 +1,12 @@
 import useAxious from "../../helpers/axiosInstance";
 import type ServerResult from "../../models/ServerResult";
-import type { ProductView, ProductDetailView } from "../../models/views/productView";
+import type {
+  ProductView,
+  ProductDetailView,
+} from "../../models/views/productView";
 
 const useProducts = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
   async function getListProducts(perPage = 15) {
     let success = false;
     let result = "";
@@ -22,10 +24,7 @@ const useProducts = (currentLang: string) => {
         }
       })
       .catch(() => {
-        result =
-          currentLang === "fa"
-            ? "خطا در دریافت محصولات"
-            : "Failed to fetch products";
+        result = "Failed to fetch products";
       });
 
     return {
@@ -42,16 +41,15 @@ const useProducts = (currentLang: string) => {
 
     try {
       const res = await axiosAuthInstance.get<ServerResult<ProductDetailView>>(
-        `/products/${id}`
+        `/products/${id}`,
       );
 
       success = true;
       data = res.data.data;
     } catch {
-      result = isFa ? "خطا در دریافت مقاله" : "Failed to load blog post";
+      result = "Failed to load blog post";
     }
-
-      return {
+    return {
       success,
       result,
       data,

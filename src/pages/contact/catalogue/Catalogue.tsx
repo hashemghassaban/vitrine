@@ -17,7 +17,6 @@ export default function Catalogue() {
   const { currentLang } = useLanguage();
   const { getList } = useDocuments(currentLang);
   const { t } = useTranslate();
-  const isFa = currentLang === "fa";
 
   const fetchDocuments = async () => {
     const { success, data } = await getList();
@@ -36,9 +35,7 @@ export default function Catalogue() {
       <AppHeader />
       <div className="showcase-container">
         <Row justify="center">
-          <h2 className="title">
-            {t("site.catalog1")}
-          </h2>
+          <h2 className="title">{t("site.catalog1")}</h2>
         </Row>
         <Row gutter={[24, 24]} justify="center">
           {documents.map((item) => (
@@ -64,7 +61,7 @@ export default function Catalogue() {
                 <Row justify={"end"}>
                   <p className="btn">
                     <img src={download} alt="download" />
-                    {isFa ? "دانلود" : "Download"}
+                    {t("local_download")}
                   </p>
                 </Row>
               </Card>
@@ -72,7 +69,7 @@ export default function Catalogue() {
           ))}
         </Row>
       </div>
-      <AppFooter/>
+      <AppFooter />
     </>
   );
 }

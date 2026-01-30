@@ -20,8 +20,6 @@ export default function About() {
   const [setting, setSetting] = useState<SettingView | null>(null);
   const { getSetting } = useSetting(currentLang);
 
-  const isFa = currentLang === "fa";
-
   const fetchVideo = async () => {
     const { success, data } = await getSetting();
     if (success && data) {
@@ -49,7 +47,7 @@ export default function About() {
     <>
       <AppHeader
         noBackground
-        title={isFa ? "درباره ویترین" : " About vitrine"}
+        title={currentLang == "fa" ? "درباره ویترین" : (currentLang == "en"? " About vitrine":"من نحن ویترین")}
       />
 
       <div className="article-content">
@@ -121,7 +119,7 @@ export default function About() {
           </Col>
         </Row>
       </div>
-       <AppFooter />
+      <AppFooter />
     </>
   );
 }

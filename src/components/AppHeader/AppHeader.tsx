@@ -11,6 +11,7 @@ import { ImageHoverModal } from "./ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../contexts/useLanguage";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
+import type { Language } from "../../i18n/LanguageType";
 
 interface AppHeaderProps {
   noBackground?: boolean;
@@ -30,17 +31,13 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { currentLang, setCurrentLang } = useLanguage();
-  const isRtl = currentLang === "fa";
-
-  type Language = "en" | "fa";
-
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
   const fetchIndex = async () => {
     const { success, data } = await getList();
     if (success && data) {
       setBrands(data);
-    }
+    } 
   };
   useEffect(() => {
     fetchIndex();
@@ -68,18 +65,18 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const menuItems = [
     {
       key: "menu-products",
-      title: { en: "Products", fa: "محصولات" },
+      title: { en: "Products", fa: "محصولات", ar: "المنتجات" },
       type: "imageHover",
     },
     {
       key: "menu-brands",
-      title: { en: "Brands", fa: "برندها" },
+      title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
       children:
         brands?.length > 0
           ? [
               {
                 key: "menu-brands-all",
-                title: { en: "All Brands", fa: "همه برندها" },
+                title: { en: "All Brands", fa: "همه برندها", ar: "جميع العلامات التجارية" },
                 path: "/brands",
               },
 
@@ -88,6 +85,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 title: {
                   en: brand.title,
                   fa: brand.title,
+                  ar: brand.title,
                 },
                 path: `/brandProducts/${brand.id}`,
                 image: brand.image,
@@ -96,35 +94,39 @@ export const AppHeader: FC<AppHeaderProps> = ({
           : [
               {
                 key: "menu-brands-main",
-                title: { en: "Brands", fa: "برندها" },
+                title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
                 path: "/brands",
               },
             ],
     },
     {
       key: "menu-catalogues",
-      title: { en: "Catalogues", fa: "کاتالوگ‌ها" },
+      title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
       path: "/catalogue",
     },
     {
       key: "menu-services",
-      title: { en: "Services", fa: "خدمات" },
+      title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
       path: "/services",
     },
     {
       key: "menu-projects",
-      title: { en: "Projects", fa: "پروژه‌ها" },
+      title: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
       path: "/project",
     },
     {
       key: "menu-representation",
-      title: { en: "Representation", fa: "نمایندگی‌ها" },
+      title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
       path: "/representation",
     },
-    { key: "menu-about", title: { en: "About", fa: "درباره" }, path: "/about" },
+    {
+      key: "menu-about",
+      title: { en: "About", fa: "درباره", ar: "من نحن" },
+      path: "/about",
+    },
     {
       key: "menu-contact",
-      title: { en: "Contact", fa: "تماس" },
+      title: { en: "Contact", fa: "تماس", ar: "اتصل بنا" },
       path: "/contactBranch",
     },
   ];
@@ -155,16 +157,20 @@ export const AppHeader: FC<AppHeaderProps> = ({
             >
               <Menu.SubMenu
                 key="b"
-                title={isRtl ? "فا" : "En"}
+                title={
+                  currentLang === "fa" ? "فا" : currentLang === "en" ? "En" : "عر"
+                }
                 className="En_text"
                 popupClassName="lang-submenu-popup"
               >
                 <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
-                  {" "}
                   En
                 </Menu.Item>
                 <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
-                  فا{" "}
+                  فا
+                </Menu.Item>
+                <Menu.Item key="b-3" onClick={() => handleLanguageChange("ar")}>
+                  عر
                 </Menu.Item>
               </Menu.SubMenu>
             </Menu>
@@ -224,7 +230,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
       {searchOpen && (
         <div className="search-box">
           <Input
-            placeholder={isRtl ? "جستجو" : "Search"}
+            placeholder={currentLang === "fa" ? "جستجو" : currentLang === "en" ? "Search" : "يبحث"}
             className="search-input"
             autoFocus
             value={searchQuery}

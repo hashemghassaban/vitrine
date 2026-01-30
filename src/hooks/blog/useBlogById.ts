@@ -4,7 +4,6 @@ import type { BlogItemView } from "../../models/views/blogView";
 
 const useBlogById = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
 
   async function getById(id: number) {
     let success = false;
@@ -12,12 +11,12 @@ const useBlogById = (currentLang: string) => {
     let result = "";
     try {
       const res = await axiosAuthInstance.get<ServerResult<BlogItemView>>(
-        `/blog/${id}`
+        `/blog/${id}`,
       );
       success = true;
       data = res.data.data;
     } catch {
-      result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+      result = "Operation failed";
     }
 
     return { success, data, result };

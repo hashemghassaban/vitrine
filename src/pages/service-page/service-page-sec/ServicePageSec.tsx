@@ -18,9 +18,7 @@ const ServicePageSec: React.FC = () => {
   const [items, setItems] = useState<AimItemView[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
-
-  const isFa = currentLang === "fa";
-
+  
   const fetchService = async () => {
     const { success, data } = await getService();
     if (success && data) {
@@ -52,9 +50,7 @@ const ServicePageSec: React.FC = () => {
 
   return (
     <>
-      <AppHeader
-        title={t("site.servicetitlenew")}
-      />
+      <AppHeader title={t("site.servicetitlenew")} />
 
       {!loading ? (
         <div className="showroom-page">
@@ -79,7 +75,7 @@ const ServicePageSec: React.FC = () => {
           <Row justify="center">
             <div>
               <h2 className="service-title">
-                {isFa ? "پروژه‌های انجام شده" : "Completed Projects"}
+                {t("local_completedProjects")}
               </h2>
               <p className="service-subtitle">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و

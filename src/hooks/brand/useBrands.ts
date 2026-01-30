@@ -4,7 +4,6 @@ import type BrandView from "../../models/views/brandView";
 
 const useBrands = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
 
   async function getList(perPage = 15) {
     let result = "";
@@ -15,14 +14,14 @@ const useBrands = (currentLang: string) => {
     try {
       const res = await axiosAuthInstance.get<ServerResult<BrandView[]>>(
         "/brands",
-        { params: { per_page: perPage } }
+        { params: { per_page: perPage } },
       );
 
       success = true;
       data = res.data.data;
       total = res.data.meta?.pagination?.total ?? 0;
     } catch {
-      result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+      result = "Operation failed";
     }
 
     return { success, result, data, total };

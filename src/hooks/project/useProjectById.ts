@@ -1,12 +1,11 @@
 import useAxious from "../../helpers/axiosInstance";
 import type ServerResult from "../../models/ServerResult";
-import type { ProjectDetailView } from "../../models/views/projectView" ;
+import type { ProjectDetailView } from "../../models/views/projectView";
 
 const useProjectDetail = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
   async function getById(id: number) {
-    const isFa = currentLang === "fa";
     let success = false;
     let result = "";
     let data: ProjectDetailView | null = null;
@@ -18,7 +17,7 @@ const useProjectDetail = (currentLang: string) => {
         data = res.data.data;
       })
       .catch(() => {
-        result = isFa ? "خطا در دریافت پروژه" : "Failed to load project";
+        result = "Failed to load project";
       });
 
     return { success, result, data };

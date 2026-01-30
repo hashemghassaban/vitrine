@@ -4,7 +4,6 @@ import type BrandView from "../../models/views/brandView";
 
 const useBrand = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
-  const isFa = currentLang === "fa";
 
   async function getById(id: number) {
     let success = false;
@@ -12,12 +11,12 @@ const useBrand = (currentLang: string) => {
     let result = "";
     try {
       const res = await axiosAuthInstance.get<ServerResult<BrandView>>(
-        `/brands/${id}`
+        `/brands/${id}`,
       );
       success = true;
       data = res.data.data;
     } catch {
-      result = isFa ? "خطا در انجام عملیات" : "Operation failed";
+      result = "Operation failed";
     }
 
     return { success, data, result };

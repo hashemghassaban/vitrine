@@ -48,6 +48,7 @@ export interface ProjectLocationView {
   id: number;
   title_fa: string;
   title_en: string;
+  title_ar: string;
   slug: string;
   latitude: string | null;
   longitude: string | null;
