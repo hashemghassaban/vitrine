@@ -1,6 +1,6 @@
 import useAxious from "../../helpers/axiosInstance";
 import type ServerResult from "../../models/ServerResult";
-import type { ProductView, ProductDetailView } from "../../models/views/productView";
+import type { ProductView, ProductDetailView,  } from "../../models/views/productView";
 
 const useProducts = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
@@ -50,7 +50,6 @@ const useProducts = (currentLang: string) => {
     } catch {
       result = isFa ? "خطا در دریافت مقاله" : "Failed to load blog post";
     }
-
       return {
       success,
       result,
@@ -58,9 +57,11 @@ const useProducts = (currentLang: string) => {
     };
   }
 
+    
   return {
     getListProducts,
     getProductById,
+
   };
 };
 
