@@ -1,7 +1,7 @@
 import { getTranslations } from "./translationStore";
 import { useLanguage } from "../contexts/useLanguage";
 import type { TranslationKey } from "./translationKeys";
-import type { Language } from "./LanguageType";
+import type { Language } from "./languageType";
 
 export const useTranslate = () => {
   const { currentLang } = useLanguage();

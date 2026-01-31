@@ -19,7 +19,7 @@ import type { IndexDataView } from "../../models/views/indexView";
 import useIndex from "../../hooks/index/useIndex";
 import useNewsletter from "../../hooks/newsletter/useNewsletter";
 import { useTranslate } from "../../i18n/useTranslate";
-import type { Language } from "../../i18n/LanguageType";
+import type { Language } from "../../i18n/languageType";
 
 export const AppFooter: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();

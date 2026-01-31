@@ -11,7 +11,7 @@ import { ImageHoverModal } from "./ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../contexts/useLanguage";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
-import type { Language } from "../../i18n/LanguageType";
+import type { Language } from "../../i18n/languageType";
 
 interface AppHeaderProps {
   noBackground?: boolean;

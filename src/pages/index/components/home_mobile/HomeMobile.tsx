@@ -13,7 +13,7 @@ import logo from "../../../../assets/header/header.png";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import search from "../../../../assets/header/search.png";
 import PulseCircleButton from "../full-page-overlay/components/PulsingButton";
-import type { Language } from "../../../../i18n/LanguageType";
+import type { Language } from "../../../../i18n/languageType";
 import { useTranslate } from "../../../../i18n/useTranslate";
 
 type MenuItem = Required<MenuProps>["items"][number];

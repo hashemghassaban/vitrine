@@ -11,7 +11,7 @@ import "./AppHeaderIndex.less";
 
 import useIndex from "../../../../hooks/index/useIndex";
 import type { IndexDataView } from "../../../../models/views/indexView";
-import type { Language } from "../../../../i18n/LanguageType";
+import type { Language } from "../../../../i18n/languageType";
 import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const AppHeaderIndex: FC = () => {
