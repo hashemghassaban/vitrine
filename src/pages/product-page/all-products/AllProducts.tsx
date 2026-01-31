@@ -22,7 +22,10 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useProducts from "../../../hooks/products/useProducts";
 import useProductFeatures from "../../../hooks/products/useProductFeatures";
 import type { FeatureView } from "../../../models/views/productFeaturesView";
-import type { CollectionView, ProductView } from "../../../models/views/productView";
+import type {
+  CollectionView,
+  ProductView,
+} from "../../../models/views/productView";
 import { CloseOutlined } from "@ant-design/icons";
 import useBrands from "../../../hooks/brand/useBrands";
 import type BrandView from "../../../models/views/brandView";
@@ -32,6 +35,7 @@ import type {
   ProductCategoryView,
 } from "../../../models/views/indexView";
 import useCollections from "../../../hooks/collections/useCollections";
+import { useTranslate } from "../../../i18n/useTranslate";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -87,6 +91,8 @@ const AllProducts: React.FC = () => {
   const { push } = useNavigation();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { getIndex } = useIndex(currentLang);
+  const { t } = useTranslate();
+
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
@@ -195,7 +201,7 @@ const AllProducts: React.FC = () => {
       <AppHeader
         categoryBackground={selectedCategory?.image_link}
         title={!!selectedCategory ? selectedCategory?.title : "محصولات"}
-        text={`خانه > محصولات ${!!selectedCategory ?`> ${selectedCategory?.title}`:""}`}
+        text={`خانه > محصولات ${!!selectedCategory ? `> ${selectedCategory?.title}` : ""}`}
       />
       <div className="products-container">
         <Row gutter={[0, 25]}>
@@ -361,7 +367,9 @@ const AllProducts: React.FC = () => {
           </Col>
 
           <Col xs={24} lg={17}>
-            <p className="count">{product.length} محصول پیدا شد</p>
+            <p className="count">
+              {product.length} {t("local_productsFound")}
+            </p>
 
             <Row gutter={[20, 30]}>
               {product.slice(0, visibleCount).map((item, i) => (
@@ -403,7 +411,7 @@ const AllProducts: React.FC = () => {
                   className="load-more"
                   onClick={() => setVisibleCount((prev) => prev + 4)}
                 >
-                  مشاهده محصولات بیشتر
+                  {t("local_viewMoreProducts")}
                 </button>
               </div>
             )}

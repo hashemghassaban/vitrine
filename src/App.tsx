@@ -19,7 +19,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     getTranslations().then((res) => {
-      setTranslations([...res.data!, ...localTranslations]);
+      setTranslations([...localTranslations, ...res.data!]);
       setLoading(false);
     });
   }, []);

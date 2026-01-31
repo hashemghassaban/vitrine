@@ -68,9 +68,12 @@ export type TranslationKey =
   | "local_download"
   | "local_phone"
   | "local_more"
+  | "local_vitrin20years"
   //product
   | "local_getCatalog"
   | "local_relatedProducts"
+  | "local_productsFound"
+  | "local_viewMoreProducts"
   //project
   | "local_architect"
   | "local_constructor"
@@ -94,7 +97,5 @@ export type TranslationKey =
   | "local_contactPhoneNumber"
   | "local_contactSelectDepartment"
   | "local_contactMessageContent"
-  | "local_contactSendMessage"
-
-  ;
+  | "local_contactSendMessage";
 //----local
