@@ -8,10 +8,12 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useRepresentation from "../../../hooks/contact/useRepresentation";
 import { useTranslate } from "../../../i18n/useTranslate";
 import "./representation.less";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const { Title } = Typography;
 
 export default function Representation() {
+  useSyncLanguage();
   const [repres, setRepresentations] = useState<representationView[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useRepresentation(currentLang);

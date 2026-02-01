@@ -12,9 +12,11 @@ import { useLanguage } from "../../contexts/useLanguage";
 import { useSearchParams } from "react-router-dom";
 import { cleanText } from "../../helpers/cleanText";
 import { useTranslate } from "../../i18n/useTranslate";
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 const { Paragraph } = Typography;
 
 const Search: React.FC = () => {
+  useSyncLanguage();
   const { push } = useNavigation();
   const [items, setItems] = useState<SearchItemView[]>([]);
   const { currentLang } = useLanguage();
@@ -66,14 +68,14 @@ const Search: React.FC = () => {
                       alt={item.title}
                       preview={false}
                       className="result-image"
-                      onClick={() => push(`/${item.type}/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/${item.type}/${item.id}`)}
                     />
                   </Col>
 
                   <Col xs={24} md={16} xl={19}>
                     <h2
                       className="item-title"
-                      onClick={() => push(`/${item.type}/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/${item.type}/${item.id}`)}
                     >
                       {item.title}
                     </h2>
@@ -85,7 +87,7 @@ const Search: React.FC = () => {
                     <Button
                       className="more-search"
                       type="link"
-                      onClick={() => push(`/${item.type}/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/${item.type}/${item.id}`)}
                     >
                       {t("local_readMore")}
                     </Button>

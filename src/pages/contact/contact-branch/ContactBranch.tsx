@@ -20,8 +20,10 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useSetting from "../../../hooks/setting/useSetting";
 import type { SettingView } from "../../../models/views/settingView";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const ContactBranch: React.FC = () => {
+  useSyncLanguage();
   const { currentLang } = useLanguage();
   const { getSetting } = useSetting(currentLang);
   const { getList } = useDepartment(currentLang);

@@ -13,7 +13,7 @@ interface Props {
 export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslate();
-   const [data, setIndexData] = useState<IndexDataView | null>(null);
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { currentLang } = useLanguage();
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
@@ -27,7 +27,6 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
     setIndexData(null);
     fetchIndex();
   }, [currentLang]);
-
 
   return (
     <div

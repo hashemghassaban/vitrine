@@ -1,5 +1,5 @@
 import { Spin } from "antd";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import useHistory from "../hooks/useHistory";
 import Index from "./index/Index";
 import "./Pages.less";
@@ -35,24 +35,27 @@ const Pages = () => {
   }
   return (
     <Routes location={location}>
-      <Route index element={<Index />} />
-      <Route path="/" element={<Index />} />
-      <Route path="*" element={<NotFound />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:id" element={<BlogDetailPage />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/representation" element={<Representation />} />
-      <Route path="/catalogue" element={<Catalogue />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/contactBranch" element={<ContactBranch />} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/project" element={<Project />} />
-      <Route path="/project/:id" element={<ProjectItemDetail />} />
-      <Route path="/brands" element={<BrandPage />} />
-      <Route path="/services" element={<ServicePageSec />} />
-      <Route path="/brandProducts/:id" element={<BrandProducts />} />
-      <Route path="/products" element={<AllProducts />} />
-      <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/" element={<Navigate to="/fa" />} />
+      <Route path="/:lang">
+        <Route index element={<Index />} />
+        <Route path="" element={<Index />} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="blog/:id" element={<BlogDetailPage />} />
+        <Route path="about" element={<About />} />
+        <Route path="representation" element={<Representation />} />
+        <Route path="catalogue" element={<Catalogue />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="contactBranch" element={<ContactBranch />} />
+        <Route path="search" element={<Search />} />
+        <Route path="project" element={<Project />} />
+        <Route path="project/:id" element={<ProjectItemDetail />} />
+        <Route path="brands" element={<BrandPage />} />
+        <Route path="services" element={<ServicePageSec />} />
+        <Route path="brandProducts/:id" element={<BrandProducts />} />
+        <Route path="products" element={<AllProducts />} />
+        <Route path="products/:id" element={<ProductDetail />} />
+      </Route>
     </Routes>
   );
 };

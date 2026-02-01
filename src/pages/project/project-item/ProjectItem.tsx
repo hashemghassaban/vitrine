@@ -113,7 +113,7 @@ export default function ProjectItem() {
                 >
                   <div
                     className="img-box-project"
-                    onClick={() => push(`/project/${block.id}`)}
+                    onClick={() => push(`/${currentLang}/project/${block.id}`)}
                   >
                     <img src={block.thumbnail_link} alt={block.title} />
                   </div>
@@ -135,7 +135,7 @@ export default function ProjectItem() {
                     }`}
                   >
                     <h2
-                      onClick={() => push(`/project/${block.id}`)}
+                      onClick={() => push(`/${currentLang}/project/${block.id}`)}
                       className="title-text-box-project"
                     >
                       {block.title}
@@ -179,7 +179,7 @@ export default function ProjectItem() {
                     <Button
                       className={` ${currentLang == "en" ? "english" : ""}`}
                       type="link"
-                      onClick={() => push(`/project/${block.id}`)}
+                      onClick={() => push(`/${currentLang}/project/${block.id}`)}
                     >
                       {t("local_view")}
                     </Button>

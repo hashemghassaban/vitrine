@@ -10,9 +10,11 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useDocuments from "../../../hooks/contact/useCatalogue";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useEffect, useState } from "react";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 const { Title } = Typography;
 
 export default function Catalogue() {
+  useSyncLanguage();
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useDocuments(currentLang);

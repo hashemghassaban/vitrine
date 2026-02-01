@@ -109,7 +109,7 @@ export default function InteriorPage() {
                 <img
                   src={block.image}
                   alt={`pic${block.id}`}
-                  onClick={() => push(`/blog/${block.id}`)}
+                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
                 />
               </div>
             </Col>
@@ -126,7 +126,7 @@ export default function InteriorPage() {
             >
               <div className="text-box">
                 <h2
-                  onClick={() => push(`/blog/${block.id}`)}
+                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
                   className="h2-box"
                 >
                   {block.title}
@@ -141,7 +141,7 @@ export default function InteriorPage() {
                 <Button
                   className={` ${currentLang == "en" ? "english" : ""}`}
                   type="link"
-                  onClick={() => push(`/blog/${block.id}`)}
+                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
                 >
                   {t("local_readArticle")}
                 </Button>

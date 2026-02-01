@@ -17,8 +17,10 @@ import { useIsMobile } from "../../helpers/useIsMobile";
 import HomeMobile from "./components/home_mobile/HomeMobile";
 import { useLanguage } from "../../contexts/useLanguage";
 import { IndexProvider } from "../../contexts/indexContext";
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 function Index() {
+  useSyncLanguage();
   const isMobile = useIsMobile();
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
 

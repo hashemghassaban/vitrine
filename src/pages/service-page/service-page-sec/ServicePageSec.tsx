@@ -9,8 +9,10 @@ import useServicePage from "../../../hooks/page/useServicePage";
 import useAim from "../../../hooks/page/useAim";
 import type { AimItemView } from "../../../models/views/aimView";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const ServicePageSec: React.FC = () => {
+  useSyncLanguage();
   const { currentLang } = useLanguage();
   const [page, setPage] = useState<PageView>();
   const { getService } = useServicePage(currentLang);

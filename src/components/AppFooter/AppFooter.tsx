@@ -20,19 +20,23 @@ import useIndex from "../../hooks/index/useIndex";
 import useNewsletter from "../../hooks/newsletter/useNewsletter";
 import { useTranslate } from "../../i18n/useTranslate";
 import type { Language } from "../../i18n/languageType";
+import useNavigation from "../../hooks/useHistory";
 
 export const AppFooter: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const [email, setEmail] = useState("");
   const { sendEmail } = useNewsletter();
+  const { push } = useNavigation();
 
-  const { currentLang, setCurrentLang } = useLanguage();
+  const { currentLang } = useLanguage();
 
   const { t } = useTranslate();
 
-  const handleLanguageChange = (lang: Language) => {
-    setCurrentLang(lang);
+  const handleLanguageChange = (newLang: Language) => {
+    if (!currentLang) return;
+    const newPath = location.pathname.replace(`/${currentLang}`, `/${newLang}`);
+    push(newPath);
   };
 
   const { getIndex } = useIndex(currentLang);

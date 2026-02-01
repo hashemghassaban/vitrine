@@ -5,8 +5,10 @@ import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import InteriorPage from "./interior-page/InteriorPage";
 import { useTranslate } from "../../i18n/useTranslate";
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 function Blog() {
+  useSyncLanguage();
   const { t } = useTranslate();
 
   return (

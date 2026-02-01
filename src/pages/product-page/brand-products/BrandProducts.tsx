@@ -8,8 +8,10 @@ import type BrandView from "../../../models/views/brandView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import "./BrandProducts.less";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const BrandProducts: React.FC = () => {
+  useSyncLanguage();
   const { id } = useParams();
   const { currentLang } = useLanguage();
   const { getById } = useBrand(currentLang);

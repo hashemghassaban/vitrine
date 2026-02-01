@@ -9,10 +9,12 @@ import useProjectDetail from "../../../hooks/project/useProjectById";
 import type { ProjectDetailView } from "../../../models/views/projectView";
 import projects from "../../../helpers/project";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const { Title } = Typography;
 
 export default function ProjectItemDetail() {
+  useSyncLanguage();
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
   const { getById } = useProjectDetail(currentLang);

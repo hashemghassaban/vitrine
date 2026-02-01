@@ -12,8 +12,10 @@ import useSetting from "../../hooks/setting/useSetting";
 import type { PageView } from "../../models/views/pageView";
 import "antd/dist/reset.css";
 import "./About.less";
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 export default function About() {
+  useSyncLanguage();
   const { currentLang } = useLanguage();
   const [page, setPage] = useState<PageView>();
   const { getAbout } = useAboutPage(currentLang);

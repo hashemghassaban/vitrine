@@ -30,7 +30,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { currentLang, setCurrentLang } = useLanguage();
+  const { currentLang } = useLanguage();
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
   const fetchIndex = async () => {
@@ -43,13 +43,18 @@ export const AppHeader: FC<AppHeaderProps> = ({
     fetchIndex();
   }, [currentLang]);
 
-  const handleLanguageChange = (lang: Language) => {
-    setCurrentLang(lang);
+  const handleLanguageChange = (newLang: Language) => {
+    if (!currentLang) return;
+    const newPath = location.pathname.replace(
+      `/${currentLang}`,
+      `/${newLang}`
+    );
+    push(newPath);
   };
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      push(`/search?s=${encodeURIComponent(searchQuery)}`);
+      push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
       setSearchOpen(false);
       setSearchQuery("");
     }
@@ -77,7 +82,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               {
                 key: "menu-brands-all",
                 title: { en: "All Brands", fa: "همه برندها", ar: "جميع العلامات التجارية" },
-                path: "/brands",
+                path: "brands",
               },
 
               ...brands.map((brand, index) => ({
@@ -87,7 +92,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                   fa: brand.title,
                   ar: brand.title,
                 },
-                path: `/brandProducts/${brand.id}`,
+                path: `brandProducts/${brand.id}`,
                 image: brand.image,
               })),
             ]
@@ -95,39 +100,39 @@ export const AppHeader: FC<AppHeaderProps> = ({
               {
                 key: "menu-brands-main",
                 title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-                path: "/brands",
+                path: "brands",
               },
             ],
     },
     {
       key: "menu-catalogues",
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
-      path: "/catalogue",
+      path: "catalogue",
     },
     {
       key: "menu-services",
       title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
-      path: "/services",
+      path: "services",
     },
     {
       key: "menu-projects",
       title: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
-      path: "/project",
+      path: "project",
     },
     {
       key: "menu-representation",
       title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
-      path: "/representation",
+      path: "representation",
     },
     {
       key: "menu-about",
       title: { en: "About", fa: "درباره", ar: "من نحن" },
-      path: "/about",
+      path: "about",
     },
     {
       key: "menu-contact",
       title: { en: "Contact", fa: "تماس", ar: "اتصل بنا" },
-      path: "/contactBranch",
+      path: "contactBranch",
     },
   ];
 
@@ -140,7 +145,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
         >
           <Row>
             <div className="home__img">
-              <img src={img} alt="vitrine" onClick={() => push("/")} />
+              <img src={img} alt="vitrine" onClick={() => push(`/${currentLang}`)} />
             </div>
             <img
               className="search__img"
@@ -191,7 +196,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                     <Menu.Item
                       key={child.key}
                       onClick={() =>
-                        child.path ? push(child.path) : undefined
+                        child.path ? push(`/${currentLang}/${child.path}`) : undefined
                       }
                     >
                       {child.title[currentLang]}
@@ -206,7 +211,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 <Menu.Item
                   key={item.key}
                   title={item.title[currentLang]}
-                  onClick={() => (item.path ? push(item.path) : undefined)}
+                  onClick={() => (item.path ? push(`/${currentLang}/${item.path}`) : undefined)}
                 >
                   {item.title[currentLang]}
                 </Menu.Item>

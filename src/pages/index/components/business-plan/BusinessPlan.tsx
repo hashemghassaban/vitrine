@@ -3,10 +3,13 @@ import { Col, Row } from "antd";
 import { AppButton } from "../../../../components/AppButton/AppButton";
 import "./BusinessPlan.less";
 import businessImg from "../../../../assets/business-plan/business-img.png";
-import useNavigation  from "../../../../hooks/useHistory";
+import useNavigation from "../../../../hooks/useHistory";
+import { useLanguage } from "../../../../contexts/useLanguage";
 
 export const BusinessPlan: React.FC = () => {
-    const { push } = useNavigation();
+  const { push } = useNavigation();
+  const { currentLang } = useLanguage();
+
   return (
     <section id="BusinessPlan" className="business-plan">
       <Row gutter={[32, 32]} align="middle">
@@ -32,7 +35,12 @@ export const BusinessPlan: React.FC = () => {
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...
             </p>
 
-            <AppButton className="business-plan__Button" onclick={()=>push("/about")}>آشنا شوید</AppButton>
+            <AppButton
+              className="business-plan__Button"
+              onclick={() => push(`/${currentLang}/about`)}
+            >
+              آشنا شوید
+            </AppButton>
           </div>
         </Col>
       </Row>
