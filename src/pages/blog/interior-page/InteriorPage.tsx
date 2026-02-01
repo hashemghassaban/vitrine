@@ -9,6 +9,7 @@ import type { BlogCategoryView } from "../../../models/views/blogView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { AppHeader } from "../../../components/AppHeader/AppHeader";
 
 export default function InteriorPage() {
   const { push } = useNavigation();
@@ -42,11 +43,20 @@ export default function InteriorPage() {
   useEffect(() => {
     fetchPost();
   }, [activeTab, currentLang]);
+  
+  const activeCategory = useMemo<BlogCategoryView | null>(() => {
+    if (activeTab === "all") return null;
+
+    return categories.find(
+      (cat) => cat?.id == Number(activeTab)
+    ) || null;
+  }, [activeTab, categories]);
+
 
   const filteredContent =
     activeTab === "all"
       ? posts
-      : posts.filter((p) => p.category_id === +activeTab);
+      : posts.filter((p) => p.category_id == +activeTab);
   const visibleBlog = filteredContent.slice(0, visibleCount);
   const hasMore = visibleCount < filteredContent.length;
 
@@ -75,88 +85,93 @@ export default function InteriorPage() {
   }, [categories]);
 
   return (
-    <div className="interior-page-container">
-      <Row justify="center" align="middle" style={{ overflow: "auto" }}>
-        <Tabs
-          activeKey={activeTab}
-          onChange={(key) => setActiveTab(key)}
-          items={tabItems.map((tab) => ({
-            key: tab.key,
-            label: tab.label,
-          }))}
-          className="interior-tabs"
-        />
-      </Row>
-
-      {visibleBlog.map((block, index) => (
-        <div
-          className={`content-block ${
-            animatedItems.includes(block.id) ? "ease-in-item" : ""
-          }`}
-          key={block.id}
-        >
-          <Row align="middle" gutter={[12, 50]}>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={12}
-              xl={12}
-              className="blog__image"
-              order={index % 2 === 0 ? 1 : 2}
-            >
-              <div className="img-box">
-                <img
-                  src={block.image}
-                  alt={`pic${block.id}`}
-                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
-                />
-              </div>
-            </Col>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={12}
-              xl={12}
-              className={` ${
-                index % 2 === 1 ? "even-content" : "blog__content"
-              }`}
-              order={index % 2 === 0 ? 2 : 1}
-            >
-              <div className="text-box">
-                <h2
-                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
-                  className="h2-box"
-                >
-                  {block.title}
-                </h2>
-                <p className="p-box">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: truncate(block.content, 120, { ellipsis: "..." }),
-                    }}
-                  ></div>
-                </p>
-                <Button
-                  className={` ${currentLang == "en" ? "english" : ""}`}
-                  type="link"
-                  onClick={() => push(`/${currentLang}/blog/${block.id}`)}
-                >
-                  {t("local_readArticle")}
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      ))}
-      {hasMore && (
-        <Row justify="center">
-          <AppButton onclick={loadMore} className="blog__Button">
-            {t("local_nextArticles")}
-          </AppButton>
+    <>
+      <AppHeader
+        categoryBackground={activeCategory?.image}
+        title={t("site.blog11")}
+        text={t("site.blog22")}
+      />
+      <div className="interior-page-container">
+        <Row justify="center" align="middle" style={{ overflow: "auto" }}>
+          <Tabs
+            activeKey={activeTab}
+            onChange={(key) => setActiveTab(key)}
+            items={tabItems.map((tab) => ({
+              key: tab.key,
+              label: tab.label,
+            }))}
+            className="interior-tabs"
+          />
         </Row>
-      )}
-    </div>
+
+        {visibleBlog.map((block, index) => (
+          <div
+            className={`content-block ${animatedItems.includes(block.id) ? "ease-in-item" : ""
+              }`}
+            key={block.id}
+          >
+            <Row align="middle" gutter={[12, 50]}>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={12}
+                xl={12}
+                className="blog__image"
+                order={index % 2 === 0 ? 1 : 2}
+              >
+                <div className="img-box">
+                  <img
+                    src={block.image}
+                    alt={`pic${block.id}`}
+                    onClick={() => push(`/${currentLang}/blog/${block.id}`)}
+                  />
+                </div>
+              </Col>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={12}
+                xl={12}
+                className={` ${index % 2 === 1 ? "even-content" : "blog__content"
+                  }`}
+                order={index % 2 === 0 ? 2 : 1}
+              >
+                <div className="text-box">
+                  <h2
+                    onClick={() => push(`/${currentLang}/blog/${block.id}`)}
+                    className="h2-box"
+                  >
+                    {block.title}
+                  </h2>
+                  <p className="p-box">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: truncate(block.content, 120, { ellipsis: "..." }),
+                      }}
+                    ></div>
+                  </p>
+                  <Button
+                    className={` ${currentLang == "en" ? "english" : ""}`}
+                    type="link"
+                    onClick={() => push(`/${currentLang}/blog/${block.id}`)}
+                  >
+                    {t("local_readArticle")}
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        ))}
+        {hasMore && (
+          <Row justify="center">
+            <AppButton onclick={loadMore} className="blog__Button">
+              {t("local_nextArticles")}
+            </AppButton>
+          </Row>
+        )}
+      </div>
+    </>
   );
 }

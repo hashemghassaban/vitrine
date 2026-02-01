@@ -16,6 +16,15 @@ export const localTranslations: TranslationView[] = [
     { key: "local_download", value: { ar: "تحميل", en: "Download", fa: "دانلود" } },
     { key: "local_phone", value: { ar: "الهاتف", en: "Phone", fa: "تلفن" } },
     { key: "local_more", value: { ar: "المزيد", en: "More", fa: "بیشتر" } },
+    
+    { key: "local_NotFoundMessage", value: { ar: "الصفحة المطلوبة غير موجودة", en: "Page Not Found", fa: "صفحه موردنظر یافت نشد" } },
+    { key: "local_redirectToHome", value: { ar: "العودة إلى الصفحة الرئيسية", en: "Back to home", fa: "بازگشت به خانه" } },
+    
+    { key: "local_luxuryProducts", value: { ar: "المنتجات الفاخرة", en: "Luxury Products", fa: "محصولات لوکس" } },
+    { key: "local_vitrineBuildingShowroom", value: { ar: "صالة عرض المباني - فيترين", en: "Vitrine Building Showroom", fa: "شوروم ساختمانی ویترین" } },
+    { key: "local_moreInfo", value: { ar: "مزيد من المعلومات", en: "More Info", fa: "اطلاعات بیشتر" } },
+    { key: "local_vitrinePlus", value: { ar: "فيترين بلاس", en: "Vitrine Plus", fa: "ویترین پلاس" } },
+
     //footer
     { key: "local_invalidEmailAddress", value: { ar: "البريد الإلكتروني غير صالح.", en: "Invalid email address.", fa: "ایمیل وارد شده نامعتبر است." } },
     { key: "local_newsletterSubscribtion", value: { ar: "الاشتراك في النشرة الإخبارية", en: "Subscribe to the newsletter", fa: "عضویت در خبرنامه" } },

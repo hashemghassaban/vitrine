@@ -111,7 +111,7 @@ export default function About() {
                   width="800"
                   height="468"
                   src={setting?.video_url}
-                  title="YouTube Video"
+                  title="Video"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

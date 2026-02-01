@@ -82,6 +82,7 @@ export interface ProjectDetailView {
   image_link: string;
   responsive_thumbnail_link: string;
   video_link: string | null;
+  video_cover_link: string | null;
   featured: boolean;
   link: string;
   created_at: string;

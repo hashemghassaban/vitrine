@@ -40,6 +40,11 @@ export type TranslationKey =
   | "site.indexservice2"
   | "site.indexservice3"
   | "site.indexservice4"
+  | "local_luxuryProducts"
+  | "local_vitrineBuildingShowroom"
+  | "local_moreInfo"
+  | "local_vitrinePlus"
+
   //footer
   | "site.footerblock1"
   | "site.footerblock2"
@@ -97,5 +102,8 @@ export type TranslationKey =
   | "local_contactPhoneNumber"
   | "local_contactSelectDepartment"
   | "local_contactMessageContent"
-  | "local_contactSendMessage";
+  | "local_contactSendMessage"
+  //404 page
+  | "local_NotFoundMessage"
+  | "local_redirectToHome";
 //----local

@@ -61,10 +61,16 @@ export default function Catalogue() {
                 </Title>
 
                 <Row justify={"end"}>
-                  <p className="btn">
+                  <a
+                    href={item.link}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn download-link"
+                  >
                     <img src={download} alt="download" />
                     {t("local_download")}
-                  </p>
+                  </a>
                 </Row>
               </Card>
             </Col>

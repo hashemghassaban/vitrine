@@ -10,6 +10,7 @@ import type {
 } from "../../../models/views/projectView";
 import { useLanguage } from "../../../contexts/useLanguage";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { AppHeader } from "../../../components/AppHeader/AppHeader";
 
 export default function ProjectItem() {
   const { push } = useNavigation();
@@ -46,6 +47,14 @@ export default function ProjectItem() {
   useEffect(() => {
     fetchPost();
   }, [activeTab, currentLang]);
+  
+   const activeCategory = useMemo<ProjectCategoryView | null>(() => {
+      if (activeTab === "all") return null;
+  
+      return categories.find(
+        (cat) => cat?.id == Number(activeTab)
+      ) || null;
+    }, [activeTab, categories]);
 
   const filteredContent =
     activeTab === "all"
@@ -81,6 +90,7 @@ export default function ProjectItem() {
 
   return (
     <>
+     <AppHeader categoryBackground={ activeCategory?.image ?? undefined} title={t("site.projectlist1")} />
       {!loadingCategory ? (
         <div className="interior-page-container">
           <Row justify="center" align="middle" style={{ overflow: "auto" }}>
