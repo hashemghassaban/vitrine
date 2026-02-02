@@ -63,7 +63,7 @@ export const FullPageOverlay: React.FC = () => {
           <div style={{ display: "inline-block" }}>
             {item?.content.map((subject) => (
               <div
-                className="content"
+                className="content-overlay-container"
                 style={{
                   left: `${subject.x}%`,
                   top: `${subject.y}%`,

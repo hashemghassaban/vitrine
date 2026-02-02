@@ -9,8 +9,11 @@ import useBlog from "../../../hooks/blog/useBlog";
 import { useEffect, useState } from "react";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
 
 export default function BlogDetailPage() {
+  useSyncLanguage();
   const { push } = useNavigation();
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
@@ -22,18 +25,23 @@ export default function BlogDetailPage() {
 
   const fetchData = async () => {
     setLoading(true);
+
     const { success, data } = await getPostById(Number(id));
-    if (success && data) {
-      setBlog(data);
-      if (data.category_id) {
-        const relatedRes = await getPosts(data.category_id);
-        if (relatedRes.success) {
-          setRelated(
-            relatedRes.data.filter((b) => b.id !== data.id).slice(0, 2),
-          );
-        }
-      }
+    if (!success || !data) {
+      setLoading(false);
+      return;
     }
+
+    setBlog(data);
+    const relatedRes = await getPosts();
+    if (relatedRes.success && relatedRes.data) {
+      const filtered = relatedRes.data
+        .filter((b) => b.category_id === data.category_id && b.id !== data.id)
+        .slice(0, 2);
+
+      setRelated(filtered);
+    }
+
     setLoading(false);
   };
 
@@ -59,7 +67,7 @@ export default function BlogDetailPage() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      onClick={() => push(`/blog/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/blog/${item.id}`)}
                     />
                     <p className="title-stiler">{item.title}</p>
                     <div
@@ -71,7 +79,7 @@ export default function BlogDetailPage() {
                     ></div>
                     <Button
                       type="link"
-                      onClick={() => push(`/blog/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/blog/${item.id}`)}
                     >
                       {t("local_readArticle")}
                     </Button>
@@ -97,6 +105,7 @@ export default function BlogDetailPage() {
           </Row>
         </div>
       )}
+      <AppFooter />
     </>
   );
 }

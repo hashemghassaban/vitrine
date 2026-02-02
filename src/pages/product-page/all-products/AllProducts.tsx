@@ -36,6 +36,7 @@ import type {
 } from "../../../models/views/indexView";
 import useCollections from "../../../hooks/collections/useCollections";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -60,6 +61,7 @@ const buildMenuItems = (
   }));
 };
 const AllProducts: React.FC = () => {
+  useSyncLanguage();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     setOpenKeys(keys);
@@ -377,7 +379,7 @@ const AllProducts: React.FC = () => {
                   <Card
                     hoverable
                     className="showcase-card-product"
-                    onClick={() => push(`/products/${item.id}`)}
+                    onClick={() => push(`/${currentLang}/products/${item.id}`)}
                     cover={
                       <img
                         src={item?.image}

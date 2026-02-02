@@ -7,12 +7,14 @@ import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../../../contexts/useLanguage";
 import useProjectDetail from "../../../hooks/project/useProjectById";
 import type { ProjectDetailView } from "../../../models/views/projectView";
-import projects from "../../../helpers/project";
 import { useTranslate } from "../../../i18n/useTranslate";
-
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import { AppFooter } from "../../../components/AppFooter/AppFooter";
+import useNavigation from "../../../hooks/useHistory";
 const { Title } = Typography;
 
 export default function ProjectItemDetail() {
+  useSyncLanguage();
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
   const { getById } = useProjectDetail(currentLang);
@@ -20,7 +22,7 @@ export default function ProjectItemDetail() {
   const [current, setCurrent] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
   const { t } = useTranslate();
-
+  const { push } = useNavigation();
   const carouselRef = useRef<any>(null);
 
   const prev = () => {
@@ -59,7 +61,7 @@ export default function ProjectItemDetail() {
     <>
       <AppHeader
         title={t("site.proje1")}
-        text={project?.page_title ?? "page_title مقدار دهی نشده است"}
+        text={project?.title}
         style={false}
       />
 
@@ -77,13 +79,13 @@ export default function ProjectItemDetail() {
               <div className="text-box-detail">
                 <div className="item-box-detail-detail">
                   <p className="title-text-detail">{t("local_architect")}</p>
-                  <p className="dec-text-detail">{project?.architect?.name}</p>
+                  <a href={project?.architect?.link} className="dec-text-detail">{project?.architect?.name}</a>
                 </div>
                 <div className="item-box-detail-detail">
                   <p className="title-text-detail">{t("local_constructor")}</p>
-                  <p className="dec-text-detail">
+                  <a href={project?.developer?.link} className="dec-text-detail">
                     {project?.developer?.name ?? ""}
-                  </p>
+                  </a>
                 </div>
                 <div className="item-box-detail-detail">
                   <p className="title-text-detail">{t("local_location")}</p>
@@ -156,6 +158,7 @@ export default function ProjectItemDetail() {
             {project?.products.map((item) => (
               <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
                 <Card
+                  onClick={() => push(`/${currentLang}/products/${item.id}`)}
                   hoverable
                   className="showcase-card-project"
                   cover={
@@ -181,63 +184,67 @@ export default function ProjectItemDetail() {
           </div>
         </div>
       </div>
-      <Row style={{ width: "100%" }}>
-        <Col span={24} style={{ padding: 0 }}>
-          <div className="image-container">
-            {!showVideo && (
-              <>
-                <img
-                  src={projects[0].img}
-                  alt="project"
-                  className="responsive-img"
-                />
+      {project?.video_link ?
+        <Row style={{ width: "100%" }}>
+          <Col span={24} style={{ padding: 0 }}>
+            <div className="image-container">
+              {!showVideo && (
+                <>
+                  <img
+                    src={project?.video_cover_link ?? undefined}
+                    alt="project"
+                    className="responsive-img"
+                  />
 
-                <img
-                  src={icon}
-                  alt="vector"
-                  className="center-img"
-                  onClick={() => setShowVideo(true)}
-                  style={{ cursor: "pointer" }}
-                />
-              </>
-            )}
+                  <img
+                    src={icon}
+                    alt="vector"
+                    className="center-img"
+                    onClick={() => setShowVideo(true)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </>
+              )}
 
-            {project?.video_link && (
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <div style={{ width: "70%", maxWidth: "900px" }}>
-                  <div
-                    style={{
-                      position: "relative",
-                      paddingBottom: "56.25%",
-                      height: 0,
-                    }}
-                  >
-                    <iframe
-                      src={project.video_link}
+              {showVideo && (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div style={{ width: "70%", maxWidth: "900px" }}>
+                    <div
                       style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
+                        position: "relative",
+                        paddingBottom: "56.25%",
+                        height: 0,
                       }}
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                    />
+                    >
+                      <video controls width="100%"    style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          border: "none",
+                        }}
+                       
+                        >
+                        <source src={project.video_link} type="video/mp4" />
+                      </video>
+          
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </Col>
-      </Row>
+              )}
+            </div>
+          </Col>
+        </Row>
+        : null}
+
+      <AppFooter />
     </>
   );
 }

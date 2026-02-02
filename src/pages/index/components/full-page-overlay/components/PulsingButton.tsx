@@ -25,11 +25,11 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
   const [open, setOpen] = useState(false);
   const { indexData } = useIndexContext();
   const data = indexData?.product_categories.find(
-    (product) => product.id == product_id
+    (product) => product.id == product_id,
   );
   const { push } = useNavigation();
   const { t } = useTranslate();
-  
+
   const content = (
     <div
       className="content_style"
@@ -65,8 +65,8 @@ const PulsingButton: React.FC<PulsingButtonProps> = ({
           margin: 0,
         }}
       >
-        <a href="#"  style={{color:'#fff'}}>
-        ویترین پلاس
+        <a href="#" style={{ color: "#fff" }}>
+          {t("local_vitrinePlus")}
         </a>
       </Title>
       <AppButton

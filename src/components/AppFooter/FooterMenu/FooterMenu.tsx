@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import useNavigation from "../../../hooks/useHistory";
 import "./FooterMenu.less";
 import type { MenuLinkView } from "../../../models/views/indexView";
+import { useLanguage } from "../../../contexts/useLanguage";
 
 interface FooterMenuProps {
   title: string;
@@ -12,6 +13,8 @@ interface FooterMenuProps {
 export const FooterMenu: FC<FooterMenuProps> = ({ title, links }) => {
   const { Item } = Menu;
   const { push } = useNavigation();
+  const { currentLang } = useLanguage();
+
   return (
     <div className="footer-menu">
       <h2 className="footer-menu__title">{title}</h2>
@@ -20,7 +23,9 @@ export const FooterMenu: FC<FooterMenuProps> = ({ title, links }) => {
           <Item key={title + index}>
             <a
               className="footer-menu__item"
-              onClick={() => push(item.url)}
+              onClick={() => {
+                push(`/${currentLang}/${item.url}`);
+              }}
             >
               {item.title}
             </a>

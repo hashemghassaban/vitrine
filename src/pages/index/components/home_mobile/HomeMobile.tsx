@@ -13,7 +13,8 @@ import logo from "../../../../assets/header/header.png";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import search from "../../../../assets/header/search.png";
 import PulseCircleButton from "../full-page-overlay/components/PulsingButton";
-import type { Language } from "../../../../i18n/LanguageType";
+import type { Language } from "../../../../i18n/languageType";
+import useNavigation from "../../../../hooks/useHistory";
 import { useTranslate } from "../../../../i18n/useTranslate";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -70,10 +71,17 @@ const HomeMobile: React.FC = () => {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { t } = useTranslate();
+  const { push } = useNavigation();
+  
   const handleLanguageChange = () => {
     const newLang: Language =
       currentLang == "en" ? "fa" : currentLang == "fa" ? "ar" : "en";
     setCurrentLang(newLang);
+    const newPath = location.pathname.replace(
+      `/${currentLang}`,
+      `/${newLang}`
+    );
+    push(newPath);
   };
 
   const { currentLang, setCurrentLang } = useLanguage();

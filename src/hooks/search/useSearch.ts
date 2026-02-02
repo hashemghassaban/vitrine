@@ -14,9 +14,9 @@ async function search(query: string) {
     `/search?s=${query}`
   );
 
-  if (res.data?.data?.data) {
+  if (res.data.success) {
     success = true;
-    data = res.data.data.data; 
+    data = res.data.data; 
   }
 
   return { success, data };

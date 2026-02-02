@@ -86,6 +86,7 @@ export interface SiteSettingsView {
 }
 
 export interface SliderItemView {
+  [x: string]: any;
   id: number;
   title: string;
   subtitle: null | string;

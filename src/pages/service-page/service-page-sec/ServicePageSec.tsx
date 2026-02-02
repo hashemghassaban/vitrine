@@ -4,27 +4,29 @@ import "./ServicePageSec.less";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { useLanguage } from "../../../contexts/useLanguage";
-import type { PageView } from "../../../models/views/pageView";
-import useServicePage from "../../../hooks/page/useServicePage";
+// import type { PageView } from "../../../models/views/pageView";
+// import useServicePage from "../../../hooks/page/useServicePage";
 import useAim from "../../../hooks/page/useAim";
 import type { AimItemView } from "../../../models/views/aimView";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 const ServicePageSec: React.FC = () => {
+  useSyncLanguage();
   const { currentLang } = useLanguage();
-  const [page, setPage] = useState<PageView>();
-  const { getService } = useServicePage(currentLang);
+  // const [page, setPage] = useState<PageView>();
+  // const { getService } = useServicePage(currentLang);
   const { getList } = useAim(currentLang);
   const [items, setItems] = useState<AimItemView[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
-  
-  const fetchService = async () => {
-    const { success, data } = await getService();
-    if (success && data) {
-      setPage(data);
-    }
-  };
+
+  // const fetchService = async () => {
+  //   const { success, data } = await getService();
+  //   if (success && data) {
+  //     setPage(data);
+  //   }
+  // };
 
   const fetchAim = async () => {
     const { success, data } = await getList();
@@ -35,9 +37,10 @@ const ServicePageSec: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchService()
-      .then(() => fetchAim())
-      .finally(() => setLoading(false));
+    // fetchService()
+    //   .then(() => fetchAim())
+    //   .finally(() => setLoading(false));
+    fetchAim().finally(() => setLoading(false));
   }, [currentLang]);
 
   const filledItems: AimItemView[] = React.useMemo(() => {
@@ -56,15 +59,15 @@ const ServicePageSec: React.FC = () => {
         <div className="showroom-page">
           <Row gutter={[40, 40]} align="middle" className="top-section">
             <Col xs={24} lg={12} style={{ textAlign: "center" }}>
-              <img src={page?.image} className="top-image" alt="showroom" />
+              <img src={items[0]?.image} className="top-image" alt="showroom" />
             </Col>
             <Col className="txt-col" xs={24} lg={12}>
               <div className="top-text-box">
-                <h2 className="top-title">{page?.title}</h2>
+                <h2 className="top-title">{items[0]?.title}</h2>
                 <p
                   className="top-text"
                   dangerouslySetInnerHTML={{
-                    __html: page?.content ?? "",
+                    __html: items[0]?.content ?? "",
                   }}
                 ></p>
               </div>
@@ -74,9 +77,7 @@ const ServicePageSec: React.FC = () => {
           {/*section3*/}
           <Row justify="center">
             <div>
-              <h2 className="service-title">
-                {t("local_completedProjects")}
-              </h2>
+              <h2 className="service-title">{t("local_completedProjects")}</h2>
               <p className="service-subtitle">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
                 طراحی. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
@@ -90,12 +91,12 @@ const ServicePageSec: React.FC = () => {
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
                   <img
-                    src={filledItems[0]?.image}
-                    alt={filledItems[0]?.title}
+                    src={filledItems[1]?.image}
+                    alt={filledItems[1]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[0]?.title}</p>
-                  <p className="card-text">{filledItems[0]?.excerpt}</p>
+                  <p className="card-title-sec">{filledItems[1]?.title}</p>
+                  <p className="card-text">{filledItems[1]?.excerpt}</p>
                 </div>
 
                 <div className="stack-space" />

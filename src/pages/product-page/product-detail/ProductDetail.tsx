@@ -17,8 +17,10 @@ import type {
 import useProducts from "../../../hooks/products/useProducts";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 export default function ProductDetail() {
+  useSyncLanguage();
   const [mainImage, setMainImage] = useState(img1);
   const isMobile = useIsMobile();
   const { id } = useParams<{ id: string }>();

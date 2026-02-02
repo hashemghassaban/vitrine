@@ -11,13 +11,13 @@ import "./AppHeaderIndex.less";
 
 import useIndex from "../../../../hooks/index/useIndex";
 import type { IndexDataView } from "../../../../models/views/indexView";
-import type { Language } from "../../../../i18n/LanguageType";
+import type { Language } from "../../../../i18n/languageType";
 import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const AppHeaderIndex: FC = () => {
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
-  const { currentLang, setCurrentLang } = useLanguage();
+  const { currentLang } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { t } = useTranslate();
@@ -35,11 +35,11 @@ export const AppHeaderIndex: FC = () => {
   }, [currentLang]);
 
   const handleLanguageChange = (lang: Language) => {
-    setCurrentLang(lang);
+    push(`/${lang}`)
   };
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      push(`/search?s=${encodeURIComponent(searchQuery)}`);
+      push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
       setSearchOpen(false);
       setSearchQuery("");
     }
@@ -63,7 +63,7 @@ export const AppHeaderIndex: FC = () => {
                 fa: "همه برندها",
                 ar: "جميع العلامات التجارية",
               },
-              path: "/brands",
+              path: "brands",
             },
 
             ...data.brands.map((brand, index) => ({
@@ -73,7 +73,7 @@ export const AppHeaderIndex: FC = () => {
                 fa: brand.title,
                 ar: brand.title,
               },
-              path: `/BrandProducts/${encodeURIComponent(brand.title)}`,
+              path: `BrandProducts/${encodeURIComponent(brand.title)}`,
               image: brand.image,
             })),
           ]
@@ -81,39 +81,39 @@ export const AppHeaderIndex: FC = () => {
             {
               key: "menu-brands-main",
               title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-              path: "/brands",
+              path: "brands",
             },
           ],
     },
     {
       key: "menu-catalogues",
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
-      path: "/catalogue",
+      path: "catalogue",
     },
     {
       key: "menu-services",
       title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
-      path: "/services",
+      path: "services",
     },
     {
       key: "menu-projects",
       title: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
-      path: "/project",
+      path: "project",
     },
     {
       key: "menu-representation",
       title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
-      path: "/representation",
+      path: "representation",
     },
     {
       key: "menu-about",
       title: { en: "About", fa: "درباره", ar: "من نحن" },
-      path: "/about",
+      path: "about",
     },
     {
       key: "menu-contact",
       title: { en: "Contact", fa: "تماس", ar: "اتصل بنا" },
-      path: "/contactBranch",
+      path: "contactBranch",
     },
   ];
 
@@ -121,7 +121,7 @@ export const AppHeaderIndex: FC = () => {
     <Container className="app-header_containers">
       <Row>
         <div className="home__img">
-          <img src={img} alt="vitrine" onClick={() => push("/")} />
+          <img src={img} alt="vitrine" onClick={() => push(`/${currentLang}`)} />
         </div>
 
         <img
@@ -169,7 +169,7 @@ export const AppHeaderIndex: FC = () => {
               {item.children.map((child) => (
                 <Menu.Item
                   key={child.key}
-                  onClick={() => (child.path ? push(child.path) : undefined)}
+                  onClick={() => (child.path ? push(`/${currentLang}/${child.path}`) : undefined)}
                 >
                   {child.title[currentLang]}
                 </Menu.Item>
@@ -183,7 +183,7 @@ export const AppHeaderIndex: FC = () => {
             <Menu.Item
               key={item.key}
               title={item.title[currentLang]}
-              onClick={() => (item.path ? push(item.path) : undefined)}
+              onClick={() => (item.path ? push(`/${currentLang}/${item.path}`) : undefined)}
             >
               {item.title[currentLang]}
             </Menu.Item>

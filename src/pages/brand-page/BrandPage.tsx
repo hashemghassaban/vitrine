@@ -9,8 +9,10 @@ import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
 import { useLanguage } from "../../contexts/useLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 const BrandPage: React.FC = () => {
+  useSyncLanguage();
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { getList } = useBrands(currentLang);
@@ -45,21 +47,21 @@ const BrandPage: React.FC = () => {
               <Card className="brand-card">
                 <div brand-box>
                   <img
-                    onClick={() => push(`/BrandProducts/${item.id}`)}
+                    onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
                     src={item.logo}
                     alt={item.title}
                     className="brand-logo"
                   />
                 </div>
                 <p
-                  onClick={() => push(`/BrandProducts/${item.id}`)}
+                  onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
                   className="brand-title"
                 >
                   {item.title}
                 </p>
                 <p className="brand-text">{item.excerpt}</p>
                 <Button
-                  onClick={() => push(`/BrandProducts/${item.id}`)}
+                  onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
                   type="link"
                   className={`brand-more ${currentLang == "en" ? "english" : ""}`}
                 >

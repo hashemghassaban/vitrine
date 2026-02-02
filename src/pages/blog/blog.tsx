@@ -1,22 +1,19 @@
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { AppHeader } from "../../components/AppHeader/AppHeader";
+
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import InteriorPage from "./interior-page/InteriorPage";
-import { useTranslate } from "../../i18n/useTranslate";
+
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 function Blog() {
-  const { t } = useTranslate();
+  useSyncLanguage();
+
 
   return (
     <>
       <Layout>
-        <AppHeader
-          noBackground
-          title={t("site.blog11")}
-          text={t("site.blog22")}
-        />
         <Content>
           <InteriorPage />
         </Content>

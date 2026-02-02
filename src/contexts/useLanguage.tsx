@@ -5,7 +5,7 @@ import React, {
   type ReactNode,
   useEffect,
 } from "react";
-import type { Language } from "../i18n/LanguageType";
+import type { Language } from "../i18n/languageType";
 
 interface LanguageContextType {
   currentLang: Language;

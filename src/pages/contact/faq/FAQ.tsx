@@ -10,10 +10,12 @@ import type FaqView from "../../../models/views/faqView";
 import { useEffect, useState } from "react";
 import useFaq from "../../../hooks/contact/useFaq";
 import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 const { Title } = Typography;
 const { Panel } = Collapse;
 
 export default function FAQ() {
+  useSyncLanguage();
   const [faq, setFaq] = useState<FaqView[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useFaq(currentLang);
