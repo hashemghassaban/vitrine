@@ -1,6 +1,6 @@
 .showcase-container {
   width: 100%;
-  padding: 50px 40px;
+  padding: 50px 10%;
   margin-bottom: 80px;
 }
 
@@ -9,6 +9,7 @@
   margin-top: 40px;
   margin-bottom: 100px;
     text-align: right;
+        align-items: flex-start;
 }
 
 .title {
@@ -24,17 +25,23 @@
 
 .text {
   text-align: right;
-  margin-bottom: 25px;
+  margin-bottom: 0;
   max-width: 1000px;
   font-weight: 300;
   font-size: 15px;
     text-align: left;
-  line-height: 25px;
+ line-height: 35px;
   color: #000000;
 }
 
 .btn-box-brand-products{
  max-width: 1000px;
+ p{
+line-height: 35px;
+    text-align: justify;
+    font-weight: 100;
+    font-size: 15px;
+ }
 }
 
 .btn-more-brand-products {
@@ -45,8 +52,9 @@
   line-height: 45px;
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-  color: #010101 !important;
+     justify-content: flex-end;
+    color: #010101 !important;
+    flex-direction: row-reverse;
 
   &:hover {
     color: black !important;
@@ -69,6 +77,9 @@
       display: inline-block;
       margin-right: 5px; 
       transition: transform 0.3s ease;
+          transform: rotate(180deg);
+            position: relative;
+    top: -2px;
     }
 
     &::after {
@@ -76,7 +87,7 @@
     }
 
     &:hover::before {
-      transform: translateX(-5px);
+      transform: translateX(5px) rotate(180deg); 
     }
   }
 }
@@ -104,7 +115,7 @@
     width: 100% !important;
     height: 100% !important;
     max-height: inherit !important;
-    object-fit: none;
+  object-fit: scale-down;
     max-width: inherit !important;
 }
 
@@ -131,12 +142,12 @@ margin-bottom: 15px;
 .card-title {
 font-weight: 800;
 font-size: 23px;
-line-height: 17px;
+line-height: 45px;
 color: #767676;
 cursor: pointer;
   text-align: left;
-  height: 45px;
-  margin-top: 0!important;
+  height: 30px;
+    margin-top: 0 !important;
 
 }
 
@@ -147,12 +158,14 @@ cursor: pointer;
   align-items:center;          // وسط‌چین عمودی
   width: 100%;
   text-align: left;
+  position: relative;
 }
 .card-arrow {
   font-size: 20px;
       transform: rotate(180deg);
-    position: relative;
-    top: -7px;
+    position: absolute;
+    top: 6px;
+    right: 0;
 
   &:hover {
     color: black !important;
@@ -171,7 +184,9 @@ cursor: pointer;
     height: 170px;
   }
 }
-
+  .grid-row{
+    justify-content: flex-start;
+  }
 .ant-layout-rtl{
 
 .top-title , .text ,.black-title-sec  , .black-text-sec  , .card-title  , .card-text{
@@ -184,6 +199,7 @@ cursor: pointer;
     display: flex;
     justify-content: flex-start;
     flex-direction: row!important;
+        margin-top: 15px;
 }
 .btn-more-brand-products::before {
 
@@ -193,7 +209,8 @@ cursor: pointer;
 .card-arrow {
   font-size: 20px;
       transform: rotate(0deg);
-    top: -0;
+    top: 12px;
+    left: 0;
 
   &:hover {
     transform: translateX(-5px) rotate(0deg);

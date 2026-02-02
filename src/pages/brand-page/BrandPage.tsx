@@ -45,7 +45,7 @@ const BrandPage: React.FC = () => {
           {brands.map((item) => (
             <Col xs={24} sm={12} lg={8} key={item.id}>
               <Card className="brand-card">
-                <div brand-box>
+                <div brand-box className="logos">
                   <img
                     onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
                     src={item.logo}

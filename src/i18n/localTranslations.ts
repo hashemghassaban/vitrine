@@ -16,7 +16,8 @@ export const localTranslations: TranslationView[] = [
     { key: "local_download", value: { ar: "تحميل", en: "Download", fa: "دانلود" } },
     { key: "local_phone", value: { ar: "الهاتف", en: "Phone", fa: "تلفن" } },
     { key: "local_more", value: { ar: "المزيد", en: "More", fa: "بیشتر" } },
-    
+        { key: "local_less", value: { ar: "القلیل", en: "Less", fa: "کمتر" } },
+
     { key: "local_NotFoundMessage", value: { ar: "الصفحة المطلوبة غير موجودة", en: "Page Not Found", fa: "صفحه موردنظر یافت نشد" } },
     { key: "local_redirectToHome", value: { ar: "العودة إلى الصفحة الرئيسية", en: "Back to home", fa: "بازگشت به خانه" } },
     

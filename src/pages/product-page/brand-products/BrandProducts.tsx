@@ -16,7 +16,7 @@ const BrandProducts: React.FC = () => {
   const { currentLang } = useLanguage();
   const { getById } = useBrand(currentLang);
   const [brand, setBrand] = useState<BrandView | null>(null);
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
 
@@ -56,21 +56,22 @@ const BrandProducts: React.FC = () => {
             </Col>
             <Col xs={24} lg={15}>
               <h2 className="title"> {brand?.title}</h2>
-              <p className="text">{brand?.excerpt}</p>
+              {showMore&&(
+                <p className="text">{brand?.excerpt}</p>
+              )}
               <div className="btn-box-brand-products">
-                {!showMore ? (
-                  <Button
+               {!showMore && (
+                  <p>{brand?.description}</p>
+                )}
+                 <Button
                     type="link"
                     className={`btn-more-brand-products ${
                       currentLang == "en" ? "english" : ""
                     }`}
-                    onClick={() => setShowMore(true)}
+                    onClick={() => setShowMore(!showMore)}
                   >
-                    {t("local_more")}
+                    {showMore ? t("local_more") : t("local_less")}
                   </Button>
-                ) : (
-                  <p>{brand?.description}</p>
-                )}
               </div>
             </Col>
           </Row>
@@ -87,6 +88,7 @@ const BrandProducts: React.FC = () => {
                     </div>
                   </div>
                 </Col>
+                
               ))}
             </Row>
           </div>
