@@ -80,6 +80,7 @@ const AllProducts: React.FC = () => {
     useState<ProductCategoryView>();
   const { currentLang } = useLanguage();
   const { getListProducts } = useProducts(currentLang);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const [productFeatures, setProductFeatures] = useState<FeatureView[]>([]);
   const { getProductFeatures } = useProductFeatures(currentLang);
@@ -206,7 +207,7 @@ const AllProducts: React.FC = () => {
         text={`خانه > محصولات ${!!selectedCategory ? `> ${selectedCategory?.title}` : ""}`}
       />
       <div className="products-container">
-        <Row gutter={[0, 25]}>
+        <Row gutter={[0, 25]} style={{    justifyContent: 'space-between'}}>
           <Col xs={24} lg={6}>
             <div className="filters-box">
               <h3 className="filter-title">دسته‌بندی‌ها</h3>
@@ -428,28 +429,36 @@ const AllProducts: React.FC = () => {
               style={{ width: "100%" }}
             />
           </Col>
-          <Col xs={12} sm={12} lg={14}>
-            <div>
-              <h2 className="dec-title"> معرفی شوروم ویترین</h2>
-              <p className="dec-text">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-                در ستون و سطر آنچنان که لازم است. لورم ایپسوم متن ساختگی با
-                تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
-                است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطر آنچنان که
-                لازم است.
-              </p>
-              <p className="dec-text">
-                {" "}
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-                در ستون و سطر آنچنان که لازم است.
-              </p>
-              <Button type="link" className="btn-more-brand-products">
-                بیشتر
-              </Button>
-            </div>
-          </Col>
+      <Col xs={12} sm={12} lg={14}>
+      <div>
+        <h2 className="dec-title">معرفی شوروم ویترین</h2>
+
+        <p className="dec-text">
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+          در ستون و سطر آنچنان که لازم است.
+        </p>
+
+        <div className={`expandable-text ${isExpanded ? "show" : ""}`}>
+          <p className="dec-text">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+            استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+            در ستون و سطر آنچنان که لازم است.
+          </p>
+          <p className="dec-text">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.
+          </p>
+        </div>
+
+        <Button
+          type="link"
+          className="btn-more-brand-products"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? "کمتر" : "بیشتر"}
+        </Button>
+      </div>
+    </Col>
         </Row>
       </div>
       <AppFooter />
