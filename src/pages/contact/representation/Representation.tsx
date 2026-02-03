@@ -42,7 +42,7 @@ export default function Representation() {
             <Col key={item.id} xs={24} sm={12} md={8} lg={8}>
               <Card
                 hoverable
-                className="showcase-card-rep "
+                className="showcase-card-rep"
                 cover={
                   <div className="map">
                     {(() => {
