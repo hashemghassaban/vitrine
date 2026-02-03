@@ -54,7 +54,7 @@ export default function About() {
 
       <div className="article-content">
         <Row justify="center" gutter={[32, 32]}>
-          <Col xs={24} lg={12} className="article-col">
+          <Col xs={24} lg={12} className="article-col" >
             <div className="article-div">
               <h2 className="article-title">{page?.title}</h2>
               <p
