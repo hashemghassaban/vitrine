@@ -37,9 +37,9 @@ export default function Representation() {
           {t("site.agents1")}
         </Title>
 
-        <Row gutter={[24, 24]} justify="center">
+        <Row gutter={[24, 24]} justify="center" style={{justifyContent:'flex-start'}}>
           {repres.map((item) => (
-            <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
+            <Col key={item.id} xs={24} sm={12} md={8} lg={8}>
               <Card
                 hoverable
                 className="showcase-card-rep "
@@ -88,7 +88,7 @@ export default function Representation() {
                 </Row>
                 <Row
                   justify={"space-between"}
-                  style={{ marginInline: "10px", marginBottom: "10px" }}
+                  style={{ marginInline: "15px", marginBottom: "10px" }}
                 >
                   <Col>{t("local_phone")}</Col>
                   <Col>
