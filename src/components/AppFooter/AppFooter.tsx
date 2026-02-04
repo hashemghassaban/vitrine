@@ -11,7 +11,6 @@ import ico_facebook from "../../assets/footer/media5.png";
 import ico_youtube from "../../assets/footer/media6.png";
 import en from "../../assets/footer/en.png";
 import media7 from "../../assets/footer/media7.png";
-import media8 from "../../assets/footer/media8.png";
 
 import "./AppFooter.less";
 import { useLanguage } from "../../contexts/useLanguage";
