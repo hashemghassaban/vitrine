@@ -40,10 +40,6 @@ export type TranslationKey =
   | "site.indexservice2"
   | "site.indexservice3"
   | "site.indexservice4"
-  | "local_luxuryProducts"
-  | "local_vitrineBuildingShowroom"
-  | "local_moreInfo"
-  | "local_vitrinePlus"
 
   //footer
   | "site.footerblock1"
@@ -75,6 +71,16 @@ export type TranslationKey =
   | "local_more"
   | "local_less"
   | "local_vitrin20years"
+  | "local_category"
+  | "local_type_products"
+  | "local_type_blog"
+  | "local_type_news"
+  | "local_type_pages"
+  //index
+  | "local_luxuryProducts"
+  | "local_vitrineBuildingShowroom"
+  | "local_moreInfo"
+  | "local_vitrinePlus"
   //product
   | "local_getCatalog"
   | "local_relatedProducts"

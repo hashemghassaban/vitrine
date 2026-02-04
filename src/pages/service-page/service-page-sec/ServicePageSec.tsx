@@ -43,13 +43,7 @@ const ServicePageSec: React.FC = () => {
     fetchAim().finally(() => setLoading(false));
   }, [currentLang]);
 
-  const filledItems: AimItemView[] = React.useMemo(() => {
-    if (!items || items.length === 0) return [];
 
-    return Array.from({ length: 5 }, (_, index) => {
-      return items[index % items.length];
-    });
-  }, [items]);
 
   return (
     <>
@@ -64,12 +58,9 @@ const ServicePageSec: React.FC = () => {
             <Col className="txt-col" xs={24} lg={12}>
               <div className="top-text-box">
                 <h2 className="top-title">{items[0]?.title}</h2>
-                <p
-                  className="top-text"
-                  dangerouslySetInnerHTML={{
-                    __html: items[0]?.content ?? "",
-                  }}
-                ></p>
+             <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[0]?.excerpt ?? "",
+                  }}></p>
               </div>
             </Col>
           </Row>
@@ -91,24 +82,28 @@ const ServicePageSec: React.FC = () => {
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
                   <img
-                    src={filledItems[1]?.image}
-                    alt={filledItems[1]?.title}
+                    src={items[1]?.image}
+                    alt={items[1]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[1]?.title}</p>
-                  <p className="card-text">{filledItems[1]?.excerpt}</p>
+                  <p className="card-title-sec">{items[1]?.title}</p>
+                  <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[1]?.excerpt ?? "",
+                  }}></p>
                 </div>
 
                 <div className="stack-space" />
 
                 <div className="grid-card">
                   <img
-                    src={filledItems[1]?.image}
-                    alt={filledItems[1]?.title}
+                    src={items[2]?.image}
+                    alt={items[2]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[1]?.title}</p>
-                  <p className="card-text">{filledItems[1]?.excerpt}</p>
+                  <p className="card-title-sec">{items[2]?.title}</p>
+                  <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[2]?.excerpt ?? "",
+                  }}></p>
                 </div>
               </Col>
 
@@ -116,12 +111,14 @@ const ServicePageSec: React.FC = () => {
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
                   <img
-                    src={filledItems[2]?.image}
-                    alt={filledItems[2]?.title}
+                    src={items[3]?.image}
+                    alt={items[3]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[2]?.title}</p>
-                  <p className="card-text">{filledItems[2]?.excerpt}</p>
+                  <p className="card-title-sec">{items[3]?.title}</p>
+                  <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[3]?.excerpt ?? "",
+                  }}></p>
                 </div>
               </Col>
 
@@ -129,22 +126,26 @@ const ServicePageSec: React.FC = () => {
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
                   <img
-                    src={filledItems[3]?.image}
-                    alt={filledItems[3]?.title}
+                    src={items[4]?.image}
+                    alt={items[4]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[3]?.title}</p>
-                  <p className="card-text">{filledItems[3]?.excerpt}</p>
+                  <p className="card-title-sec">{items[4]?.title}</p>
+                  <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[4]?.excerpt ?? "",
+                  }}></p>
                 </div>
                 <div className="stack-space" />
                 <div className="grid-card">
                   <img
-                    src={filledItems[4]?.image}
-                    alt={filledItems[4]?.title}
+                    src={items[5]?.image}
+                    alt={items[5]?.title}
                     className="card-img"
                   />
-                  <p className="card-title-sec">{filledItems[4]?.title}</p>
-                  <p className="card-text">{filledItems[4]?.excerpt}</p>
+                  <p className="card-title-sec">{items[5]?.title}</p>
+                  <p className="card-text" dangerouslySetInnerHTML={{
+                    __html: items[5]?.excerpt ?? "",
+                  }}></p>
                 </div>
               </Col>
             </Row>

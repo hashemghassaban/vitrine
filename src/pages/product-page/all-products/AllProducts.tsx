@@ -6,7 +6,7 @@ import {
   type MenuProps,
   Checkbox,
   Tag,
-  
+
   Input,
   Divider,
   Card,
@@ -17,32 +17,29 @@ import imgb from "../../../assets/blog/img1.png";
 import useNavigation from "../../../hooks/useHistory";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
-
+import { useTranslate } from "../../../i18n/useTranslate";
+import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { useLanguage } from "../../../contexts/useLanguage";
 import useProducts from "../../../hooks/products/useProducts";
 import useProductFeatures from "../../../hooks/products/useProductFeatures";
 import type { FeatureView } from "../../../models/views/productFeaturesView";
-import type {
-  CollectionView,
-  ProductView,
-} from "../../../models/views/productView";
+import type { CollectionView, ProductView } from "../../../models/views/productView";
 import { CloseOutlined } from "@ant-design/icons";
 import useBrands from "../../../hooks/brand/useBrands";
 import type BrandView from "../../../models/views/brandView";
 import useIndex from "../../../hooks/index/useIndex";
+import { useSearchParams } from "react-router-dom";
 import type {
   IndexDataView,
   ProductCategoryView,
 } from "../../../models/views/indexView";
 import useCollections from "../../../hooks/collections/useCollections";
-import { useTranslate } from "../../../i18n/useTranslate";
-import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const buildMenuItems = (
   categories: ProductCategoryView[],
-  openKeys: string[],
+  openKeys: string[]
 ): MenuItem[] => {
   return categories.map((cat) => ({
     key: cat.slug,
@@ -67,19 +64,16 @@ const AllProducts: React.FC = () => {
     setOpenKeys(keys);
   };
 
-  {
-    /* --------------menu-------------*/
-  }
 
-  {
-    /* --------------filter-brand-------------*/
-  }
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
+  const [selectedFeature, setSelectedFeature] = useState<number[]>([]);
+  const [selectedCollection, setSelectedCollection] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] =
-    useState<ProductCategoryView>();
+    useState<ProductCategoryView | null>(null);
   const { currentLang } = useLanguage();
   const { getListProducts } = useProducts(currentLang);
+  const { t } = useTranslate();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [productFeatures, setProductFeatures] = useState<FeatureView[]>([]);
@@ -94,8 +88,8 @@ const AllProducts: React.FC = () => {
   const { push } = useNavigation();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { getIndex } = useIndex(currentLang);
-  const { t } = useTranslate();
-
+  const [searchParams] = useSearchParams();
+  const categorySlug = searchParams.get("category");
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
@@ -140,21 +134,53 @@ const AllProducts: React.FC = () => {
     fetchCollection();
   }, [currentLang]);
 
-  const filteredCollections =
-    selected.length === 0
-      ? collections
-      : collections.filter((c) => selected.includes(Number(c.brand_id)));
+  useEffect(() => {
+  if (categorySlug && data?.product_categories?.length) {
+    const cat = findCategoryBySlug(
+      data.product_categories,
+      categorySlug
+    );
 
-  const items = buildMenuItems(data?.product_categories ?? [], openKeys);
+    if (cat) {
+      setSelectedCategory(cat);
+    }
+  }
+}, [categorySlug, data]);
+  const filteredCollections = selected.length === 0
+    ? collections
+    : collections.filter((c) => selected.includes(Number(c.brand_id)));
+
+
+  const allProductsItem: MenuItem = {
+    key: "all-products",
+    label: (
+      <div className="menu-label">
+        <span>همه کالاها</span>
+      </div>
+    ),
+  };
+
+  const items = [allProductsItem, ...buildMenuItems(data?.product_categories ?? [], openKeys)];
 
   const toggleBrand = (id: number) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
 
   const removeFilter = (id: number) => {
     setSelected((prev) => prev.filter((i) => i !== id));
+  };
+
+  const selectCollection = (id: number) => {
+    setSelectedCollection((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+  const selectFeature = (id: number) => {
+    setSelectedFeature((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
   const findCategoryById = (
@@ -182,23 +208,54 @@ const AllProducts: React.FC = () => {
     }
   };
 
-  /* const filteredProducts =
-    selected.length === 0
-      ? product
-      : product.filter((item) =>
-          selected.some((id) => {
-            const b = brands.find((x) => x.id === id);
-            return b && item.brand.id === b.id;
-          })
-        );*/
+  const getFilteredProducts = (): ProductView[] => {
+    return product.filter((p) => {
+      const matchesBrand =
+        selected.length === 0 || selected.includes(p.brand?.id);
+
+      const matchesCollection =
+        selectedCollection.length === 0 || filteredCollections.some((c) => c.id == p?.collection?.id);
+
+      const matchesCategory =
+        !selectedCategory || p?.category?.id == selectedCategory?.id;
+
+      const matchesFeatures =
+        selectedFeature.length === 0 ||
+        selectedFeature.every(featureId =>
+          p.feature_values?.some(pf => pf.id == featureId)
+        )
+      return matchesBrand && matchesCollection && matchesCategory && matchesFeatures;
+    });
+  };
+  const filteredProducts = getFilteredProducts();
+
   const shouldShowFeatureMenu = (
-    selectedCategoryId: string | undefined,
-    featureCategoryId: string,
+    selectedCategoryId: string | undefined | null,
+    featureCategoryId: string
   ): boolean => {
     if (!selectedCategoryId) return false;
     return selectedCategoryId == featureCategoryId;
   };
 
+
+  const handleMenuSelect = ({ key }: { key: string }) => {
+    if (key === "all-products") {
+      setSelectedCategory(null);
+    } else {
+      const cat = findCategoryBySlug(
+        data?.product_categories ?? [],
+        key
+      );
+
+      setSelectedCategory(cat ?? null);
+    }
+  };
+  const getSelectedKeys = () => {
+    if (!selectedCategory) {
+      return ["all-products"];
+    }
+    return [selectedCategory.slug];
+  };
   return (
     <>
       <AppHeader
@@ -217,15 +274,10 @@ const AllProducts: React.FC = () => {
                   openKeys={openKeys}
                   onOpenChange={onOpenChange}
                   expandIcon={null}
-                  defaultSelectedKeys={["1"]}
+                  defaultSelectedKeys={["all-products"]}
+                  selectedKeys={getSelectedKeys()}
                   defaultOpenKeys={["sub1"]}
-                  onSelect={({ key }) => {
-                    const cat = findCategoryBySlug(
-                      data?.product_categories ?? [],
-                      key,
-                    );
-                    setSelectedCategory(cat);
-                  }}
+                  onSelect={handleMenuSelect}
                   mode="inline"
                   items={items}
                 />
@@ -309,7 +361,9 @@ const AllProducts: React.FC = () => {
                         <Menu.Item className="brand-menu-item" key={b.id}>
                           <div className="item-menu-box">
                             <div className="item-menu-check-box">
-                              <Checkbox className="item-menu-check">
+                              <Checkbox className="item-menu-check"
+                                checked={selectedCollection.includes(b.id)}
+                                onChange={() => selectCollection(b.id)}>
                                 {b.title}
                               </Checkbox>
                             </div>
@@ -325,76 +379,74 @@ const AllProducts: React.FC = () => {
                   </Menu.SubMenu>
                 </Menu>
               </div>
-              <div className=" menu-border">
-                <Menu className="menu-item-product-col  " mode="inline">
-                  {productFeatures
-                    .filter((feature) =>
-                      shouldShowFeatureMenu(
-                        selectedCategory?.id.toString(),
-                        feature?.category_id,
-                      ),
-                    )
-                    .map((item) => (
-                      <Menu.SubMenu
-                        key="ks"
-                        title={
-                          <div className="menu-label-filter">
-                            <span>{item?.title}</span>
-                            <span> &#8595;</span>
-                          </div>
-                        }
-                      >
-                        {item?.values.map((b, index) => (
-                          <>
-                            <Menu.Item className="brand-menu-item" key={b.id}>
-                              <div className="item-menu-box">
-                                <div className="item-menu-check-box">
-                                  <Checkbox className="item-menu-check">
-                                    {b.value}
-                                  </Checkbox>
+              {selectedCategory && (
+                <div className=" menu-border">
+                  <Menu className="menu-item-product-col  " mode="inline">
+                    {productFeatures
+                      .filter((feature) =>
+                        shouldShowFeatureMenu(
+                          selectedCategory?.id.toString(),
+                          feature?.category_id
+                        )
+                      )
+                      .map((item) => (
+                        <Menu.SubMenu
+                          key={`feature-${item.id}`}
+                          title={
+                            <div className="menu-label-filter">
+                              <span>{item?.title}</span>
+                              <span> &#8595;</span>
+                            </div>
+                          }
+                        >
+                          {item?.values.map((b, index) => (
+                            <>
+                              <Menu.Item className="brand-menu-item" key={b.id}>
+                                <div className="item-menu-box">
+                                  <div className="item-menu-check-box">
+                                    <Checkbox className="item-menu-check"
+                                      checked={selectedFeature.includes(b.id)}
+                                      onChange={() => selectFeature(b.id)}>
+                                      {b.value}
+                                    </Checkbox>
+                                  </div>
                                 </div>
-                              </div>
-                            </Menu.Item>
-                            {index !== item?.values.length - 1 && (
-                              <div className="divider-brand">
-                                <Divider className="divider-brand" />
-                              </div>
-                            )}
-                          </>
-                        ))}
-                      </Menu.SubMenu>
-                    ))}
-                </Menu>
-              </div>
+                              </Menu.Item>
+                              {index !== item?.values.length - 1 && (
+                                <div className="divider-brand">
+                                  <Divider className="divider-brand" />
+                                </div>
+                              )}
+                            </>
+                          ))}
+                        </Menu.SubMenu>
+                      ))}
+                  </Menu>
+                </div>
+              )}
             </div>
           </Col>
 
           <Col xs={24} lg={17}>
+
             <p className="count">
-              {product.length} {t("local_productsFound")}
+              {filteredProducts.length} {t("local_productsFound")}
             </p>
 
             <Row gutter={[20, 30]}>
-              {product.slice(0, visibleCount).map((item, i) => (
+              {filteredProducts.slice(0, visibleCount).map((item, i) => (
                 <Col xs={12} sm={12} lg={6} key={i}>
                   <Card
                     hoverable
                     className="showcase-card-product"
                     onClick={() => push(`/${currentLang}/products/${item.id}`)}
-                    cover={
-                      <img
-                        src={item?.image}
-                        alt="product"
-                        className="img-card-product"
-                      />
-                    }
+                    cover={<img src={item?.image} alt="product" className="img-card-product" />}
                   >
                     <div className="selected-tags-item">
                       {selected.map((id) => {
-                        const b = brands.find((x) => x.id === id);
-
+                        const b = brands.find((x) => x.id == id);
                         if (!b) return null;
-                        if (item.id !== b.id) return null;
+                        if (item.brand.id !== b.id) return null;
                         return (
                           <Tag key={id} onClose={() => removeFilter(id)}>
                             <div className="pulse-tag">{b.title}</div>
@@ -408,7 +460,7 @@ const AllProducts: React.FC = () => {
               ))}
             </Row>
 
-            {visibleCount < product.length && (
+            {visibleCount < filteredProducts.length && (
               <div className="load-more-box">
                 <button
                   className="load-more"
