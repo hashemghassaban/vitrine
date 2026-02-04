@@ -123,7 +123,7 @@ export const AppFooter: React.FC = () => {
                 <h2 className="app-footer__subscribe_title">
                   {t("local_newsletterSubscribtion")}
                 </h2>
-                <div className="">
+                <div className="blockEmail">
                   <Input
                     name="email"
                     className="app-footer__email"
@@ -176,9 +176,7 @@ export const AppFooter: React.FC = () => {
 
         {/* آیکون‌های رسانه و تماس */}
         <Row justify="end" className="contact">
-          <a href={data?.settings.whatsapp_url}>
-            <img src={media8} alt="media8" />
-          </a>
+       
           <a href={data?.settings.whatsapp_url}>
             <img src={media7} alt="media7" />
           </a>

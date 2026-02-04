@@ -49,21 +49,25 @@
   height: 335px;               
      gap: 25px 0;
   direction: rtl;
-  align-content: flex-start;
+  align-content: flex-end;
 }
 
 .menu-column {
   width: calc(100% / 5);
   box-sizing: border-box;
+
 }
 
 .menu-column-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    flex-direction: row-reverse;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    justify-content: flex-start;
+
 }
 
 .menu-column-title img {
@@ -96,17 +100,26 @@
 }
 
 .ant-modal-wrap-rtl{
+  .ant-row{
+    justify-content: flex-end;
+  }
+    .menu-grid{
+        align-content: flex-start;
+  }
+
   .menu-item-link{
-    text-align: left;
+    text-align: right;
         padding-right: inherit;
             padding-left: 30px;
   }
 .menu-column-title{
- justify-content: flex-start;
-    flex-direction: row-reverse;
+       justify-content: flex-start;
+           flex-direction: row;
 }
 .ant-row{
     flex-direction: row-reverse;
 }
    
 }
+
+

@@ -44,20 +44,20 @@
   justify-content: center;
   .ant-menu-item,
   .ant-menu-submenu-title {
-    padding: 0;
+    padding: 0 27px;
     color: white !important;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
     line-height: 60px;
-    width: 115px;
+    width: auto;
     text-align: center;
   }
 
   .ant-menu-item:hover,
   .ant-menu-submenu-title:hover {
     color: #fff !important;
-    font-weight: 700 !important; /* ← Bold */
+    font-weight: 400 !important; /* ← Bold */
     background: transparent !important;
   }
 }
@@ -165,3 +165,15 @@
     left: 80px;
     top: 37px;
 }
+   .ant-menu-submenu-rtl.ant-menu-submenu-popup >.ant-menu .ant-menu-item{
+      direction: rtl!important;
+    }
+
+    .ant-menu-sub.ant-menu-vertical{
+      left: 22px;
+
+    }
+    .ant-menu-submenu-rtl.ant-menu-submenu-placement-bottomLeft .ant-menu-vertical{
+      left: -100%!important;
+
+    }

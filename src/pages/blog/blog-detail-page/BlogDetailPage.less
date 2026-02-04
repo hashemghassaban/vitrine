@@ -7,7 +7,7 @@
   .sidebar {
     text-align: right;
     display: flex;
-    justify-content: end;
+    justify-content: start;
     padding-top: 60px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
@@ -53,7 +53,7 @@
 
       p {
         margin-bottom: 12px;
-  text-align: left;
+  text-align: justify!important;
         font-weight: 300;
         font-size: 13px;
         line-height: 27px;
@@ -71,14 +71,14 @@
         align-items: center;
         gap: 6px;
                 flex-direction: row-reverse;
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: 100%;
         &:hover {
           color: black;
         }
       }
       
-    .ant-btn-link::before {
+    .ant-btn-link::after {
         content: "←";
         display: inline-block;
         transition: transform 0.3s ease;
@@ -87,14 +87,18 @@
       }
 
       /* هاور = حرکت فلش به جلو */
-      .ant-btn-link:hover::before {
+      .ant-btn-link:hover::after {
         transform: translateX(-5px) rotate(180deg); /* حرکت رو به جلو */
       }
     
 
     }
   }
+ 
+ .ant-row{
 
+    flex-direction: row-reverse!important;
+  }
   /* ---------- Main Content ---------- */
   .main-content {
     text-align: right;
@@ -133,7 +137,7 @@
       line-height: 30px;
       margin-bottom: 25px;
       font-weight: 300;
-      text-align: start;
+      text-align: justify!important;
 
     }
 
@@ -254,11 +258,15 @@
 }
 
 .ant-layout-rtl{
+   .ant-row{
+
+    flex-direction: row;
+  }
     .title , .meta , .paragraph ,  .sidebar-title  , .title-stiler , .related-item p{
       text-align: right!important;
     }
   .ant-btn-link{
-    flex-direction: row-reverse!important;
+    flex-direction: row!important;
   }
     .main-content {
     padding-right: 50px !important;
@@ -268,13 +276,13 @@
       direction: rtl!important;
       text-align: right!important;
     }
-        .ant-btn-link::before {
+        .ant-btn-link::after {
      transform: rotate(0deg)!important; 
         top: 0!important;
       }
 
       /* هاور = حرکت فلش به جلو */
-      .ant-btn-link:hover::before {
+      .ant-btn-link:hover::after {
     transform: translateX(-5px) rotate(0deg)!important; 
       }
   

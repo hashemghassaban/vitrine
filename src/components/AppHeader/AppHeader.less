@@ -50,20 +50,20 @@
   justify-content: center;
   .ant-menu-item,
   .ant-menu-submenu-title {
-    padding: 0;
+    padding: 0 27px;
     color: white !important;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
     line-height: 60px;
-    width: 115px;
+    width: auto;
     text-align: center;
   }
 
   .ant-menu-item:hover,
   .ant-menu-submenu-title:hover {
     color: #fff !important;
-    font-weight: 700 !important; /* ← Bold */
+    font-weight: 400 !important; /* ← Bold */
     background: transparent !important;
   }
 }
@@ -115,7 +115,7 @@
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
-    direction: rtl !important;
+    direction: ltr !important;
   }
   .ant-menu-item {
     color: #b0b0b0 !important;
@@ -204,12 +204,15 @@
   background: rgba(0, 0, 0, 0.55); /* نیمه‌شفاف */
   z-index: 9998;
 }
+
 .ant-layout-rtl{
+  
+
    .search-box{
     left: inherit;
         right: 40px;
         .search-input{
-          text-align: left;
+          text-align: right;
         }
   }
 }
@@ -224,7 +227,6 @@
   width: 275px;
     height: 53px;
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
   gap: 10px;
 }
@@ -236,7 +238,7 @@
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  text-align: right;
+  text-align: left;
   padding: 0 5px;
 }
 
@@ -262,7 +264,7 @@
   text-align: left;
   display: flex;
   justify-content: flex-start;
-  padding-left: 70px;
+  padding-left: 140px;
   flex-direction: column;
 
   .title-page {
@@ -292,7 +294,7 @@
   text-align: left;
   display: flex;
   justify-content: flex-start;
-  padding-left: 55px;
+  padding-left: 140px;
   flex-direction: column;
 
   .title-page2 {
@@ -312,16 +314,20 @@
     font-size: 18px;
     line-height: 30px;
     color: #767676;
-    padding-top: 80px;
+    padding-top: 60px;
     z-index: 2;
   }
 }
 .ant-layout-rtl {
   .box-page ,  .box-page2{
         padding-left: 0;
-            padding-right: 55px;
+            padding-right: 140px;
   }
   .box-page .title-page ,  .box-page .text-page ,  .box-page2 .title-page2  , .box-page2  .text-page2{
         text-align: right;
   }
 }
+
+   .ant-menu-submenu-rtl.ant-menu-submenu-popup >.ant-menu .ant-menu-item{
+      direction: rtl!important;
+    }

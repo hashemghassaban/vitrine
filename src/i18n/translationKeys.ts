@@ -69,6 +69,7 @@ export type TranslationKey =
   | "local_download"
   | "local_phone"
   | "local_more"
+  | "local_less"
   | "local_vitrin20years"
   | "local_category"
   | "local_type_products"

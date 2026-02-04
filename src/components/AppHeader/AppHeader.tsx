@@ -104,6 +104,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
               },
             ],
     },
+     {
+      key: "menu-catalogues",
+      title: { en: "Callections", fa: "کالکشن ها", ar: "الکالکشن" },
+      path: "collections",
+    },
     {
       key: "menu-catalogues",
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
