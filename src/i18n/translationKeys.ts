@@ -76,6 +76,8 @@ export type TranslationKey =
   | "local_type_blog"
   | "local_type_news"
   | "local_type_pages"
+  | "local_aboutVitrine"
+  | "local_ourServices"
   //index
   | "local_luxuryProducts"
   | "local_vitrineBuildingShowroom"
@@ -97,6 +99,7 @@ export type TranslationKey =
   | "local_relatedArticles"
   | "local_readArticle"
   | "local_nextArticles"
+  | "local_lastArticles"
   //contactBranch
   | "local_completeTheForm"
   | "local_invalidEmail"

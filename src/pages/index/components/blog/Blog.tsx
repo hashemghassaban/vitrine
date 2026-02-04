@@ -6,11 +6,13 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { AppButton } from "../../../../components/AppButton/AppButton";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import { useIndexContext } from "../../../../contexts/indexContext";
+import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const Blog: React.FC = () => {
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { indexData } = useIndexContext();
+  const { t } = useTranslate();
   const truncateHtml = (html: string, limit: number) => {
     const div = document.createElement("div");
     div.innerHTML = html;
@@ -24,7 +26,7 @@ export const Blog: React.FC = () => {
   return (
     <section id="blog" className="blog">
       <Row justify="center" className="first__title">
-        <p>آخرین نوشته‌های ویترین</p>
+        <p>{t("local_lastArticles")}</p>
       </Row>
       {indexData?.blog_items.map((item, index) => {
         const isEven = index % 2 === 0;
@@ -61,7 +63,7 @@ export const Blog: React.FC = () => {
                   className="blog__more"
                   onClick={() => push(`/${currentLang}/blog/${item.id}`)}
                 >
-                  خواندن مقاله <ArrowLeftOutlined />
+                 {t("local_readArticle")}<ArrowLeftOutlined />
                 </a>
               </div>
             </Col>
@@ -74,7 +76,7 @@ export const Blog: React.FC = () => {
           className="blog__Button"
           onclick={() => push(`/${currentLang}/blog`)}
         >
-          مقاله‌های بعدی
+          {t("local_nextArticles")}
         </AppButton>
       </Row>
     </section>

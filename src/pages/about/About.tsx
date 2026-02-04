@@ -13,6 +13,7 @@ import type { PageView } from "../../models/views/pageView";
 import "antd/dist/reset.css";
 import "./About.less";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
+import { useTranslate } from "../../i18n/useTranslate";
 
 export default function About() {
   useSyncLanguage();
@@ -21,6 +22,7 @@ export default function About() {
   const { getAbout } = useAboutPage(currentLang);
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
   const { getIndex } = useIndex(currentLang);
+  const { t } = useTranslate();
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
@@ -59,7 +61,7 @@ export default function About() {
     <>
       <AppHeader
         noBackground
-        title={currentLang == "fa" ? "درباره ویترین" : (currentLang == "en" ? " About vitrine" : "من نحن ویترین")}
+        title={t("local_aboutVitrine")}
       />
 
       <div className="article-content">

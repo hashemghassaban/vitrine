@@ -26,9 +26,9 @@ export const localTranslations: TranslationView[] = [
     { key: "local_redirectToHome", value: { ar: "العودة إلى الصفحة الرئيسية", en: "Back to home", fa: "بازگشت به خانه" } },
     
     { key: "local_luxuryProducts", value: { ar: "المنتجات الفاخرة", en: "Luxury Products", fa: "محصولات لوکس" } },
-    { key: "local_vitrineBuildingShowroom", value: { ar: "صالة عرض المباني - فيترين", en: "Vitrine Building Showroom", fa: "شوروم ساختمانی ویترین" } },
+    { key: "local_vitrineBuildingShowroom", value: { ar: "صالة عرض المباني - ویترین", en: "Vitrine Building Showroom", fa: "شوروم ساختمانی ویترین" } },
     { key: "local_moreInfo", value: { ar: "مزيد من المعلومات", en: "More Info", fa: "اطلاعات بیشتر" } },
-    { key: "local_vitrinePlus", value: { ar: "فيترين بلاس", en: "Vitrine Plus", fa: "ویترین پلاس" } },
+    { key: "local_vitrinePlus", value: { ar: "ویترین بلاس", en: "Vitrine Plus", fa: "ویترین پلاس" } },
 
     //footer
     { key: "local_invalidEmailAddress", value: { ar: "البريد الإلكتروني غير صالح.", en: "Invalid email address.", fa: "ایمیل وارد شده نامعتبر است." } },
@@ -40,6 +40,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_relatedArticles", value: { ar: "مقالات ذات صلة", en: "Related articles", fa: "مقالات مرتبط" } },
     { key: "local_readArticle", value: { ar: "قراءة المقال", en: "Read the article", fa: "خواندن مقاله" } },
     { key: "local_nextArticles", value: { ar: "المقالات التالية", en: "Next articles", fa: "مقاله‌های بعدی" } },
+    { key: "local_lastArticles", value: { ar: "آخر المقالات في ویترین", en: "Last articles on Vitrine", fa: "آخرین نوشته‌های ویترین" } },
     //product
     { key: "local_getCatalog", value: { ar: "الحصول على الكتالوج", en: "Get the catalog", fa: "دریافت کاتالوگ" } },
     { key: "local_relatedProducts", value: { ar: "المنتجات ذات الصلة", en: "Related products", fa: "محصولات مرتبط" } },
@@ -54,7 +55,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_completeTheForm", value: { ar: "يرجى إكمال النموذج.", en: "Please complete the form.", fa: "لطفا فرم را تکمیل کنید." } },
     { key: "local_invalidEmail", value: { ar: "البريد الإلكتروني غير صالح.", en: "Invalid email address.", fa: "ایمیل وارد شده نامعتبر است." } },
     { key: "local_invalidPhone", value: { ar: "رقم الهاتف غير صالح.", en: "Invalid phone number.", fa: "شماره تماس وارد شده نامعتبر است" } },
-    { key: "local_contactVitrine", value: { ar: "التواصل مع فيترين", en: "Contact Vitrine", fa: "تماس با ویترین" } },
+    { key: "local_contactVitrine", value: { ar: "التواصل مع ویترین", en: "Contact Vitrine", fa: "تماس با ویترین" } },
     { key: "local_contactAddress", value: { ar: "/العنوان", en: "/Address", fa: "نشانی/" } },
     { key: "local_contactPhone", value: { ar: "/الهاتف", en: "/Phone", fa: "تلفن/" } },
     { key: "local_contactEmail", value: { ar: "البريد الإلكتروني", en: "email", fa: "آدرس ایمیل" } },
@@ -64,5 +65,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_contactMessageContent", value: { ar: "الرسالة *", en: "Message *", fa: "موضوع تماس و پیام شما *" } },
     { key: "local_contactSendMessage", value: { ar: "إرسال الرسالة", en: "Send Message", fa: "ارسال پیام" } },
 
-    { key: "local_vitrin20years", value: { ar: "فيترين إلى جانبكم منذ 20 عامًا.", en: "Vitrin has been by your side for 20 years.", fa: "ویترین ۲۰ سال است در کنار شماست" } },
+    { key: "local_vitrin20years", value: { ar: "ویترین إلى جانبكم منذ 20 عامًا.", en: "Vitrin has been by your side for 20 years.", fa: "ویترین ۲۰ سال است در کنار شماست" } },
+    { key: "local_aboutVitrine", value: { ar: "من نحن ویترین", en: "About Vitrine", fa: "درباره ویترین" } },
+    { key: "local_ourServices", value: { ar: "التعرّف على الخدمات", en: "Our Services", fa: "آشنایی با خدمات" } },
 ];
