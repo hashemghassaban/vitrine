@@ -19,7 +19,8 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     getTranslations().then((res) => {
-      setTranslations([...localTranslations, ...res.data!]);
+      const local = localTranslations.filter((c) => !res.data!.some((d) => c.key == d.key));
+      setTranslations([...local, ...res.data!]);
       setLoading(false);
     });
   }, []);

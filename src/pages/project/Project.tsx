@@ -15,7 +15,7 @@ function Project() {
         <Content>
           <ProjectItem />
         </Content>
-            <AppFooter />
+        <AppFooter />
       </Layout>
     </>
   );
