@@ -9,7 +9,11 @@ export const localTranslations: TranslationView[] = [
     { key: "local_readMore", value: { ar: "اقرأ المزيد", en: "Read more", fa: "ادامه مطلب" } },
     { key: "local_searchResults2", value: { ar: "نتائج البحث عن", en: "results for search", fa: "نتیجه در جستجوی ویترین" } },
     { key: "local_searchResults1", value: { ar: "نتائج البحث", en: "Search results", fa: "نتایج جستجو" } },
-
+    { key: "local_type_products", value: { ar: "منتجات", en: "Products", fa: "محصولات" } },
+    { key: "local_type_blog", value: { ar: "مدونة", en: "Blog", fa: "بلاگ" } },
+    { key: "local_type_news", value: { ar: "أخبار", en: "News", fa: "اخبار" } },
+    { key: "local_type_pages", value: { ar: "صفحات", en: "Pages", fa: "صفحات" } },
+    { key: "local_category",value: { fa: "دسته‌بندی",en: "Category", ar: "التصنيف" } },
     { key: "local_noSearchQuery", value: { ar: "لم يتم إدخال عبارة للبحث", en: "No search query provided", fa: "عبارتی برای جستجو وارد نشده است" } },
     { key: "local_all", value: { ar: "الكل", en: "All", fa: "همه" } },
     { key: "local_view", value: { ar: "عرض", en: "View", fa: "مشاهده" } },

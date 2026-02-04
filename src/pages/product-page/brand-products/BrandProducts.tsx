@@ -19,7 +19,22 @@ const BrandProducts: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
+  const getDescriptionContinuation = () => {
+  if (!brand?.description || !brand?.excerpt) return "";
 
+
+  const cleanExcerpt = brand.excerpt
+    .replace(/(\.\.\.|…)\s*$/, "")
+    .trim();
+
+
+  if (brand.description.length <= cleanExcerpt.length) {
+    return "";
+  }
+
+
+  return brand.description.substring(cleanExcerpt.length+3).trim();
+};
   const fetchBrand = async () => {
     if (!id) return;
     setLoading(true);
@@ -69,7 +84,9 @@ const BrandProducts: React.FC = () => {
                     {t("local_more")}
                   </Button>
                 ) : (
-                  <p>{brand?.description}</p>
+                  <p dangerouslySetInnerHTML={{
+                    __html: getDescriptionContinuation(),
+                  }}></p>
                 )}
               </div>
             </Col>

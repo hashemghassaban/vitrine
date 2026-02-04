@@ -7,8 +7,8 @@ import play from "../../assets/about/play.png";
 import { useEffect, useState } from "react";
 import useAboutPage from "../../hooks/page/useAboutPage";
 import { useLanguage } from "../../contexts/useLanguage";
-import type { SettingView } from "../../models/views/settingView";
-import useSetting from "../../hooks/setting/useSetting";
+import type { IndexDataView } from "../../models/views/indexView";
+import useIndex from "../../hooks/index/useIndex";
 import type { PageView } from "../../models/views/pageView";
 import "antd/dist/reset.css";
 import "./About.less";
@@ -19,16 +19,26 @@ export default function About() {
   const { currentLang } = useLanguage();
   const [page, setPage] = useState<PageView>();
   const { getAbout } = useAboutPage(currentLang);
-  const [setting, setSetting] = useState<SettingView | null>(null);
-  const { getSetting } = useSetting(currentLang);
-
-  const fetchVideo = async () => {
-    const { success, data } = await getSetting();
+  const [indexData, setIndexData] = useState<IndexDataView | null>(null);
+  const { getIndex } = useIndex(currentLang);
+  const fetchIndex = async () => {
+    const { success, data } = await getIndex();
     if (success && data) {
-      setSetting(data);
+      setIndexData(data);
     }
   };
 
+  useEffect(() => {
+    setIndexData(null);
+    fetchIndex();
+  }, [currentLang]);
+
+  const videoOne = indexData?.sliders.find(
+    (item) => item.slug == "about-video-one",
+  );
+  const videoTwo = indexData?.sliders.find(
+    (item) => item.slug == "about-video-two",
+  );
   const fetchabout = async () => {
     const { success, data } = await getAbout();
     if (success && data) {
@@ -37,11 +47,11 @@ export default function About() {
   };
 
   useEffect(() => {
-    fetchVideo();
+
     fetchabout();
   }, [currentLang]);
 
-  // حالت نمایش ویدیو
+  
   const [showVideo1, setShowVideo1] = useState(false);
   const [showVideo2, setShowVideo2] = useState(false);
 
@@ -49,7 +59,7 @@ export default function About() {
     <>
       <AppHeader
         noBackground
-        title={currentLang == "fa" ? "درباره ویترین" : (currentLang == "en"? " About vitrine":"من نحن ویترین")}
+        title={currentLang == "fa" ? "درباره ویترین" : (currentLang == "en" ? " About vitrine" : "من نحن ویترین")}
       />
 
       <div className="article-content">
@@ -81,41 +91,42 @@ export default function About() {
             <div className="video-div" onClick={() => setShowVideo1(true)}>
               {!showVideo1 ? (
                 <>
-                  <img src={page?.thumbnail ?? ""} className="main-image" />
+                  <img src={videoOne?.image ?? undefined} className="main-image" />
                   <img src={play} className="overlay-image" />
                 </>
               ) : (
-                <iframe
-                  width="800"
-                  height="468"
-                  src={setting?.video_url}
-                  title="YouTube Video"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <div>
+                  <video controls width="600"
+                    height="468" style={{
+                      border: "none",
+                    }}
+                  >
+                    <source src={videoOne?.video ?? undefined} type="video/mp4" />
+                  </video>ّ
+                </div>
               )}
             </div>
           </Col>
 
           {/* ویدیو ۲ */}
           <Col xs={24} md={12} className="box-video2">
-            <div className="video-div" onClick={() => setShowVideo2(true)}>
+            <div className=" video-div" onClick={() => setShowVideo2(true)}>
               {!showVideo2 ? (
                 <>
-                  <img src={page?.thumbnail ?? ""} className="main-image" />
+                  <img src={videoTwo?.image ?? ""} className="main-image" />
                   <img src={play} className="overlay-image" />
                 </>
               ) : (
-                <iframe
-                  width="800"
-                  height="468"
-                  src={setting?.video_url}
-                  title="Video"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <div>
+                  <video controls width="600"
+                    height="468" style={{
+                      border: "none",
+                    
+                    }}
+                  >
+                    <source src={videoTwo?.video ?? ""} type="video/mp4" />
+                  </video>ّ
+                </div>
               )}
             </div>
           </Col>

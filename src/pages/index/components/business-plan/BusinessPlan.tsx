@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Row } from "antd";
 import { AppButton } from "../../../../components/AppButton/AppButton";
 import "./BusinessPlan.less";
-import businessImg from "../../../../assets/business-plan/business-img.png";
 import useNavigation from "../../../../hooks/useHistory";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import { useIndexContext } from "../../../../contexts/indexContext";
@@ -21,7 +20,7 @@ export const BusinessPlan: React.FC = () => {
         {/* ستون تصویر */}
         <Col xs={24} sm={24} lg={12} className="business-plan__img-col">
           <img
-            src={businessImg}
+            src={data?.image ?? undefined}
             alt="business"
             className="business-plan__img"
           />

@@ -9,12 +9,16 @@ import { AppHeaderIndex } from "../header/AppHeaderIndex";
 import { Button } from "antd";
 import { ScrollDown } from "./scroll-down/ScrollDown";
 import intro from "../../../../assets/home/intro.png";
-import video from "../../../../assets/home/video.mp4";
 import { useTranslate } from "../../../../i18n/useTranslate";
+import { useIndexContext } from "../../../../contexts/indexContext";
 
 export function Home(): JSX.Element {
   const carouselRef = useRef<any>(null);
   const { t } = useTranslate();
+  const { indexData } = useIndexContext();
+   const data = indexData?.sliders.find(
+    (item) => item.id == 11,
+  );
   return (
     <section id="home" className="home">
       <AppHeaderIndex />
@@ -32,7 +36,7 @@ export function Home(): JSX.Element {
           </div>
           <div className="home__content" id="home-content2">
             <video autoPlay muted>
-              <source src={video}></source>
+              <source src={data?.video ?? undefined}></source>
             </video>
           </div>
         </Carousel>

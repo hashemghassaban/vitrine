@@ -1,11 +1,17 @@
 import React from "react";
 import { Col, Row } from "antd";
 import { AppButton } from "../../../../components/AppButton/AppButton";
-
-import img from "../../../../assets/service/image.png";
 import "./Service.less";
-
+import { useIndexContext } from "../../../../contexts/indexContext";
+import useNavigation from "../../../../hooks/useHistory";
+import { useLanguage } from "../../../../contexts/useLanguage";
 export const Service: React.FC = () => {
+  const { indexData } = useIndexContext();
+  const { push } = useNavigation();
+  const { currentLang } = useLanguage();
+  const data = indexData?.sliders.find(
+    (item) => item.slug == "home-service-section",
+  );
   return (
     <section id="Service" className="service">
       <Row className="first__title" justify="center">
@@ -21,22 +27,23 @@ export const Service: React.FC = () => {
           xl={7}
           className="service__content fade-in"
         >
-          <a href="#" className="service__title">این پروژه سوپرلوکس با محصولات</a>
+          <a href={`/${currentLang}${data?.link}`} className="service__title">{data?.title}</a>
 
-          <p className="service__text">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            استفاده از طراحان گرافیک است.
+          <p className="service__text" dangerouslySetInnerHTML={{
+            __html: data?.description ?? "",
+          }}>
+
           </p>
 
-          <AppButton className="service__Button">مشاوره و طراحی</AppButton>
+          <AppButton onclick={() => push(`/${currentLang}/${data?.link}`)} className="service__Button"> {data?.link_title} </AppButton>
         </Col>
 
         <Col xs={24} sm={24} md={12} lg={14} xl={17} className="service__image">
-        <a href="#" >
-          <img src={img} alt="service" className="service-img" />
+          <a href={`/${currentLang}${data?.link}`}>
+            <img src={data?.image ?? undefined} alt="service" className="service-img" />
 
 
-        </a>
+          </a>
         </Col>
       </Row>
     </section>
