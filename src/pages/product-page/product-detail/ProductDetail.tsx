@@ -74,7 +74,7 @@ const [rating, setRating] = useState(0);
         <Row gutter={[40, 40]} justify="center">
           <Col xs={24} md={12} lg={15} className="product-info">
             <div className="product-info">
-              <div className="brand-section">
+              <div className="brand-section" id="sectionDown">
                 <div>
                   <div className="date-box">بهار ۲۰۲۵</div>
                   <p className="category-text">

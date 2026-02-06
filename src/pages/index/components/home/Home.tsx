@@ -46,7 +46,7 @@ export function Home(): JSX.Element {
           <Button className="home__button">{t("local_moreInfo")}</Button>
         </div>
 
-        <ScrollDown targetId="home-content" />
+        <ScrollDown />
       </div>
     </section>
   );

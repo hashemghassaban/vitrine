@@ -3,19 +3,19 @@ import "./ScrollDown.less";
 import { useTranslate } from "../../../../../i18n/useTranslate";
 
 interface ScrollDownProps {
-  targetId?: string; // id بخشی که میخوای اسکرول بشه
+  scrollAmount?: number; // اختیاری، می‌تونی مقدار px هم بدی
 }
 
 export const ScrollDown: FC<ScrollDownProps> = ({
-  targetId = "home-content",
+  scrollAmount,
 }) => {
   const { t } = useTranslate();
 
   const scrollToContent = () => {
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    window.scrollBy({
+      top: scrollAmount ?? window.innerHeight, // اگر scrollAmount داده نشده، از 100vh استفاده می‌کنه
+      behavior: "smooth",
+    });
   };
 
   return (
