@@ -129,11 +129,14 @@ const ServicePage: React.FC = () => {
           <Row gutter={[0, 10]} className="grid-section">
             <Col xs={24} sm={12} lg={8}>
               <div className="grid-card">
-                <img
+                <div className="img-block">
+ <img
                   src={items[0].image}
                   alt={items[0].title}
                   className="card-img"
                 />
+                </div>
+               
                 <p className="card-title">{items[0].title}</p>
                 <p className="card-text">{items[0].text}</p>
               </div>
@@ -141,11 +144,13 @@ const ServicePage: React.FC = () => {
               <div className="stack-space" />
 
               <div className="grid-card">
+                <div className="img-block">
                 <img
                   src={items[3].image}
                   alt={items[3].title}
                   className="card-img"
                 />
+                </div>
                 <p className="card-title">{items[3].title}</p>
                 <p className="card-text">{items[3].text}</p>
               </div>
@@ -154,11 +159,13 @@ const ServicePage: React.FC = () => {
             {/* ستون 2 → آیتم 2 */}
             <Col xs={24} sm={12} lg={8}>
               <div className="grid-card">
+                 <div className="img-block">
                 <img
                   src={items[1].image}
                   alt={items[1].title}
                   className="card-img"
                 />
+                </div>
                 <p className="card-title">{items[1].title}</p>
                 <p className="card-text">{items[1].text}</p>
               </div>
@@ -167,21 +174,25 @@ const ServicePage: React.FC = () => {
             {/* ستون 3 → آیتم 3 و 5 */}
             <Col xs={24} sm={12} lg={8}>
               <div className="grid-card">
+                 <div className="img-block">
                 <img
                   src={items[0].image}
                   alt={items[0].title}
                   className="card-img"
                 />
+                </div>
                 <p className="card-title">{items[0].title}</p>
                 <p className="card-text">{items[0].text}</p>
               </div>
               <div className="stack-space" />
               <div className="grid-card">
+                 <div className="img-block">
                 <img
                   src={items[3].image}
                   alt={items[3].title}
                   className="card-img"
                 />
+                </div>
                 <p className="card-title">{items[3].title}</p>
                 <p className="card-text">{items[3].text}</p>
               </div>

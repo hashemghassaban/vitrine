@@ -81,11 +81,13 @@ const ServicePageSec: React.FC = () => {
             <Row gutter={[0, 10]} className="grid-section">
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
+                    <div className="img-block">
                   <img
                     src={items[1]?.image}
                     alt={items[1]?.title}
                     className="card-img"
                   />
+                  </div>
                   <p className="card-title-sec">{items[1]?.title}</p>
                   <p className="card-text" dangerouslySetInnerHTML={{
                     __html: items[1]?.excerpt ?? "",
@@ -95,11 +97,13 @@ const ServicePageSec: React.FC = () => {
                 <div className="stack-space" />
 
                 <div className="grid-card">
+                   <div className="img-block">
                   <img
                     src={items[2]?.image}
                     alt={items[2]?.title}
                     className="card-img"
                   />
+                  </div>
                   <p className="card-title-sec">{items[2]?.title}</p>
                   <p className="card-text" dangerouslySetInnerHTML={{
                     __html: items[2]?.excerpt ?? "",
@@ -110,11 +114,13 @@ const ServicePageSec: React.FC = () => {
               {/* ستون 2 → آیتم 2 */}
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
+                   <div className="img-block">
                   <img
                     src={items[3]?.image}
                     alt={items[3]?.title}
                     className="card-img"
                   />
+                  </div>
                   <p className="card-title-sec">{items[3]?.title}</p>
                   <p className="card-text" dangerouslySetInnerHTML={{
                     __html: items[3]?.excerpt ?? "",
@@ -125,11 +131,13 @@ const ServicePageSec: React.FC = () => {
               {/* ستون 3 → آیتم 3 و 5 */}
               <Col xs={24} sm={12} lg={8}>
                 <div className="grid-card">
+                   <div className="img-block">
                   <img
                     src={items[4]?.image}
                     alt={items[4]?.title}
                     className="card-img"
                   />
+                  </div>
                   <p className="card-title-sec">{items[4]?.title}</p>
                   <p className="card-text" dangerouslySetInnerHTML={{
                     __html: items[4]?.excerpt ?? "",
@@ -137,11 +145,13 @@ const ServicePageSec: React.FC = () => {
                 </div>
                 <div className="stack-space" />
                 <div className="grid-card">
+                   <div className="img-block">
                   <img
                     src={items[5]?.image}
                     alt={items[5]?.title}
                     className="card-img"
                   />
+                  </div>
                   <p className="card-title-sec">{items[5]?.title}</p>
                   <p className="card-text" dangerouslySetInnerHTML={{
                     __html: items[5]?.excerpt ?? "",

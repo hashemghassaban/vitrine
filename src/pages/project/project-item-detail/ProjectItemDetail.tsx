@@ -24,6 +24,7 @@ export default function ProjectItemDetail() {
   const { t } = useTranslate();
   const { push } = useNavigation();
   const carouselRef = useRef<any>(null);
+const videoRef = useRef<HTMLVideoElement>(null);
 
   const prev = () => {
     if (current > 0) {
@@ -39,6 +40,14 @@ export default function ProjectItemDetail() {
     }
   };
 
+  const onplay = () =>{
+         setShowVideo(true)
+
+     setTimeout(() => {
+    videoRef.current?.play();
+  }, 0);
+
+  }
   useEffect(() => {
     let isMounted = true;
 
@@ -200,7 +209,7 @@ export default function ProjectItemDetail() {
                     src={icon}
                     alt="vector"
                     className="center-img"
-                    onClick={() => setShowVideo(true)}
+                    onClick={() => onplay()}
                     style={{ cursor: "pointer" }}
                   />
                 </>
@@ -222,19 +231,22 @@ export default function ProjectItemDetail() {
                         height: 0,
                       }}
                     >
-                      <video controls width="100%"    style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          border: "none",
-                        }}
-                       
-                        >
-                        <source src={project.video_link} type="video/mp4" />
-                      </video>
-          
+                     <video
+  ref={videoRef}
+  controls
+  playsInline
+  width="100%"
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    border: "none",
+  }}
+>
+  <source src={project.video_link} type="video/mp4" />
+</video>
                     </div>
                   </div>
                 </div>

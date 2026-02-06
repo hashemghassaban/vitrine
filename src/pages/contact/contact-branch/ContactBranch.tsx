@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { EnvironmentOutlined } from "@ant-design/icons";
 import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import instagram from "../../../assets/footer/media1.png";
+import Marker from "../../../assets/icon/pin.png";
 import whatsapp from "../../../assets/footer/media2.png";
 import linkedin from "../../../assets/footer/media3.png";
 import telegram from "../../../assets/footer/media4.png";
@@ -173,16 +173,8 @@ const ContactBranch: React.FC = () => {
           <div className="form-section">
             <div className="form-row">
               <div className="input-group half">
-                <Input
-                  className=" input-text"
-                  placeholder={t("local_contactEmail")}
-                  variant="underlined"
-                  value={formData.email || ""}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                />
-              </div>
-              <div className="input-group half">
-                <Input
+           
+                 <Input
                   className=" input-text"
                   placeholder={t("local_contactFullName")}
                   variant="underlined"
@@ -192,11 +184,9 @@ const ContactBranch: React.FC = () => {
                   }
                 />
               </div>
-            </div>
-
-            <div className="form-row">
               <div className="input-group half">
-                <Input
+             
+                  <Input
                   className=" input-text"
                   placeholder={t("local_contactPhoneNumber")}
                   variant="underlined"
@@ -204,9 +194,21 @@ const ContactBranch: React.FC = () => {
                   onChange={(e) => handleInputChange("phone", e.target.value)}
                 />
               </div>
+            </div>
+
+            <div className="form-row">
+              <div className="input-group half">
+                     <Input
+                  className=" input-text"
+                  placeholder={t("local_contactEmail")}
+                  variant="underlined"
+                  value={formData.email || ""}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                />
+              </div>
               <div className="input-group half">
                 <Select
-                  className=" input-text"
+                  className=" input-text custom-select"
                   placeholder={t("local_contactSelectDepartment")}
                   variant="underlined"
                   value={formData.department_id}
@@ -256,7 +258,7 @@ const ContactBranch: React.FC = () => {
             loading="lazy"
           ></iframe>
           <div className="map-pin">
-            <EnvironmentOutlined />
+        <img src={Marker} className="action" alt="WhatsApp" />
           </div>
         </div>
       </div>

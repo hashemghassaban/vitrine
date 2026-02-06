@@ -64,7 +64,7 @@ const Search: React.FC = () => {
               {items.map((item) => (
                 <React.Fragment key={item.id}>
                   <Row gutter={[20, 16]} className="result-item" align="middle">
-                    <Col xs={24} md={8} xl={5}>
+                    <Col xs={24} md={8} xl={5} className="image-block">
                       <Image
                         src={item.thumbnail || img}
                         alt={item.title}

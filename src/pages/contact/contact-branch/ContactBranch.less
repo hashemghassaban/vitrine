@@ -210,6 +210,9 @@
       pointer-events: none;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
       animation: pulse 2s infinite;
+      img{
+        width: 80px;
+      }
     }
   }
 }
@@ -226,10 +229,16 @@
         position: relative;
     transform: rotate(180deg);
     top: 0;
-    left: 0px;
+    left: -5px;
   }
 
 .ant-layout-rtl{
+  .custom-select {
+ &::after {
+right: inherit;
+  left: 6px;
+  }
+}
     .action-icons {
          justify-content: right;
     }
@@ -251,7 +260,7 @@
         position: relative;
     transform: rotate(0deg);
     top: 0;
-    right: 5px;
+    right: -5px;
   }
 .submit-btn{
   flex-direction: row-reverse!important;
@@ -264,4 +273,23 @@
 
 .ant-select-selector{
       border-color: transparent transparent #939393 transparent!important;
+}
+
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  &::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: url("../../../assets/icon/arrow.png") no-repeat center;
+  background-color:#fff;
+  pointer-events: none;
+}
 }
