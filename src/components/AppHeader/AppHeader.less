@@ -72,7 +72,7 @@
   border-bottom: none !important;
   justify-content: center;
     top: 18px;
-    left: 98px;
+    right: 110px;
     position: absolute;
   .ant-menu-item,
   .ant-menu-submenu-title {
@@ -105,7 +105,7 @@
   background: #ebebeb !important;
   color: #8f8f8f !important;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 12px;
 }
 .ant-menu-submenu-popup {
   border-radius: 0 !important;
@@ -161,7 +161,7 @@
     position: absolute;
     width: 23px;
     height: 23px;
-    left: 151px;
+    right: 151px;
     top: 37px;
         z-index: 100000;
 }
@@ -185,7 +185,7 @@
 
 .en_img {
     position: absolute;
-    left: 80px;
+    right: 80px;
     top: 37px;
 }
 
@@ -209,8 +209,8 @@
   
 
    .search-box{
-    left: inherit;
-        right: 40px;
+    right: inherit;
+        left: 40px;
         .search-input{
           text-align: right;
         }
@@ -220,7 +220,7 @@
 .search-box {
   position: absolute;
   top: 80px;
-  left: 40px;
+  right: 40px;
   background: white;
   padding: 10px;
   z-index: 9999; /* بالاتر از overlay */
@@ -330,4 +330,30 @@
 
    .ant-menu-submenu-rtl.ant-menu-submenu-popup >.ant-menu .ant-menu-item{
       direction: rtl!important;
+    }
+
+
+    .backgroundColor{
+      background-image: none!important;
+      background-color: #E7E7E7!important;
+          height: 189px;
+      &::before{
+      background-color: inherit!important;
+
+      }
+      .title-page , .text-page{
+        display: none;
+      }
+      .home__img{
+        img{
+        filter: invert(1);
+        }
+
+      }
+      .search__img{
+         filter: invert(1);
+      }
+      .ant-menu-title-content{
+        color: #000;
+      }
     }

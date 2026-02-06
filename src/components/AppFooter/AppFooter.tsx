@@ -27,6 +27,15 @@ export const AppFooter: React.FC = () => {
   const [email, setEmail] = useState("");
   const { sendEmail } = useNewsletter();
   const { push } = useNavigation();
+type Lang = "en" | "fa" | "ar";
+
+const languages: Lang[] = ["en", "fa", "ar"];
+const langLabels: Record<Lang, string> = {
+  en: "En",
+  fa: "Fa",
+  ar: "Ar",
+};
+
 
   const { currentLang } = useLanguage();
 
@@ -150,23 +159,22 @@ export const AppFooter: React.FC = () => {
                   ))}
                 </div>
                 <div className="footer_en_content">
-                  <p
-                    className="footer_en_text"
-                    style={{ cursor: "pointer" }}
-                    onClick={
-                      currentLang === "en"
-                        ? () => handleLanguageChange("fa")
-                        : currentLang === "fa"
-                          ? () => handleLanguageChange("ar")
-                          : () => handleLanguageChange("en")
-                    }
-                  >
-                    {t("local_currentLang")}
-                    <img src={en} alt="en" />
-                  </p>
-                  <p className="footer_en_text">
-                    {t("local_languageSelection")}
-                  </p>
+      <p className="footer_en_text">
+  {languages
+    .filter((lang) => lang !== currentLang)
+    .map((lang, index, arr) => (
+      <span
+        key={lang}
+        style={{ cursor: "pointer" }}
+        onClick={() => handleLanguageChange(lang)}
+      >
+        {langLabels[lang]}
+        {index < arr.length - 1 && " | "} {/* pipe بین آیتم‌ها */}
+      </span>
+    ))}
+</p>
+
+<p className="footer_en_text">{t("local_languageSelection")}</p>
                 </div>
               </div>
             </Col>

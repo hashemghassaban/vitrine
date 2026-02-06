@@ -46,7 +46,7 @@ const buildMenuItems = (
     label: (
       <div className="menu-label">
         {cat.children?.length > 0 && (
-          <span>{openKeys.includes(String(cat.id)) ? "↓" : "←"}</span>
+          <span className="icon">{openKeys.includes(String(cat.id)) ? "←" : "←"}</span>
         )}
         <span>{cat.title}</span>
       </div>
@@ -228,6 +228,8 @@ const AllProducts: React.FC = () => {
     });
   };
   const filteredProducts = getFilteredProducts();
+  console.log(filteredProducts);
+  
 
   const shouldShowFeatureMenu = (
     selectedCategoryId: string | undefined | null,
@@ -267,7 +269,7 @@ const AllProducts: React.FC = () => {
         <Row gutter={[0, 25]} style={{    justifyContent: 'space-between'}}>
           <Col xs={24} lg={6}>
             <div className="filters-box">
-              <h3 className="filter-title">دسته‌بندی‌ها</h3>
+              <h3 className="filter-title" style={{color : '#000' ,  fontWeight: 700}}>دسته‌بندی‌ها</h3>
               <div className="menu-scroll-container">
                 <Menu
                   className="menu-item-product"
@@ -283,7 +285,7 @@ const AllProducts: React.FC = () => {
                 />
               </div>
               <div className="filters-box">
-                <h3 className="filter-title mt-30">فیلترها</h3>
+                <h3 className="filter-title mt-30" style={{color : '#000', fontWeight: 700}}>فیلترها</h3>
                 <div className="selected-tags">
                   {selected.map((id) => {
                     const b = brands.find((x) => x.id === id);
@@ -306,7 +308,7 @@ const AllProducts: React.FC = () => {
               </div>
 
               <div className="menu-scroll-container">
-                <div className="  filters-box-t">
+                <div className="filters-box-t">
                   <h3 className="filter-brand-title"> برندها</h3>
                   <Input
                     className="filter-brand-input"
@@ -439,21 +441,23 @@ const AllProducts: React.FC = () => {
                   <Card
                     hoverable
                     className="showcase-card-product"
-                    onClick={() => push(`/${currentLang}/products/${item.id}`)}
+                    onClick={() => push(`/${currentLang}/products/${item?.id}`)}
                     cover={<img src={item?.image} alt="product" className="img-card-product" />}
                   >
-                    <div className="selected-tags-item">
-                      {selected.map((id) => {
-                        const b = brands.find((x) => x.id == id);
-                        if (!b) return null;
-                        if (item.brand.id !== b.id) return null;
-                        return (
-                          <Tag key={id} onClose={() => removeFilter(id)}>
-                            <div className="pulse-tag">{b.title}</div>
+                   {item?.collection && (
+
+                  <div className="selected-tags-item">
+                   
+                   
+                   
+         <Tag key={item?.collection?.id} >
+                            <div className="pulse-tag">{item?.collection?.title}</div>
                           </Tag>
-                        );
-                      })}
+
                     </div>
+                   )}
+                
+                   
                     <p className="product-title-product">{item.title}</p>
                   </Card>
                 </Col>

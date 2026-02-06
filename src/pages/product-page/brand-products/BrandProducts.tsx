@@ -65,7 +65,8 @@ const BrandProducts: React.FC = () => {
               <h2 className="title"> {brand?.title}</h2>
               {showMore && <p className="text">{brand?.excerpt}</p>}
               <div className="btn-box-brand-products">
-                {!showMore && <p>{brand?.description}</p>}
+                {!showMore &&   <p dangerouslySetInnerHTML={{ __html: brand?.description || "" }}></p>
+}
                 <Button
                   type="link"
                   className={`btn-more-brand-products ${

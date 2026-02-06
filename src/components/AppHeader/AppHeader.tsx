@@ -19,9 +19,20 @@ interface AppHeaderProps {
   text?: String;
   style?: boolean;
   categoryBackground?: string;
+  noBackgroundProducts?: boolean;
 }
+type Lang = "en" | "fa" | "ar";
+
+const languages: Lang[] = ["en", "fa", "ar"];
+
+const langLabels: Record<Lang, string> = {
+  en: "En",
+  fa: "فا",
+  ar: "عر",
+};
 export const AppHeader: FC<AppHeaderProps> = ({
   noBackground,
+  noBackgroundProducts,
   title,
   text,
   style = true,
@@ -145,7 +156,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
-          className={`app-header_container ${noBackground ? "no-bg" : ""}`}
+          className={`app-header_container ${noBackground ? "no-bg" : noBackgroundProducts ? 'backgroundColor' : ''}`}
           style={headerBackground}
         >
           <Row>
@@ -165,24 +176,23 @@ export const AppHeader: FC<AppHeaderProps> = ({
               selectable={false}
               overflowedIndicator={null}
             >
-              <Menu.SubMenu
-                key="b"
-                title={
-                  currentLang === "fa" ? "فا" : currentLang === "en" ? "En" : "عر"
-                }
-                className="En_text"
-                popupClassName="lang-submenu-popup"
-              >
-                <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
-                  En
-                </Menu.Item>
-                <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
-                  فا
-                </Menu.Item>
-                <Menu.Item key="b-3" onClick={() => handleLanguageChange("ar")}>
-                  عر
-                </Menu.Item>
-              </Menu.SubMenu>
+         <Menu.SubMenu
+  key="b"
+  title={langLabels[currentLang]} // نمایش label زبان فعلی
+  className="En_text"
+  popupClassName="lang-submenu-popup"
+>
+  {languages
+    .filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
+    .map((lang) => (
+      <Menu.Item
+        key={`lang-${lang}`}
+        onClick={() => handleLanguageChange(lang)}
+      >
+        {langLabels[lang]}
+      </Menu.Item>
+    ))}
+</Menu.SubMenu>
             </Menu>
 
             <img className="en_img" src={en} alt={en} />

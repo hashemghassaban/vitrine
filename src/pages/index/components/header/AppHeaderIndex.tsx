@@ -21,6 +21,15 @@ export const AppHeaderIndex: FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { t } = useTranslate();
+type Lang = "en" | "fa" | "ar";
+
+const languages: Lang[] = ["en", "fa", "ar"];
+
+const langLabels: Record<Lang, string> = {
+  en: "En",
+  fa: "فا",
+  ar: "عر",
+};
 
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
@@ -137,22 +146,23 @@ export const AppHeaderIndex: FC = () => {
           selectable={false}
           overflowedIndicator={null}
         >
-          <Menu.SubMenu
-            key="b"
-            title={t("local_currentLang")}
-            className="En_text"
-            popupClassName="lang-submenu-popup"
-          >
-            <Menu.Item key="b-1" onClick={() => handleLanguageChange("en")}>
-              En
-            </Menu.Item>
-            <Menu.Item key="b-2" onClick={() => handleLanguageChange("fa")}>
-              فا
-            </Menu.Item>
-            <Menu.Item key="b-3" onClick={() => handleLanguageChange("ar")}>
-              عر
-            </Menu.Item>
-          </Menu.SubMenu>
+<Menu.SubMenu
+  key="b"
+  title={langLabels[currentLang]} // نمایش label زبان فعلی
+  className="En_text"
+  popupClassName="lang-submenu-popup"
+>
+  {languages
+    .filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
+    .map((lang) => (
+      <Menu.Item
+        key={`lang-${lang}`}
+        onClick={() => handleLanguageChange(lang)}
+      >
+        {langLabels[lang]}
+      </Menu.Item>
+    ))}
+</Menu.SubMenu>
         </Menu>
         <img className="en_img" src={en} alt={en} />
       </Row>

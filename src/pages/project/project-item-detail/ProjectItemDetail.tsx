@@ -72,6 +72,8 @@ const videoRef = useRef<HTMLVideoElement>(null);
         title={t("site.proje1")}
         text={project?.title}
         style={false}
+     
+
       />
 
       <div className="blog-details-container-detail">

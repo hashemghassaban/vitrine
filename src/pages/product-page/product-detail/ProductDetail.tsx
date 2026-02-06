@@ -2,6 +2,7 @@ import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import "./ProductDetail.less";
 import img1 from "../../../assets/products/img1.jpg";
 import img4 from "../../../assets/products/image3.png";
+import reply from "../../../assets/icon/reply.svg";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
@@ -14,6 +15,8 @@ import type {
   ProductView,
   ProductDetailView,
 } from "../../../models/views/productView";
+import { Input, Select , Rate} from "antd";
+import TextArea from "antd/es/input/TextArea";
 import useProducts from "../../../hooks/products/useProducts";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
@@ -28,6 +31,13 @@ export default function ProductDetail() {
   const { getListProducts, getProductById } = useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenComments, setIsOpenComments] = useState(false);
+  const openDialogComments = () => setIsOpenComments(true);
+  const closeDialogomments = () => setIsOpenComments(false);
+  const openDialog = () => setIsOpen(true);
+  const closeDialog = () => setIsOpen(false);
+const [rating, setRating] = useState(0);
   const thumbnails = [product?.image ?? "", product?.thumbnail ?? ""];
   const { t } = useTranslate();
   
@@ -46,6 +56,9 @@ export default function ProductDetail() {
               .slice(0, 5)
           );
         }
+
+        console.log(relatedRes);
+        
       }
     }
   };
@@ -55,7 +68,7 @@ export default function ProductDetail() {
   }, [id, currentLang]);
   return (
     <>
-      {isMobile ? <HomeMobile /> : <AppHeader />}
+      {isMobile ? <HomeMobile /> : <AppHeader noBackgroundProducts/>}
 
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
@@ -97,7 +110,7 @@ export default function ProductDetail() {
                     </div>
                   ))}
                 </div>
-                <Button className="info-btn">دریافت اطلاعات</Button>
+                <button className="info-btn"  onClick={openDialog}>دریافت اطلاعات</button>
               </div>
             </div>
           </Col>
@@ -166,6 +179,99 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
+        <div className="comment-section">
+      <h2 className="other-title">
+نظرات
+              </h2>
+  <div className="comment-form">
+  <div className="comment-form-block">
+      <div className="form-row ">
+      <div className="input-group half">
+        <Input
+          className="input-text"
+          placeholder="نام و نام خانوادگی"
+          variant="underlined"
+        />
+      </div>
+      <div className="input-group half">
+        <Input
+          className="input-text"
+          placeholder="ایمیل"
+          variant="underlined"
+        />
+      </div>
+    </div>
+
+
+  </div>
+
+    <div className="form-row textarea-field">
+      <div className="input-group half" style={{    display: 'flex',
+    alignItems: 'center'}}>
+       <span> امتیاز دهید</span>
+<Rate allowHalf onChange={setRating} value={rating}  className="black-rate"
+ />
+
+      </div>
+      <div className="input-group half">
+        <TextArea
+          className="input-text"
+          rows={4}
+          placeholder="کامنت خود را بنویسید"
+          variant="underlined"
+        />
+      </div>
+       
+    </div>
+
+    <div className="form-row block-fill">
+      <button className="info-btn" onClick={() => alert("کامنت ارسال شد!")}>
+        ارسال
+      </button>
+    </div>
+  </div>
+
+  <div className="comment-list">
+
+
+    <div className="comment">
+      <div className="comment-header">
+        <div className="text-comment">
+ <strong>علی رضایی</strong> - <span>5 امتیاز</span>
+        </div>
+        <div className="date">
+          1404/09/12  12:35
+        </div>
+        
+       
+      </div>
+      <div className="comment-body">
+       
+        <p> این محصول خیلی خوب بود و تجربه خرید عالی داشتم.</p>
+        
+      </div>
+
+      {/* پاسخ به کامنت */}
+      <div className="comment-reply">
+        <div className="reply-icon">
+            <img src={reply} alt="reply" />
+          </div>
+        <div className="comment-header">
+          
+          <strong>پشتیبانی</strong>
+        </div>
+        <div className="comment-body">
+          <p>          از نظر مثبت شما بسیار سپاسگزاریم! خوشحالیم رضایت داشتید.
+</p>
+           <button className="reply-btn" onClick={openDialogComments}>
+            پاسخ 
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
             <div className="other-box">
               <h2 className="other-title">
@@ -188,7 +294,7 @@ export default function ProductDetail() {
                     >
                       <div className="selected-tags-item">
                         <Tag>
-                          <div className="pulse-tag">{item?.code}</div>
+                          <div className="pulse-tag">{item?.collection?.title}</div>
                         </Tag>
                       </div>
                       <p className="product-title-product">{item?.title}</p>
@@ -199,7 +305,159 @@ export default function ProductDetail() {
             </div>
           </Col>
         </Row>
+         {isOpen && (
+        <div 
+        className="dialogMain"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+            zIndex: 100000,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+          <div   className="dialogBlock"  style={{
+            backgroundColor: "#fff",
+            padding: "20px",
+            borderRadius: "8px",
+            minWidth: "768px",
+          }}>
+            <h2> دریافت اطلاعات</h2>
+          <div className="form-section">
+            <div className="form-row">
+              <div className="input-group half">
+           
+                 <Input
+                  className=" input-text"
+                  placeholder={t("local_contactFullName")}
+                  variant="underlined"
+                
+                />
+              </div>
+              <div className="input-group half">
+             
+                  <Input
+                  className=" input-text"
+                  placeholder={t("local_contactPhoneNumber")}
+                  variant="underlined"
+                />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="input-group half">
+                     <Input
+                  className=" input-text"
+                  placeholder="شرکت"
+                  variant="underlined"
+                />
+              </div>
+              <div className="input-group half">
+                     <Input
+                  className=" input-text"
+                  placeholder={t("local_contactEmail")}
+                  variant="underlined"
+                />
+              </div>
+             
+            </div>
+            <div className="form-row">
+              <div className="input-group">
+                <TextArea
+                  className=" input-text"
+                  rows={4}
+                  placeholder="آدرس"
+                  variant="underlined"
+                />
+              </div>
+            </div>
+
+          
+          </div>
+           <div className="dialogFooter">
+             <button  className="info-btn" onClick={closeDialog}>تایید</button>
+            <button  className="info-btn  closed" onClick={closeDialog}>خروج</button>
+           </div>
+          </div>
+        </div>
+      )}
+
+
+       {isOpenComments && (
+        <div 
+        className="dialogMain"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          display: "flex",
+              zIndex: 100000,
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+          <div   className="dialogBlock"  style={{
+            backgroundColor: "#fff",
+            padding: "20px",
+            borderRadius: "8px",
+            minWidth: "768px",
+          }}>
+            <h2>  پاسخ به ...</h2>
+          <div className="form-section">
+        <div className="comment-form-block">
+      <div className="form-row ">
+      <div className="input-group half">
+        <Input
+          className="input-text"
+          placeholder="نام و نام خانوادگی"
+          variant="underlined"
+        />
       </div>
+      <div className="input-group half">
+        <Input
+          className="input-text"
+          placeholder="ایمیل"
+          variant="underlined"
+        />
+      </div>
+    </div>
+
+
+  </div>
+
+    <div className="form-row textarea-field">
+      <div className="input-group half">
+        <TextArea
+          className="input-text"
+          rows={4}
+          placeholder="کامنت خود را بنویسید"
+          variant="underlined"
+        />
+      </div>
+       <div className="input-group half">
+<Rate allowHalf onChange={setRating} value={rating}  className="black-rate"
+ />
+
+      </div>
+    </div>
+
+          
+          </div>
+           <div className="dialogFooter">
+             <button  className="info-btn" onClick={closeDialogomments}>ارسال</button>
+            <button  className="info-btn  closed" onClick={closeDialogomments}>خروج</button>
+           </div>
+          </div>
+        </div>
+      )}
+      </div>
+
       <AppFooter />
     </>
   );
