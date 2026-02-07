@@ -58,9 +58,24 @@ export interface FeatureValueView {
 }
 
 export interface MediaView {
-  id?: number;
-  url?: string;
-  type?: string;
+  id: number;
+  name: string;
+  path: string;
+  disk: string;
+  url: string;
+  mime_type: string;
+  mediable_type: string;
+  mediable_id: number;
+  title: string | null;
+  description: string | null;
+  user_id: number;
+  state: string;
+  created_by: number;
+  updated_by: number;
+  approved_at: string | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 }
 export interface ProductDetailView {
   id: number;

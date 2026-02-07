@@ -46,6 +46,14 @@ export const localTranslations: TranslationView[] = [
     { key: "local_relatedProducts", value: { ar: "المنتجات ذات الصلة", en: "Related products", fa: "محصولات مرتبط" } },
     { key: "local_productsFound", value: { ar: "منتجات تم العثور عليها", en: "products found", fa: "محصول پیدا شد" } },
     { key: "local_viewMoreProducts", value: { ar: "عرض المزيد من المنتجات", en: "View more products", fa: "مشاهده محصولات بیشتر" } },
+    { key: "local_filters", value: { ar: "الفلاتر", en: "Filters", fa: "فیلتر ها" } },
+    { key: "local_collections", value: { ar: "المجموعات", en: "Collections", fa: "کالکشن ها" } },
+    { key: "local_brands", value: { ar: "العلامات التجارية", en: "Brands", fa: "برند ها" } },
+    { key: "local_allProducts", value: { ar: "جميع المنتجات", en: "All Products", fa: "همه کالا ها" } },
+    { key: "local_productFeatures", value: { ar: "ميزات المنتج", en: "Product Features", fa: "ویژگی‌های محصول" } },
+    { key: "local_code", value: { ar: "رمز", en: "Code", fa: "کد" } },
+    { key: "local_getInfo", value: { ar: "الحصول على المعلومات", en: "Get Info", fa: "دریافت اطلاعات" } },
+    //project
     //project
     { key: "local_architect", value: { ar: "المهندس المعماري", en: "Architect", fa: "معمار" } },
     { key: "local_constructor", value: { ar: "المقاول", en: "Constructor", fa: "سازنده" } },

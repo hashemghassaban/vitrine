@@ -1,7 +1,7 @@
 import { type FC, useEffect, useState } from "react";
 import { Divider, Modal, Row } from "antd";
 import { useTranslate } from "../../../i18n/useTranslate";
-
+import useNavigation from "../../../hooks/useHistory";
 import "./ImageHoverModal.less";
 import type { IndexDataView } from "../../../models/views/indexView";
 import useIndex from "../../../hooks/index/useIndex";
@@ -15,7 +15,9 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
   const { t } = useTranslate();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { currentLang } = useLanguage();
+  const { push } = useNavigation();
   const { getIndex } = useIndex(currentLang);
+  
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
@@ -61,7 +63,9 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
           <div className="menu-grid">
             {data?.product_categories.map((category, index) => (
               <div key={index} className="menu-column">
-                <h3 className="menu-column-title">
+                <h3 className="menu-column-title"  onClick={() =>
+                        push(`/${currentLang}/products?category=${category.slug}`)
+                      }>
                   <img src={category?.icon_link} alt="icon" />
                   {category.title}
                 </h3>
@@ -69,7 +73,9 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
                 <ul className="menu-items">
                   {category.children.map((item, i) => (
                     <li key={i}>
-                      <a href="#" className="menu-item-link">
+                      <a className="menu-item-link" onClick={() =>
+                        push(`/${currentLang}/products?category=${item.slug}`)
+                      }>
                         {item?.title}
                       </a>
                     </li>
