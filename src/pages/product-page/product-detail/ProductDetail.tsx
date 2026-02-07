@@ -98,7 +98,7 @@ export default function ProductDetail() {
 
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
-          <Col xs={24} md={12} lg={15} className="product-info">
+          <Col xs={24} md={24} lg={15} className="product-info">
             <div className="product-info">
               <div className="brand-section" id="sectionDown">
                 <div>
@@ -148,7 +148,7 @@ export default function ProductDetail() {
             </div>
           </Col>
 
-          <Col xs={24} md={10} lg={9} className="gallery">
+          <Col xs={24} md={24} lg={9} className="gallery">
             <div className="main-image">
               <img src={mainImage} alt="product" />
 
