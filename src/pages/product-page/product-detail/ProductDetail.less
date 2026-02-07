@@ -2,8 +2,6 @@
   padding: 10px 10px;
   padding-bottom: 120px;
   background: #e7e7e7;
-  display: flex;
-  justify-content: center;
   margin-bottom: 80px;
 
   @media (max-width: 768px) {
@@ -17,6 +15,13 @@
     padding-bottom: 100px;
   }
 }
+.ant-row{
+ @media (max-width: 1200px) {
+    width: 100%;
+    padding: 0 3%!important;
+  }
+}
+ 
 
 .info-btn {
   margin-top: 25px;
@@ -267,7 +272,17 @@ textarea{
   display: flex;
   flex-direction: row;
   padding-top: 110px;
+  @media (max-width: 1200px) {
 
+flex: 0 0 42.5%;
+        max-width: 42.5%;
+    }
+     @media (max-width: 992px) {
+
+flex: 0 0 100%;
+        max-width: 100%;
+                justify-content: center;
+    }
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     padding-top: 40px;
@@ -343,7 +358,6 @@ textarea{
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 420px;
     height: 459px;
 
     @media (max-width: 768px) {
@@ -393,6 +407,17 @@ textarea{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  &.ant-col{
+  @media (max-width: 1200px) {
+           flex: 0 0 57.5%;
+        max-width: 57.5%;
+  }
+    @media (max-width: 992px) {
+           flex: 100%;
+        max-width:100%;
+  }
+  }
+
 
   @media (max-width: 768px) {
     margin-top: 30px;
@@ -422,8 +447,8 @@ textarea{
 
     .date-box {
       background: #ffffff;
-      width: 90px;
-      height: 26px;
+         min-height: 26px;
+       width: auto;
       display: flex;
       align-items: center !important;
       justify-content: center;
@@ -432,14 +457,12 @@ textarea{
       line-height: 45px;
       text-align: center;
       color: #616161;
+      padding: 0 13px;
 
-      @media (max-width: 480px) {
-        width: 120px;
-      }
+    
 
 
       @media (min-width: 769px) and (max-width: 1024px) {
-        width: 100px;
         height: 28px;
         font-size: 12px;
       }
@@ -656,9 +679,7 @@ textarea{
     gap: 30px !important;
   }
 
-  @media (min-width: 1025px) and (max-width: 1200px) {
-    gap: 40px !important;
-  }
+  
 }
 
 .description-section {
@@ -668,6 +689,15 @@ textarea{
 
   @media (max-width: 768px) {
     padding: 60px 15px;
+  }
+  .ant-row{
+    .ant-col{
+       @media (max-width: 1400px) {
+ 
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+    }
   }
 }
 
@@ -1059,7 +1089,13 @@ textarea{
     }
   }
 }
-
+.ant-row {
+           width: 100%;
+        padding: 0 5% !important;
+        margin: auto !important;
+        display: flex;
+        justify-content: flex-start;
+}
 
 .ant-layout-rtl {
 

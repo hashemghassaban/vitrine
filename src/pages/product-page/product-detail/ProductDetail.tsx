@@ -72,7 +72,7 @@ const [rating, setRating] = useState(0);
 
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
-          <Col xs={24} md={12} lg={15} className="product-info">
+          <Col xs={24} md={24} lg={15} className="product-info">
             <div className="product-info">
               <div className="brand-section" id="sectionDown">
                 <div>
@@ -115,7 +115,7 @@ const [rating, setRating] = useState(0);
             </div>
           </Col>
 
-          <Col xs={24} md={10} lg={9} className="gallery">
+          <Col xs={24} md={24} lg={9} className="gallery">
             <div className="main-image">
               <img src={product?.thumbnail} alt="product" />
             </div>
