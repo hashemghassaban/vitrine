@@ -18,7 +18,7 @@ export default function InteriorPage() {
   const [categories, setCategories] = useState<BlogCategoryView[]>([]);
   const [posts, setPosts] = useState<BlogItemView[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
-  const [visibleCount, setVisibleCount] = useState(2);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
   const { t } = useTranslate();
 

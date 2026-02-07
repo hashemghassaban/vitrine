@@ -19,7 +19,7 @@ export default function ProjectItem() {
   const { t } = useTranslate();
   const [projects, setProjects] = useState<ProjectItemView[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
-  const [visibleCount, setVisibleCount] = useState(2);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
   const [categories, setCategories] = useState<ProjectCategoryView[]>([]);
   const [loadingCategory, setLoadingCategory] = useState(true);

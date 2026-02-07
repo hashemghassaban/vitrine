@@ -88,6 +88,14 @@ export type TranslationKey =
   | "local_relatedProducts"
   | "local_productsFound"
   | "local_viewMoreProducts"
+  | "local_brands"
+  | "local_collections"
+  | "local_filters"
+  | "local_allProducts"
+  | "local_getInfo"
+  | "local_code"
+  | "local_productFeatures"
+
   //project
   | "local_architect"
   | "local_constructor"
