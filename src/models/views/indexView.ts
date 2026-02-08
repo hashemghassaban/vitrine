@@ -19,6 +19,7 @@ export interface SimpleCategoryView {
   title: string;
   slug: string;
   image: string;
+  icon: string;
 }
 
 export interface MenuLinkView {
