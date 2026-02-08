@@ -9,7 +9,6 @@ import ico_linkedin from "../../assets/footer/media3.png";
 import ico_telegram from "../../assets/footer/media4.png";
 import ico_facebook from "../../assets/footer/media5.png";
 import ico_youtube from "../../assets/footer/media6.png";
-import en from "../../assets/footer/en.png";
 import media7 from "../../assets/footer/media7.png";
 
 import "./AppFooter.less";

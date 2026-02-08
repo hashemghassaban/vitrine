@@ -1,6 +1,5 @@
 import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import "./ProductDetail.less";
-import img4 from "../../../assets/products/image3.png";
 import reply from "../../../assets/icon/reply.svg";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
