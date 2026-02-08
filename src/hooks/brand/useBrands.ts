@@ -13,8 +13,9 @@ const useBrands = (currentLang: string) => {
     let success = false;
     let data: BrandView[] = [];
     let total = 0;
+    const cacheKey = `${CACHE_PREFIX}${currentLang}`;
 
-    const cachedData = localStorage.getItem(CACHE_PREFIX);
+    const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const { data, timestamp } = JSON.parse(cachedData);
       if (Date.now() - timestamp < CACHE_TTL) {
@@ -36,7 +37,7 @@ const useBrands = (currentLang: string) => {
       data = res.data.data;
       total = res.data.meta?.pagination?.total ?? 0;
       localStorage.setItem(
-        CACHE_PREFIX,
+        cacheKey,
         JSON.stringify({
           data,
           timestamp: Date.now(),
