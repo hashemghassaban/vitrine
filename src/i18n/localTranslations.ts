@@ -41,6 +41,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_readArticle", value: { ar: "قراءة المقال", en: "Read the article", fa: "خواندن مقاله" } },
     { key: "local_nextArticles", value: { ar: "المقالات التالية", en: "Next articles", fa: "مقاله‌های بعدی" } },
     { key: "local_lastArticles", value: { ar: "آخر المقالات في ویترین", en: "Last articles on Vitrine", fa: "آخرین نوشته‌های ویترین" } },
+    { key: "local_publishedAt", value: { ar: "تاريخ النشر", en: "Published on", fa: "انتشار" } },
     //product
     { key: "local_getCatalog", value: { ar: "الحصول على الكتالوج", en: "Get the catalog", fa: "دریافت کاتالوگ" } },
     { key: "local_relatedProducts", value: { ar: "المنتجات ذات الصلة", en: "Related products", fa: "محصولات مرتبط" } },

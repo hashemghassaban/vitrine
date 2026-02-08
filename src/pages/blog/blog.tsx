@@ -9,8 +9,6 @@ import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 
 function Blog() {
   useSyncLanguage();
-
-
   return (
     <>
       <Layout>

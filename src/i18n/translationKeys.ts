@@ -108,6 +108,7 @@ export type TranslationKey =
   | "local_readArticle"
   | "local_nextArticles"
   | "local_lastArticles"
+  | "local_publishedAt"
   //contactBranch
   | "local_completeTheForm"
   | "local_invalidEmail"

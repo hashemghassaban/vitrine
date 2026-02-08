@@ -25,13 +25,11 @@ export default function BlogDetailPage() {
 
   const fetchData = async () => {
     setLoading(true);
-
     const { success, data } = await getPostById(Number(id));
     if (!success || !data) {
       setLoading(false);
       return;
     }
-
     setBlog(data);
     const relatedRes = await getPosts();
     if (relatedRes.success && relatedRes.data) {
@@ -91,7 +89,9 @@ export default function BlogDetailPage() {
             <Col xs={24} md={16} lg={17} className="main-content">
               <div className="main-box">
                 <h1 className="title">{blog?.title}</h1>
-                {/* <p className="meta">{blog?.comments_count} / 10</p> */}
+                <p className="meta">
+                  {t("local_publishedAt")}: {blog?.published_at}
+                </p>
                 {/* عکس اصلی */}
                 <img src={blog?.image} className="main-image" alt="main" />
                 <div

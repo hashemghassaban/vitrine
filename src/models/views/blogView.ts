@@ -15,6 +15,7 @@ export interface BlogItemView {
   image: string;
   thumbnail: string;
   seo: BlogItemSEOView;
+  published_at: string;
 }
 
 export interface BlogItemSEOView {
