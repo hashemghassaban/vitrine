@@ -52,7 +52,7 @@ export default function BlogDetailPage() {
     <>
       <AppHeader />
 
-      {!loading && (
+      {!loading ? (
         <div className="blog-details-container">
           {/* Content */}
           <Row justify="center" gutter={[0, 32]}>
@@ -104,6 +104,8 @@ export default function BlogDetailPage() {
             </Col>
           </Row>
         </div>
+      ) : (
+        <div style={{ height: 500 }}></div>
       )}
       <AppFooter />
     </>
