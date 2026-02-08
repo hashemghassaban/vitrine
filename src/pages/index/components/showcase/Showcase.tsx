@@ -25,7 +25,7 @@ export const Showcase: React.FC = () => {
               onMouseLeave={() => setHoverIndex(null)}
             >
               <div className="img-wrapper">
-                <a href={`/${currentLang}/products?category=${encodeURIComponent(item.title)}`}>
+                <a href={`/${currentLang}/products?category=${encodeURIComponent(item.slug)}`}>
                   <img
                     src={item.icon}
                     alt={item.title}
