@@ -42,6 +42,7 @@ export interface ProjectItemView {
   location: ProjectLocationView;
   developer: DeveloperView | null;
   architect: ArchitectView | null;
+  place_address: string | null;
 }
 
 export interface ProjectLocationView {

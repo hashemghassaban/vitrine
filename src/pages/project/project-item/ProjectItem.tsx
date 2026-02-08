@@ -170,13 +170,7 @@ export default function ProjectItem() {
                       <p className="title-text-project ">
                         {t("local_location")}
                       </p>
-                      <p className="dec-text-project ">
-                        {currentLang == "fa"
-                          ? block.location?.title_fa
-                          : currentLang == "en"
-                            ? block.location?.title_en
-                            : block.location?.title_ar}
-                      </p>
+                      <p className="dec-text-project ">{block?.place_address}</p>
                     </div>
                     <div className="dec-text-project-box">
                       <p

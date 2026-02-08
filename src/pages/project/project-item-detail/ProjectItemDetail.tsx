@@ -101,11 +101,7 @@ const videoRef = useRef<HTMLVideoElement>(null);
                 <div className="item-box-detail-detail">
                   <p className="title-text-detail">{t("local_location")}</p>
                   <p className="dec-text-detail">
-                    {currentLang == "fa"
-                      ? project?.location?.title_fa
-                      : currentLang == "en"
-                        ? project?.location?.title_en
-                        : project?.location?.title_ar}
+                    {project?.place_address}
                   </p>
                 </div>
                 <p
