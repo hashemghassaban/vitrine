@@ -16,63 +16,125 @@ import PulseCircleButton from "../full-page-overlay/components/PulsingButton";
 import type { Language } from "../../../../i18n/languageType";
 import useNavigation from "../../../../hooks/useHistory";
 import { useTranslate } from "../../../../i18n/useTranslate";
+import useIndex from "../../../../hooks/index/useIndex";
+import type { IndexDataView } from "../../../../models/views/indexView";
+import useBrands from "../../../../hooks/brand/useBrands";
+import type BrandView from "../../../../models/views/brandView";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuItem[] = [
+type TranslatedLabel = Record<Language, string>;
+const buildProductChildren = (
+  data: IndexDataView | null,
+): MenuItem[] => {
+  if (!data?.product_categories) return [];
+
+  return data.product_categories.map((cat) => ({
+    key: `products?category=${cat.slug}`,
+    label: cat.title,
+  }));
+};
+const buildBrandChildren = (
+  data: BrandView[] | null,
+): MenuItem[] => {
+  if (!data) return [];
+
+  return data?.map((cat) => ({
+    key: `brandProducts/${cat.id}`,
+    label: cat.title,
+  }));
+};
+const itemsText: Record<string, TranslatedLabel> = {
+  products: { en: "Products", fa: "محصولات", ar: "المنتجات" },
+  brands: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
+  catalogues: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
+  services: { en: "Services", fa: "خدمات", ar: "الخدمات" },
+  representations: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
+  about: { en: "About", fa: "درباره", ar: "من نحن" },
+  projects: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
+  contact: { en: "Contact", fa: "تماس", ar: "اتصل بنا" },
+};
+
+const getMenuItems = (lang: Language, data: IndexDataView | null , brand: BrandView[] | null): MenuItem[] => [
   {
-    key: "sub1",
-    label: "محصولات",
-    children: [
-      { key: "1", label: "وان" },
-      { key: "2", label: "اکسسوری" },
-      { key: "3", label: "روشویی" },
-      { key: "4", label: "سردوش" },
-    ],
+    key: "products",
+    label: itemsText.products[lang],
+    children: data
+      ? buildProductChildren(data)
+      : []
   },
   {
-    key: "sub2",
-    label: "برندها",
+    key: "brands",
+    label: itemsText.brands[lang],
+       children: brand
+      ? buildBrandChildren(brand)
+      : []
   },
   {
-    key: "sub3",
-    label: "کاتالوگ ها",
+    key: "catalogue",
+    label: itemsText.catalogues[lang],
   },
   {
-    key: "sub4",
-    label: "خدمات",
-    children: [
-      { key: "1", label: "وان" },
-      { key: "2", label: "اکسسوری" },
-      { key: "3", label: "روشویی" },
-      { key: "4", label: "سردوش" },
-    ],
+    key: "services",
+    label: itemsText.services[lang],
   },
   {
-    key: "sub5",
-    label: "پروژه ها",
+    key: "project",
+    label: itemsText.projects[lang],
   },
   {
-    key: "sub6",
-    label: "نمایندگی ها",
+    key: "representation",
+    label: itemsText.representations[lang],
   },
   {
-    key: "sub7",
-    label: "درباره",
+    key: "about",
+    label: itemsText.about[lang],
   },
   {
-    key: "sub8",
-    label: "تماس",
+    key: "contactBranch",
+    label: itemsText.contact[lang],
   },
 ];
 
 const HomeMobile: React.FC = () => {
   const [open, setOpen] = useState(false);
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { t } = useTranslate();
   const { push } = useNavigation();
-  
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
+  const { currentLang, setCurrentLang } = useLanguage();
+  const { getIndex } = useIndex(currentLang);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [brands, setBrands] = useState<BrandView[]>([]);
+  const { getList } = useBrands(currentLang);
+  const fetchBrand = async () => {
+    const { success, data } = await getList();
+    if (success && data) {
+      setBrands(data);
+    } 
+  };
+  const fetchIndex = async () => {
+    const { success, data } = await getIndex();
+    if (success && data) {
+      setIndexData(data);
+    }
+  };
+
+  useEffect(() => {
+    setIndexData(null);
+    fetchIndex();
+    fetchBrand();
+  }, [currentLang]);
+
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery("");
+    }
+  };
+
+
   const handleLanguageChange = () => {
     const newLang: Language =
       currentLang == "en" ? "fa" : currentLang == "fa" ? "ar" : "en";
@@ -84,7 +146,7 @@ const HomeMobile: React.FC = () => {
     push(newPath);
   };
 
-  const { currentLang, setCurrentLang } = useLanguage();
+
   const [openKeys, setOpenKeys] = useState<string[]>(["sub1"]);
 
   useEffect(() => {
@@ -136,8 +198,8 @@ const HomeMobile: React.FC = () => {
               alt="product"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
-            <p className="text_mobile1"> محصولات لوکس </p>
-            <p className="text_mobile2">شوروم ساختمانی ویترین </p>
+            <p className="text_mobile1">{t("local_luxuryProducts")} </p>
+            <p className="text_mobile2">{t("local_vitrineBuildingShowroom")} </p>
             {imageButtons.map((button) => (
               <PulseCircleButton
                 key={button.id}
@@ -178,16 +240,24 @@ const HomeMobile: React.FC = () => {
               <Input
                 className="search_box_mobile"
                 placeholder={t("local_search")}
-                suffix={<img src={search} alt={search} />}
+                suffix={<img  onClick={handleSearch} src={search} alt={search} />}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onPressEnter={handleSearch}
+
               />
               <Menu
                 mode="inline"
-                items={items}
+                items={getMenuItems(currentLang, data, brands)}
                 openKeys={openKeys}
                 inlineIndent={0}
                 onOpenChange={handleOpenChange}
                 expandIcon={renderExpandIcon}
                 className="custom-menu-mobile"
+                onClick={({ key }) => {
+                  push(`/${currentLang}/${key}`);
+                  setOpen(false);
+                }}
               />
             </div>
           </Drawer>
