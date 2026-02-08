@@ -24,6 +24,7 @@ export const localTranslations: TranslationView[] = [
 
     { key: "local_NotFoundMessage", value: { ar: "الصفحة المطلوبة غير موجودة", en: "Page Not Found", fa: "صفحه موردنظر یافت نشد" } },
     { key: "local_redirectToHome", value: { ar: "العودة إلى الصفحة الرئيسية", en: "Back to home", fa: "بازگشت به خانه" } },
+    { key: "local_home", value: { ar: "الرئيسية", en: "Home", fa: "خانه" } },
     
     { key: "local_luxuryProducts", value: { ar: "المنتجات الفاخرة", en: "Luxury Products", fa: "محصولات لوکس" } },
     { key: "local_vitrineBuildingShowroom", value: { ar: "صالة عرض المباني - ویترین", en: "Vitrine Building Showroom", fa: "شوروم ساختمانی ویترین" } },

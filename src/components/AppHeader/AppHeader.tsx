@@ -45,7 +45,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     const { success, data } = await getList();
     if (success && data) {
       setBrands(data);
-    } 
+    }
   };
   useEffect(() => {
     fetchIndex();
@@ -53,11 +53,8 @@ export const AppHeader: FC<AppHeaderProps> = ({
 
   const handleLanguageChange = (newLang: Language) => {
     if (!currentLang) return;
-    const newPath = location.pathname.replace(
-      `/${currentLang}`,
-      `/${newLang}`
-    );
-    push(newPath);
+    const newPath = location.pathname.replace(`/${currentLang}`, `/${newLang}`);
+    window.location.href = newPath;
   };
 
   const handleSearch = () => {
@@ -89,7 +86,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
           ? [
               {
                 key: "menu-brands-all",
-                title: { en: "All Brands", fa: "همه برندها", ar: "جميع العلامات التجارية" },
+                title: {
+                  en: "All Brands",
+                  fa: "همه برندها",
+                  ar: "جميع العلامات التجارية",
+                },
                 path: "brands",
               },
 
@@ -112,7 +113,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               },
             ],
     },
-     {
+    {
       key: "menu-catalogues",
       title: { en: "Callections", fa: "کالکشن ها", ar: "الکالکشن" },
       path: "collections",
@@ -153,12 +154,16 @@ export const AppHeader: FC<AppHeaderProps> = ({
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
-          className={`app-header_container ${noBackground ? "no-bg" : noBackgroundProducts ? 'backgroundColor' : ''}`}
+          className={`app-header_container ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor" : ""}`}
           style={headerBackground}
         >
           <Row>
             <div className="home__img">
-              <img src={img} alt="vitrine" onClick={() => push(`/${currentLang}`)} />
+              <img
+                src={img}
+                alt="vitrine"
+                onClick={() => push(`/${currentLang}`)}
+              />
             </div>
             <img
               className="search__img"
@@ -173,23 +178,22 @@ export const AppHeader: FC<AppHeaderProps> = ({
               selectable={false}
               overflowedIndicator={null}
             >
-         <Menu.SubMenu
-  key="b"
-  title={langLabels[currentLang]} // نمایش label زبان فعلی
-  className="En_text"
-  popupClassName="lang-submenu-popup"
->
-  {LANGUAGES
-    .filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
-    .map((lang) => (
-      <Menu.Item
-        key={`lang-${lang}`}
-        onClick={() => handleLanguageChange(lang)}
-      >
-        {langLabels[lang]}
-      </Menu.Item>
-    ))}
-</Menu.SubMenu>
+              <Menu.SubMenu
+                key="b"
+                title={langLabels[currentLang]} // نمایش label زبان فعلی
+                className="En_text"
+                popupClassName="lang-submenu-popup"
+              >
+                {LANGUAGES.filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
+                  .map((lang) => (
+                    <Menu.Item
+                      key={`lang-${lang}`}
+                      onClick={() => handleLanguageChange(lang)}
+                    >
+                      {langLabels[lang]}
+                    </Menu.Item>
+                  ))}
+              </Menu.SubMenu>
             </Menu>
 
             <img className="en_img" src={en} alt={en} />
@@ -208,7 +212,9 @@ export const AppHeader: FC<AppHeaderProps> = ({
                     <Menu.Item
                       key={child.key}
                       onClick={() =>
-                        child.path ? push(`/${currentLang}/${child.path}`) : undefined
+                        child.path
+                          ? push(`/${currentLang}/${child.path}`)
+                          : undefined
                       }
                     >
                       {child.title[currentLang]}
@@ -223,7 +229,9 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 <Menu.Item
                   key={item.key}
                   title={item.title[currentLang]}
-                  onClick={() => (item.path ? push(`/${currentLang}/${item.path}`) : undefined)}
+                  onClick={() =>
+                    item.path ? push(`/${currentLang}/${item.path}`) : undefined
+                  }
                 >
                   {item.title[currentLang]}
                 </Menu.Item>
@@ -247,7 +255,13 @@ export const AppHeader: FC<AppHeaderProps> = ({
       {searchOpen && (
         <div className="search-box">
           <Input
-            placeholder={currentLang === "fa" ? "جستجو" : currentLang === "en" ? "Search" : "يبحث"}
+            placeholder={
+              currentLang === "fa"
+                ? "جستجو"
+                : currentLang === "en"
+                  ? "Search"
+                  : "يبحث"
+            }
             className="search-input"
             autoFocus
             value={searchQuery}

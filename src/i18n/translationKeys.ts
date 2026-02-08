@@ -78,6 +78,7 @@ export type TranslationKey =
   | "local_type_pages"
   | "local_aboutVitrine"
   | "local_ourServices"
+  | "local_home"
   //index
   | "local_luxuryProducts"
   | "local_vitrineBuildingShowroom"

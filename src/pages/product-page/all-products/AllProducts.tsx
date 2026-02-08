@@ -6,7 +6,6 @@ import {
   type MenuProps,
   Checkbox,
   Tag,
-
   Input,
   Divider,
   Card,
@@ -22,7 +21,10 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import useProducts from "../../../hooks/products/useProducts";
 import useProductFeatures from "../../../hooks/products/useProductFeatures";
 import type { FeatureView } from "../../../models/views/productFeaturesView";
-import type { CollectionView, ProductView } from "../../../models/views/productView";
+import type {
+  CollectionView,
+  ProductView,
+} from "../../../models/views/productView";
 import { CloseOutlined } from "@ant-design/icons";
 import useBrands from "../../../hooks/brand/useBrands";
 import type BrandView from "../../../models/views/brandView";
@@ -38,7 +40,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const buildMenuItems = (
   categories: ProductCategoryView[],
-  openKeys: string[]
+  openKeys: string[],
 ): MenuItem[] => {
   return categories.map((cat) => ({
     key: cat.slug,
@@ -60,7 +62,7 @@ const buildMenuItems = (
 const getParentKeys = (
   categories: ProductCategoryView[],
   slug: string,
-  parents: string[] = []
+  parents: string[] = [],
 ): string[] => {
   for (const cat of categories) {
     if (cat.slug === slug) {
@@ -68,11 +70,7 @@ const getParentKeys = (
     }
 
     if (cat.children?.length) {
-      const result = getParentKeys(
-        cat.children,
-        slug,
-        [...parents, cat.slug]
-      );
+      const result = getParentKeys(cat.children, slug, [...parents, cat.slug]);
       if (result.length) return result;
     }
   }
@@ -85,7 +83,6 @@ const AllProducts: React.FC = () => {
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     setOpenKeys(keys);
   };
-
 
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
@@ -165,26 +162,21 @@ const AllProducts: React.FC = () => {
 
   useEffect(() => {
     if (categorySlug && data?.product_categories?.length) {
-      const cat = findCategoryBySlug(
-        data.product_categories,
-        categorySlug
-      );
+      const cat = findCategoryBySlug(data.product_categories, categorySlug);
 
       if (cat) {
         setSelectedCategory(cat);
       }
     }
-
-
   }, [categorySlug, data]);
   useEffect(() => {
     updateSelectedInfo();
   }, [selectedCategory]);
 
   useEffect(() => {
-
     if (selectedCollection.length > 0) {
-      const lastCollectionId = selectedCollection[selectedCollection.length - 1];
+      const lastCollectionId =
+        selectedCollection[selectedCollection.length - 1];
       const col = collections.find((c) => c.id === lastCollectionId);
       if (col) {
         setSelectedInfo({ type: "collection", data: col });
@@ -207,29 +199,36 @@ const AllProducts: React.FC = () => {
     }
 
     setSelectedInfo(null);
-  }, [selectedCollection, selected, selectedCategory, collections, brands, selectedCategory]);
+  }, [
+    selectedCollection,
+    selected,
+    selectedCategory,
+    collections,
+    brands,
+    selectedCategory,
+  ]);
 
   useEffect(() => {
     if (!categorySlug || !data?.product_categories) return;
 
     const selectedCat = findCategoryBySlug(
       data.product_categories,
-      categorySlug
+      categorySlug,
     );
 
     if (selectedCat) {
       setSelectedCategory(selectedCat);
 
-
       const parentKeys = getParentKeys(
         data.product_categories,
-        selectedCat.slug
+        selectedCat.slug,
       );
       setOpenKeys(parentKeys);
     }
   }, [categorySlug, data]);
-  const filteredCollections = collections.filter((c) => selected.includes(Number(c.brand_id)));
-
+  const filteredCollections = collections.filter((c) =>
+    selected.includes(Number(c.brand_id)),
+  );
 
   const allProductsItem: MenuItem = {
     key: "all-products",
@@ -240,21 +239,22 @@ const AllProducts: React.FC = () => {
     ),
   };
 
-  const items = [allProductsItem, ...buildMenuItems(data?.product_categories ?? [], openKeys)];
+  const items = [
+    allProductsItem,
+    ...buildMenuItems(data?.product_categories ?? [], openKeys),
+  ];
 
   const toggleBrand = (id: number) => {
-    setSelected(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
 
   const selectCollection = (id: number) => {
-    setSelectedCollection(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    setSelectedCollection((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
-
-
 
   const removeFilter = (id: number) => {
     setSelected((prev) => prev.filter((i) => i !== id));
@@ -264,7 +264,7 @@ const AllProducts: React.FC = () => {
     if (!collectionIdParam || collections.length === 0) return;
 
     const colId = Number(collectionIdParam);
-    const col = collections.find(c => c.id === colId);
+    const col = collections.find((c) => c.id === colId);
     if (col) {
       setSelectedCollection([col.id]);
       setSelectedInfo({ type: "collection", data: col });
@@ -273,7 +273,7 @@ const AllProducts: React.FC = () => {
 
   const selectFeature = (id: number) => {
     setSelectedFeature((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
 
@@ -308,23 +308,26 @@ const AllProducts: React.FC = () => {
         selected.length === 0 || selected.includes(p.brand?.id);
 
       const matchesCollection =
-        selectedCollection.length === 0 || selectedCollection.includes(p.collection?.id);
+        selectedCollection.length === 0 ||
+        selectedCollection.includes(p.collection?.id);
       const matchesCategory =
         !selectedCategory || p?.category?.id == selectedCategory?.id;
 
       const matchesFeatures =
         selectedFeature.length === 0 ||
-        selectedFeature.every(featureId =>
-          p.feature_values?.some(pf => pf.id == featureId)
-        )
-      return matchesBrand && matchesCollection && matchesCategory && matchesFeatures;
+        selectedFeature.every((featureId) =>
+          p.feature_values?.some((pf) => pf.id == featureId),
+        );
+      return (
+        matchesBrand && matchesCollection && matchesCategory && matchesFeatures
+      );
     });
   };
   const filteredProducts = getFilteredProducts();
 
   const shouldShowFeatureMenu = (
     selectedCategoryId: string | undefined | null,
-    featureCategoryId: string
+    featureCategoryId: string,
   ): boolean => {
     if (!selectedCategoryId) return false;
     return selectedCategoryId == featureCategoryId;
@@ -358,8 +361,8 @@ const AllProducts: React.FC = () => {
 
   const updateSelectedInfo = () => {
     if (selectedCollection.length > 0) {
-
-      const lastCollectionId = selectedCollection[selectedCollection.length - 1];
+      const lastCollectionId =
+        selectedCollection[selectedCollection.length - 1];
       const col = collections.find((c) => c.id === lastCollectionId);
       if (col) {
         setSelectedInfo({ type: "collection", data: col });
@@ -368,7 +371,6 @@ const AllProducts: React.FC = () => {
     }
 
     if (selected.length > 0) {
-
       const lastBrandId = selected[selected.length - 1];
       const brand = brands.find((b) => b.id === lastBrandId);
       if (brand) {
@@ -390,10 +392,7 @@ const AllProducts: React.FC = () => {
       setSelectedCategory(null);
       setSelectedInfo(null);
     } else {
-      const cat = findCategoryBySlug(
-        data?.product_categories ?? [],
-        key
-      );
+      const cat = findCategoryBySlug(data?.product_categories ?? [], key);
 
       if (cat) {
         setSelectedCategory(cat);
@@ -418,11 +417,15 @@ const AllProducts: React.FC = () => {
     <>
       <AppHeader
         categoryBackground={selectedCategory?.image_link}
-        title={!!selectedCategory ? selectedCategory?.title : "محصولات"}
-        text={`خانه > محصولات ${!!selectedCategory ? `> ${selectedCategory?.title}` : ""}`}
+        title={
+          !!selectedCategory
+            ? selectedCategory?.title
+            : t("local_type_products")
+        }
+        text={`${t("local_home")} > ${t("local_type_products")} ${!!selectedCategory ? `> ${selectedCategory?.title}` : ""}`}
       />
       <div className="products-container">
-        <Row gutter={[0, 25]} style={{ justifyContent: 'space-between' }}>
+        <Row gutter={[0, 25]} style={{ justifyContent: "space-between" }}>
           <Col xs={24} lg={6}>
             <div className="filters-box">
               <h3 className="filter-title"> {t("local_category")}</h3>
@@ -441,7 +444,7 @@ const AllProducts: React.FC = () => {
                 />
               </div>
               <div className="filters-box">
-                <h3 className="filter-title mt-30">{t("local_filters")}  </h3>
+                <h3 className="filter-title mt-30">{t("local_filters")} </h3>
                 <div className="selected-tags">
                   {selected.map((id) => {
                     const b = brands.find((x) => x.id === id);
@@ -461,28 +464,30 @@ const AllProducts: React.FC = () => {
                     );
                   })}
 
-                  {selected.length > 0 ? selectedCollection.map((id) => {
-                    const c = collections.find((x) => x.id === id);
-                    if (!c) return null;
+                  {selected.length > 0
+                    ? selectedCollection.map((id) => {
+                        const c = collections.find((x) => x.id === id);
+                        if (!c) return null;
 
-                    return (
-                      <Tag key={`collection-${id}`}>
-                        <div className="pulse-tag">
-                          {c.title}
-                          <button
-                            onClick={() =>
-                              setSelectedCollection((prev) =>
-                                prev.filter((i) => i !== id)
-                              )
-                            }
-                            className="pulse-button"
-                          >
-                            <span className="plus-icon">+</span>
-                          </button>
-                        </div>
-                      </Tag>
-                    );
-                  }) : selectedCollection.pop()}
+                        return (
+                          <Tag key={`collection-${id}`}>
+                            <div className="pulse-tag">
+                              {c.title}
+                              <button
+                                onClick={() =>
+                                  setSelectedCollection((prev) =>
+                                    prev.filter((i) => i !== id),
+                                  )
+                                }
+                                className="pulse-button"
+                              >
+                                <span className="plus-icon">+</span>
+                              </button>
+                            </div>
+                          </Tag>
+                        );
+                      })
+                    : selectedCollection.pop()}
                 </div>
               </div>
 
@@ -526,40 +531,44 @@ const AllProducts: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {selected.length > 0 && filteredCollections.length > 0 && (<div className=" menu-border ">
-                <Menu className="menu-item-product-col " mode="inline">
-                  <Menu.SubMenu
-                    key="ks"
-                    title={
-                      <div className="menu-label-filter ">
-                        <span> {t("local_collections")} </span>
-                        <span> &#8595;</span>
-                      </div>
-                    }
-                  >
-                    {filteredCollections.map((b, index) => (
-                      <>
-                        <Menu.Item className="brand-menu-item" key={b.id}>
-                          <div className="item-menu-box">
-                            <div className="item-menu-check-box">
-                              <Checkbox className="item-menu-check"
-                                checked={selectedCollection.includes(b.id)}
-                                onChange={() => selectCollection(b.id)}>
-                                {b.title}
-                              </Checkbox>
+              {selected.length > 0 && filteredCollections.length > 0 && (
+                <div className=" menu-border ">
+                  <Menu className="menu-item-product-col " mode="inline">
+                    <Menu.SubMenu
+                      key="ks"
+                      title={
+                        <div className="menu-label-filter ">
+                          <span> {t("local_collections")} </span>
+                          <span> &#8595;</span>
+                        </div>
+                      }
+                    >
+                      {filteredCollections.map((b, index) => (
+                        <>
+                          <Menu.Item className="brand-menu-item" key={b.id}>
+                            <div className="item-menu-box">
+                              <div className="item-menu-check-box">
+                                <Checkbox
+                                  className="item-menu-check"
+                                  checked={selectedCollection.includes(b.id)}
+                                  onChange={() => selectCollection(b.id)}
+                                >
+                                  {b.title}
+                                </Checkbox>
+                              </div>
                             </div>
-                          </div>
-                        </Menu.Item>
-                        {index !== filteredCollections.length - 1 && (
-                          <div className="divider-brand">
-                            <Divider className="divider-brand" />
-                          </div>
-                        )}
-                      </>
-                    ))}
-                  </Menu.SubMenu>
-                </Menu>
-              </div>)}
+                          </Menu.Item>
+                          {index !== filteredCollections.length - 1 && (
+                            <div className="divider-brand">
+                              <Divider className="divider-brand" />
+                            </div>
+                          )}
+                        </>
+                      ))}
+                    </Menu.SubMenu>
+                  </Menu>
+                </div>
+              )}
 
               {selectedCategory && (
                 <div className=" menu-border">
@@ -568,8 +577,8 @@ const AllProducts: React.FC = () => {
                       .filter((feature) =>
                         shouldShowFeatureMenu(
                           selectedCategory?.id.toString(),
-                          feature?.category_id
-                        )
+                          feature?.category_id,
+                        ),
                       )
                       .map((item) => (
                         <Menu.SubMenu
@@ -586,9 +595,11 @@ const AllProducts: React.FC = () => {
                               <Menu.Item className="brand-menu-item" key={b.id}>
                                 <div className="item-menu-box">
                                   <div className="item-menu-check-box">
-                                    <Checkbox className="item-menu-check"
+                                    <Checkbox
+                                      className="item-menu-check"
                                       checked={selectedFeature.includes(b.id)}
-                                      onChange={() => selectFeature(b.id)}>
+                                      onChange={() => selectFeature(b.id)}
+                                    >
                                       {b.value}
                                     </Checkbox>
                                   </div>
@@ -610,46 +621,53 @@ const AllProducts: React.FC = () => {
           </Col>
 
           <Col xs={24} lg={17}>
-
             <p className="count">
               {filteredProducts.length} {t("local_productsFound")}
             </p>
 
             <Row gutter={[20, 30]}>
-              {filteredProducts.reverse().slice(0, visibleCount).map((item, i) => (
-                <Col xs={12} sm={12} lg={6} key={i}>
-                  <Card
-                    hoverable
-                    className={`showcase-card-product ${animatedItems.includes(item.id) ? "fade-in" : ""
+              {filteredProducts
+                .reverse()
+                .slice(0, visibleCount)
+                .map((item, i) => (
+                  <Col xs={12} sm={12} lg={6} key={i}>
+                    <Card
+                      hoverable
+                      className={`showcase-card-product ${
+                        animatedItems.includes(item.id) ? "fade-in" : ""
                       }`}
-
-                    onClick={() => push(`/${currentLang}/products/${item.id}`)}
-                    cover={<img src={item?.image} alt="product" className="img-card-product" />}
-                  >
-                    <div className="selected-tags-item">
-                      {selected.map((id) => {
-                        const b = brands.find((x) => x.id == id);
-                        if (!b) return null;
-                        if (item.brand.id !== b.id) return null;
-                        return (
-                          <Tag key={id} onClose={() => removeFilter(id)}>
-                            <div className="pulse-tag">{b.title}</div>
-                          </Tag>
-                        );
-                      })}
-                    </div>
-                    <p className="product-title-product">{item.title}</p>
-                  </Card>
-                </Col>
-              ))}
+                      onClick={() =>
+                        push(`/${currentLang}/products/${item.id}`)
+                      }
+                      cover={
+                        <img
+                          src={item?.image}
+                          alt="product"
+                          className="img-card-product"
+                        />
+                      }
+                    >
+                      <div className="selected-tags-item">
+                        {selected.map((id) => {
+                          const b = brands.find((x) => x.id == id);
+                          if (!b) return null;
+                          if (item.brand.id !== b.id) return null;
+                          return (
+                            <Tag key={id} onClose={() => removeFilter(id)}>
+                              <div className="pulse-tag">{b.title}</div>
+                            </Tag>
+                          );
+                        })}
+                      </div>
+                      <p className="product-title-product">{item.title}</p>
+                    </Card>
+                  </Col>
+                ))}
             </Row>
 
             {visibleCount < filteredProducts.length && (
               <div className="load-more-box">
-                <button
-                  className="load-more"
-                  onClick={loadMore}
-                >
+                <button className="load-more" onClick={loadMore}>
                   {t("local_viewMoreProducts")}
                 </button>
               </div>
@@ -676,16 +694,15 @@ const AllProducts: React.FC = () => {
 
             <Col xs={12} sm={12} lg={14}>
               <div>
-                <h2 className="dec-title">
-                  {selectedInfo.data.title}
-                </h2>
-                <p className="dec-text" dangerouslySetInnerHTML={{
-                  __html: isExpanded
-                    ? descriptionText ?? ""
-                    : truncateByWord(descriptionText ?? "", 200),
-                }}>
-
-                </p>
+                <h2 className="dec-title">{selectedInfo.data.title}</h2>
+                <p
+                  className="dec-text"
+                  dangerouslySetInnerHTML={{
+                    __html: isExpanded
+                      ? (descriptionText ?? "")
+                      : truncateByWord(descriptionText ?? "", 200),
+                  }}
+                ></p>
 
                 {(descriptionText?.length ?? 0) > 200 && (
                   <Button
@@ -696,7 +713,6 @@ const AllProducts: React.FC = () => {
                     {isExpanded ? t("local_less") : t("local_more")}
                   </Button>
                 )}
-
               </div>
             </Col>
           </Row>
