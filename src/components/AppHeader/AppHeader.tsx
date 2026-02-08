@@ -11,7 +11,7 @@ import { ImageHoverModal } from "./ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../contexts/useLanguage";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
-import type { Language } from "../../i18n/languageType";
+import { LANGUAGES, type Language } from "../../i18n/languageType";
 
 interface AppHeaderProps {
   noBackground?: boolean;
@@ -21,11 +21,8 @@ interface AppHeaderProps {
   categoryBackground?: string;
   noBackgroundProducts?: boolean;
 }
-type Lang = "en" | "fa" | "ar";
 
-const languages: Lang[] = ["en", "fa", "ar"];
-
-const langLabels: Record<Lang, string> = {
+const langLabels: Record<Language, string> = {
   en: "En",
   fa: "فا",
   ar: "عر",
@@ -182,7 +179,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   className="En_text"
   popupClassName="lang-submenu-popup"
 >
-  {languages
+  {LANGUAGES
     .filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
     .map((lang) => (
       <Menu.Item

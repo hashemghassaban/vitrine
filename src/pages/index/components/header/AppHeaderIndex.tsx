@@ -11,7 +11,7 @@ import "./AppHeaderIndex.less";
 
 import useIndex from "../../../../hooks/index/useIndex";
 import type { IndexDataView } from "../../../../models/views/indexView";
-import type { Language } from "../../../../i18n/languageType";
+import { LANGUAGES, type Language } from "../../../../i18n/languageType";
 import { useTranslate } from "../../../../i18n/useTranslate";
 
 export const AppHeaderIndex: FC = () => {
@@ -21,15 +21,12 @@ export const AppHeaderIndex: FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { t } = useTranslate();
-type Lang = "en" | "fa" | "ar";
 
-const languages: Lang[] = ["en", "fa", "ar"];
-
-const langLabels: Record<Lang, string> = {
-  en: "En",
-  fa: "فا",
-  ar: "عر",
-};
+  const langLabels: Record<Language, string> = {
+    en: "En",
+    fa: "فا",
+    ar: "عر",
+  };
 
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
@@ -44,7 +41,7 @@ const langLabels: Record<Lang, string> = {
   }, [currentLang]);
 
   const handleLanguageChange = (lang: Language) => {
-    push(`/${lang}`)
+    push(`/${lang}`);
   };
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -130,7 +127,11 @@ const langLabels: Record<Lang, string> = {
     <Container className="app-header_containers">
       <Row>
         <div className="home__img">
-          <img src={img} alt="vitrine" onClick={() => push(`/${currentLang}`)} />
+          <img
+            src={img}
+            alt="vitrine"
+            onClick={() => push(`/${currentLang}`)}
+          />
         </div>
 
         <img
@@ -146,23 +147,22 @@ const langLabels: Record<Lang, string> = {
           selectable={false}
           overflowedIndicator={null}
         >
-<Menu.SubMenu
-  key="b"
-  title={langLabels[currentLang]} // نمایش label زبان فعلی
-  className="En_text"
-  popupClassName="lang-submenu-popup"
->
-  {languages
-    .filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
-    .map((lang) => (
-      <Menu.Item
-        key={`lang-${lang}`}
-        onClick={() => handleLanguageChange(lang)}
-      >
-        {langLabels[lang]}
-      </Menu.Item>
-    ))}
-</Menu.SubMenu>
+          <Menu.SubMenu
+            key="b"
+            title={langLabels[currentLang]} // نمایش label زبان فعلی
+            className="En_text"
+            popupClassName="lang-submenu-popup"
+          >
+            {LANGUAGES.filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
+              .map((lang) => (
+                <Menu.Item
+                  key={`lang-${lang}`}
+                  onClick={() => handleLanguageChange(lang)}
+                >
+                  {langLabels[lang]}
+                </Menu.Item>
+              ))}
+          </Menu.SubMenu>
         </Menu>
         <img className="en_img" src={en} alt={en} />
       </Row>
@@ -179,7 +179,11 @@ const langLabels: Record<Lang, string> = {
               {item.children.map((child) => (
                 <Menu.Item
                   key={child.key}
-                  onClick={() => (child.path ? push(`/${currentLang}/${child.path}`) : undefined)}
+                  onClick={() =>
+                    child.path
+                      ? push(`/${currentLang}/${child.path}`)
+                      : undefined
+                  }
                 >
                   {child.title[currentLang]}
                 </Menu.Item>
@@ -193,7 +197,9 @@ const langLabels: Record<Lang, string> = {
             <Menu.Item
               key={item.key}
               title={item.title[currentLang]}
-              onClick={() => (item.path ? push(`/${currentLang}/${item.path}`) : undefined)}
+              onClick={() =>
+                item.path ? push(`/${currentLang}/${item.path}`) : undefined
+              }
             >
               {item.title[currentLang]}
             </Menu.Item>
