@@ -21,6 +21,7 @@ import useSetting from "../../../hooks/setting/useSetting";
 import type { SettingView } from "../../../models/views/settingView";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import { validateEmail, validatePhone } from "../../../helpers/validation";
 
 const ContactBranch: React.FC = () => {
   useSyncLanguage();
@@ -76,15 +77,6 @@ const ContactBranch: React.FC = () => {
     });
   };
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePhone = (phone: string): boolean => {
-    const phoneRegex = /^[\d\u06F0-\u06F9\s\-\+]+$/;
-    return phoneRegex.test(phone) && phone.replace(/\D/g, "").length >= 10;
-  };
   const mapSrc = setting?.google_map_address?.match(/src="([^"]+)"/)?.[1] || "";
   const onSubmit = async () => {
     try {
@@ -173,8 +165,7 @@ const ContactBranch: React.FC = () => {
           <div className="form-section">
             <div className="form-row">
               <div className="input-group half">
-           
-                 <Input
+                <Input
                   className=" input-text"
                   placeholder={t("local_contactFullName")}
                   variant="underlined"
@@ -185,8 +176,7 @@ const ContactBranch: React.FC = () => {
                 />
               </div>
               <div className="input-group half">
-             
-                  <Input
+                <Input
                   className=" input-text"
                   placeholder={t("local_contactPhoneNumber")}
                   variant="underlined"
@@ -198,7 +188,7 @@ const ContactBranch: React.FC = () => {
 
             <div className="form-row">
               <div className="input-group half">
-                     <Input
+                <Input
                   className=" input-text"
                   placeholder={t("local_contactEmail")}
                   variant="underlined"
@@ -258,7 +248,7 @@ const ContactBranch: React.FC = () => {
             loading="lazy"
           ></iframe>
           <div className="map-pin">
-        <img src={Marker} className="action" alt="WhatsApp" />
+            <img src={Marker} className="action" alt="WhatsApp" />
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import useAxious from "../../helpers/axiosInstance";
+import { useTranslate } from "../../i18n/useTranslate";
+import type { ProductCommentDTO } from "../../models/dtos/productCommentDTO";
 import type ServerResult from "../../models/ServerResult";
 import type {
   ProductView,
@@ -7,6 +9,8 @@ import type {
 
 const useProducts = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
+  const { t } = useTranslate();
+  
   async function getListProducts(perPage = 15) {
     let success = false;
     let result = "";
@@ -34,6 +38,7 @@ const useProducts = (currentLang: string) => {
       total,
     };
   }
+
   async function getProductById(id: number) {
     let success = false;
     let data: ProductDetailView | null = null;
@@ -56,9 +61,32 @@ const useProducts = (currentLang: string) => {
     };
   }
 
+  async function getCommentProductById(id: number, dto: ProductCommentDTO) {
+    let result = "";
+    let success = false;
+    await axiosAuthInstance
+      .post<ServerResult<ProductCommentDTO>>(`/comments/product/${id}`, dto)
+      .then((res) => {
+        if (res.data.success) {
+          success = true;
+          result = t("local_sentComment");
+        } else {
+          result = res.data.message;
+        }
+      })
+      .catch(() => {
+        result = "Operation failed";
+      });
+    return {
+      success,
+      result,
+    };
+  }
+
   return {
     getListProducts,
     getProductById,
+    getCommentProductById
   };
 };
 

@@ -13,13 +13,15 @@ import type {
   ProductView,
   ProductDetailView,
 } from "../../../models/views/productView";
-import { Input, Rate } from "antd";
+import { Input, message, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import useProducts from "../../../hooks/products/useProducts";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import useNavigation from "../../../hooks/useHistory";
+import type { ProductCommentDTO } from "../../../models/dtos/productCommentDTO";
+import { validateEmail, validatePhone } from "../../../helpers/validation";
 export default function ProductDetail() {
   useSyncLanguage();
   const [mainImage, setMainImage] = useState("");
@@ -27,7 +29,7 @@ export default function ProductDetail() {
   const isMobile = useIsMobile();
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
-  const { getListProducts, getProductById } = useProducts(currentLang);
+  const { getListProducts, getProductById, getCommentProductById } = useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +41,10 @@ export default function ProductDetail() {
   const [rating, setRating] = useState(0);
   const { t } = useTranslate();
   const { push } = useNavigation();
+
+  const [commentFormSubmitting, setCommentFormSubmitting] = useState(false);
+  const [commentForm, setCommentForm] = useState<ProductCommentDTO>({} as ProductCommentDTO);
+
   const groupedFeatures = product?.features.reduce<Record<string, string[]>>(
     (acc, feature) => {
       if (!acc[feature.feature_title]) {
@@ -82,6 +88,7 @@ export default function ProductDetail() {
     if (!id) return;
     fetchData();
   }, [id, currentLang]);
+
   useEffect(() => {
     if (product?.media?.length && !mainImage) {
       setMainImage(product.media[0]?.url);
@@ -91,10 +98,65 @@ export default function ProductDetail() {
   useEffect(() => {
     setIsExpanded(false);
   }, [product?.content]);
+
+  const handleCommentInputChange = (field: keyof ProductCommentDTO, value: any) => {
+    setCommentForm((prev) => ({
+      ...prev,
+      [field]: value || null,
+    }));
+  };
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const showMessage = (content: string) => {
+    messageApi.open({
+      icon: <></>,
+      content: content,
+    });
+  };
+
+  const onCommentSubmit = async () => {
+    try {
+      console.log('commentForm',commentForm)
+      const isEmpty =
+        !commentForm.content ||
+        !commentForm.rate ||
+        !commentForm.user_email ||
+        !commentForm.user_name;
+      if (isEmpty) {
+        showMessage(t("local_completeTheForm"));
+        return;
+      }
+
+      if (commentForm.user_email && !validateEmail(commentForm.user_email)) {
+        showMessage(t("local_invalidEmail"));
+        return;
+      }
+
+      if (commentForm.phone && !validatePhone(commentForm.phone)) {
+        showMessage(t("local_invalidPhone"));
+        return;
+      }
+
+      setCommentFormSubmitting(true);
+      const resp = await getCommentProductById(Number(id),commentForm);
+      if (resp.success) {
+        showMessage(resp.result);
+        setCommentForm({} as ProductCommentDTO);
+      } else {
+        showMessage(resp.result);
+      }
+    } catch (e: any) {
+      showMessage(e?.message);
+    } finally {
+      setCommentFormSubmitting(false);
+    }
+  };
+
   return (
     <>
+      {contextHolder}
       {isMobile ? <HomeMobile /> : <AppHeader noBackgroundProducts />}
-
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
           <Col xs={24} md={24} lg={15} className="product-info">
@@ -208,7 +270,7 @@ export default function ProductDetail() {
             </div>
             <div className="comment-section">
               <h2 className="other-title">
-                نظرات
+                {t("local_comments")}
               </h2>
               <div className="comment-form">
                 <div className="comment-form-block">
@@ -216,20 +278,24 @@ export default function ProductDetail() {
                     <div className="input-group half">
                       <Input
                         className="input-text"
-                        placeholder="نام و نام خانوادگی"
+                        placeholder={t("local_contactFullName")}
                         variant="underlined"
+                        value={commentForm.user_name || ""}
+                        onChange={(e) =>
+                          handleCommentInputChange("user_name", e.target.value)
+                        }
                       />
                     </div>
                     <div className="input-group half">
                       <Input
                         className="input-text"
-                        placeholder="ایمیل"
+                        placeholder={t("local_contactEmail")}
                         variant="underlined"
+                        value={commentForm.user_email || ""}
+                        onChange={(e) => handleCommentInputChange("user_email", e.target.value)}
                       />
                     </div>
                   </div>
-
-
                 </div>
 
                 <div className="form-row textarea-field">
@@ -237,31 +303,36 @@ export default function ProductDetail() {
                     display: 'flex',
                     alignItems: 'center'
                   }}>
-                    <span> امتیاز دهید</span>
-                    <Rate allowHalf onChange={setRating} value={rating} className="black-rate"
-                    />
-
+                    <span>{t("local_commentRate")}</span>
+                    <Rate allowHalf
+                      value={commentForm.rate || 0}
+                      onChange={(value) =>
+                        handleCommentInputChange("rate", value)
+                      } className="black-rate"/>
                   </div>
                   <div className="input-group half">
                     <TextArea
                       className="input-text"
                       rows={4}
-                      placeholder="کامنت خود را بنویسید"
+                      placeholder={t("local_commentContent")}
                       variant="underlined"
+                      value={commentForm.content || ""}
+                      onChange={(e) => handleCommentInputChange("content", e.target.value)}
                     />
                   </div>
-
                 </div>
 
                 <div className="form-row block-fill">
-                  <button className="info-btn" onClick={() => alert("کامنت ارسال شد!")}>
-                    ارسال
+                  <button 
+                    className="info-btn" 
+                    onClick={onCommentSubmit}
+                    disabled={commentFormSubmitting}>
+                    {t("local_send")}
                   </button>
                 </div>
               </div>
 
               <div className="comment-list">
-
 
                 <div className="comment">
                   <div className="comment-header">

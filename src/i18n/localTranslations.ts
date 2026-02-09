@@ -55,7 +55,13 @@ export const localTranslations: TranslationView[] = [
     { key: "local_productFeatures", value: { ar: "ميزات المنتج", en: "Product Features", fa: "ویژگی‌های محصول" } },
     { key: "local_code", value: { ar: "رمز", en: "Code", fa: "کد" } },
     { key: "local_getInfo", value: { ar: "الحصول على المعلومات", en: "Get Info", fa: "دریافت اطلاعات" } },
-    //project
+    //comment
+    { key: "local_sentComment", value: { ar: "تم تسجيل رأيك بنجاح.", en: "Your comment has been submitted successfully.", fa: "نظر شما با موفقیت ثبت شد." } },
+    { key: "local_send", value: { ar: "إرسال", en: "Send", fa: "ارسال" } },
+    { key: "local_commentContent", value: { ar: "اكتب تعليقك", en: "Write your comment", fa: "کامنت خود را بنویسید" } },
+    { key: "local_comments", value: { ar: "التعليقات", en: "Comments", fa: "نظرات" } },
+    { key: "local_commentRate", value: { ar: "قيّم", en: "Rate", fa: "امتیاز دهید" } },
+
     //project
     { key: "local_architect", value: { ar: "المهندس المعماري", en: "Architect", fa: "معمار" } },
     { key: "local_constructor", value: { ar: "المقاول", en: "Constructor", fa: "سازنده" } },
