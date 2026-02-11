@@ -254,11 +254,11 @@ export default function ProductDetail() {
               {product?.brochures.map((item) => (
 
                 <div className="download-content">
-                  {/* <p className="download-title">
+                  <p className="download-title">
                     {
                       (item?.startsWith('https://') || item?.startsWith('http://')) ? t("local_getCatalog") : item.split('/').pop()
                     }
-                  </p> */}
+                  </p>
 
                   <a href={item}
                     download
