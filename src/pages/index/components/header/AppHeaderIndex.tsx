@@ -21,12 +21,35 @@ export const AppHeaderIndex: FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { t } = useTranslate();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const langLabels: Record<Language, string> = {
     en: "En",
     fa: "فا",
     ar: "عر",
   };
+  useEffect(() => {
+    // تابعی که هنگام اسکرول اجرا می‌شود
+    const handleScroll = () => {
+      // اگر اسکرول عمودی بیشتر از ۵۰ پیکسل بود، وضعیت را true کن
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+        setIsMenuOpen(false)
+      }
+    };
+
+    // اضافه کردن رویداد اسکرول به پنجره
+    window.addEventListener('scroll', handleScroll);
+
+    // حذف رویداد هنگام unmount شدن کامپوننت برای جلوگیری از نشت حافظه
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
@@ -39,6 +62,10 @@ export const AppHeaderIndex: FC = () => {
     setIndexData(null);
     fetchIndex();
   }, [currentLang]);
+
+   const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const handleLanguageChange = (lang: Language) => {
     push(`/${lang}`);
@@ -123,8 +150,37 @@ export const AppHeaderIndex: FC = () => {
     },
   ];
 
+const renderMenuItems = (items: any[]) => {
+  return items.map((item) => {
+    if (item.children && item.children.length > 0) {
+      return (
+        <Menu.SubMenu
+          key={item.key}
+          title={item.title[currentLang]}
+        >
+          {renderMenuItems(item.children)}
+        </Menu.SubMenu>
+      );
+    }
+
+    return (
+      <Menu.Item
+        key={item.key}
+        onClick={() =>
+          item.path
+            ? push(`/${currentLang}/${item.path}`)
+            : undefined
+        }
+      >
+        {item.title[currentLang]}
+      </Menu.Item>
+    );
+  });
+};
+
+
   return (
-    <Container className="app-header_containers">
+    <Container className={`app-header_containers ${isScrolled ? 'freez' : ''}`}>
       <Row>
         <div className="home__img">
           <img
@@ -141,7 +197,7 @@ export const AppHeaderIndex: FC = () => {
           onClick={() => setSearchOpen(true)}
         />
         <Menu
-          className="app-header__menu-Text"
+          className={`app-header__menu-Text ${isMenuOpen ? 'active' : ''}`}
           mode="horizontal"
           triggerSubMenuAction="hover"
           selectable={false}
@@ -164,7 +220,18 @@ export const AppHeaderIndex: FC = () => {
               ))}
           </Menu.SubMenu>
         </Menu>
-        <img className="en_img" src={en} alt={en} />
+        <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
+        <div className="burgerMenu">
+ <button 
+        className={`menu-toggle-btn ${isMenuOpen ? 'active' : ''}`} 
+        onClick={toggleMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+        </div>
       </Row>
       <Menu
         className="app-header__menu-home"
@@ -223,6 +290,34 @@ export const AppHeaderIndex: FC = () => {
           </button>
         </div>
       )}
+      <div className={`side-menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
+      <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+
+        <div className="side-menu-search">
+          <Input
+            placeholder={t("local_search")}
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch}
+          />
+
+          <button className="serach-btn " onClick={() => setSearchOpen(false)}>
+               <img
+          src={search}
+          alt={search}
+          onClick={() => setSearchOpen(true)}
+        />
+          </button>
+        </div>
+<Menu
+ className="app-header__menu-slide"
+  mode="inline"
+  selectable={false}
+>
+  {renderMenuItems(menuItems)}
+</Menu>
+      </div>
     </Container>
   );
 };
