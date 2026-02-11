@@ -47,7 +47,7 @@ const buildMenuItems = (
     label: (
       <div className="menu-label">
         {cat.children?.length > 0 && (
-          <span>{openKeys.includes(String(cat.id)) ? "↓" : "←"}</span>
+          <span className="iconArrow">{openKeys.includes(String(cat.id)) ? "↓" : "←"}</span>
         )}
         <span>{cat.title}</span>
       </div>
@@ -630,7 +630,7 @@ const AllProducts: React.FC = () => {
                 .reverse()
                 .slice(0, visibleCount)
                 .map((item, i) => (
-                  <Col xs={12} sm={12} lg={6} key={i}>
+                  <Col xs={12}  md={3} sm={12} lg={8} key={i}>
                     <Card
                       hoverable
                       className={`showcase-card-product ${

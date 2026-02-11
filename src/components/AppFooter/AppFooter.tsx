@@ -9,7 +9,7 @@ import ico_linkedin from "../../assets/footer/media3.png";
 import ico_telegram from "../../assets/footer/media4.png";
 import ico_facebook from "../../assets/footer/media5.png";
 import ico_youtube from "../../assets/footer/media6.png";
-import media7 from "../../assets/footer/media7.png";
+import media7 from "../../assets/icon/whatsapp.svg";
 
 import "./AppFooter.less";
 import { useLanguage } from "../../contexts/useLanguage";

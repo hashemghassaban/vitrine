@@ -130,17 +130,18 @@
   }
 
   .contact {
-    position: absolute;
-    right: 40px;
+    position: fixed;
+    left: 40px;
     display: inline-block;
     bottom: 145px;
-        width: 90%;
+    width: 52px;
     padding: 0px 0;
+        bottom: 27px;
     
 
     img {
       transition: transform 0.3s ease;
-          width: 50px;
+          width: 60px;
       &:hover {
         transform: scale(1.2);
         cursor: pointer;
@@ -170,10 +171,10 @@
   .back-to-top {
     position: absolute;
     top: -20px;
-    left: 10px;
+    right: 10px;
     width: 44px;
     height: 44px;
-    margin-left: 4rem;
+    margin-right: 4rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background: #fff;
     border: 1px solid #CFCFCF;
@@ -228,7 +229,8 @@
     }
 
     .back-to-top {
-      left: 10px;
+      right: 10px;
+      left: inherit;
       top: -10px;
     }
   }
@@ -290,14 +292,15 @@ footer{
 
 .ant-layout-rtl{
     .contact {
-      left: 40px;
-      right: inherit;
+      left: inherit;
+      right: 40px;
       
     }
    .back-to-top {
-      right: 10px;
-      top: -10px;
-          margin-right: 4rem;
+      left: 10px;
+            right: inherit;
+      top: -23px;
+          margin-left: 1rem;
     }
     
   .app-footer__copyright_text {

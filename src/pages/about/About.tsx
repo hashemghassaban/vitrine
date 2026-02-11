@@ -78,11 +78,13 @@ export default function About() {
             </div>
           </Col>
           <Col xs={24} lg={12}>
+          <div className="top-image-about-block">
             <img
-              className="top-image-about"
               src={page?.image ?? ""}
               alt={page?.title}
             />
+          </div>
+          
           </Col>
         </Row>
       </div>

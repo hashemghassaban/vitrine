@@ -107,6 +107,12 @@ padding: 0!important;
   max-height: 238px;
   overflow-y: auto;
   margin-bottom: 25px;
+  ul{
+    border: 0!important;
+    li{
+      border-radius: 0!important;
+    }
+  }
 
   &::-webkit-scrollbar {
     width: 9px;
@@ -171,10 +177,11 @@ padding: 0!important;
   gap: 8px;
 }
 
-.menu-label .icon{
+.menu-label .iconArrow{
    position: relative;
   transition-duration: 0.5ms;
   transform: rotate(-180deg);
+  top: -5px;
 }
 
 .menu-item-product-col {
@@ -209,10 +216,10 @@ padding: 0!important;
   gap: 8px;
 }
 
-.ant-menu-submenu-open .icon{
+.ant-menu-submenu-open .iconArrow{
   position: relative;
   transition-duration: 0.5ms;
-  transform: rotate(-90deg)!important;
+  transform: rotate(0deg)!important;
 }
 /* -------- SIDEBAR FILTERS -------- */
 
@@ -232,7 +239,7 @@ padding: 0!important;
   padding-bottom: 8px;
   border-bottom: 1px solid #737373;
   font-weight: 100;
-  font-size: 18;
+  font-weight: 600;
   line-height: 45px;
   color: #868686;
   margin-bottom: 20px;
@@ -433,11 +440,12 @@ color: #000000;
 text-align: right;
 
 }
-.menu-label .icon{
-  transform: rotate(0deg)!important;
-}
-.ant-menu-submenu-open .icon{
+.menu-label .iconArrow{
   transform: rotate(-90deg)!important;
+  top: 0;
+}
+.ant-menu-submenu-open .iconArrow{
+  transform: rotate(0deg)!important;
 }
 .product-title-product{
   font-size: 14px;
@@ -450,3 +458,6 @@ text-align: right;
 }
 }
 
+.brands-list ul{
+  border: 0!important;
+}

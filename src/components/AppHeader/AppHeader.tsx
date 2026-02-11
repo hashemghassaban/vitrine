@@ -113,11 +113,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               },
             ],
     },
-    {
-      key: "menu-catalogues",
-      title: { en: "Callections", fa: "کالکشن ها", ar: "الکالکشن" },
-      path: "collections",
-    },
+
     {
       key: "menu-catalogues",
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
@@ -140,12 +136,12 @@ export const AppHeader: FC<AppHeaderProps> = ({
     },
     {
       key: "menu-about",
-      title: { en: "About", fa: "درباره", ar: "من نحن" },
+      title: { en: "About", fa: "درباره ما", ar: "من نحن" },
       path: "about",
     },
     {
       key: "menu-contact",
-      title: { en: "Contact", fa: "تماس", ar: "اتصل بنا" },
+      title: { en: "Contact", fa: "تماس با ما", ar: "اتصل بنا" },
       path: "contactBranch",
     },
   ];

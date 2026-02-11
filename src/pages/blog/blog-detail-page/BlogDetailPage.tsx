@@ -90,7 +90,7 @@ export default function BlogDetailPage() {
               <div className="main-box">
                 <h1 className="title">{blog?.title}</h1>
                 <p className="meta">
-                  {t("local_publishedAt")}: {blog?.published_at}
+                  {t("local_publishedAt")}: <span>{blog?.published_at}</span>
                 </p>
                 {/* عکس اصلی */}
                 <img src={blog?.image} className="main-image" alt="main" />

@@ -1,6 +1,8 @@
 import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import "./ProductDetail.less";
 import reply from "../../../assets/icon/reply.svg";
+import star from "../../../assets/icon/star.svg";
+
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
@@ -236,7 +238,7 @@ export default function ProductDetail() {
               <p className="description-text" dangerouslySetInnerHTML={{
                 __html: isExpanded
                   ? product?.content ?? ""
-                  : truncateByWord(product?.content ?? "", 350),
+                  : truncateByWord(product?.content ?? "", 500),
               }}>
 
               </p>
@@ -252,11 +254,11 @@ export default function ProductDetail() {
               {product?.brochures.map((item) => (
 
                 <div className="download-content">
-                  <p className="download-title">
+                  {/* <p className="download-title">
                     {
-                      (item.startsWith('https://') || item.startsWith('http://')) ? t("local_getCatalog") : item.split('/').pop()
+                      (item?.startsWith('https://') || item?.startsWith('http://')) ? t("local_getCatalog") : item.split('/').pop()
                     }
-                  </p>
+                  </p> */}
 
                   <a href={item}
                     download
@@ -269,6 +271,11 @@ export default function ProductDetail() {
               ))}
             </div>
             <div className="comment-section">
+              <div className="scoreProduct">
+               
+               <div>  امتیاز محصول / </div>
+               <div><img src={star} alt="star" /> 0  ( 0 دیدگاه ) </div>
+              </div>
               <h2 className="other-title">
                 {t("local_comments")}
               </h2>

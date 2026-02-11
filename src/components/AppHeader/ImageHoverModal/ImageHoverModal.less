@@ -44,12 +44,13 @@
 }
 
 .menu-grid {
-  display: flex;
-  flex-flow: column wrap;       
-  height: 335px;               
-     gap: 25px 0;
-  direction: rtl;
-  align-content: flex-end;
+    display: flex;
+    flex-flow: column wrap;
+    height: 335px;
+    gap: 25px 0;
+    direction: ltr;
+    align-content: flex-start;
+    align-items: flex-start;
 }
 
 .menu-column {
@@ -63,7 +64,7 @@
     align-items: center;
     gap: 8px;
     font-weight: 700;
-    flex-direction: row-reverse;
+    flex-direction: row;
     margin-bottom: 12px;
     white-space: nowrap;
     justify-content: flex-start;
@@ -104,7 +105,8 @@
     justify-content: flex-end;
   }
     .menu-grid{
-        align-content: flex-start;
+          align-content: flex-start;
+    direction: rtl;
   }
 
   .menu-item-link{
