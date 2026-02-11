@@ -1,5 +1,6 @@
 import useAxious from "../../helpers/axiosInstance";
 import { useTranslate } from "../../i18n/useTranslate";
+import type { orderProductDTO } from "../../models/dtos/orderProductDTO";
 import type { ProductCommentDTO } from "../../models/dtos/productCommentDTO";
 import type ServerResult from "../../models/ServerResult";
 import type {
@@ -83,10 +84,32 @@ const useProducts = (currentLang: string) => {
     };
   }
 
+    async function getOrderProduct(dto: orderProductDTO) {
+    let result = "";
+    let success = false;
+    await axiosAuthInstance
+      .post<ServerResult<ProductCommentDTO>>(`/orders`, dto)
+      .then((res) => {
+        if (res.data.success) {
+          success = true;
+          result = t("local_sentComment");
+        } else {
+          result = res.data.message;
+        }
+      })
+      .catch(() => {
+        result = "Operation failed";
+      });
+    return {
+      success,
+      result,
+    };
+  }
   return {
     getListProducts,
     getProductById,
-    getCommentProductById
+    getCommentProductById,
+    getOrderProduct
   };
 };
 

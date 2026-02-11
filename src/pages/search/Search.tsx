@@ -86,8 +86,7 @@ const Search: React.FC = () => {
                         {item.title}
                       </h2>
                       <p>
-                        {" "}
-                        {t("local_category")}: {t(`local_type_${item.type}`)}{" "}
+                        {t("local_category")}: {t(`local_type_${item.type}`)}
                       </p>
                       <Paragraph className="item-text">
                         {cleanText(item.content).slice(0, 150)}...
