@@ -96,6 +96,12 @@ export type TranslationKey =
   | "local_getInfo"
   | "local_code"
   | "local_productFeatures"
+  | "local_company"
+  | "local_orderFormProducts"
+  | "local_orderFormAddProduct"
+  | "local_orderFormSendOrder"
+  | "local_orderFormClose"
+  | "local_address"
   //comment
   | "local_sentComment"
   | "local_send"

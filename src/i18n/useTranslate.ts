@@ -11,7 +11,7 @@ export const useTranslate = () => {
     const item = translations[key];
 
     if (!item) {
-      console.warn(`Missing translation key: ${key}`);
+      //console.warn(`Missing translation key: ${key}`);
       return key;
     }
 
