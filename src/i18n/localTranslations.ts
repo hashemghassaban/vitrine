@@ -90,4 +90,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_vitrin20years", value: { ar: "ویترین إلى جانبكم منذ 20 عامًا.", en: "Vitrin has been by your side for 20 years.", fa: "ویترین ۲۰ سال است در کنار شماست" } },
     { key: "local_aboutVitrine", value: { ar: "من نحن ویترین", en: "About Vitrine", fa: "درباره ویترین" } },
     { key: "local_ourServices", value: { ar: "التعرّف على الخدمات", en: "Our Services", fa: "آشنایی با خدمات" } },
+    
+    //captcha
+    { key: "local_captchaTextInput", value: { fa: "متن داخل تصویر را وارد کنید", en: "Enter text from image", ar: "أدخل النص من الصورة" } },
 ];

@@ -5,4 +5,6 @@ export interface ProductCommentDTO {
   user_website: string;
   phone: string;
   content: string;
+  key:string;
+  captcha:string;
 }

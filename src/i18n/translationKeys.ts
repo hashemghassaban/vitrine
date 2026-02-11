@@ -79,6 +79,7 @@ export type TranslationKey =
   | "local_aboutVitrine"
   | "local_ourServices"
   | "local_home"
+  | "local_captchaTextInput"
   //index
   | "local_luxuryProducts"
   | "local_vitrineBuildingShowroom"
