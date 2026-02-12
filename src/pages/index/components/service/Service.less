@@ -1,14 +1,16 @@
 .service {
   width: 100%;
-  padding: 100px 10% 50px;
+  padding: 100px 5% 50px;
 }
 
 /* عنوان */
 .first__title {
-  font-weight: 700;
+  h2{
+    font-weight: 700;
   font-size: 20px;
   color: #767676;
   margin-bottom: 50px;
+  }
 }
 
 /* متن + انیمیشن ورود */
@@ -35,7 +37,7 @@
   font-weight: 700;
   font-size: 18px;
   color: #767676;
-  margin-bottom: 77px;
+  margin-bottom: 25px;
   display: block;
   &:hover{
     color: #000;
@@ -47,7 +49,7 @@
   font-size: 15px;
   line-height: 31px;
   color: #6b6b6b;
-  padding-bottom: 40px;
+  padding-bottom: 15px;
 }
 
 .service__Button {
@@ -61,17 +63,14 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  a{
+       width: 82%;
+  }
 }
 
 .service-img {
-  width: 586px;
-  border-radius: 12px;
-  transition: transform 0.4s ease, filter 0.4s ease;
+  width: 100%;
 
-  &:hover {
-    transform: scale(1.04);
-    filter: brightness(1.08);
-  }
 }
 
 /* ریسپانسیو */

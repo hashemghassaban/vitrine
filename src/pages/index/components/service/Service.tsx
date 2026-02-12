@@ -17,7 +17,7 @@ export const Service: React.FC = () => {
   return (
     <section id="Service" className="service">
       <Row className="first__title" justify="center">
-        <p>{t("local_ourServices")}</p>
+        <h2>{t("local_ourServices")}</h2>
       </Row>
       <Row align="middle" justify="center" className="service__row">
         <Col
@@ -28,7 +28,7 @@ export const Service: React.FC = () => {
           xl={7}
           className="service__content fade-in"
         >
-          <a href={`/${currentLang}${data?.link}`} className="service__title">{data?.title}</a>
+          <a href={`/${currentLang}${data?.link}`} className="service__title"><h3>{data?.title}</h3></a>
           <p className="service__text" dangerouslySetInnerHTML={{
             __html: data?.description ?? "",
           }}>

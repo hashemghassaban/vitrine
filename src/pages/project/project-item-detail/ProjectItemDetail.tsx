@@ -72,7 +72,8 @@ const videoRef = useRef<HTMLVideoElement>(null);
         title={t("site.proje1")}
         text={project?.title}
         style={false}
-     
+        categoryBackground={project?.image_link ? project?.image_link : ""}
+
 
       />
 

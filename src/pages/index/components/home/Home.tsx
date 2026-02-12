@@ -1,11 +1,8 @@
 import { useRef } from "react";
 import type { JSX } from "react";
-
 import "./Home.less";
 import { Carousel } from "antd";
-
 import { AppHeaderIndex } from "../header/AppHeaderIndex";
-
 import { Button } from "antd";
 import { ScrollDown } from "./scroll-down/ScrollDown";
 import intro from "../../../../assets/home/intro.png";

@@ -29,7 +29,7 @@ export const BusinessPlan: React.FC = () => {
         {/* ستون محتوا */}
         <Col xs={24} sm={24} lg={12} className="business-plan__content">
           <div className="business-plan__content-inner">
-            <p className="business-plan__title">{data?.title}</p>
+            <h2 className="business-plan__title">{data?.title}</h2>
 
             <p
               className="business-plan__desc"

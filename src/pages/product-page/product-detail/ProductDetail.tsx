@@ -2,13 +2,11 @@ import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import "./ProductDetail.less";
 import reply from "../../../assets/icon/reply.svg";
 import star from "../../../assets/icon/star.svg";
-
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
 import { VerticalAlignBottomOutlined } from "@ant-design/icons";
 import { useIsMobile } from "../../../helpers/useIsMobile";
-import HomeMobile from "../../index/components/home_mobile/HomeMobile";
 import { useParams } from "react-router-dom";
 import { useLanguage } from "../../../contexts/useLanguage";
 import type {
@@ -28,7 +26,6 @@ export default function ProductDetail() {
   useSyncLanguage();
   const [mainImage, setMainImage] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
-  const isMobile = useIsMobile();
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
   const { getListProducts, getProductById, getCommentProductById } = useProducts(currentLang);
@@ -81,8 +78,6 @@ export default function ProductDetail() {
           );
         }
 
-        console.log(relatedRes);
-
       }
     }
   };
@@ -119,7 +114,7 @@ export default function ProductDetail() {
 
   const onCommentSubmit = async () => {
     try {
-      console.log('commentForm',commentForm)
+      console.log('commentForm', commentForm)
       const isEmpty =
         !commentForm.content ||
         !commentForm.rate ||
@@ -141,7 +136,7 @@ export default function ProductDetail() {
       }
 
       setCommentFormSubmitting(true);
-      const resp = await getCommentProductById(Number(id),commentForm);
+      const resp = await getCommentProductById(Number(id), commentForm);
       if (resp.success) {
         showMessage(resp.result);
         setCommentForm({} as ProductCommentDTO);
@@ -158,7 +153,7 @@ export default function ProductDetail() {
   return (
     <>
       {contextHolder}
-      {isMobile ? <HomeMobile /> : <AppHeader noBackgroundProducts />}
+      <AppHeader noBackgroundProducts />
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
           <Col xs={24} md={24} lg={15} className="product-info">
@@ -272,9 +267,9 @@ export default function ProductDetail() {
             </div>
             <div className="comment-section">
               <div className="scoreProduct">
-               
-               <div>  امتیاز محصول / </div>
-               <div><img src={star} alt="star" /> 0  ( 0 دیدگاه ) </div>
+
+                <div>  امتیاز محصول / </div>
+                <div><img src={star} alt="star" /> 0  ( 0 دیدگاه ) </div>
               </div>
               <h2 className="other-title">
                 {t("local_comments")}
@@ -315,7 +310,7 @@ export default function ProductDetail() {
                       value={commentForm.rate || 0}
                       onChange={(value) =>
                         handleCommentInputChange("rate", value)
-                      } className="black-rate"/>
+                      } className="black-rate" />
                   </div>
                   <div className="input-group half">
                     <TextArea
@@ -330,8 +325,8 @@ export default function ProductDetail() {
                 </div>
 
                 <div className="form-row block-fill">
-                  <button 
-                    className="info-btn" 
+                  <button
+                    className="info-btn"
                     onClick={onCommentSubmit}
                     disabled={commentFormSubmitting}>
                     {t("local_send")}
@@ -389,7 +384,7 @@ export default function ProductDetail() {
                 {related.map((item, index) => (
                   <Col key={index} xs={24} sm={12} md={8} lg={6} xl={5}>
                     <Card
-                     onClick={() => push(`/${currentLang}/products/${item.id}`)}
+                      onClick={() => push(`/${currentLang}/products/${item.id}`)}
                       hoverable
                       className="showcase-card-product-another"
                       cover={

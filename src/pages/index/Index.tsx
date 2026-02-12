@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import useIndex from "../../hooks/index/useIndex";
 import type { IndexDataView } from "../../models/views/indexView";
 import { useIsMobile } from "../../helpers/useIsMobile";
-import HomeMobile from "./components/home_mobile/HomeMobile";
 import { useLanguage } from "../../contexts/useLanguage";
 import { IndexProvider } from "../../contexts/indexContext";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
@@ -43,7 +42,7 @@ function Index() {
       <IndexProvider value={{ indexData }}>
         <Layout>
           <Content>
-            {isMobile ? <HomeMobile /> : <Home />}
+            <Home />
             <BrandRow />
             <BusinessPlan />
             <VideoBlock />

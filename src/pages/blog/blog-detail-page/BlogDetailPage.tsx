@@ -19,6 +19,9 @@ export default function BlogDetailPage() {
   const { currentLang } = useLanguage();
   const { getPostById, getPosts } = useBlog(currentLang);
   const [blog, setBlog] = useState<BlogItemView | null>(null);
+      const [backgroundData, setBackground] = useState<string>("");
+
+
   const [related, setRelated] = useState<BlogItemView[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
@@ -31,6 +34,8 @@ export default function BlogDetailPage() {
       return;
     }
     setBlog(data);
+    
+    setBackground(data?.image)
     const relatedRes = await getPosts();
     if (relatedRes.success && relatedRes.data) {
       const filtered = relatedRes.data
@@ -50,7 +55,8 @@ export default function BlogDetailPage() {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader categoryBackground={backgroundData}
+/>
 
       {!loading ? (
         <div className="blog-details-container">
@@ -59,7 +65,6 @@ export default function BlogDetailPage() {
             <Col xs={24} md={8} lg={7} className="sidebar">
               <div className="slider-box">
                 <h3 className="sidebar-title">{t("local_relatedArticles")}</h3>
-
                 {related.map((item) => (
                   <div key={item.id} className="related-item">
                     <img

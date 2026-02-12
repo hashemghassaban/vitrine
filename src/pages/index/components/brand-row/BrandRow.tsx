@@ -27,9 +27,9 @@ export function BrandRow(): JSX.Element {
   return (
     <section className="brand-section">
       <Row className="brand-title" justify="center" align="middle">
-        <p>
+        <h2>
           {t("site.indexbrands")}
-        </p>
+        </h2>
       </Row>
       <div className="brand-scale-container">
         <Row className="brand-scale-row" gutter={0} >

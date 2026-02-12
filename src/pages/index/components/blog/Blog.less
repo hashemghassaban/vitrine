@@ -1,14 +1,17 @@
 .blog {
-  margin: 120px 10%;
+  margin: 120px 5%;
 
   .first__title {
+
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+    h2{
     font-weight: 700;
     font-size: 22px;
     text-align: center;
     color: #767676;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeIn 0.8s ease forwards;
+    margin-bottom: 50px;
+    }
   }
 
   .blog__Row {
@@ -24,6 +27,9 @@
 
 .blog__Row.reverse {
   flex-direction: row-reverse;
+  .blog__image {
+      justify-content: flex-end;
+  }
 }
 
 
@@ -32,18 +38,18 @@
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    overflow: hidden;
 padding: 0 !important;
+a{
+      width: 84%;
+
     img {
-       width: 537px;
+       width: 100%;
     height: auto;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    object-fit: cover;
+    }
     }
 
-    &:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-    }
+
   }
 
   .blog__content,
@@ -71,6 +77,7 @@ justify-content: flex-end;
 
         .blog__box2{
       width: 400px;
+      margin-right: auto;
     }
 
   }
@@ -81,6 +88,7 @@ justify-content: flex-end;
     font-size: 20px;
     color: #767676;
     display: block;
+    line-height: 40px;
   }
 
   .blog__text {

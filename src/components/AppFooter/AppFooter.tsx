@@ -107,7 +107,7 @@ const langLabels: Record<Lang, string> = {
             {/* لوگو و متن */}
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__logo">
               <img className="app-footer__logo_img" src={img} alt="Logo" />
-              <p className="app-footer_title">{t("site.footerblock6")}</p>
+              <h1 className="app-footer_title">{t("site.footerblock6")}</h1>
               <p className="app-footer_text">{t("site.footerblock7")}</p>
             </Col>
 

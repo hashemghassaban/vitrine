@@ -4,7 +4,7 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import play from "../../assets/about/play.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef} from "react";
 import useAboutPage from "../../hooks/page/useAboutPage";
 import { useLanguage } from "../../contexts/useLanguage";
 import type { IndexDataView } from "../../models/views/indexView";
@@ -22,6 +22,9 @@ export default function About() {
   const { getAbout } = useAboutPage(currentLang);
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
   const { getIndex } = useIndex(currentLang);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const videoRef1 = useRef<HTMLVideoElement>(null);
+  
   const { t } = useTranslate();
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
@@ -56,6 +59,23 @@ export default function About() {
   
   const [showVideo1, setShowVideo1] = useState(false);
   const [showVideo2, setShowVideo2] = useState(false);
+
+
+  const onplay = () => {
+    setShowVideo1(true)
+
+    setTimeout(() => {
+      videoRef.current?.play();
+    }, 0);
+  }
+
+  const onplay1 = () => {
+    setShowVideo2(true)
+
+    setTimeout(() => {
+      videoRef1.current?.play();
+    }, 0);
+  }
 
   return (
     <>
@@ -93,7 +113,7 @@ export default function About() {
       <div className="center-video">
         <Row justify="center" gutter={[32, 32]}>
           <Col xs={24} md={12} className="box-video">
-            <div className="video-div" onClick={() => setShowVideo1(true)}>
+            <div className="video-div" onClick={() => onplay()}>
               {!showVideo1 ? (
                 <>
                   <img src={videoOne?.image ?? undefined} className="main-image" />
@@ -102,6 +122,7 @@ export default function About() {
               ) : (
                 <div>
                   <video controls width="600"
+                  ref={videoRef} 
                     height="468" style={{
                       border: "none",
                     }}
@@ -115,7 +136,7 @@ export default function About() {
 
           {/* ویدیو ۲ */}
           <Col xs={24} md={12} className="box-video2">
-            <div className=" video-div" onClick={() => setShowVideo2(true)}>
+            <div className=" video-div" onClick={() => onplay1()}>
               {!showVideo2 ? (
                 <>
                   <img src={videoTwo?.image ?? ""} className="main-image" />
@@ -124,6 +145,7 @@ export default function About() {
               ) : (
                 <div>
                   <video controls width="600"
+                  ref={videoRef1} 
                     height="468" style={{
                       border: "none",
                     

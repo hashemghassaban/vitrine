@@ -43,7 +43,8 @@ const BrandProducts: React.FC = () => {
 
   return (
     <>
-      <AppHeader />
+      <AppHeader categoryBackground={brand?.image}
+/>
       {!loading ? (
         <div className="showcase-container">
           <Row

@@ -236,12 +236,12 @@ export const AppHeader: FC<AppHeaderProps> = ({
           </Menu>
           {style ? (
             <div className="box-page">
-              <p className="title-page">{title}</p>
+              <h1 className="title-page">{title}</h1>
               <p className="text-page">{text}</p>
             </div>
           ) : (
             <div className="box-page2">
-              <p className="text-page2">{title}</p>
+              <h1 className="text-page2">{title}</h1>
               <p className="title-page2">{text}</p>
             </div>
           )}

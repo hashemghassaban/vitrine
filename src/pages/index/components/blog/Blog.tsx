@@ -26,7 +26,7 @@ export const Blog: React.FC = () => {
   return (
     <section id="blog" className="blog">
       <Row justify="center" className="first__title">
-        <p>{t("local_lastArticles")}</p>
+        <h2>{t("local_lastArticles")}</h2>
       </Row>
       {indexData?.blog_items.map((item, index) => {
         const isEven = index % 2 === 0;
@@ -50,7 +50,10 @@ export const Blog: React.FC = () => {
               className={isEven ? "blog__content" : "blog__content2"}
             >
               <div className={isEven ? "blog__box1" : "blog__box2"}>
-                <a className="blog__title">{item.title}</a>
+                <a className="blog__title" onClick={() => push(`/${currentLang}/blog/${item.id}`)}>
+                  <h3>
+                  {item.title} 
+                  </h3> </a>
 
                 <p
                   className="blog__text"

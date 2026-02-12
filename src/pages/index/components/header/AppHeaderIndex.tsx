@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from "react";
-import { Input, Menu, Row } from "antd";
+import { Row, Col, Input, Drawer, Menu, type MenuProps } from "antd";
 import { Container } from "../../../../components/Container/Container";
 import useNavigation from "../../../../hooks/useHistory";
 import img from "../../../../assets/header/header.png";
@@ -22,7 +22,10 @@ export const AppHeaderIndex: FC = () => {
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const { t } = useTranslate();
   const [isScrolled, setIsScrolled] = useState(false);
-
+interface MenuItem {
+  key: string;
+  label: string;
+}
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const langLabels: Record<Language, string> = {
@@ -150,8 +153,43 @@ export const AppHeaderIndex: FC = () => {
     },
   ];
 
+const buildProductChildren = (
+  data: IndexDataView | null,
+): MenuItem[] => {
+  if (!data?.product_categories) return [];
+
+  return data.product_categories.map((cat) => ({
+    key: `products?category=${cat.slug}`,
+    label: cat.title,
+  }));
+};
+
 const renderMenuItems = (items: any[]) => {
   return items.map((item) => {
+    // ✅ اگر type برابر imageHover بود
+if (item.type === "imageHover") {
+  const productChildren = buildProductChildren(data);
+
+  return (
+    <Menu.SubMenu
+      key={item.key}
+      title={item.title[currentLang]}
+    >
+      {productChildren.map((child) => (
+        <Menu.Item
+          key={child.key}
+          onClick={() =>
+            push(`/${currentLang}/${child.key}`)
+          }
+        >
+          {child.label}
+        </Menu.Item>
+      ))}
+    </Menu.SubMenu>
+  );
+}
+
+    // ✅ حالت معمولی SubMenu
     if (item.children && item.children.length > 0) {
       return (
         <Menu.SubMenu
@@ -163,6 +201,7 @@ const renderMenuItems = (items: any[]) => {
       );
     }
 
+    // ✅ آیتم ساده
     return (
       <Menu.Item
         key={item.key}
@@ -177,6 +216,7 @@ const renderMenuItems = (items: any[]) => {
     );
   });
 };
+
 
 
   return (
@@ -294,21 +334,17 @@ const renderMenuItems = (items: any[]) => {
       <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
 
         <div className="side-menu-search">
-          <Input
-            placeholder={t("local_search")}
-            autoFocus
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onPressEnter={handleSearch}
-          />
+            <Input
+                className="search_box_mobile"
+                placeholder={t("local_search")}
+                suffix={<img  onClick={handleSearch} src={search} alt={search} />}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onPressEnter={handleSearch}
 
-          <button className="serach-btn " onClick={() => setSearchOpen(false)}>
-               <img
-          src={search}
-          alt={search}
-          onClick={() => setSearchOpen(true)}
-        />
-          </button>
+              />
+
+          
         </div>
 <Menu
  className="app-header__menu-slide"

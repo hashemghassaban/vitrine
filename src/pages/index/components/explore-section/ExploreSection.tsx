@@ -9,7 +9,7 @@ export const ExploreSection: FC = () => {
   return (
     <section className="explore">
       <div className="explore__content">
-        <p className="explore__title">{t("site.footerblock1")}</p>
+        <h2 className="explore__title">{t("site.footerblock1")}</h2>
         <p className="explore__subtitle">{t("site.footerblock2")}</p>
         <a className="explore__more" href="">
           بیشتر
