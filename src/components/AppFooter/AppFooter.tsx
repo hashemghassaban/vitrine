@@ -17,7 +17,7 @@ import type { IndexDataView } from "../../models/views/indexView";
 import useIndex from "../../hooks/index/useIndex";
 import useNewsletter from "../../hooks/newsletter/useNewsletter";
 import { useTranslate } from "../../i18n/useTranslate";
-import type { Language } from "../../i18n/languageType";
+import { LANGUAGES, type Language } from "../../i18n/languageType";
 import useNavigation from "../../hooks/useHistory";
 
 export const AppFooter: React.FC = () => {
@@ -26,15 +26,12 @@ export const AppFooter: React.FC = () => {
   const [email, setEmail] = useState("");
   const { sendEmail } = useNewsletter();
   const { push } = useNavigation();
-type Lang = "en" | "fa" | "ar";
 
-const languages: Lang[] = ["en", "fa", "ar"];
-const langLabels: Record<Lang, string> = {
-  en: "En",
-  fa: "Fa",
-  ar: "Ar",
-};
-
+  const langLabels: Record<Language, string> = {
+    en: "En",
+    fa: "Fa",
+    ar: "Ar",
+  };
 
   const { currentLang } = useLanguage();
 
@@ -158,22 +155,25 @@ const langLabels: Record<Lang, string> = {
                   ))}
                 </div>
                 <div className="footer_en_content">
-      <p className="footer_en_text">
-  {languages
-    .filter((lang) => lang !== currentLang)
-    .map((lang, index, arr) => (
-      <span
-        key={lang}
-        style={{ cursor: "pointer" }}
-        onClick={() => handleLanguageChange(lang)}
-      >
-        {langLabels[lang]}
-        {index < arr.length - 1 && " | "} {/* pipe بین آیتم‌ها */}
-      </span>
-    ))}
-</p>
+                  <p className="footer_en_text">
+                    {LANGUAGES
+                      .filter((lang) => lang !== currentLang)
+                      .map((lang, index, arr) => (
+                        <span
+                          key={lang}
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleLanguageChange(lang)}
+                        >
+                          {langLabels[lang]}
+                          {index < arr.length - 1 && " | "}{" "}
+                          {/* pipe بین آیتم‌ها */}
+                        </span>
+                      ))}
+                  </p>
 
-<p className="footer_en_text">{t("local_languageSelection")}</p>
+                  <p className="footer_en_text">
+                    {t("local_languageSelection")}
+                  </p>
                 </div>
               </div>
             </Col>
@@ -182,7 +182,6 @@ const langLabels: Record<Lang, string> = {
 
         {/* آیکون‌های رسانه و تماس */}
         <Row justify="end" className="contact">
-       
           <a href={data?.settings.whatsapp_url}>
             <img src={media7} alt="media7" />
           </a>

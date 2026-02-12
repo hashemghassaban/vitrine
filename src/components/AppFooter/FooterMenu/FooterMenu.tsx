@@ -24,7 +24,11 @@ export const FooterMenu: FC<FooterMenuProps> = ({ title, links }) => {
             <a
               className="footer-menu__item"
               onClick={() => {
-                push(`/${currentLang}/${item.url}`);
+                if (item.url.indexOf(`${currentLang}/`) >= 0) {
+                  push(`${item.url}`);
+                } else {
+                  push(`/${currentLang}/${item.url}`);
+                }
               }}
             >
               {item.title}
