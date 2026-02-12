@@ -101,14 +101,17 @@ export type TranslationKey =
   | "local_orderFormProducts"
   | "local_orderFormAddProduct"
   | "local_orderFormSendOrder"
-  | "local_orderFormClose"
+  | "local_formClose"
   | "local_address"
+  | "local_noProductSelected"
   //comment
   | "local_sentComment"
   | "local_send"
   | "local_commentContent"
   | "local_comments"
   | "local_commentRate"
+  | "local_commentReplyTo"
+  | "local_commentReply"
 
   //project
   | "local_architect"

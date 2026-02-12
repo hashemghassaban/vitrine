@@ -2,24 +2,21 @@ import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
-import { PlusOutlined, VerticalAlignBottomOutlined } from "@ant-design/icons";
-import { useIsMobile } from "../../../helpers/useIsMobile";
+import {  VerticalAlignBottomOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useLanguage } from "../../../contexts/useLanguage";
 import type {
   ProductView,
   ProductDetailView,
 } from "../../../models/views/productView";
-import { Input, message } from "antd";
 import useProducts from "../../../hooks/products/useProducts";
 import truncate from "truncate-html";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import useNavigation from "../../../hooks/useHistory";
-import { validateEmail, validatePhone } from "../../../helpers/validation";
-import type { orderProductDTO } from "../../../models/dtos/orderProductDTO";
 import "./ProductDetail.less";
 import CommentForm from "./components/CommentForm";
+import OrderForm from "./components/OrderForm";
 
 export default function ProductDetail() {
   useSyncLanguage();
@@ -27,23 +24,15 @@ export default function ProductDetail() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
-  const { getListProducts, getProductById, getOrderProduct } =
+  const { getListProducts, getProductById } =
     useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const openDialog = () => setIsOpen(true);
-  const closeDialog = () => setIsOpen(false);
+
 
   const { t } = useTranslate();
   const { push } = useNavigation();
-  const [orderFormSubmitting, setOrderFormSubmitting] = useState(false);
-  const [orderForm, setOrderForm] = useState<orderProductDTO>(
-    {} as orderProductDTO,
-  );
-
-  const [orderProducts, setOrderProducts] = useState<string[]>([""]);
   const groupedFeatures = product?.features.reduce<Record<string, string[]>>(
     (acc, feature) => {
       if (!acc[feature.feature_title]) {
@@ -81,6 +70,7 @@ export default function ProductDetail() {
       }
     }
   };
+
   useEffect(() => {
     if (!id) return;
     fetchData();
@@ -96,76 +86,8 @@ export default function ProductDetail() {
     setIsExpanded(false);
   }, [product?.content]);
 
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const showMessage = (content: string) => {
-    messageApi.open({
-      icon: <></>,
-      content: content,
-    });
-  };
-
-  const handleOrderInputChange = (field: keyof orderProductDTO, value: any) => {
-    setOrderForm((prev) => ({
-      ...prev,
-      [field]: value || null,
-    }));
-  };
-
-  const onOrderSubmit = async () => {
-    try {
-      const productsString = orderProducts.filter(Boolean);
-
-      const payload: orderProductDTO = {
-        ...orderForm,
-        products: productsString,
-      };
-      const isEmpty =
-        !payload.full_name ||
-        !payload.email ||
-        !payload.company ||
-        !payload.telephone ||
-        !payload.address ||
-        !payload.products;
-
-      if (isEmpty) {
-        showMessage(t("local_completeTheForm"));
-        return;
-      }
-
-      if (payload.email && !validateEmail(payload.email)) {
-        showMessage(t("local_invalidEmail"));
-        return;
-      }
-
-      if (payload.telephone && !validatePhone(payload.telephone)) {
-        showMessage(t("local_invalidPhone"));
-        return;
-      }
-
-      setOrderFormSubmitting(true);
-
-      const resp = await getOrderProduct(payload);
-
-      if (resp.success) {
-        showMessage(resp.result);
-        setOrderForm({} as orderProductDTO);
-        setOrderProducts([""]);
-        closeDialog();
-      } else {
-        showMessage(resp.result);
-      }
-    } catch (e: any) {
-      showMessage(e?.message);
-    } finally {
-      setOrderFormSubmitting(false);
-    }
-    closeDialog();
-  };
-
   return (
     <>
-      {contextHolder}
       <AppHeader noBackgroundProducts />
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
@@ -217,7 +139,6 @@ export default function ProductDetail() {
 
               <div className="additional-info">
                 <div className="feature-box">
-
                   {groupedFeatures &&
                     Object.entries(groupedFeatures).map(
                       ([title, values], index) => (
@@ -238,9 +159,7 @@ export default function ProductDetail() {
                       ),
                     )}
                 </div>
-                <button className="info-btn" onClick={openDialog}>
-                  {t("local_getInfo")}
-                </button>
+                <OrderForm product={product}/>
               </div>
             </div>
           </Col>
@@ -311,7 +230,7 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
-            
+
             <CommentForm id={id} />
 
             <div className="other-box">
@@ -348,144 +267,7 @@ export default function ProductDetail() {
             </div>
           </Col>
         </Row>
-        {isOpen && (
-          <div
-            className="dialogMain"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              zIndex: 100000,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0,0,0,0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              className="dialogBlock"
-              style={{
-                backgroundColor: "#fff",
-                padding: "20px",
-                borderRadius: "8px",
-                minWidth: "768px",
-              }}
-            >
-              <h2> دریافت اطلاعات</h2>
-              <div className="form-section">
-                <div className="form-row">
-                  <div className="input-group half">
-                    <Input
-                      className=" input-text"
-                      placeholder={t("local_contactFullName")}
-                      variant="underlined"
-                      value={orderForm.full_name || ""}
-                      onChange={(e) =>
-                        handleOrderInputChange("full_name", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="input-group half">
-                    <Input
-                      className=" input-text"
-                      placeholder={t("local_contactPhoneNumber")}
-                      variant="underlined"
-                      value={orderForm.telephone || ""}
-                      onChange={(e) =>
-                        handleOrderInputChange("telephone", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="input-group half">
-                    <Input
-                      className=" input-text"
-                      placeholder={t("local_company")}
-                      variant="underlined"
-                      value={orderForm.company || ""}
-                      onChange={(e) =>
-                        handleOrderInputChange("company", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="input-group half">
-                    <Input
-                      className=" input-text"
-                      placeholder={t("local_contactEmail")}
-                      variant="underlined"
-                      value={orderForm.email || ""}
-                      onChange={(e) =>
-                        handleOrderInputChange("email", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="input-group">
-                    <Input
-                      className=" input-text"
-                      placeholder={t("local_address")}
-                      variant="underlined"
-                      value={orderForm.address || ""}
-                      onChange={(e) =>
-                        handleOrderInputChange("address", e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="input-group">
-                    <p className="text">{t("local_orderFormProducts")}</p>
-
-                    {orderProducts.map((pro, index) => (
-                      <Input
-                        key={index}
-                        className="input-product"
-                        placeholder={product?.title}
-                        value={pro}
-                        onChange={(e) => {
-                          const newProducts = [...orderProducts];
-                          newProducts[index] = e.target.value;
-                          setOrderProducts(newProducts);
-                        }}
-                        style={{ marginBottom: 15 }}
-                      />
-                    ))}
-
-                    <Button
-                      icon={<PlusOutlined />}
-                      onClick={() => setOrderProducts([...orderProducts, ""])}
-                      style={{
-                        borderRadius: 20,
-                        padding: "20px 20px",
-                      }}
-                    >
-                      {t("local_orderFormAddProduct")}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <div className="dialogFooter">
-                <button
-                  className="info-btn"
-                  onClick={onOrderSubmit}
-                  disabled={orderFormSubmitting}
-                >
-                  {t("local_orderFormSendOrder")}
-                </button>
-                <button className="info-btn closed" onClick={closeDialog}>
-                  {t("local_orderFormClose")}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-
       <AppFooter />
     </>
   );

@@ -4,5 +4,7 @@ export interface orderProductDTO {
   company: string;
   telephone: string;
   address: string;
-  products: string[];
+  products: string;
+  key: string;
+  captcha: string;
 }
