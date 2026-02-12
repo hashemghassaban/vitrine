@@ -106,10 +106,11 @@ const AllProducts: React.FC = () => {
   const filteredBrands = brands.filter((b) => b.title.includes(search));
   const { push } = useNavigation();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
+  const [openCollectionMenu, setOpenCollectionMenu] = useState(false);
   const { getIndex } = useIndex(currentLang);
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get("category");
-  const collectionIdParam = searchParams.get("collectionId");
+  const collectionIdParam = searchParams.get("collection");
   const [selectedInfo, setSelectedInfo] = useState<
     | { type: "category"; data: ProductCategoryView }
     | { type: "collection"; data: CollectionView }
@@ -226,9 +227,10 @@ const AllProducts: React.FC = () => {
       setOpenKeys(parentKeys);
     }
   }, [categorySlug, data]);
-  const filteredCollections = collections.filter((c) =>
-    selected.includes(Number(c.brand_id)),
-  );
+  const filteredCollections =
+    selected.length > 0
+      ? collections.filter((c) => selected.includes(Number(c.brand_id)))
+      : collections;
 
   const allProductsItem: MenuItem = {
     key: "all-products",
@@ -263,11 +265,12 @@ const AllProducts: React.FC = () => {
   useEffect(() => {
     if (!collectionIdParam || collections.length === 0) return;
 
-    const colId = Number(collectionIdParam);
-    const col = collections.find((c) => c.id === colId);
+    const colId = collectionIdParam;
+    const col = collections.find((c) => c.title == colId);
     if (col) {
       setSelectedCollection([col.id]);
       setSelectedInfo({ type: "collection", data: col });
+      setOpenCollectionMenu(true);
     }
   }, [collectionIdParam, collections]);
 
@@ -464,30 +467,30 @@ const AllProducts: React.FC = () => {
                     );
                   })}
 
-                  {selected.length > 0
-                    ? selectedCollection.map((id) => {
-                        const c = collections.find((x) => x.id === id);
-                        if (!c) return null;
+                  {
+                    selectedCollection.map((id) => {
+                      const c = collections.find((x) => x.id === id);
+                      if (!c) return null;
 
-                        return (
-                          <Tag key={`collection-${id}`}>
-                            <div className="pulse-tag">
-                              {c.title}
-                              <button
-                                onClick={() =>
-                                  setSelectedCollection((prev) =>
-                                    prev.filter((i) => i !== id),
-                                  )
-                                }
-                                className="pulse-button"
-                              >
-                                <span className="plus-icon">+</span>
-                              </button>
-                            </div>
-                          </Tag>
-                        );
-                      })
-                    : selectedCollection.pop()}
+                      return (
+                        <Tag key={`collection-${id}`}>
+                          <div className="pulse-tag">
+                            {c.title}
+                            <button
+                              onClick={() =>
+                                setSelectedCollection((prev) =>
+                                  prev.filter((i) => i !== id),
+                                )
+                              }
+                              className="pulse-button"
+                            >
+                              <span className="plus-icon">+</span>
+                            </button>
+                          </div>
+                        </Tag>
+                      );
+                    })
+                  }
                 </div>
               </div>
 
@@ -531,11 +534,15 @@ const AllProducts: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {selected.length > 0 && filteredCollections.length > 0 && (
+              {filteredCollections.length > 0 && (
                 <div className=" menu-border ">
-                  <Menu className="menu-item-product-col " mode="inline">
+                  <Menu className="menu-item-product-col " mode="inline"
+                    openKeys={openCollectionMenu ? ["collection-menu"] : []}
+                    onOpenChange={(keys) =>
+                      setOpenCollectionMenu(keys.includes("collection-menu"))
+                    }>
                     <Menu.SubMenu
-                      key="ks"
+                      key="collection-menu"
                       title={
                         <div className="menu-label-filter ">
                           <span> {t("local_collections")} </span>
@@ -633,9 +640,8 @@ const AllProducts: React.FC = () => {
                   <Col xs={12}  md={3} sm={12} lg={8} key={i}>
                     <Card
                       hoverable
-                      className={`showcase-card-product ${
-                        animatedItems.includes(item.id) ? "fade-in" : ""
-                      }`}
+                      className={`showcase-card-product ${animatedItems.includes(item.id) ? "fade-in" : ""
+                        }`}
                       onClick={() =>
                         push(`/${currentLang}/products/${item.id}`)
                       }

@@ -1,6 +1,6 @@
 import type BrandView from "./brandView";
 
-export  interface ProductView {
+export interface ProductView {
   id: number;
   title: string;
   slug: string;
@@ -90,7 +90,7 @@ export interface ProductDetailView {
   comments_count: number;
   thumbnail: string;
   image: string;
-  brochures: string[];
+  brochures: BrochoresView[];
 
   seo: SEOView;
   media: MediaView[];
@@ -100,4 +100,10 @@ export interface ProductDetailView {
   collection: CollectionView;
 
   features: FeatureValueView[];
+}
+
+export interface BrochoresView {
+  link: string;
+  name: string;
+  type: string;
 }

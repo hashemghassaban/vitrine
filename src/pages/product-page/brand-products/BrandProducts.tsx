@@ -9,6 +9,7 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import "./BrandProducts.less";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import useNavigation from "../../../hooks/useHistory";
 
 const BrandProducts: React.FC = () => {
   useSyncLanguage();
@@ -19,6 +20,7 @@ const BrandProducts: React.FC = () => {
   const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
+  const { push } = useNavigation();
   // const getDescriptionContinuation = () => {
   //   if (!brand?.description || !brand?.excerpt) return "";
   //   const cleanExcerpt = brand.excerpt.replace(/(\.\.\.|…)\s*$/, "").trim();
@@ -85,7 +87,7 @@ const BrandProducts: React.FC = () => {
             <Row gutter={[20, 30]} justify="center" className="grid-row">
               {brand?.collections.map((item, i) => (
                 <Col xs={24} sm={12} lg={8} key={i}>
-                  <div className="img-card">
+                  <div className="img-card" onClick={() => push(`/${currentLang}/products?collection=${item?.title}`)}>
                     <img src={item.main_image} alt="item" />
                     <div className="card-info">
                       <p className="card-title">{item.title}</p>

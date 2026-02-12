@@ -35,6 +35,7 @@ const AppContent: React.FC = () => {
           colorPrimary: "#5e5e5e",
         },
       }}
+      warning={{ strict: false }}
     >
       <Layout style={{ minHeight: "100vh" }}>
         {!loading && (
