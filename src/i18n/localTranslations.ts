@@ -59,14 +59,18 @@ export const localTranslations: TranslationView[] = [
     { key: "local_orderFormProducts", value: { fa: "محصولات مدنظر شما", en: "Your Products", ar: "المنتجات المطلوبة" } },
     { key: "local_orderFormAddProduct", value: { fa: "اضافه کردن محصول", en: "Add Product", ar: "إضافة منتج" } },
     { key: "local_orderFormSendOrder", value: { fa: "ارسال درخواست", en: "Send Order", ar: "إرسال الطلب" } },
-    { key: "local_orderFormClose", value: { fa: "خروج", en: "Close", ar: "خروج" } },
+    { key: "local_formClose", value: { fa: "خروج", en: "Close", ar: "خروج" } },
     { key: "local_address", value: { fa: "آدرس", en: "Address", ar: "العنوان" } },
+    {key: " local_noProductSelected" , value: {fa: "محصولی انتخاب نشده", en: "No product selected", ar: "لم يتم اختيار منتج"}},
+    
     //comment
     { key: "local_sentComment", value: { ar: "تم تسجيل رأيك بنجاح.", en: "Your comment has been submitted successfully.", fa: "نظر شما با موفقیت ثبت شد." } },
     { key: "local_send", value: { ar: "إرسال", en: "Send", fa: "ارسال" } },
     { key: "local_commentContent", value: { ar: "اكتب تعليقك", en: "Write your comment", fa: "کامنت خود را بنویسید" } },
     { key: "local_comments", value: { ar: "التعليقات", en: "Comments", fa: "نظرات" } },
     { key: "local_commentRate", value: { ar: "قيّم", en: "Rate", fa: "امتیاز دهید" } },
+    { key: "local_commentReplyTo", value: { ar: "ردًا على ...", en: "Reply to ...", fa: "پاسخ به ..." } },
+    { key: "local_commentReply", value: { ar: "رد", en: "Reply", fa: "پاسخ" } },
 
     //project
     { key: "local_architect", value: { ar: "المهندس المعماري", en: "Architect", fa: "معمار" } },

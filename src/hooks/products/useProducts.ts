@@ -62,7 +62,7 @@ const useProducts = (currentLang: string) => {
     };
   }
 
-  async function getCommentProductById(id: number, dto: ProductCommentDTO) {
+  async function sendCommentProductById(id: number, dto: ProductCommentDTO) {
     let result = "";
     let success = false;
     await axiosAuthInstance
@@ -84,7 +84,7 @@ const useProducts = (currentLang: string) => {
     };
   }
 
-    async function getOrderProduct(dto: orderProductDTO) {
+    async function sendOrderProduct(dto: orderProductDTO) {
     let result = "";
     let success = false;
     await axiosAuthInstance
@@ -108,8 +108,8 @@ const useProducts = (currentLang: string) => {
   return {
     getListProducts,
     getProductById,
-    getCommentProductById,
-    getOrderProduct
+    sendCommentProductById,
+    sendOrderProduct
   };
 };
 
