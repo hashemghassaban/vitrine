@@ -218,11 +218,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product }) => {
               />
             </div>
           </div>
-
-          {!commentFormSubmitting && (
-            <Captcha onVerify={handleCommentInputChange} />
-          )}
-
+          <div className="form-row textarea-field">
+            {!commentFormSubmitting && (
+              <Captcha onVerify={handleCommentInputChange} />
+            )}
+          </div>
           <div className="form-row block-fill">
             <button
               className="info-btn"

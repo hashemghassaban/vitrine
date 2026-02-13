@@ -22,6 +22,7 @@ import type { SettingView } from "../../../models/views/settingView";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { validateEmail, validatePhone } from "../../../helpers/validation";
+import Captcha from "../../../components/Captcha/Captcha";
 
 const ContactBranch: React.FC = () => {
   useSyncLanguage();
@@ -33,13 +34,9 @@ const ContactBranch: React.FC = () => {
   const [setting, setSetting] = useState<SettingView | null>(null);
   const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<contractBranchDTO>({
-    full_name: null,
-    email: null,
-    phone: null,
-    content: null,
-    department_id: null,
-  });
+  const [formData, setFormData] = useState<contractBranchDTO>(
+    {} as contractBranchDTO,
+  );
   const { t } = useTranslate();
 
   const fetchDepartments = async () => {
@@ -85,7 +82,8 @@ const ContactBranch: React.FC = () => {
         !formData.email ||
         !formData.phone ||
         !formData.content ||
-        !formData.department_id;
+        !formData.department_id ||
+        !formData.captcha;
       if (isEmpty) {
         showMessage(t("local_completeTheForm"));
         return;
@@ -105,13 +103,7 @@ const ContactBranch: React.FC = () => {
       const resp = await submitContractForm(formData);
       if (resp.success) {
         showMessage(resp.result);
-        setFormData({
-          full_name: null,
-          email: null,
-          phone: null,
-          content: null,
-          department_id: null,
-        });
+        setFormData({} as contractBranchDTO);
       } else {
         showMessage(resp.result);
       }
@@ -224,7 +216,11 @@ const ContactBranch: React.FC = () => {
                 />
               </div>
             </div>
-
+            <div className="form-row">
+              <div className="input-group">
+                {!isSubmitting && <Captcha onVerify={handleInputChange} />}
+              </div>
+            </div>
             <div className="btn">
               <button
                 className="submit-btn"

@@ -286,9 +286,13 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
                   )}
                 </div>
               </div>
-              {!orderFormSubmitting && (
-                <Captcha onVerify={handleOrderInputChange} />
-              )}
+              <div className="form-row">
+                <div className="input-group">
+                  {!orderFormSubmitting && (
+                    <Captcha onVerify={handleOrderInputChange} />
+                  )}
+                </div>
+              </div>
             </div>
             <div className="dialogFooter">
               <button
