@@ -11,6 +11,7 @@ import useDocuments from "../../../hooks/contact/useCatalogue";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useEffect, useState } from "react";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 const { Title } = Typography;
 
 export default function Catalogue() {
@@ -18,12 +19,14 @@ export default function Catalogue() {
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useDocuments(currentLang);
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
 
   const fetchDocuments = async () => {
     const { success, data } = await getList();
     if (success && data) {
       setDocuments(data);
+      setLoading(false);
     }
   };
 
@@ -34,6 +37,7 @@ export default function Catalogue() {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader />
       <div className="showcase-container">
         <Row justify="center">

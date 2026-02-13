@@ -11,6 +11,7 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import useNavigation from "../../../hooks/useHistory";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 const { Title } = Typography;
 
 export default function ProjectItemDetail() {
@@ -24,7 +25,8 @@ export default function ProjectItemDetail() {
   const { t } = useTranslate();
   const { push } = useNavigation();
   const carouselRef = useRef<any>(null);
-const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [loading, setLoading] = useState(true);
 
   const prev = () => {
     if (current > 0) {
@@ -57,6 +59,7 @@ const videoRef = useRef<HTMLVideoElement>(null);
       if (success && data && isMounted) {
         setProject(data);
       }
+      setLoading(false);
     };
 
     setProject(null);
@@ -68,14 +71,12 @@ const videoRef = useRef<HTMLVideoElement>(null);
   }, [id, currentLang]);
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader
         title={t("site.proje1")}
         text={project?.title}
         style={false}
-        categoryBackground={project?.image_link ? project?.image_link : ""}
-
-
-      />
+        categoryBackground={project?.image_link ? project?.image_link : ""}/>
 
       <div className="blog-details-container-detail">
         <div className="content-block-detail" key={project?.id}>

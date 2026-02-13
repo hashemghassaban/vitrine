@@ -23,6 +23,7 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { validateEmail, validatePhone } from "../../../helpers/validation";
 import Captcha from "../../../components/Captcha/Captcha";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 const ContactBranch: React.FC = () => {
   useSyncLanguage();
@@ -30,7 +31,7 @@ const ContactBranch: React.FC = () => {
   const { getSetting } = useSetting(currentLang);
   const { getList } = useDepartment(currentLang);
   const { submitContractForm } = useContactBranch();
-
+  const [loading, setLoading] = useState(true);
   const [setting, setSetting] = useState<SettingView | null>(null);
   const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,8 +55,14 @@ const ContactBranch: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchDepartments();
-    fetchSettings();
+    const fetchAll = async () => {
+    await Promise.all([
+      fetchDepartments(),
+      fetchSettings()
+    ]);
+    setLoading(false);
+  };
+  fetchAll();
   }, [currentLang]);
 
   const handleInputChange = (field: keyof contractBranchDTO, value: any) => {
@@ -117,6 +124,7 @@ const ContactBranch: React.FC = () => {
   return (
     <>
       {contextHolder}
+      <LoadingSpin loading={loading} />
       <AppHeader noBackground title={t("local_contactVitrine")} />
       <div className="contact-branch-container">
         <div className="contact-content">

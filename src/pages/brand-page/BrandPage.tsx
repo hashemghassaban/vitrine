@@ -10,6 +10,7 @@ import type BrandView from "../../models/views/brandView";
 import { useLanguage } from "../../contexts/useLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
+import LoadingSpin from "../../components/Loading/LoadingSpin";
 
 const BrandPage: React.FC = () => {
   useSyncLanguage();
@@ -17,6 +18,7 @@ const BrandPage: React.FC = () => {
   const { currentLang } = useLanguage();
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const BrandPage: React.FC = () => {
       const { success, data } = await getList();
       if (success && data) {
         setBrands(data);
+        setLoading(false);
       }
     };
     fetchBrands();
@@ -31,6 +34,7 @@ const BrandPage: React.FC = () => {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader
         title={t("site.brandpage1")}
         text={t("site.brandpage2")}

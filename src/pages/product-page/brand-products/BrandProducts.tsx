@@ -10,6 +10,7 @@ import "./BrandProducts.less";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import useNavigation from "../../../hooks/useHistory";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 const BrandProducts: React.FC = () => {
   useSyncLanguage();
@@ -45,8 +46,8 @@ const BrandProducts: React.FC = () => {
 
   return (
     <>
-      <AppHeader categoryBackground={brand?.image}
-/>
+      <LoadingSpin loading={loading} />
+      <AppHeader categoryBackground={brand?.image}/>
       {!loading ? (
         <div className="showcase-container">
           <Row

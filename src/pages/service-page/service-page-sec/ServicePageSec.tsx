@@ -10,6 +10,7 @@ import useAim from "../../../hooks/page/useAim";
 import type { AimItemView } from "../../../models/views/aimView";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 const ServicePageSec: React.FC = () => {
   useSyncLanguage();
@@ -47,6 +48,7 @@ const ServicePageSec: React.FC = () => {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader title={t("site.servicetitlenew")} />
 
       {!loading ? (

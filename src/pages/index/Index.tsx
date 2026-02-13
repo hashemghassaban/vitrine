@@ -17,18 +17,20 @@ import { useIsMobile } from "../../helpers/useIsMobile";
 import { useLanguage } from "../../contexts/useLanguage";
 import { IndexProvider } from "../../contexts/indexContext";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
+import LoadingSpin from "../../components/Loading/LoadingSpin";
 
 function Index() {
   useSyncLanguage();
   const isMobile = useIsMobile();
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
-
+  const [loading, setLoading] = useState(true);
   const { currentLang } = useLanguage();
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
       setIndexData(data);
+      setLoading(false);
     }
   };
 
@@ -39,6 +41,7 @@ function Index() {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <IndexProvider value={{ indexData }}>
         <Layout>
           <Content>

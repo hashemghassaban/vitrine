@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import useFaq from "../../../hooks/contact/useFaq";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 const { Title } = Typography;
 const { Panel } = Collapse;
 
@@ -20,11 +21,13 @@ export default function FAQ() {
   const { currentLang } = useLanguage();
   const { getList } = useFaq(currentLang);
   const { t } = useTranslate();
-
+  const [loading, setLoading] = useState(true);
+  
   const fetchFaq = async () => {
     const { success, data } = await getList();
     if (success && data) {
       setFaq(data);
+      setLoading(false);
     }
   };
 
@@ -35,6 +38,7 @@ export default function FAQ() {
 
   return (
     <>
+     <LoadingSpin loading={loading} />
       <AppHeader noBackground title={t("site.faq11")} />
       <Row justify="center" align="middle" className="faq-row">
         <Col xs={24} sm={20} md={18}  className="faq-col">

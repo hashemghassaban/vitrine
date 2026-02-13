@@ -13,6 +13,7 @@ import { useSearchParams } from "react-router-dom";
 import { cleanText } from "../../helpers/cleanText";
 import { useTranslate } from "../../i18n/useTranslate";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
+import LoadingSpin from "../../components/Loading/LoadingSpin";
 const { Paragraph } = Typography;
 
 const Search: React.FC = () => {
@@ -52,6 +53,7 @@ const Search: React.FC = () => {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader noBackground title={t("local_searchResults1")} />
       {!loading ? (
         <div className="search-results-container">

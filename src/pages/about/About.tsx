@@ -4,7 +4,7 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 
 import play from "../../assets/about/play.png";
-import { useEffect, useState , useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import useAboutPage from "../../hooks/page/useAboutPage";
 import { useLanguage } from "../../contexts/useLanguage";
 import type { IndexDataView } from "../../models/views/indexView";
@@ -14,6 +14,7 @@ import "antd/dist/reset.css";
 import "./About.less";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
+import LoadingSpin from "../../components/Loading/LoadingSpin";
 
 export default function About() {
   useSyncLanguage();
@@ -22,19 +23,20 @@ export default function About() {
   const { getAbout } = useAboutPage(currentLang);
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
   const { getIndex } = useIndex(currentLang);
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const videoRef1 = useRef<HTMLVideoElement>(null);
-  
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const [loading, setLoading] = useState(true);
+
   const { t } = useTranslate();
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
       setIndexData(data);
     }
+    setTimeout(()=>{setLoading(false);},1000)
   };
 
   useEffect(() => {
-    setIndexData(null);
     fetchIndex();
   }, [currentLang]);
 
@@ -52,41 +54,36 @@ export default function About() {
   };
 
   useEffect(() => {
-
     fetchabout();
   }, [currentLang]);
 
-  
   const [showVideo1, setShowVideo1] = useState(false);
   const [showVideo2, setShowVideo2] = useState(false);
 
-
   const onplay = () => {
-    setShowVideo1(true)
+    setShowVideo1(true);
 
     setTimeout(() => {
       videoRef.current?.play();
     }, 0);
-  }
+  };
 
   const onplay1 = () => {
-    setShowVideo2(true)
+    setShowVideo2(true);
 
     setTimeout(() => {
       videoRef1.current?.play();
     }, 0);
-  }
+  };
 
   return (
     <>
-      <AppHeader
-        noBackground
-        title={t("local_aboutVitrine")}
-      />
+      <LoadingSpin loading={loading} />
+      <AppHeader noBackground title={t("local_aboutVitrine")} />
 
       <div className="article-content">
         <Row justify="center" gutter={[32, 32]}>
-          <Col xs={24} lg={12} className="article-col" >
+          <Col xs={24} lg={12} className="article-col">
             <div className="article-div">
               <h2 className="article-title">{page?.title}</h2>
               <p
@@ -98,14 +95,13 @@ export default function About() {
             </div>
           </Col>
           <Col xs={24} lg={12}>
-          <div className="top-image-about-block">
-            <img
-              className="top-image-about"
-              src={page?.image ?? ""}
-              alt={page?.title}
-            />
-          </div>
-          
+            <div className="top-image-about-block">
+              <img
+                className="top-image-about"
+                src={page?.image ?? ""}
+                alt={page?.title}
+              />
+            </div>
           </Col>
         </Row>
       </div>
@@ -116,19 +112,29 @@ export default function About() {
             <div className="video-div" onClick={() => onplay()}>
               {!showVideo1 ? (
                 <>
-                  <img src={videoOne?.image ?? undefined} className="main-image" />
+                  <img
+                    src={videoOne?.image ?? undefined}
+                    className="main-image"
+                  />
                   <img src={play} className="overlay-image" />
                 </>
               ) : (
                 <div>
-                  <video controls width="600"
-                  ref={videoRef} 
-                    height="468" style={{
+                  <video
+                    controls
+                    width="600"
+                    ref={videoRef}
+                    height="468"
+                    style={{
                       border: "none",
                     }}
                   >
-                    <source src={videoOne?.video ?? undefined} type="video/mp4" />
-                  </video>ّ
+                    <source
+                      src={videoOne?.video ?? undefined}
+                      type="video/mp4"
+                    />
+                  </video>
+                  ّ
                 </div>
               )}
             </div>
@@ -144,15 +150,18 @@ export default function About() {
                 </>
               ) : (
                 <div>
-                  <video controls width="600"
-                  ref={videoRef1} 
-                    height="468" style={{
+                  <video
+                    controls
+                    width="600"
+                    ref={videoRef1}
+                    height="468"
+                    style={{
                       border: "none",
-                    
                     }}
                   >
                     <source src={videoTwo?.video ?? ""} type="video/mp4" />
-                  </video>ّ
+                  </video>
+                  ّ
                 </div>
               )}
             </div>

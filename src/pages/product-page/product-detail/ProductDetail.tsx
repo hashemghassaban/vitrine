@@ -17,6 +17,7 @@ import useNavigation from "../../../hooks/useHistory";
 import "./ProductDetail.less";
 import CommentForm from "./components/CommentForm";
 import OrderForm from "./components/OrderForm";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 export default function ProductDetail() {
   useSyncLanguage();
@@ -28,9 +29,7 @@ export default function ProductDetail() {
     useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
-
-
-
+  const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
   const { push } = useNavigation();
   const groupedFeatures = product?.features.reduce<Record<string, string[]>>(
@@ -69,6 +68,7 @@ export default function ProductDetail() {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -88,6 +88,7 @@ export default function ProductDetail() {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader noBackgroundProducts />
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">

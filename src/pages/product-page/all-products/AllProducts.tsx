@@ -35,6 +35,7 @@ import type {
   ProductCategoryView,
 } from "../../../models/views/indexView";
 import useCollections from "../../../hooks/collections/useCollections";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -111,6 +112,7 @@ const AllProducts: React.FC = () => {
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get("category");
   const collectionIdParam = searchParams.get("collection");
+  const [loading, setLoading] = useState(true);
   const [selectedInfo, setSelectedInfo] = useState<
     | { type: "category"; data: ProductCategoryView }
     | { type: "collection"; data: CollectionView }
@@ -149,17 +151,28 @@ const AllProducts: React.FC = () => {
       setCollections(data);
     }
   };
+
   useEffect(() => {
+  const fetchAll = async () => {
+    setLoading(true);
     setProducts([]);
-    fetchProducts();
-    fetchBrands();
-    setIndexData(null);
-    fetchIndex();
     setProductFeatures([]);
-    fetchFeatures();
     setCollections([]);
-    fetchCollection();
-  }, [currentLang]);
+    setIndexData(null)
+
+    await Promise.all([
+      fetchProducts(),
+      fetchBrands(),
+      fetchIndex(),
+      fetchFeatures(),
+      fetchCollection(),
+    ]);
+
+    setLoading(false);
+  };
+
+  fetchAll();
+}, [currentLang]);
 
   useEffect(() => {
     if (categorySlug && data?.product_categories?.length) {
@@ -418,6 +431,7 @@ const AllProducts: React.FC = () => {
   };
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader
         categoryBackground={selectedCategory?.image_link}
         title={

@@ -19,6 +19,7 @@ import ServicePageSec from "./service-page/service-page-sec/ServicePageSec";
 import BrandProducts from "./product-page/brand-products/BrandProducts";
 import AllProducts from "./product-page/all-products/AllProducts";
 import ProductDetail from "./product-page/product-detail/ProductDetail";
+import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 
 const Pages = () => {
   const { location } = useHistory();
@@ -34,29 +35,32 @@ const Pages = () => {
     );
   }
   return (
-    <Routes location={location}>
-      <Route path="/" element={<Navigate to="/fa" />} />
-      <Route path="/:lang">
-        <Route index element={<Index />} />
-        <Route path="" element={<Index />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="blog/:id" element={<BlogDetailPage />} />
-        <Route path="about" element={<About />} />
-        <Route path="representation" element={<Representation />} />
-        <Route path="catalogue" element={<Catalogue />} />
-        <Route path="faq" element={<FAQ />} />
-        <Route path="contactBranch" element={<ContactBranch />} />
-        <Route path="search" element={<Search />} />
-        <Route path="project" element={<Project />} />
-        <Route path="project/:id" element={<ProjectItemDetail />} />
-        <Route path="brands" element={<BrandPage />} />
-        <Route path="services" element={<ServicePageSec />} />
-        <Route path="brandProducts/:id" element={<BrandProducts />} />
-        <Route path="products" element={<AllProducts />} />
-        <Route path="products/:id" element={<ProductDetail />} />
-      </Route>
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes location={location}>
+        <Route path="/" element={<Navigate to="/fa" />} />
+        <Route path="/:lang">
+          <Route index element={<Index />} />
+          <Route path="" element={<Index />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="blog/:id" element={<BlogDetailPage />} />
+          <Route path="about" element={<About />} />
+          <Route path="representation" element={<Representation />} />
+          <Route path="catalogue" element={<Catalogue />} />
+          <Route path="faq" element={<FAQ />} />
+          <Route path="contactBranch" element={<ContactBranch />} />
+          <Route path="search" element={<Search />} />
+          <Route path="project" element={<Project />} />
+          <Route path="project/:id" element={<ProjectItemDetail />} />
+          <Route path="brands" element={<BrandPage />} />
+          <Route path="services" element={<ServicePageSec />} />
+          <Route path="brandProducts/:id" element={<BrandProducts />} />
+          <Route path="products" element={<AllProducts />} />
+          <Route path="products/:id" element={<ProductDetail />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 

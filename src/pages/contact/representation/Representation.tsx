@@ -9,18 +9,21 @@ import useRepresentation from "../../../hooks/contact/useRepresentation";
 import { useTranslate } from "../../../i18n/useTranslate";
 import "./representation.less";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
+import LoadingSpin from "../../../components/Loading/LoadingSpin";
 
 const { Title } = Typography;
 
 export default function Representation() {
   useSyncLanguage();
   const [repres, setRepresentations] = useState<representationView[]>([]);
+  const [loading, setLoading] = useState(true);
   const { currentLang } = useLanguage();
   const { getList } = useRepresentation(currentLang);
   const fetchRepresentations = async () => {
     const { success, data } = await getList();
     if (success && data) {
       setRepresentations(data);
+      setLoading(false);
     }
   };
   const { t } = useTranslate();
@@ -31,6 +34,7 @@ export default function Representation() {
 
   return (
     <>
+      <LoadingSpin loading={loading} />
       <AppHeader />
       <div className="showcase-container">
         <Title level={3} className="title-page">
