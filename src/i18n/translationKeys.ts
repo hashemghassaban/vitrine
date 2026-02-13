@@ -112,6 +112,7 @@ export type TranslationKey =
   | "local_commentRate"
   | "local_commentReplyTo"
   | "local_commentReply"
+  | "local_rate"
 
   //project
   | "local_architect"

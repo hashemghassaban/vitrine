@@ -231,7 +231,7 @@ export default function ProductDetail() {
               ))}
             </div>
 
-            <CommentForm id={id} />
+            <CommentForm id={id} product={product} />
 
             <div className="other-box">
               <h2 className="other-title">{t("local_relatedProducts")}</h2>

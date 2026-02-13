@@ -71,6 +71,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_commentRate", value: { ar: "قيّم", en: "Rate", fa: "امتیاز دهید" } },
     { key: "local_commentReplyTo", value: { ar: "ردًا على ...", en: "Reply to ...", fa: "پاسخ به ..." } },
     { key: "local_commentReply", value: { ar: "رد", en: "Reply", fa: "پاسخ" } },
+    { key: "local_rate", value: { ar: "التقييم", en: "Rating", fa: "امتیاز" } },
 
     //project
     { key: "local_architect", value: { ar: "المهندس المعماري", en: "Architect", fa: "معمار" } },

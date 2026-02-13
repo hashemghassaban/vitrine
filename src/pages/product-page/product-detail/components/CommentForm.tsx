@@ -1,5 +1,5 @@
 import { useState } from "react";
-import reply from "../../../../assets/icon/reply.svg";
+// import reply from "../../../../assets/icon/reply.svg";
 import star from "../../../../assets/icon/star.svg";
 import { Input, message, Rate } from "antd";
 import Captcha from "../../../../components/Captcha/Captcha";
@@ -9,12 +9,14 @@ import { useLanguage } from "../../../../contexts/useLanguage";
 import { validateEmail, validatePhone } from "../../../../helpers/validation";
 import TextArea from "antd/es/input/TextArea";
 import { useTranslate } from "../../../../i18n/useTranslate";
+import type { ProductDetailView } from "../../../../models/views/productView";
 
 interface CommentFormProps {
   id: string | undefined;
+  product: ProductDetailView | null;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ id }) => {
+const CommentForm: React.FC<CommentFormProps> = ({ id, product }) => {
   const [commentFormSubmitting, setCommentFormSubmitting] = useState(false);
   const [replyCommentFormSubmitting, setReplyCommentFormSubmitting] =
     useState(false);
@@ -26,10 +28,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ id }) => {
   );
   const [rating, setRating] = useState(0);
   const [isOpenComments, setIsOpenComments] = useState(false);
-  const openDialogComments = () => {
-    setIsOpenComments(true);
-    document.body.style.overflow = "hiddien";
-  };
+  // const openDialogComments = () => {
+  //   setIsOpenComments(true);
+  //   document.body.style.overflow = "hiddien";
+  // };
   const closeDialogomments = () => {
     setIsOpenComments(false);
     setReplyCommentForm({} as ProductCommentDTO);
@@ -233,19 +235,20 @@ const CommentForm: React.FC<CommentFormProps> = ({ id }) => {
         </div>
 
         <div className="comment-list">
-          <div className="comment">
-            <div className="comment-header">
-              <div className="text-comment">
-                <strong>علی رضایی</strong> - <span>5 امتیاز</span>
+          {product?.comments.map((c) => (
+            <div className="comment">
+              <div className="comment-header">
+                <div className="text-comment">
+                  <strong>{c.user_name}</strong> - <span>{c.rate} {t("local_rate")}</span>
+                </div>
+                <div className="date">{c.created_at}</div>
               </div>
-              <div className="date">1404/09/12 12:35</div>
-            </div>
-            <div className="comment-body">
-              <p> این محصول خیلی خوب بود و تجربه خرید عالی داشتم.</p>
-            </div>
+              <div className="comment-body">
+                <p>{c.content}</p>
+              </div>
 
-            {/* پاسخ به کامنت */}
-            <div className="comment-reply">
+              {/* پاسخ به کامنت */}
+              {/* <div className="comment-reply">
               <div className="reply-icon">
                 <img src={reply} alt="reply" />
               </div>
@@ -258,8 +261,9 @@ const CommentForm: React.FC<CommentFormProps> = ({ id }) => {
                   {t("local_commentReply")}
                 </button>
               </div>
+            </div> */}
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
