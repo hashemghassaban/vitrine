@@ -21,9 +21,8 @@ const useNewsletter = () => {
           result = res.data.message;
         }
       })
-      .catch((ex) => {
-        result = ex?.response?.data?.message;
-        if (!result) result = "Operation failed";
+      .catch((err: any) => {
+        result = err.response?.data?.message || "Operation failed";
       });
     return {
       success,

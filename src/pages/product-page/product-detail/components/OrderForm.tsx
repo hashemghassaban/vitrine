@@ -31,8 +31,6 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
     {} as orderProductDTO,
   );
 
-  const [orderProducts, setOrderProducts] = useState<string[]>([""]);
-
   const { t } = useTranslate();
   const [producList, setProductsList] = useState<ProductView[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +51,6 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
   useEffect(() => {
     if (product?.title) {
       setSelectedProducts([product.title]);
-      setOrderProducts([product.title]);
     }
   }, [product]);
 
@@ -85,7 +82,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
 
   const onOrderSubmit = async () => {
     try {
-      const productsString = orderProducts.filter(Boolean).join(",");
+      const productsString = selectedProducts.filter(Boolean).join(" - ");
       const payload: orderProductDTO = {
         ...orderForm,
         products: productsString,
@@ -120,7 +117,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
       if (resp.success) {
         showMessage(resp.result);
         setOrderForm({} as orderProductDTO);
-        setOrderProducts([product?.title ?? ""]);
+        setSelectedProducts([product?.title ?? ""]);
         closeDialog();
       } else {
         showMessage(resp.result);
@@ -242,7 +239,6 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
                               (p) => p !== item,
                             );
                             setSelectedProducts(filtered);
-                            setOrderProducts(filtered);
                           }}
                           style={{ margin: 0 }}
                         >
@@ -273,7 +269,6 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
                         if (!selectedProducts.includes(value)) {
                           const updated = [...selectedProducts, value];
                           setSelectedProducts(updated);
-                          setOrderProducts(updated);
                         }
                         setSelectOpen(false);
                       }}

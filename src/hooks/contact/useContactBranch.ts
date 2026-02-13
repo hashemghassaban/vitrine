@@ -22,8 +22,8 @@ const useContactBranch = () => {
           result = res.data.message;
         }
       })
-      .catch(() => {
-        result = "Operation failed";
+      .catch((err: any) => {
+        result = err.response?.data?.message || "Operation failed";
       });
     return {
       success,

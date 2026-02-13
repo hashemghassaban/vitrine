@@ -11,7 +11,7 @@ import type {
 const useProducts = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
   const { t } = useTranslate();
-  
+
   async function getListProducts(perPage = 15) {
     let success = false;
     let result = "";
@@ -75,8 +75,8 @@ const useProducts = (currentLang: string) => {
           result = res.data.message;
         }
       })
-      .catch(() => {
-        result = "Operation failed";
+      .catch((err: any) => {
+        result = err.response?.data?.message || "Operation failed";
       });
     return {
       success,
@@ -84,7 +84,7 @@ const useProducts = (currentLang: string) => {
     };
   }
 
-    async function sendOrderProduct(dto: orderProductDTO) {
+  async function sendOrderProduct(dto: orderProductDTO) {
     let result = "";
     let success = false;
     await axiosAuthInstance
@@ -97,8 +97,8 @@ const useProducts = (currentLang: string) => {
           result = res.data.message;
         }
       })
-      .catch(() => {
-        result = "Operation failed";
+      .catch((err: any) => {
+        result = err.response?.data?.message || "Operation failed";
       });
     return {
       success,
@@ -109,7 +109,7 @@ const useProducts = (currentLang: string) => {
     getListProducts,
     getProductById,
     sendCommentProductById,
-    sendOrderProduct
+    sendOrderProduct,
   };
 };
 
