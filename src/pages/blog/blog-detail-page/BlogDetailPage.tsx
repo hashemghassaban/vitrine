@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import useNavigation from "../../../hooks/useHistory";
-import { Button, Col, Row, Spin } from "antd";
+import { Button, Col, Row } from "antd";
 import "./BlogDetailPage.less";
 import { useLanguage } from "../../../contexts/useLanguage";
 import type { BlogItemView } from "../../../models/views/blogView";
