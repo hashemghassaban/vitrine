@@ -62,6 +62,8 @@ export const localTranslations: TranslationView[] = [
     { key: "local_formClose", value: { fa: "خروج", en: "Close", ar: "خروج" } },
     { key: "local_address", value: { fa: "آدرس", en: "Address", ar: "العنوان" } },
     { key: "local_noProductSelected", value: {fa: "محصولی انتخاب نشده", en: "No product selected", ar: "لم يتم اختيار منتج"}},
+    { key: "local_productRating", value: {fa: "امتیاز محصول", en: "Product Rating", ar: "تقييم المنتج"}},
+    { key: "local_productComment", value: {fa: "دیدگاه", en: "Comments", ar: "تعليق"}},
     
     //comment
     { key: "local_sentComment", value: { ar: "تم تسجيل رأيك بنجاح.", en: "Your comment has been submitted successfully.", fa: "نظر شما با موفقیت ثبت شد." } },

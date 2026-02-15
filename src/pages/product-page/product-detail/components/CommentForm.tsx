@@ -156,9 +156,9 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product }) => {
       {contextHolder}
       <div className="comment-section">
         <div className="scoreProduct">
-          <div> امتیاز محصول / </div>
+          <div> {t("local_productRating")} / </div>
           <div>
-            <img src={star} alt="star" /> 0 ( 0 دیدگاه )
+            <img src={star} alt="star" /> {product?.rate ?? 0} ( {product?.comments_count ?? 0} {t("local_productComment")} )
           </div>
         </div>
         <h2 className="other-title">{t("local_comments")}</h2>

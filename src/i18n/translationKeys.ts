@@ -104,6 +104,8 @@ export type TranslationKey =
   | "local_formClose"
   | "local_address"
   | "local_noProductSelected"
+  | "local_productRating"
+  | "local_productComment"
   //comment
   | "local_sentComment"
   | "local_send"

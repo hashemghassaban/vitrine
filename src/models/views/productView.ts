@@ -89,6 +89,7 @@ export interface ProductDetailView {
   category_path: string;
   comments_count: number;
   comments: CommentView[];
+  rate: number;
   thumbnail: string;
   image: string;
   brochures: BrochoresView[];
