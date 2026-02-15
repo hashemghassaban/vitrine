@@ -88,7 +88,7 @@ export const AppFooter: React.FC = () => {
     { url: data?.settings.linkedin_url, img: ico_linkedin },
     { url: data?.settings.telegram_url, img: ico_telegram },
     { url: data?.settings.facebook_url, img: ico_facebook },
-    { url: data?.settings.twitter_url, img: ico_youtube },
+    { url: data?.settings.youtube_url, img: ico_youtube },
   ];
 
   const handleBackToTop = () => {
