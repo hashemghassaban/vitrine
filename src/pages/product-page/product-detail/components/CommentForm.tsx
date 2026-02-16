@@ -17,10 +17,9 @@ import type {
 interface CommentFormProps {
   id: string | undefined;
   product: ProductDetailView | null;
-  callback: Function;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
+const CommentForm: React.FC<CommentFormProps> = ({ id, product }) => {
   const [commentFormSubmitting, setCommentFormSubmitting] = useState(false);
   const [replyCommentFormSubmitting, setReplyCommentFormSubmitting] =
     useState(false);
@@ -101,7 +100,6 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
       if (resp.success) {
         showMessage(resp.result);
         setCommentForm({} as CommentDTO);
-        callback();
       } else {
         showMessage(resp.result);
       }
@@ -145,7 +143,6 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
         showMessage(resp.result);
         setReplyCommentForm({} as CommentDTO);
         closeDialogomments();
-        callback();
       } else {
         showMessage(resp.result);
       }

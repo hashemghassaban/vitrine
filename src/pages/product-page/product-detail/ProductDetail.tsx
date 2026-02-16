@@ -70,13 +70,6 @@ export default function ProductDetail() {
     setLoading(false);
   };
 
-  const fetchProduct = async () => {
-    const { success, data } = await getProductById(Number(id));
-    if (success && data) {
-      setproduct(data);
-    }
-  };
-
   useEffect(() => {
     if (!id) return;
     fetchData();
@@ -243,7 +236,7 @@ export default function ProductDetail() {
               ))}
             </div>
 
-            <CommentForm id={id} product={product} callback={fetchProduct} />
+            <CommentForm id={id} product={product} />
 
             <div className="other-box">
               <div className="other-title">{t("local_relatedProducts")}</div>

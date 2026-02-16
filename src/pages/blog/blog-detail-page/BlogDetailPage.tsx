@@ -49,13 +49,6 @@ export default function BlogDetailPage() {
     setLoading(false);
   };
 
-  const fetchBlogData = async () => {
-    const { success, data } = await getPostById(Number(id));
-    if (success && data) {
-      setBlog(data);
-    }
-  };
-
   useEffect(() => {
     if (!id) return;
     fetchData();
@@ -114,7 +107,7 @@ export default function BlogDetailPage() {
             </div>
           </Col>
         </Row>
-        <BlogCommentForm id={id} blog={blog} callback={fetchBlogData} />
+        <BlogCommentForm id={id} blog={blog} />
       </div>
       <AppFooter />
     </>

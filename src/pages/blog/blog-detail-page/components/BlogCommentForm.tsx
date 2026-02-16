@@ -14,13 +14,11 @@ import type { BlogCommentView, BlogItemView } from "../../../../models/views/blo
 interface BlogCommentFormProps {
   id: string | undefined;
   blog: BlogItemView | null;
-  callback: Function;
 }
 
 const BlogCommentForm: React.FC<BlogCommentFormProps> = ({
   id,
-  blog,
-  callback,
+  blog
 }) => {
   const [commentFormSubmitting, setCommentFormSubmitting] = useState(false);
   const [replyCommentFormSubmitting, setReplyCommentFormSubmitting] =
@@ -100,7 +98,6 @@ const BlogCommentForm: React.FC<BlogCommentFormProps> = ({
       if (resp.success) {
         showMessage(resp.result);
         setCommentForm({} as CommentDTO);
-        callback();
       } else {
         showMessage(resp.result);
       }
@@ -145,7 +142,6 @@ const BlogCommentForm: React.FC<BlogCommentFormProps> = ({
         setReplyCommentForm({} as CommentDTO);
         setSelectedComment(null);
         closeDialogomments();
-        callback();
       } else {
         showMessage(resp.result);
       }
