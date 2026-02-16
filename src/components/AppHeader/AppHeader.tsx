@@ -58,6 +58,13 @@ export const AppHeader: FC<AppHeaderProps> = ({
   };
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
+  
+  const fetchBrands = async () => {
+    const { success, data } = await getList();
+    if (success && data) {
+      setBrands(data);
+    }
+  };
   const fetchIndex = async () => {
     const { success, data } = await getIndex();
     if (success && data) {
@@ -66,6 +73,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   };
   useEffect(() => {
     fetchIndex();
+    fetchBrands();
   }, [currentLang]);
   useEffect(() => {
     // تابعی که هنگام اسکرول اجرا می‌شود
