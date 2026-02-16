@@ -32,44 +32,7 @@
 
   }
 }
-.freez {
-  background: rgba(0, 0, 0, 0.95) !important;
-  padding: 4rem 15px;
-  height: 129px;
 
-  .app-header__menu-home,
-  .search__img {
-    display: none;
-  }
-
-  .burgerMenu {
-    display: block;
-  }
-
-  .en_img,
-  .app-header__menu-Text {
-    right: -100px;
-  }
-
-  .en_img.active {
-    display: block !important;
-    position: absolute;
-    z-index: 1111000;
-    right: 444px;
-    top: 48px;
-  }
-
-  .app-header__menu-Text.active {
-    position: absolute !important;
-    margin-right: 345px;
-    display: block !important;
-    width: 29px;
-    top: 17px!important;
-    right: 120px;
-
-  }
-
-}
 /* --- 1. استایل دکمه همبرگری (تبدیل به ضربدر) --- */
 .menu-toggle-btn {
   position: fixed;
@@ -329,6 +292,88 @@
   }
 }
 
+.backgroundColor {
+  background-image: none !important;
+  background-color: #E7E7E7 !important;
+  height: 189px;
+
+  &::before {
+    background-color: inherit !important;
+
+  }
+
+  .title-page,
+  .text-page {
+    display: none;
+  }
+
+  .home__img {
+    img {
+      filter: invert(1);
+    }
+
+  }
+
+  .search__img {
+    filter: invert(1);
+  }
+  &.freez{
+    .home__img {
+    img {
+      filter: invert(0);
+    }
+
+  }
+      .search__img {
+    filter: invert(0);
+  }
+  .ant-menu-title-content {
+    color: #fff;
+  }
+  }
+
+  .ant-menu-title-content {
+    color: #000;
+  }
+}
+.freez {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  padding: 4rem 15px!important;
+  height: 129px!important;
+
+  .app-header__menu-home,
+  .search__img {
+    display: none;
+  }
+
+  .burgerMenu {
+    display: block;
+  }
+
+  .en_img,
+  .app-header__menu-Text {
+    right: -100px;
+  }
+
+  .en_img.active {
+    display: block !important;
+    position: absolute;
+    z-index: 1111000;
+    right: 444px;
+    top: 48px;
+  }
+
+  .app-header__menu-Text.active {
+    position: absolute !important;
+    margin-right: 345px;
+    display: block !important;
+    width: 29px;
+    top: 17px!important;
+    right: 120px;
+
+  }
+
+}
 .app-header_container::before {
   content: "";
   position: absolute;
@@ -726,34 +771,3 @@
   direction: rtl !important;
 }
 
-
-.backgroundColor {
-  background-image: none !important;
-  background-color: #E7E7E7 !important;
-  height: 189px;
-
-  &::before {
-    background-color: inherit !important;
-
-  }
-
-  .title-page,
-  .text-page {
-    display: none;
-  }
-
-  .home__img {
-    img {
-      filter: invert(1);
-    }
-
-  }
-
-  .search__img {
-    filter: invert(1);
-  }
-
-  .ant-menu-title-content {
-    color: #000;
-  }
-}

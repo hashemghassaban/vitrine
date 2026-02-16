@@ -249,7 +249,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
-          className={`app-header_container ${isScrolled ? 'freez' : ''} ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor" : ""}`}
+          className={`app-header_container ${isScrolled ? 'freez' : ''} ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor"  : ""}`}
           style={headerBackground}
         >
           <Row>
