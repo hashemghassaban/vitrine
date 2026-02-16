@@ -29,7 +29,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import useBrands from "../../../hooks/brand/useBrands";
 import type BrandView from "../../../models/views/brandView";
 import useIndex from "../../../hooks/index/useIndex";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import type {
   IndexDataView,
   ProductCategoryView,
@@ -166,7 +166,8 @@ const AllProducts: React.FC = () => {
   const [openCollectionMenu, setOpenCollectionMenu] = useState(false);
   const { getIndex } = useIndex(currentLang);
   const [searchParams] = useSearchParams();
-  const categorySlug = searchParams.get("category");
+
+  const { categorySlug } = useParams();
   const collectionIdParam = searchParams.get("collection");
   const [loading, setLoading] = useState(true);
   const [selectedInfo, setSelectedInfo] = useState<
@@ -239,6 +240,7 @@ const AllProducts: React.FC = () => {
       }
     }
   }, [categorySlug, data]);
+  
   useEffect(() => {
     updateSelectedInfo();
   }, [selectedCategory]);
@@ -348,17 +350,19 @@ const items = [
     setSelected((prev) => prev.filter((i) => i !== id));
   };
 
-  useEffect(() => {
-    if (!collectionIdParam || collections.length === 0) return;
+useEffect(() => {
+  if (!collectionIdParam || collections.length === 0) return;
 
-    const colId = collectionIdParam;
-    const col = collections.find((c) => c.title == colId);
-    if (col) {
-      setSelectedCollection([col.id]);
-      setSelectedInfo({ type: "collection", data: col });
-      setOpenCollectionMenu(true);
-    }
-  }, [collectionIdParam, collections]);
+ 
+  const collectionTitle = collectionIdParam.replace(/-/g, ' ');
+  const col = collections.find((c) => c.title === collectionTitle);
+  
+  if (col) {
+    setSelectedCollection([col.id]);
+    setSelectedInfo({ type: "collection", data: col });
+    setOpenCollectionMenu(true);
+  }
+}, [collectionIdParam, collections]);
 
   const selectFeature = (id: number) => {
     setSelectedFeature((prev) =>

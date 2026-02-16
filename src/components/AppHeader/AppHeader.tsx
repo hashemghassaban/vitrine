@@ -155,8 +155,10 @@ export const AppHeader: FC<AppHeaderProps> = ({
     }));
   };
   const handleSearch = () => {
+    const urlFriendlyTitle = searchQuery.replace(/ /g, '-');
+
     if (searchQuery.trim()) {
-      push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
+      push(`/${currentLang}/search?s=${encodeURIComponent(urlFriendlyTitle)}`);
       setSearchOpen(false);
       setSearchQuery("");
     }

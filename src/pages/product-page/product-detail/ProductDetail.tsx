@@ -2,7 +2,7 @@ import { Row, Col, Button, Divider, Card, Tag } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
-import {  VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { VerticalAlignBottomOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useLanguage } from "../../../contexts/useLanguage";
 import type {
@@ -25,8 +25,7 @@ export default function ProductDetail() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { currentLang } = useLanguage();
-  const { getListProducts, getProductById } =
-    useProducts(currentLang);
+  const { getListProducts, getProductById } = useProducts(currentLang);
   const [product, setproduct] = useState<ProductDetailView | null>(null);
   const [related, setRelated] = useState<ProductView[]>([]);
   const [loading, setLoading] = useState(true);
@@ -71,6 +70,13 @@ export default function ProductDetail() {
     setLoading(false);
   };
 
+  const fetchProduct = async () => {
+    const { success, data } = await getProductById(Number(id));
+    if (success && data) {
+      setproduct(data);
+    }
+  };
+
   useEffect(() => {
     if (!id) return;
     fetchData();
@@ -99,11 +105,11 @@ export default function ProductDetail() {
                   {product?.collection && (
                     <div
                       className="date-box"
-                      onClick={() =>
-                        push(
-                          `/${currentLang}/products?collection=${product?.collection?.title}`,
-                        )
-                      }
+                      onClick={() => {
+                       
+                        const urlFriendlyTitle = product.collection.title.replace(/ /g, '-');
+                        push(`/${currentLang}/products?collection=${urlFriendlyTitle}`);
+                      }}
                     >
                       {product?.collection?.title}{" "}
                     </div>
@@ -158,14 +164,14 @@ export default function ProductDetail() {
                             </span>
                             {index !==
                               Object.entries(groupedFeatures).length - 1 && (
-                              <Divider />
-                            )}
+                                <Divider />
+                              )}
                           </div>
                         </div>
                       ),
                     )}
                 </div>
-                <OrderForm product={product}/>
+                <OrderForm product={product} />
               </div>
             </div>
           </Col>
@@ -237,7 +243,7 @@ export default function ProductDetail() {
               ))}
             </div>
 
-            <CommentForm id={id} product={product} />
+            <CommentForm id={id} product={product} callback={fetchProduct} />
 
             <div className="other-box">
               <div className="other-title">{t("local_relatedProducts")}</div>

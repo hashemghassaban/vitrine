@@ -88,7 +88,7 @@ export interface ProductDetailView {
   call_us: boolean;
   category_path: string;
   comments_count: number;
-  comments: CommentView[];
+  comments: ProductCommentView[];
   rate: number;
   thumbnail: string;
   image: string;
@@ -110,7 +110,7 @@ export interface BrochoresView {
   type: string;
 }
 
-export interface CommentView {
+export interface ProductCommentView {
   id: number;
   content: string;
   user_name: string;

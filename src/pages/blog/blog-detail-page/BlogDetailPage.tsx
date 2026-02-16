@@ -12,6 +12,7 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import BlogCommentForm from "./components/BlogCommentForm";
 
 export default function BlogDetailPage() {
   useSyncLanguage();
@@ -46,6 +47,13 @@ export default function BlogDetailPage() {
     }
 
     setLoading(false);
+  };
+
+  const fetchBlogData = async () => {
+    const { success, data } = await getPostById(Number(id));
+    if (success && data) {
+      setBlog(data);
+    }
   };
 
   useEffect(() => {
@@ -106,6 +114,7 @@ export default function BlogDetailPage() {
             </div>
           </Col>
         </Row>
+        <BlogCommentForm id={id} blog={blog} callback={fetchBlogData} />
       </div>
       <AppFooter />
     </>

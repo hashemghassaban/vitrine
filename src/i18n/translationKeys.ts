@@ -80,6 +80,7 @@ export type TranslationKey =
   | "local_ourServices"
   | "local_home"
   | "local_captchaTextInput"
+  | "local_blogRating"
   //index
   | "local_luxuryProducts"
   | "local_vitrineBuildingShowroom"
