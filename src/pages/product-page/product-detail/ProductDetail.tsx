@@ -138,7 +138,7 @@ export default function ProductDetail() {
               <p
                 className="product-desc"
                 dangerouslySetInnerHTML={{
-                  __html: truncate(product?.excerpt ?? ""),
+                  __html: truncate(product?.summary ?? ""),
                 }}
               ></p>
 

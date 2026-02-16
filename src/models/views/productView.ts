@@ -82,6 +82,7 @@ export interface ProductDetailView {
   title: string;
   slug: string;
   excerpt: string;
+  summary: string;
   content: string;
   price: string;
   code: string;

@@ -60,7 +60,7 @@ const Search: React.FC = () => {
           return `/${currentLang}/brands`;
       }
     }
-    return `/${currentLang}/`;
+    return `/${currentLang}/${item.type}/${item.id}`;
   };
 
   if (!query) {
