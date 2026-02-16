@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type FC } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Layout, Input, message } from "antd";
 import { FooterMenu } from "./FooterMenu/FooterMenu";
 import img from "../../assets/footer/img1.png";
