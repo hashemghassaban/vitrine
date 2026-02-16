@@ -35,12 +35,33 @@ const Search: React.FC = () => {
     }
   };
   useEffect(() => {
-
-     const queryTitle = query?.replace(/-/g, ' ');
+    const queryTitle = query?.replace(/-/g, ' ');
     if (!!queryTitle) {
       fetchSearch(queryTitle);
     }
   }, [query, currentLang]);
+
+  const getItemUrl = (item: SearchItemView) => {
+    if (item.type === "pages") {
+      switch (item.slug) {
+        case t("local_Services"):
+          return `/${currentLang}/services`;
+        case t("local_Projects"):
+          return `/${currentLang}/project`;
+        case t("local_Catalogues"):
+          return `/${currentLang}/catalogue`;
+        case t("local_Representation"):
+          return `/${currentLang}/representation`;
+        case t("local_About"):
+          return `/${currentLang}/about`;
+        case t("local_Contact"):
+          return `/${currentLang}/contactBranch`;
+        case t("local_Brands"):
+          return `/${currentLang}/brands`;
+      }
+    }
+    return `/${currentLang}/`;
+  };
 
   if (!query) {
     return (
@@ -75,7 +96,7 @@ const Search: React.FC = () => {
                         preview={false}
                         className="result-image"
                         onClick={() =>
-                          push(`/${currentLang}/${item.type}/${item.id}`)
+                          push(getItemUrl(item))
                         }
                       />
                     </Col>
@@ -84,7 +105,7 @@ const Search: React.FC = () => {
                       <h2
                         className="item-title"
                         onClick={() =>
-                          push(`/${currentLang}/${item.type}/${item.id}`)
+                          push(getItemUrl(item))
                         }
                       >
                         {item.title}
@@ -100,7 +121,7 @@ const Search: React.FC = () => {
                         className="more-search"
                         type="link"
                         onClick={() =>
-                          push(`/${currentLang}/${item.type}/${item.id}`)
+                          push(getItemUrl(item))
                         }
                       >
                         {t("local_readMore")}

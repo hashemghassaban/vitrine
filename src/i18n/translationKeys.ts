@@ -143,6 +143,16 @@ export type TranslationKey =
   | "local_contactSelectDepartment"
   | "local_contactMessageContent"
   | "local_contactSendMessage"
+
+  //pages
+  | "local_Catalogues"
+  | "local_Services"
+  | "local_Projects"
+  | "local_Representation"
+  | "local_About"
+  | "local_Contact"
+  | "local_Brands"
+
   //404 page
   | "local_NotFoundMessage"
   | "local_redirectToHome";

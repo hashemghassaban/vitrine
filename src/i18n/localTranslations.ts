@@ -101,4 +101,14 @@ export const localTranslations: TranslationView[] = [
     
     //captcha
     { key: "local_captchaTextInput", value: { fa: "متن داخل تصویر را وارد کنید", en: "Enter text from image", ar: "أدخل النص من الصورة" } },
+    
+    //pages
+    { key: "local_Catalogues", value: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" }},
+    { key: "local_Services", value: { en: "Services", fa: "خدمات", ar: "الخدمات" }},
+    { key: "local_Projects", value: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" }}, 
+    { key: "local_Representation", value: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" }},
+    { key: "local_About", value: { en: "About Us", fa: "درباره ما", ar: "من نحن" }},
+    { key: "local_Contact", value: { en: "Contact", fa: "تماس با ما", ar: "اتصل بنا" }},
+    { key: "local_Brands", value: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" }},
+
 ];

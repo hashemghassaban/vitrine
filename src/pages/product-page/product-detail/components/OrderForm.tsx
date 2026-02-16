@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Input, message, Select, Tag } from "antd";
+import { Button, Input, message, Tag } from "antd";
 import Captcha from "../../../../components/Captcha/Captcha";
 import useProducts from "../../../../hooks/products/useProducts";
 import { useLanguage } from "../../../../contexts/useLanguage";
@@ -9,10 +9,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import { useTranslate } from "../../../../i18n/useTranslate";
 import type { orderProductDTO } from "../../../../models/dtos/orderProductDTO";
-import type {
-  ProductDetailView,
-  ProductView,
-} from "../../../../models/views/productView";
+import type { ProductDetailView } from "../../../../models/views/productView";
 
 interface OrderFormProps {
   product: ProductDetailView | null;
@@ -20,8 +17,7 @@ interface OrderFormProps {
 
 const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
   const { currentLang } = useLanguage();
-  const [selectOpen, setSelectOpen] = useState(false);
-  const { getListProducts, sendOrderProduct } = useProducts(currentLang);
+  const { sendOrderProduct } = useProducts(currentLang);
 
   const [selectedProducts, setSelectedProducts] = useState<string[]>(
     product?.title ? [product.title] : [],
@@ -32,21 +28,10 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
   );
 
   const { t } = useTranslate();
-  const [producList, setProductsList] = useState<ProductView[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [productInput, setProductInput] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
-
-  const fetchProductsList = async () => {
-    const res = await getListProducts();
-    if (res.success) {
-      setProductsList(res.data);
-    }
-  };
-
-  useEffect(() => {
-    fetchProductsList();
-  }, [currentLang]);
 
   useEffect(() => {
     if (product?.title) {
@@ -64,6 +49,19 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
     setOrderForm({} as orderProductDTO);
     setSelectedProducts([product?.title ?? ""]);
     document.body.style.overflow = "auto";
+  };
+
+  const confirmAddProduct = () => {
+    const trimmed = productInput.trim();
+
+    if (trimmed) {
+      if (!selectedProducts.includes(trimmed)) {
+        setSelectedProducts((prev) => [...prev, trimmed]);
+      }
+    }
+
+    setProductInput("");
+    setIsAddingProduct(false);
   };
 
   const showMessage = (content: string) => {
@@ -233,58 +231,47 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
               <div className="form-row">
                 <div className="input-group">
                   <p className="text">{t("local_orderFormProducts")}</p>
-
                   <div className="products-container">
-                    {selectedProducts.length > 0 ? (
-                      selectedProducts.map((item) => (
-                        <Tag
-                          key={item}
-                          closable
-                          onClose={() => {
-                            const filtered = selectedProducts.filter(
-                              (p) => p !== item,
-                            );
-                            setSelectedProducts(filtered);
-                          }}
-                          style={{ margin: 0 }}
-                        >
-                          {item}
-                        </Tag>
-                      ))
-                    ) : (
+                    {selectedProducts.length === 0 && !isAddingProduct && (
                       <span className="no-product">
                         {t("local_noProductSelected")}
                       </span>
                     )}
+
+                    {selectedProducts.map((item) => (
+                      <Tag
+                        key={item}
+                        closable
+                        onClose={() => {
+                          setSelectedProducts((prev) =>
+                            prev.filter((p) => p !== item),
+                          );
+                        }}
+                        style={{ margin: 0 }}
+                      >
+                        {item}
+                      </Tag>
+                    ))}
+
+                    {isAddingProduct && (
+                      <Input
+                        autoFocus
+                        size="small"
+                        value={productInput}
+                        onChange={(e) => setProductInput(e.target.value)}
+                        onPressEnter={confirmAddProduct}
+                        onBlur={confirmAddProduct}
+                        style={{ width: 150 }}
+                      />
+                    )}
                   </div>
+
                   <Button
                     icon={<PlusOutlined />}
-                    onClick={() => setSelectOpen(true)}
+                    onClick={() => setIsAddingProduct(true)}
                   >
                     {t("local_orderFormAddProduct")}
                   </Button>
-                  {selectOpen && (
-                    <Select
-                      autoFocus
-                      showSearch
-                      open
-                      style={{ width: "100%", marginBottom: 10 }}
-                      placeholder={t("local_search")}
-                      optionFilterProp="label"
-                      onChange={(value) => {
-                        if (!selectedProducts.includes(value)) {
-                          const updated = [...selectedProducts, value];
-                          setSelectedProducts(updated);
-                        }
-                        setSelectOpen(false);
-                      }}
-                      getPopupContainer={(trigger) => trigger.parentElement!}
-                      options={producList.map((item) => ({
-                        value: item.title,
-                        label: item.title,
-                      }))}
-                    />
-                  )}
                 </div>
               </div>
               <div className="form-row">
