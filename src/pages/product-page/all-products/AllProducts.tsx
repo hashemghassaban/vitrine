@@ -165,7 +165,7 @@ const AllProducts: React.FC = () => {
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const [openCollectionMenu, setOpenCollectionMenu] = useState(false);
   const { getIndex } = useIndex(currentLang);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { categorySlug } = useParams();
   const collectionIdParam = searchParams.get("collection");
@@ -506,6 +506,28 @@ useEffect(() => {
     setVisibleCount((prev) => prev + 4);
     setAnimatedItems((prev) => [...prev, ...newItems.map((i) => i.id)]);
   };
+
+  useEffect(() => {
+  const params = new URLSearchParams();
+
+ 
+  if (selected.length > 0) {
+    params.set("brand", selected.join(","));
+  }
+
+ 
+  if (selectedCollection.length > 0) {
+    params.set("collection", selectedCollection.join(","));
+  }
+
+  
+  if (selectedFeature.length > 0) {
+    params.set("feature", selectedFeature.join(","));
+  }
+
+
+  setSearchParams(params);
+}, [selected, selectedCollection, selectedFeature, selectedCategory]);
   return (
     <>
       <LoadingSpin loading={loading} />
