@@ -23,7 +23,7 @@ function Blog() {
   const [posts, setPosts] = useState<BlogItemView[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [visibleCount, setVisibleCount] = useState(8);
-  const [animatedItems, setAnimatedItems] = useState<number[]>([]);
+  const [animatedItems, setAnimatedItems] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
 
