@@ -1,7 +1,7 @@
 import useAxious from "../../helpers/axiosInstance";
 import { useTranslate } from "../../i18n/useTranslate";
 import type { orderProductDTO } from "../../models/dtos/orderProductDTO";
-import type { ProductCommentDTO } from "../../models/dtos/productCommentDTO";
+import type { CommentDTO } from "../../models/dtos/commentDTO";
 import type ServerResult from "../../models/ServerResult";
 import type {
   ProductView,
@@ -62,11 +62,11 @@ const useProducts = (currentLang: string) => {
     };
   }
 
-  async function sendCommentProductById(id: number, dto: ProductCommentDTO) {
+  async function sendCommentProductById(id: number, dto: CommentDTO) {
     let result = "";
     let success = false;
     await axiosAuthInstance
-      .post<ServerResult<ProductCommentDTO>>(`/comments/product/${id}`, dto)
+      .post<ServerResult<CommentDTO>>(`/comments/product/${id}`, dto)
       .then((res) => {
         if (res.data.success) {
           success = true;
@@ -88,7 +88,7 @@ const useProducts = (currentLang: string) => {
     let result = "";
     let success = false;
     await axiosAuthInstance
-      .post<ServerResult<ProductCommentDTO>>(`/orders`, dto)
+      .post<ServerResult<CommentDTO>>(`/orders`, dto)
       .then((res) => {
         if (res.data.success) {
           success = true;

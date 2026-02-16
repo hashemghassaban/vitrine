@@ -1,10 +1,13 @@
 import useAxious from "../../helpers/axiosInstance";
+import { useTranslate } from "../../i18n/useTranslate";
+import type { CommentDTO } from "../../models/dtos/commentDTO";
 import type ServerResult from "../../models/ServerResult";
 import type { BlogItemView } from "../../models/views/blogView";
 import type { BlogCategoryView } from "../../models/views/blogView";
 
 const useBlog = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
+  const { t } = useTranslate();
 
   // گرفتن پست‌ها
   async function getPosts(categoryId?: number) {
@@ -65,6 +68,29 @@ const useBlog = (currentLang: string) => {
 
     return { success, data, result };
   }
-  return { getPosts, getCategories, getPostById };
+
+  async function sendCommentPostById(id: number, dto: CommentDTO) {
+    let result = "";
+    let success = false;
+    await axiosAuthInstance
+      .post<ServerResult<CommentDTO>>(`/comments/post/${id}`, dto)
+      .then((res) => {
+        if (res.data.success) {
+          success = true;
+          result = t("local_sentComment");
+        } else {
+          result = res.data.message;
+        }
+      })
+      .catch((err: any) => {
+        result = err.response?.data?.message || "Operation failed";
+      });
+    return {
+      success,
+      result,
+    };
+  }
+
+  return { getPosts, getCategories, getPostById, sendCommentPostById };
 };
 export default useBlog;

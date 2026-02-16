@@ -9,18 +9,19 @@ import { useLanguage } from "../../../../contexts/useLanguage";
 import { validateEmail, validatePhone } from "../../../../helpers/validation";
 import TextArea from "antd/es/input/TextArea";
 import { useTranslate } from "../../../../i18n/useTranslate";
-import type {
-  ProductCommentView,
-  ProductDetailView,
-} from "../../../../models/views/productView";
+import type { BlogCommentView, BlogItemView } from "../../../../models/views/blogView";
 
-interface CommentFormProps {
+interface BlogCommentFormProps {
   id: string | undefined;
-  product: ProductDetailView | null;
+  blog: BlogItemView | null;
   callback: Function;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
+const BlogCommentForm: React.FC<BlogCommentFormProps> = ({
+  id,
+  blog,
+  callback,
+}) => {
   const [commentFormSubmitting, setCommentFormSubmitting] = useState(false);
   const [replyCommentFormSubmitting, setReplyCommentFormSubmitting] =
     useState(false);
@@ -29,12 +30,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
     {} as CommentDTO,
   );
 
-  const [selectedComment, setSelectedComment] =
-    useState<ProductCommentView | null>(null);
-
+  const [selectedComment, setSelectedComment] = useState<BlogCommentView | null>(null);
   const [isOpenComments, setIsOpenComments] = useState(false);
 
-  const openDialogComments = (item: ProductCommentView) => {
+  const openDialogComments = (item: BlogCommentView) => {
     setSelectedComment(item);
     setIsOpenComments(true);
   };
@@ -144,6 +143,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
       if (resp.success) {
         showMessage(resp.result);
         setReplyCommentForm({} as CommentDTO);
+        setSelectedComment(null);
         closeDialogomments();
         callback();
       } else {
@@ -160,10 +160,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
       {contextHolder}
       <div className="comment-section">
         <div className="scoreProduct">
-          <div> {t("local_productRating")} / </div>
+          <div> {t("local_blogRating")} / </div>
           <div>
-            <img src={star} alt="star" /> {product?.rate ?? 0} ({" "}
-            {product?.comments_count ?? 0} {t("local_productComment")} )
+            <img src={star} alt="star" /> {blog?.rate ?? 0} ({" "}
+            {blog?.comments_count ?? 0} {t("local_productComment")} )
           </div>
         </div>
         <h2 className="other-title">{t("local_comments")}</h2>
@@ -240,7 +240,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
         </div>
 
         <div className="comment-list">
-          {product?.comments
+          {blog?.comments
             .filter((c) => !c.parent_id)
             .map((c, idx) => (
               <div className="comment" key={idx}>
@@ -263,7 +263,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
                   </button>
                 </div>
 
-                {product?.comments
+                {blog?.comments
                   .filter((p) => +p.parent_id == c.id)
                   .map((pc, index) => (
                     <div className="comment-reply" key={index}>
@@ -392,4 +392,4 @@ const CommentForm: React.FC<CommentFormProps> = ({ id, product, callback }) => {
   );
 };
 
-export default CommentForm;
+export default BlogCommentForm;

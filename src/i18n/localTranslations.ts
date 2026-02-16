@@ -63,6 +63,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_address", value: { fa: "آدرس", en: "Address", ar: "العنوان" } },
     { key: "local_noProductSelected", value: {fa: "محصولی انتخاب نشده", en: "No product selected", ar: "لم يتم اختيار منتج"}},
     { key: "local_productRating", value: {fa: "امتیاز محصول", en: "Product Rating", ar: "تقييم المنتج"}},
+    { key: "local_blogRating", value: {fa: "امتیاز مقاله", en: "Post Rating", ar: "تقييم المقال"}},
     { key: "local_productComment", value: {fa: "دیدگاه", en: "Comments", ar: "تعليق"}},
     
     //comment
@@ -71,7 +72,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_commentContent", value: { ar: "اكتب تعليقك", en: "Write your comment", fa: "کامنت خود را بنویسید" } },
     { key: "local_comments", value: { ar: "التعليقات", en: "Comments", fa: "نظرات" } },
     { key: "local_commentRate", value: { ar: "قيّم", en: "Rate", fa: "امتیاز دهید" } },
-    { key: "local_commentReplyTo", value: { ar: "ردًا على ...", en: "Reply to ...", fa: "پاسخ به ..." } },
+    { key: "local_commentReplyTo", value: { ar: "ردًا على", en: "Reply to", fa: "پاسخ به" } },
     { key: "local_commentReply", value: { ar: "رد", en: "Reply", fa: "پاسخ" } },
     { key: "local_rate", value: { ar: "التقييم", en: "Rating", fa: "امتیاز" } },
 
