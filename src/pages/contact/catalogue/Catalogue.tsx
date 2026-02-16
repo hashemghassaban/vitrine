@@ -41,7 +41,7 @@ export default function Catalogue() {
       <AppHeader />
       <div className="showcase-container">
         <Row justify="center">
-          <h2 className="title">{t("site.catalog1")}</h2>
+          <h1 className="title">{t("site.catalog1")}</h1>
         </Row>
         <Row gutter={[24, 24]} justify="center">
           {documents.map((item) => (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, type FC } from "react";
 import { Col, Row, Layout, Input, message } from "antd";
 import { FooterMenu } from "./FooterMenu/FooterMenu";
 import img from "../../assets/footer/img1.png";
@@ -19,8 +19,14 @@ import useNewsletter from "../../hooks/newsletter/useNewsletter";
 import { useTranslate } from "../../i18n/useTranslate";
 import { LANGUAGES, type Language } from "../../i18n/languageType";
 import useNavigation from "../../hooks/useHistory";
+interface AppFooterProps {
+  page?: String;
+}
 
-export const AppFooter: React.FC = () => {
+
+export const AppFooter: React.FC<AppFooterProps> = ({
+  page,
+}) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [data, setIndexData] = useState<IndexDataView | null>(null);
   const [email, setEmail] = useState("");
@@ -104,7 +110,8 @@ export const AppFooter: React.FC = () => {
             {/* لوگو و متن */}
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__logo">
               <img className="app-footer__logo_img" src={img} alt="Logo" />
-              <h1 className="app-footer_title">{t("site.footerblock6")}</h1>
+              {page === "home" ? (<h1 className="app-footer_title">{t("site.footerblock6")}</h1>) : (<div className="app-footer_title">{t("site.footerblock6")}</div>)}
+
               <p className="app-footer_text">{t("site.footerblock7")}</p>
             </Col>
 

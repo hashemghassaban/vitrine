@@ -42,23 +42,77 @@ type MenuItem = Required<MenuProps>["items"][number];
 const buildMenuItems = (
   categories: ProductCategoryView[],
   openKeys: string[],
+  onSelectCategory: (slug: string) => void,
+  setOpenKeys: React.Dispatch<React.SetStateAction<string[]>>,
+  activeParentSlug: string | null,
+  setActiveParentSlug: React.Dispatch<React.SetStateAction<string | null>>,
 ): MenuItem[] => {
   return categories.map((cat) => ({
     key: cat.slug,
     label: (
-      <div className="menu-label">
+      <div
+        className={`menu-label ${
+          activeParentSlug === cat.slug ? "parent-selected" : ""
+        }`}
+        onClick={() => {
+          if (cat.children?.length) {
+            setOpenKeys((prev) =>
+              prev.includes(cat.slug)
+                ? prev.filter((k) => k !== cat.slug)
+                : [...prev, cat.slug],
+            );
+          }
+        }}
+      >
         {cat.children?.length > 0 && (
-          <span className="iconArrow">{openKeys.includes(String(cat.id)) ? "↓" : "←"}</span>
+          <span
+            className="iconArrow"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenKeys((prev) =>
+                prev.includes(cat.slug)
+                  ? prev.filter((k) => k !== cat.slug)
+                  : [...prev, cat.slug],
+              );
+            }}
+          >
+            {openKeys.includes(cat.slug) ? "↑" : "↓"}
+          </span>
         )}
-        <span>{cat.title}</span>
+
+        <span
+          onClick={(e) => {
+            e.stopPropagation();
+            setActiveParentSlug(cat.slug); // 👈 این خط جدید
+            onSelectCategory(cat.slug);
+          }}
+        >
+          {cat.title}
+        </span>
       </div>
     ),
     children:
       cat.children && cat.children.length > 0
-        ? [{ type: "divider" }, ...buildMenuItems(cat.children, openKeys)]
+        ? [
+            { type: "divider" as const },
+            ...buildMenuItems(
+              cat.children,
+              openKeys,
+              onSelectCategory,
+              setOpenKeys,
+              activeParentSlug,
+              setActiveParentSlug,
+            ),
+          ]
         : undefined,
   }));
 };
+
+
+
+
+
+
 
 const getParentKeys = (
   categories: ProductCategoryView[],
@@ -93,6 +147,8 @@ const AllProducts: React.FC = () => {
     useState<ProductCategoryView | null>(null);
   const { currentLang } = useLanguage();
   const { getListProducts } = useProducts(currentLang);
+  const [activeParentSlug, setActiveParentSlug] = useState<string | null>(null);
+
   const { t } = useTranslate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
@@ -244,20 +300,37 @@ const AllProducts: React.FC = () => {
     selected.length > 0
       ? collections.filter((c) => selected.includes(Number(c.brand_id)))
       : collections;
-
-  const allProductsItem: MenuItem = {
+const items = [
+  {
     key: "all-products",
     label: (
-      <div className="menu-label">
+      <div
+        className={`menu-label ${
+          activeParentSlug === "all-products" ? "parent-selected" : ""
+        }`}
+        onClick={() => {
+          setActiveParentSlug("all-products");
+          handleMenuSelect({ key: "all-products" });
+        }}
+      >
         <span>{t("local_allProducts")}</span>
       </div>
     ),
-  };
+  },
+  ...buildMenuItems(
+    data?.product_categories ?? [],
+    openKeys,
+    (slug) => handleMenuSelect({ key: slug }),
+    setOpenKeys,
+    activeParentSlug,
+    setActiveParentSlug,
+  ),
+];
 
-  const items = [
-    allProductsItem,
-    ...buildMenuItems(data?.product_categories ?? [], openKeys),
-  ];
+
+
+
+
 
   const toggleBrand = (id: number) => {
     setSelected((prev) =>
@@ -441,12 +514,12 @@ const AllProducts: React.FC = () => {
         }
         text={`${t("local_home")} > ${t("local_type_products")} ${!!selectedCategory ? `> ${selectedCategory?.title}` : ""}`}
       />
-      <div className="products-container">
+      <div className="products-containers">
         <Row gutter={[0, 25]} style={{ justifyContent: "space-between" }}>
           <Col xs={24} lg={6}>
             <div className="filters-box">
               <h3 className="filter-title"> {t("local_category")}</h3>
-              <div className="menu-scroll-container">
+              <div className="menu-scroll-container category-scroll">
                 <Menu
                   className="menu-item-product"
                   openKeys={openKeys}
@@ -534,7 +607,7 @@ const AllProducts: React.FC = () => {
                                   {b.title}
                                 </Checkbox>
                               </div>
-                              <p> {b.title} </p>
+                            
                             </div>
                           </Menu.Item>
                           {index !== filteredBrands.length - 1 && (
@@ -679,7 +752,7 @@ const AllProducts: React.FC = () => {
                           );
                         })}
                       </div>
-                      <p className="product-title-product">{item.title}</p>
+                      <h2 className="product-title-product">{item.title}</h2>
                     </Card>
                   </Col>
                 ))}

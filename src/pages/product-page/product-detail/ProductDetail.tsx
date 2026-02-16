@@ -111,13 +111,13 @@ export default function ProductDetail() {
 
                   <p
                     className="category-text"
-                    onClick={() =>
+                    
+                  >
+                    {t("local_category")}/ <span onClick={() =>
                       push(
                         `/${currentLang}/products?category=${product?.category?.slug}`,
                       )
-                    }
-                  >
-                    {t("local_category")}/ {product?.category?.title}
+                    }>{product?.category?.title}</span>
                   </p>
                   <p className="category-code">
                     {t("local_code")}: {product?.code}
@@ -126,10 +126,15 @@ export default function ProductDetail() {
                 <img
                   src={product?.brand?.logo ?? undefined}
                   className="brand-logo-product"
+                  onClick={() =>
+                      push(
+                        `/${currentLang}/brandProducts/${product?.brand?.id}`,
+                      )
+                    }
                 />
               </div>
 
-              <h2 className="product-title">{product?.title}</h2>
+              <h1 className="product-title">{product?.title}</h1>
 
               <p
                 className="product-desc"
@@ -144,9 +149,9 @@ export default function ProductDetail() {
                     Object.entries(groupedFeatures).map(
                       ([title, values], index) => (
                         <div key={index}>
-                          <h3 className="feature-title">
+                          <div className="feature-title">
                             {t("local_productFeatures")}
-                          </h3>
+                          </div>
                           <div className="feature-item" key={index}>
                             <span>
                               {title}: {values.join(", ")}
@@ -189,7 +194,7 @@ export default function ProductDetail() {
         <Row justify="center" align="middle">
           <Col span={17}>
             <div>
-              <h2 className="description-title">{product?.title} </h2>
+              <div className="description-title">{product?.title} </div>
               <p
                 className="description-text"
                 dangerouslySetInnerHTML={{
@@ -235,7 +240,7 @@ export default function ProductDetail() {
             <CommentForm id={id} product={product} />
 
             <div className="other-box">
-              <h2 className="other-title">{t("local_relatedProducts")}</h2>
+              <div className="other-title">{t("local_relatedProducts")}</div>
               <Row className="other-box-row" gutter={[16, 24]} justify="center">
                 {related.map((item, index) => (
                   <Col key={index} xs={24} sm={12} md={8} lg={6} xl={5}>

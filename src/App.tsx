@@ -31,7 +31,7 @@ const AppContent: React.FC = () => {
       locale={currentLang === "fa" ? faIR : currentLang === "en" ? enUS : arEG}
       theme={{
         token: {
-          fontFamily: "YekanBakh",
+          fontFamily:isRtl ? 'YekanBakh' : "-apple-system,BlinkMacSystemFont,San Francisco,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Segoe UI,Fira Sans,Roboto,Oxygen,Ubuntu,Droid Sans,Arial,Microsoft YaHei,sans-serif;",
           colorPrimary: "#5e5e5e",
         },
       }}

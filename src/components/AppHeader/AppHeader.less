@@ -1,8 +1,5 @@
 .app-header_container {
   width: 100% !important;
-  position: absolute;
-  top: 0;
-  left: 0;
   max-width: none;
   height: 397px;
 
@@ -10,8 +7,326 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0));
+  margin: 0 auto;
+  width: 100% !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  max-width: none;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-  position: relative;
+  .burgerMenu {
+    display: none;
+
+    @media (max-width: 992px) {
+      display: block;
+    }
+  }
+
+  @media (max-width: 992px) {
+
+    background: rgba(0, 0, 0, 0.95) !important;
+    padding: 4rem 15px;
+
+  }
+}
+.freez {
+  background: rgba(0, 0, 0, 0.95) !important;
+  padding: 4rem 15px;
+  height: 129px;
+
+  .app-header__menu-home,
+  .search__img {
+    display: none;
+  }
+
+  .burgerMenu {
+    display: block;
+  }
+
+  .en_img,
+  .app-header__menu-Text {
+    right: -100px;
+  }
+
+  .en_img.active {
+    display: block !important;
+    position: absolute;
+    z-index: 1111000;
+    right: 444px;
+    top: 48px;
+  }
+
+  .app-header__menu-Text.active {
+    position: absolute !important;
+    margin-right: 345px;
+    display: block !important;
+    width: 29px;
+    top: 17px!important;
+    right: 120px;
+
+  }
+
+}
+/* --- 1. استایل دکمه همبرگری (تبدیل به ضربدر) --- */
+.menu-toggle-btn {
+  position: fixed;
+  top: 45px;
+  right: 40px;
+  z-index: 2000;
+  width: 45px;
+  height: 35px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+
+  @media (max-width: 768px) {
+
+    width: 35px;
+    height: 25px;
+  }
+
+  span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #fff; // رنگ خطوط
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  // حالت فعال (تبدیل به ضربدر)
+  &.active {
+    right: 27px;
+
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(11px, 6px);
+
+      @media (max-width: 768px) {
+
+        transform: rotate(45deg) translate(4px, 5px);
+      }
+    }
+
+    span:nth-child(2) {
+      opacity: 0; // خط وسط محو می‌شود
+    }
+
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(18px, -13px);
+
+      @media (max-width: 768px) {
+
+        transform: rotate(-45deg) translate(12px, -14px);
+      }
+    }
+  }
+}
+
+/* --- 2. استایل منوی کناری (Sidebar) --- */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -518px; // در حالت عادی بیرون از صفحه (چپ) پنهان است
+  width: 518px;
+  height: 100vh;
+  background-color: #000; // رنگ مشکی
+  z-index: 1500;
+  transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1); // انیمیشن نرم
+  padding: 80px 30px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    right: -100%;
+
+
+  }
+
+  // وقتی کلاس open اضافه شد، منو وارد صفحه می‌شود
+  &.open {
+    right: 0;
+  }
+
+  .side-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right; // راست‌چین برای فارسی
+    padding-right: 20px;
+
+    li {
+      margin-bottom: 20px;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #aaa; // رنگ هاور
+        }
+      }
+    }
+  }
+}
+
+/* --- 3. لایه تاریک پشت منو (Overlay) --- */
+.side-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // نیمه شفاف
+  z-index: 1400;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.side-menu-search {
+  display: flex;
+  margin: 85px 0 65px;
+  border-bottom: 1px solid #fff !important;
+  height: 50px;
+
+  @media (max-width: 768px) {
+
+    margin: 30px 0 40px;
+
+  }
+
+  input {
+    flex: 1;
+    border: none !important;
+    background: inherit;
+    text-align: left;
+    width: 100%;
+    display: block;
+    color: #fff;
+    font-size: 15px;
+    height: 40px;
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
+    text-align: right;
+
+    &::placeholder {
+      color: #766F6F;
+      text-align: start;
+      font-size: 15px;
+
+
+    }
+
+    &:focus,
+    &:active {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    &:hover,
+    &:focus-within {
+      background-color: inherit;
+    }
+  }
+
+  /* دکمه × */
+  .serach-btn {
+    background: transparent;
+    color: #767676;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 0;
+  }
+
+}
+
+.app-header__menu-slide {
+  background-color: #000 !important;
+  height: 59vh;
+  overflow-y: auto;
+
+  li {
+    span {
+      color: #fff;
+
+      &:hover {
+        color: #6F6F6F !important;
+      }
+    }
+  }
+
+  .ant-menu-submenu {
+    border: 0;
+
+    .ant-menu {
+      li {
+        margin: 0;
+        height: 35px;
+
+        &:last-child {
+          margin-bottom: 50px;
+        }
+
+        &:hover {
+          span {
+            color: #fff !important;
+          }
+        }
+
+        .ant-menu-title-content {
+          color: #6F6F6F !important;
+          font-weight: 100;
+        }
+      }
+
+    }
+
+  }
+
+  .ant-menu-submenu-arrow {
+    min-height: 3px;
+    color: #fff;
+
+    &:before {
+      content: "+";
+      transform: none !important;
+      background-color: inherit !important;
+      font-size: 31px;
+      position: absolute;
+      top: -22px;
+      font-weight: 100;
+      font-style: normal;
+      height: 60px;
+    }
+
+    &:after {
+      transform: none !important;
+      background-color: inherit !important;
+    }
+  }
+
+  .ant-menu-submenu-open .ant-menu-submenu-arrow {
+    &:before {
+      content: "-";
+    }
+  }
 }
 
 .app-header_container::before {
@@ -48,6 +363,7 @@
   background: transparent !important;
   border-bottom: none !important;
   justify-content: center;
+
   .ant-menu-item,
   .ant-menu-submenu-title {
     padding: 0 27px;
@@ -63,16 +379,22 @@
   .ant-menu-item:hover,
   .ant-menu-submenu-title:hover {
     color: #fff !important;
-    font-weight: 400 !important; /* ← Bold */
+    font-weight: 400 !important;
+    /* ← Bold */
     background: transparent !important;
   }
 }
+
 .app-header__menu-Text.ant-menu-root.ant-menu-horizontal {
   background: transparent !important;
   border-bottom: none !important;
   justify-content: center;
-    top: 6px;
-    position: absolute;
+  top: 5px;
+  position: absolute;
+  z-index: 10000;
+  height: 19px;
+  display: block;
+
   .ant-menu-item,
   .ant-menu-submenu-title {
     color: white !important;
@@ -84,21 +406,25 @@
 
 
 }
-.ant-menu-horizontal > .ant-menu-item::after,
-.ant-menu-horizontal > .ant-menu-submenu::after {
+
+.ant-menu-horizontal>.ant-menu-item::after,
+.ant-menu-horizontal>.ant-menu-submenu::after {
   display: none !important;
 }
-.lang-submenu-popup{
 
-  .ant-menu{
-  min-width: 45px!important;
-      right: auto !important;
-      .ant-menu-item:first-child{
-  background: #fff!important;
-   font-weight: 100!important;
-}
+.lang-submenu-popup {
+
+  .ant-menu {
+    min-width: 45px !important;
+    right: auto !important;
+
+    .ant-menu-item:first-child {
+      background: #fff !important;
+      font-weight: 100 !important;
+    }
   }
 }
+
 .ant-menu-submenu-popup .ant-menu-item:first-child {
   border-radius: 0 !important;
   background: #ebebeb !important;
@@ -106,6 +432,7 @@
   font-weight: 600;
   font-size: 12px;
 }
+
 .ant-menu-submenu-popup {
   border-radius: 0 !important;
 
@@ -115,6 +442,7 @@
     margin: 0 !important;
     direction: ltr !important;
   }
+
   .ant-menu-item {
     color: #b0b0b0 !important;
     border-radius: 0 !important;
@@ -131,6 +459,7 @@
   background: #ebebeb !important;
   color: #8f8f8f !important;
 }
+
 .ant-menu-submenu-popup .ant-menu-item:hover {
   background: #ebebeb !important;
   color: #8f8f8f !important;
@@ -156,35 +485,36 @@
 }
 
 .search__img {
-    position: absolute;
-    width: 23px;
-    height: 23px;
-    right: 151px;
-    top: 37px;
-        z-index: 100000;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  right: 151px;
+  top: 37px;
+  z-index: 100000;
 }
 
 .En_text {
-// position: absolute;
-    width: 24px;
-    height: 34px;
-    // left: 105px;
-    // top: 31px;
-        margin: 0;
-    padding: 0;
-    font-style: normal;
-    font-weight: 100;
-    font-size: 20px;
-    line-height: 34px;
-    text-align: right;
-    color: #ffffff;
-    cursor: pointer;
+  // position: absolute;
+  width: 24px;
+  height: 34px;
+  // left: 105px;
+  // top: 31px;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 20px;
+  line-height: 34px;
+  text-align: right;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .en_img {
-    position: absolute;
-    right: 80px;
-    top: 37px;
+  position: absolute;
+  right: 80px;
+  top: 37px;
+  filter: invert(1);
 }
 
 .header-wrapper {
@@ -199,21 +529,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.55); /* نیمه‌شفاف */
+  background: rgba(0, 0, 0, 0.55);
+  /* نیمه‌شفاف */
   z-index: 9998;
 }
 
-.ant-layout-rtl{
-  
 
-   .search-box{
-    right: inherit;
-        left: 40px;
-        .search-input{
-          text-align: right;
-        }
-  }
-}
 /* 🔥 باکس جست‌وجو */
 .search-box {
   position: absolute;
@@ -221,9 +542,10 @@
   right: 40px;
   background: white;
   padding: 10px;
-  z-index: 9999; /* بالاتر از overlay */
+  z-index: 9999;
+  /* بالاتر از overlay */
   width: 275px;
-    height: 53px;
+  height: 53px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -238,7 +560,7 @@
   box-shadow: none !important;
   text-align: left;
   padding: 0 5px;
-  
+
 }
 
 /* حذف border هنگام فوکوس */
@@ -256,7 +578,7 @@
   font-size: 15px;
   border: none;
   cursor: pointer;
-      margin-top: 5px;
+  margin-top: 5px;
 }
 
 .box-page {
@@ -317,44 +639,121 @@
     z-index: 2;
   }
 }
+
+
+
 .ant-layout-rtl {
-  .box-page ,  .box-page2{
-        padding-left: 0;
-            padding-right: 140px;
+  .menu-toggle-btn {
+    left: 40px !important;
+    right: unset !important;
+
+    &.active {
+      left: 27px !important;
+      right: unset !important;
+    }
   }
-  .box-page .title-page ,  .box-page .text-page ,  .box-page2 .title-page2  , .box-page2  .text-page2{
-        text-align: right;
+
+
+
+
+
+  .freez {
+
+    .en_img,
+    .app-header__menu-Text {
+      left: -100px !important;
+      right: unset !important;
+    }
+
+    .app-header__menu-Text.active {
+      left: 120px !important;
+      right: unset !important;
+      margin-right: unset !important;
+      margin-left: 345px !important;
+    }
+
+    .side-menu {
+      transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1); // انیمیشن نرم
+
+      left: -518px !important;
+      right: unset !important;
+
+      @media (max-width: 768px) {
+        width: 100%;
+        left: -100%;
+        right: unset !important;
+
+
+      }
+
+      &.open {
+        left: 0 !important;
+      }
+
+    }
+
+    .en_img.active {
+      left: 444px !important;
+      right: unset !important;
+    }
+
+  }
+
+  .search-box {
+    right: inherit;
+    left: 40px;
+
+    .search-input {
+      text-align: right;
+    }
+  }
+
+  .box-page,
+  .box-page2 {
+    padding-left: 0;
+    padding-right: 140px;
+  }
+
+  .box-page .title-page,
+  .box-page .text-page,
+  .box-page2 .title-page2,
+  .box-page2 .text-page2 {
+    text-align: right;
   }
 }
 
-   .ant-menu-submenu-rtl.ant-menu-submenu-popup >.ant-menu .ant-menu-item{
-      direction: rtl!important;
+.ant-menu-submenu-rtl.ant-menu-submenu-popup>.ant-menu .ant-menu-item {
+  direction: rtl !important;
+}
+
+
+.backgroundColor {
+  background-image: none !important;
+  background-color: #E7E7E7 !important;
+  height: 189px;
+
+  &::before {
+    background-color: inherit !important;
+
+  }
+
+  .title-page,
+  .text-page {
+    display: none;
+  }
+
+  .home__img {
+    img {
+      filter: invert(1);
     }
 
+  }
 
-    .backgroundColor{
-      background-image: none!important;
-      background-color: #E7E7E7!important;
-          height: 189px;
-      &::before{
-      background-color: inherit!important;
+  .search__img {
+    filter: invert(1);
+  }
 
-      }
-      .title-page , .text-page{
-        display: none;
-      }
-      .home__img{
-        img{
-        filter: invert(1);
-        }
-
-      }
-      .search__img{
-         filter: invert(1);
-      }
-      .ant-menu-title-content{
-        color: #000;
-      }
-    }
-
-    
+  .ant-menu-title-content {
+    color: #000;
+  }
+}

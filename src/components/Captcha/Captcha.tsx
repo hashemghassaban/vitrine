@@ -69,6 +69,10 @@ const Captcha: React.FC<CaptchaProps> = ({ onVerify }) => {
         value={userInput}
         onChange={handleChange}
         placeholder={t("local_captchaTextInput")}
+         style={{
+          display: "flex",
+  
+        }}
       />
     </div>
   );

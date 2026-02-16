@@ -81,3 +81,14 @@ This set of fonts are used in this project under the license: (.....)
 	src: url('fonts/woff/Yekan Bakh FaNum-ExtraBlack.woff') format('woff'),   
 	url('fonts/woff2/Yekan Bakh FaNum-ExtraBlack.woff2') format('woff2');		 
 }
+
+@font-face {
+	font-family: interEnFont;
+	font-style: normal;
+	font-weight: 950;
+	src: url('fonts/en/inter.woff2') format('woff'),   
+	url('fonts/en/inter.eot') format('eot'),
+	url('fonts/en/inter.ttf') format('ttf'),
+	url('fonts/en/inter.woff') format('woff');	
+		 
+}

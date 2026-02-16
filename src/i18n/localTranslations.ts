@@ -54,7 +54,7 @@ export const localTranslations: TranslationView[] = [
     { key: "local_allProducts", value: { ar: "جميع المنتجات", en: "All Products", fa: "همه کالا ها" } },
     { key: "local_productFeatures", value: { ar: "ميزات المنتج", en: "Product Features", fa: "ویژگی‌های محصول" } },
     { key: "local_code", value: { ar: "رمز", en: "Code", fa: "کد" } },
-    { key: "local_getInfo", value: { ar: "الحصول على المعلومات", en: "Get Info", fa: "دریافت اطلاعات" } },
+    { key: "local_getInfo", value: { ar: "الحصول على المعلومات", en: "Get Info Production", fa: "دریافت اطلاعات محصول" } },
     { key: "local_company", value: { fa: "شرکت", en: "Company", ar: "الشركة" } },
     { key: "local_orderFormProducts", value: { fa: "محصولات مدنظر شما", en: "Your Products", ar: "المنتجات المطلوبة" } },
     { key: "local_orderFormAddProduct", value: { fa: "اضافه کردن محصول", en: "Add Product", ar: "إضافة منتج" } },

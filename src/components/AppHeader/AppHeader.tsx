@@ -12,6 +12,9 @@ import { useLanguage } from "../../contexts/useLanguage";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
 import { LANGUAGES, type Language } from "../../i18n/languageType";
+import type { IndexDataView } from "../../models/views/indexView";
+import { useTranslate } from "../../i18n/useTranslate";
+import useIndex from "../../hooks/index/useIndex";
 
 interface AppHeaderProps {
   noBackground?: boolean;
@@ -22,6 +25,10 @@ interface AppHeaderProps {
   noBackgroundProducts?: boolean;
 }
 
+interface MenuItem {
+  key: string;
+  label: string;
+}
 const langLabels: Record<Language, string> = {
   en: "En",
   fa: "فا",
@@ -35,28 +42,118 @@ export const AppHeader: FC<AppHeaderProps> = ({
   style = true,
   categoryBackground,
 }) => {
+  const { currentLang } = useLanguage();
+
+  const { getIndex } = useIndex(currentLang);
+
   const { push } = useNavigation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { currentLang } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [data, setIndexData] = useState<IndexDataView | null>(null);
+  const { t } = useTranslate();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
   const fetchIndex = async () => {
-    const { success, data } = await getList();
+    const { success, data } = await getIndex();
     if (success && data) {
-      setBrands(data);
+      setIndexData(data);
     }
   };
   useEffect(() => {
     fetchIndex();
   }, [currentLang]);
+  useEffect(() => {
+    // تابعی که هنگام اسکرول اجرا می‌شود
+    const handleScroll = () => {
+      // اگر اسکرول عمودی بیشتر از ۵۰ پیکسل بود، وضعیت را true کن
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+        setIsMenuOpen(false)
+      }
+    };
 
+    // اضافه کردن رویداد اسکرول به پنجره
+    window.addEventListener('scroll', handleScroll);
+
+    // حذف رویداد هنگام unmount شدن کامپوننت برای جلوگیری از نشت حافظه
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  const renderMenuItems = (items: any[]) => {
+    return items.map((item) => {
+      // ✅ اگر type برابر imageHover بود
+      if (item.type === "imageHover") {
+        const productChildren = buildProductChildren(data);
+
+        return (
+          <Menu.SubMenu
+            key={item.key}
+            title={item.title[currentLang]}
+          >
+            {productChildren.map((child) => (
+              <Menu.Item
+                key={child.key}
+                onClick={() =>
+                  push(`/${currentLang}/${child.key}`)
+                }
+              >
+                {child.label}
+              </Menu.Item>
+            ))}
+          </Menu.SubMenu>
+        );
+      }
+
+      // ✅ حالت معمولی SubMenu
+      if (item.children && item.children.length > 0) {
+        return (
+          <Menu.SubMenu
+            key={item.key}
+            title={item.title[currentLang]}
+          >
+            {renderMenuItems(item.children)}
+          </Menu.SubMenu>
+        );
+      }
+
+      // ✅ آیتم ساده
+      return (
+        <Menu.Item
+          key={item.key}
+          onClick={() =>
+            item.path
+              ? push(`/${currentLang}/${item.path}`)
+              : undefined
+          }
+        >
+          {item.title[currentLang]}
+        </Menu.Item>
+      );
+    });
+  };
   const handleLanguageChange = (newLang: Language) => {
     if (!currentLang) return;
     const newPath = location.pathname.replace(`/${currentLang}`, `/${newLang}`);
     window.location.href = newPath;
   };
+  const buildProductChildren = (
+    data: IndexDataView | null,
+  ): MenuItem[] => {
+    if (!data?.product_categories) return [];
 
+    return data.product_categories.map((cat) => ({
+      key: `products?category=${cat.slug}`,
+      label: cat.title,
+    }));
+  };
   const handleSearch = () => {
     if (searchQuery.trim()) {
       push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
@@ -65,11 +162,10 @@ export const AppHeader: FC<AppHeaderProps> = ({
     }
   };
   const headerBackground = {
-    backgroundImage: `url(${
-      categoryBackground && categoryBackground.trim()
-        ? categoryBackground
-        : defaultBg
-    })`,
+    backgroundImage: `url(${categoryBackground && categoryBackground.trim()
+      ? categoryBackground
+      : defaultBg
+      })`,
   };
 
   const menuItems = [
@@ -84,34 +180,34 @@ export const AppHeader: FC<AppHeaderProps> = ({
       children:
         brands?.length > 0
           ? [
-              {
-                key: "menu-brands-all",
-                title: {
-                  en: "All Brands",
-                  fa: "همه برندها",
-                  ar: "جميع العلامات التجارية",
-                },
-                path: "brands",
+            {
+              key: "menu-brands-all",
+              title: {
+                en: "All Brands",
+                fa: "همه برندها",
+                ar: "جميع العلامات التجارية",
               },
+              path: "brands",
+            },
 
-              ...brands.map((brand, index) => ({
-                key: `brand-${brand.title}-${index}`,
-                title: {
-                  en: brand.title,
-                  fa: brand.title,
-                  ar: brand.title,
-                },
-                path: `brandProducts/${brand.id}`,
-                image: brand.image,
-              })),
-            ]
-          : [
-              {
-                key: "menu-brands-main",
-                title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-                path: "brands",
+            ...brands.map((brand, index) => ({
+              key: `brand-${brand.title}-${index}`,
+              title: {
+                en: brand.title,
+                fa: brand.title,
+                ar: brand.title,
               },
-            ],
+              path: `brandProducts/${brand.id}`,
+              image: brand.image,
+            })),
+          ]
+          : [
+            {
+              key: "menu-brands-main",
+              title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
+              path: "brands",
+            },
+          ],
     },
 
     {
@@ -120,15 +216,16 @@ export const AppHeader: FC<AppHeaderProps> = ({
       path: "catalogue",
     },
     {
-      key: "menu-services",
-      title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
-      path: "services",
-    },
-    {
       key: "menu-projects",
       title: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
       path: "project",
     },
+    {
+      key: "menu-services",
+      title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
+      path: "services",
+    },
+
     {
       key: "menu-representation",
       title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
@@ -150,7 +247,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
-          className={`app-header_container ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor" : ""}`}
+          className={`app-header_container ${isScrolled ? 'freez' : ''} ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor" : ""}`}
           style={headerBackground}
         >
           <Row>
@@ -168,7 +265,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               alt={search}
             />
             <Menu
-              className="app-header__menu-Text"
+              className={`app-header__menu-Text ${isMenuOpen ? 'active' : ''}`}
               mode="horizontal"
               triggerSubMenuAction="hover"
               selectable={false}
@@ -192,7 +289,18 @@ export const AppHeader: FC<AppHeaderProps> = ({
               </Menu.SubMenu>
             </Menu>
 
-            <img className="en_img" src={en} alt={en} />
+            <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
+            <div className="burgerMenu">
+              <button
+                className={`menu-toggle-btn ${isMenuOpen ? 'active' : ''}`}
+                onClick={toggleMenu}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+
+            </div>
           </Row>
           <Menu
             className="app-header__menu-home"
@@ -241,13 +349,12 @@ export const AppHeader: FC<AppHeaderProps> = ({
             </div>
           ) : (
             <div className="box-page2">
-              <h1 className="text-page2">{title}</h1>
-              <p className="title-page2">{text}</p>
+              <p className="text-page2">{title}</p>
+              <h1 className="title-page2">{text}</h1>
             </div>
           )}
-        </Container>
-      </div>
-      {searchOpen && <div className="page-overlay" />}
+
+              {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
           <Input
@@ -270,6 +377,33 @@ export const AppHeader: FC<AppHeaderProps> = ({
           </button>
         </div>
       )}
+      <div className={`side-menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
+      <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+
+        <div className="side-menu-search">
+          <Input
+            className="search_box_mobile"
+            placeholder={t("local_search")}
+            suffix={<img onClick={handleSearch} src={search} alt={search} />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch}
+
+          />
+
+
+        </div>
+        <Menu
+          className="app-header__menu-slide"
+          mode="inline"
+          selectable={false}
+        >
+          {renderMenuItems(menuItems)}
+        </Menu>
+      </div>
+        </Container>
+      </div>
+  
     </>
   );
 };

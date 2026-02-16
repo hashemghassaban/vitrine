@@ -37,9 +37,9 @@ export default function Representation() {
       <LoadingSpin loading={loading} />
       <AppHeader />
       <div className="showcase-container">
-        <Title level={3} className="title-page">
+        <h1  className="title-page">
           {t("site.agents1")}
-        </Title>
+        </h1>
 
         <Row gutter={[24, 24]} justify="center" style={{justifyContent:'flex-start'}}>
           {repres.map((item) => (

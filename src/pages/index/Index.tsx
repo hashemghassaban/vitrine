@@ -55,7 +55,7 @@ function Index() {
             <Blog />
             <ExploreSection />
           </Content>
-          <AppFooter />
+          <AppFooter page="home"/>
         </Layout>
       </IndexProvider>
     </>

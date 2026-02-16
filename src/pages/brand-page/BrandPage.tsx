@@ -57,12 +57,12 @@ const BrandPage: React.FC = () => {
                     className="brand-logo"
                   />
                 </div>
-                <p
+                <h2
                   onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
                   className="brand-title"
                 >
                   {item.title}
-                </p>
+                </h2>
                 <p className="brand-text">{item.excerpt}</p>
                 <Button
                   onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}

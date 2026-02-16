@@ -160,7 +160,13 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
               minWidth: "768px",
             }}
           >
-            <h2>{t("local_getInfo")}</h2>
+            <div className="dialog-header">
+               <h2>{t("local_getInfo")}</h2>
+                <button className=" closed" onClick={closeDialog}>
+                x
+              </button>
+            </div>
+           
             <div className="form-section">
               <div className="form-row">
                 <div className="input-group half">
@@ -282,7 +288,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
                 </div>
               </div>
               <div className="form-row">
-                <div className="input-group">
+                <div className="input-group" style={{marginTop:'20px'}}>
                   {!orderFormSubmitting && (
                     <Captcha onVerify={handleOrderInputChange} />
                   )}
@@ -297,9 +303,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
               >
                 {t("local_orderFormSendOrder")}
               </button>
-              <button className="info-btn closed" onClick={closeDialog}>
-                {t("local_formClose")}
-              </button>
+            
             </div>
           </div>
         </div>

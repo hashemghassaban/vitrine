@@ -1,5 +1,5 @@
-.products-container {
-  padding: 40px 5%;
+.products-containers {
+  padding: 450px 5% 40px;
   max-width: 1850px;
   margin: auto;
      margin-bottom: 80px;
@@ -104,9 +104,12 @@ padding: 0!important;
 }
 
 .menu-scroll-container {
-  max-height: 238px;
+  max-height: 274px;
   overflow-y: auto;
   margin-bottom: 25px;
+  &.category-scroll{
+        max-height: 336px;
+  }
   ul{
     border: 0!important;
     li{
@@ -180,8 +183,8 @@ padding: 0!important;
 .menu-label .iconArrow{
    position: relative;
   transition-duration: 0.5ms;
-  transform: rotate(-180deg);
-  top: -5px;
+  transform: rotate(0);
+  top: -1px;
 }
 
 .menu-item-product-col {
@@ -216,11 +219,6 @@ padding: 0!important;
   gap: 8px;
 }
 
-.ant-menu-submenu-open .iconArrow{
-  position: relative;
-  transition-duration: 0.5ms;
-  transform: rotate(0deg)!important;
-}
 /* -------- SIDEBAR FILTERS -------- */
 
 .filters-box {
@@ -306,6 +304,7 @@ font-size: 12px;
   gap: 15px;
   color: #868686 !important;
   padding-bottom: 10px;
+      line-height: 46px;
 }
 .item-menu-check .ant-checkbox-inner {
   border-radius: 0 !important;
@@ -410,8 +409,8 @@ color: #000000;
 /* -------- RESPONSIVE -------- */
 
 @media (max-width: 768px) {
-  .products-container {
-    padding: 20px;
+  .products-containers {
+    padding: 450px 20px 20px;
   }
 
   .product-img {
@@ -441,12 +440,9 @@ text-align: right;
 
 }
 .menu-label .iconArrow{
-  transform: rotate(-90deg)!important;
   top: 0;
 }
-.ant-menu-submenu-open .iconArrow{
-  transform: rotate(0deg)!important;
-}
+
 .product-title-product{
   font-size: 14px;
   text-align: right;
@@ -460,4 +456,10 @@ text-align: right;
 
 .brands-list ul{
   border: 0!important;
+}
+
+
+.parent-selected {
+  font-weight: 600;
+  color: #000;
 }

@@ -173,6 +173,21 @@
   }
 }
 
+.dialog-header{
+     display: flex;
+    justify-content: space-between;
+    .closed{
+      background: none;
+    border: 0;
+    width: 10px;
+    font-size: 29px;
+    margin: 0 9px 0;
+    padding: 0;
+    height: 10px;
+      
+    }
+}
+
 
 .products-container {
   width: 100%;
@@ -539,7 +554,6 @@ flex: 0 0 100%;
       line-height: 45px;
       text-align: right;
       color: #a1a1a1;
-      cursor: pointer;
 
       @media (max-width: 768px) {
         text-align: center;
@@ -551,6 +565,13 @@ flex: 0 0 100%;
       @media (min-width: 769px) and (max-width: 1024px) {
         font-size: 13px;
         line-height: 35px;
+      }
+      span{
+        margin: 3px;
+        &:hover{
+             color: #000;
+             cursor: pointer;
+        }
       }
     }
 
@@ -576,6 +597,9 @@ flex: 0 0 100%;
     .brand-logo-product {
       max-width: 173px;
       max-height: 61px;
+      &:hover{
+        cursor: pointer;
+      }
 
       @media (max-width: 768px) {
         max-width: 150px;

@@ -66,7 +66,7 @@ const BrandProducts: React.FC = () => {
               </div>
             </Col>
             <Col xs={24} lg={15}>
-              <h2 className="title"> {brand?.title}</h2>
+              <h1 className="title"> {brand?.title}</h1>
               {showMore && <p className="text">{brand?.excerpt}</p>}
               <div className="btn-box-brand-products">
                 {!showMore &&   <p dangerouslySetInnerHTML={{ __html: brand?.description || "" }}></p>
@@ -91,7 +91,7 @@ const BrandProducts: React.FC = () => {
                   <div className="img-card" onClick={() => push(`/${currentLang}/products?collection=${item?.title}`)}>
                     <img src={item.main_image} alt="item" />
                     <div className="card-info">
-                      <p className="card-title">{item.title}</p>
+                      <h2 className="card-title">{item.title}</h2>
                       <span className="card-arrow">←</span>
                     </div>
                   </div>
