@@ -35,8 +35,10 @@ const Search: React.FC = () => {
     }
   };
   useEffect(() => {
-    if (!!query) {
-      fetchSearch(query);
+
+     const queryTitle = query?.replace(/-/g, ' ');
+    if (!!queryTitle) {
+      fetchSearch(queryTitle);
     }
   }, [query, currentLang]);
 

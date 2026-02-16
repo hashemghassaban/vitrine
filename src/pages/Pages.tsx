@@ -58,6 +58,7 @@ const Pages = () => {
           <Route path="brandProducts/:id" element={<BrandProducts />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:id" element={<ProductDetail />} />
+          <Route path="/:lang/products/category/:categorySlug" element={<AllProducts />} />
         </Route>
       </Routes>
     </>

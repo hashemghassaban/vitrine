@@ -97,7 +97,7 @@ export interface ProjectDetailView {
   architect: ArchitectView | null;
   tags: ProjectTagView[];
   products: ProjectProductView[];
-  media: any[];
+  media: MediaView[];
   comments_count: number;
   hits: number;
   updated_at: string;
@@ -111,4 +111,26 @@ export interface DeveloperView {
 export interface ArchitectView {
   link: string;
   name: string;
+}
+
+
+export interface MediaView {
+  id: number;
+  name: string;
+  path: string;
+  disk: string;
+  url: string;
+  mime_type: string;
+  mediable_type: string;
+  mediable_id: string;
+  title: null | string;
+  description: null | string;
+  user_id: string;
+  state: string;
+  created_by: string;
+  updated_by: string;
+  approved_at: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null | string;
 }

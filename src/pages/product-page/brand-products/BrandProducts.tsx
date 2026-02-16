@@ -69,13 +69,12 @@ const BrandProducts: React.FC = () => {
               <h2 className="title"> {brand?.title}</h2>
               {showMore && <p className="text">{brand?.excerpt}</p>}
               <div className="btn-box-brand-products">
-                {!showMore &&   <p dangerouslySetInnerHTML={{ __html: brand?.description || "" }}></p>
-}
+                {!showMore && <p dangerouslySetInnerHTML={{ __html: brand?.description || "" }}></p>
+                }
                 <Button
                   type="link"
-                  className={`btn-more-brand-products ${
-                    currentLang == "en" ? "english" : ""
-                  }`}
+                  className={`btn-more-brand-products ${currentLang == "en" ? "english" : ""
+                    }`}
                   onClick={() => setShowMore(!showMore)}
                 >
                   {showMore ? t("local_more") : t("local_less")}
@@ -88,7 +87,13 @@ const BrandProducts: React.FC = () => {
             <Row gutter={[20, 30]} justify="center" className="grid-row">
               {brand?.collections.map((item, i) => (
                 <Col xs={24} sm={12} lg={8} key={i}>
-                  <div className="img-card" onClick={() => push(`/${currentLang}/products?collection=${item?.title}`)}>
+                  <div className="img-card"
+                    onClick={() => {
+
+                      const urlFriendlyTitle = item?.title.replace(/ /g, '-');
+                      push(`/${currentLang}/products?collection=${urlFriendlyTitle}`);
+                    }}
+                  >
                     <img src={item.main_image} alt="item" />
                     <div className="card-info">
                       <p className="card-title">{item.title}</p>

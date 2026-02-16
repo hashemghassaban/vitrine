@@ -58,18 +58,19 @@ export const AppHeader: FC<AppHeaderProps> = ({
   };
 
   const handleSearch = () => {
+    const urlFriendlyTitle = searchQuery.replace(/ /g, '-');
+
     if (searchQuery.trim()) {
-      push(`/${currentLang}/search?s=${encodeURIComponent(searchQuery)}`);
+      push(`/${currentLang}/search?s=${encodeURIComponent(urlFriendlyTitle)}`);
       setSearchOpen(false);
       setSearchQuery("");
     }
   };
   const headerBackground = {
-    backgroundImage: `url(${
-      categoryBackground && categoryBackground.trim()
+    backgroundImage: `url(${categoryBackground && categoryBackground.trim()
         ? categoryBackground
         : defaultBg
-    })`,
+      })`,
   };
 
   const menuItems = [

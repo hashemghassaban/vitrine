@@ -105,11 +105,11 @@ export default function ProductDetail() {
                   {product?.collection && (
                     <div
                       className="date-box"
-                      onClick={() =>
-                        push(
-                          `/${currentLang}/products?collection=${product?.collection?.title}`,
-                        )
-                      }
+                      onClick={() => {
+                       
+                        const urlFriendlyTitle = product.collection.title.replace(/ /g, '-');
+                        push(`/${currentLang}/products?collection=${urlFriendlyTitle}`);
+                      }}
                     >
                       {product?.collection?.title}{" "}
                     </div>
@@ -159,8 +159,8 @@ export default function ProductDetail() {
                             </span>
                             {index !==
                               Object.entries(groupedFeatures).length - 1 && (
-                              <Divider />
-                            )}
+                                <Divider />
+                              )}
                           </div>
                         </div>
                       ),

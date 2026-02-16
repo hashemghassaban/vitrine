@@ -128,13 +128,15 @@ export default function ProjectItemDetail() {
                   infinite={false}
                   dots={{ className: "custom-dots" }}
                 >
-                  <div>
+                  {project?.media.map((item)=>(
+                      <div>
                     <img
                       className="imgs-detail"
-                      src={project?.image_link}
+                      src={item.url ?? undefined}
                       alt="img"
                     />
                   </div>
+                  ))}
                 </Carousel>
 
                 <div className="custom-bottom-arrows">
