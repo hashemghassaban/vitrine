@@ -20,6 +20,9 @@
     text-align: right;
     right: inherit !important;
     height: 124px;
+    &.right{
+         text-align: left;
+    }
   h4{
 color: #000;
     font-style: normal;
@@ -31,11 +34,18 @@ color: #000;
   p{
 color: #000;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 25px;
-    text-align: right;
     white-space: nowrap;
     margin-top: 0;
   }
 }
 
+.ant-layout-rtl{
+  .content-overlay-container{
+       text-align: left;
+         &.right{
+         text-align: right;
+    }
+  }
+}

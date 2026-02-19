@@ -104,10 +104,12 @@ export default function BlogDetailPage() {
                   __html: blog?.content ?? "",
                 }}
               ></div>
+              <BlogCommentForm id={id} blog={blog} />
             </div>
+            
           </Col>
         </Row>
-        <BlogCommentForm id={id} blog={blog} />
+        
       </div>
       <AppFooter />
     </>

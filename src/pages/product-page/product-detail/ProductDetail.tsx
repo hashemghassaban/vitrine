@@ -191,7 +191,7 @@ export default function ProductDetail() {
       </div>
       <div className="description-section">
         <Row justify="center" align="middle">
-          <Col span={17}>
+          <Col span={20}>
             <div>
               <div className="description-title">{product?.title} </div>
               <p
@@ -242,7 +242,8 @@ export default function ProductDetail() {
               <div className="other-title">{t("local_relatedProducts")}</div>
               <Row className="other-box-row" gutter={[16, 24]} justify="center">
                 {related.map((item, index) => (
-                  <Col key={index} xs={24} sm={12} md={8} lg={6} xl={5}>
+
+                  <Col key={index} xs={24} sm={12} md={8} lg={5} xl={4}>
                     <Card
                       onClick={() =>
                         push(`/${currentLang}/products/${item.id}`)
@@ -267,6 +268,7 @@ export default function ProductDetail() {
                       <p className="product-title-product">{item?.title}</p>
                     </Card>
                   </Col>
+                 
                 ))}
               </Row>
             </div>

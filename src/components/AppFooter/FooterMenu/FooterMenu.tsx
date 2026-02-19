@@ -17,7 +17,7 @@ export const FooterMenu: FC<FooterMenuProps> = ({ title, links }) => {
 
   return (
     <div className="footer-menu">
-      <h2 className="footer-menu__title">{title}</h2>
+      <div className="footer-menu__title">{title}</div>
       <Menu>
         {links?.map((item, index) => (
           <Item key={title + index}>

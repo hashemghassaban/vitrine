@@ -31,11 +31,11 @@ export function Home(): JSX.Element {
           <div className="home__content" id="home-content">
             <img className="imgs-detail" src={intro} alt="img" />
           </div>
-          <div className="home__content" id="home-content2">
+          {/* <div className="home__content" id="home-content2">
             <video autoPlay muted>
               <source src={data?.video ?? undefined}></source>
             </video>
-          </div>
+          </div> */}
         </Carousel>
         <div className="content">
           <h1 className="home__title">{t("local_luxuryProducts")}</h1>

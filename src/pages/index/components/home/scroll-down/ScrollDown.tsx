@@ -13,7 +13,7 @@ export const ScrollDown: FC<ScrollDownProps> = ({
 
   const scrollToContent = () => {
     window.scrollBy({
-      top: scrollAmount ?? window.innerHeight, // اگر scrollAmount داده نشده، از 100vh استفاده می‌کنه
+      top: scrollAmount ?? window.innerHeight - 130, // اگر scrollAmount داده نشده، از 100vh استفاده می‌کنه
       behavior: "smooth",
     });
   };

@@ -1,5 +1,5 @@
 .explore {
-  width: 90%;            
+  width: 85%;            
   height: 460px;
   background: #F7F7F7;  
   padding: 100px 0;
@@ -35,8 +35,44 @@
     font-size: 14px;
     line-height: 45px; 
     color: #797979;
+     transition:  0.3s ease;
     display: inline-flex;
     gap: 10px;
+         .anticon{
+           transition: all 0.3s ease !important;
+
+    transform: translateX(0) rotate(180deg)!important
+
+
+      }
+    &:hover {
+      color: black;
+      .anticon{
+                position: relative;
+ transition: all 0.3s ease !important;
+
+    transform: translateX(5px) rotate(180deg)!important;
+
+      }
+    }
    
+  }
+}
+
+
+.ant-layout-rtl{
+   .explore__more {
+      .anticon{
+    transform: translateX(0) rotate(0deg)!important
+
+
+      }
+ &:hover {
+      .anticon{
+          transition: all 0.3s ease !important;
+
+    transform: translateX(-5px) rotate(0deg)!important
+      }
+    }
   }
 }

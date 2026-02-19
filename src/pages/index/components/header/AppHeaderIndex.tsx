@@ -30,8 +30,8 @@ export const AppHeaderIndex: FC = () => {
 
   const langLabels: Record<Language, string> = {
     en: "En",
-    fa: "فا",
-    ar: "عر",
+    fa: "FA",
+    ar: "AR",
   };
   useEffect(() => {
     // تابعی که هنگام اسکرول اجرا می‌شود

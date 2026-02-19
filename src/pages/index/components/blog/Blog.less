@@ -1,5 +1,5 @@
 .blog {
-  margin: 120px 5%;
+  margin: 120px 9%;
 
   .first__title {
 
@@ -107,10 +107,21 @@ justify-content: flex-end;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    transition: color 0.3s ease;
+          
+.anticon{
+  position: relative;
+transition: all 0.3s ease !important;
+              transform: translateX(0) rotate(180deg)!important
+}
 
     &:hover {
       color: black;
+      .anticon{
+                position: relative;
+          transition: all 0.3s ease !important;
+
+    transform: translateX(5px) rotate(180deg)!important
+      }
     }
   }
 
@@ -198,3 +209,22 @@ justify-content: flex-end;
     }
   }
 }
+
+
+.ant-layout-rtl{
+   .blog__more {
+      .anticon{
+    transform: translateX(0) rotate(0deg)!important
+
+
+      }
+ &:hover {
+      .anticon{
+          transition: all 0.3s ease !important;
+
+    transform: translateX(-5px) rotate(0deg)!important
+      }
+    }
+  }
+}
+

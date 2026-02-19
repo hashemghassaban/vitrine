@@ -31,8 +31,8 @@ interface MenuItem {
 }
 const langLabels: Record<Language, string> = {
   en: "En",
-  fa: "فا",
-  ar: "عر",
+  fa: "FA",
+  ar: "AR",
 };
 export const AppHeader: FC<AppHeaderProps> = ({
   noBackground,
@@ -79,7 +79,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     // تابعی که هنگام اسکرول اجرا می‌شود
     const handleScroll = () => {
       // اگر اسکرول عمودی بیشتر از ۵۰ پیکسل بود، وضعیت را true کن
-      if (window.scrollY > 50) {
+      if (window.scrollY > 100) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);

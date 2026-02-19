@@ -131,9 +131,9 @@ export const AppFooter: React.FC<AppFooterProps> = ({
             {/* عضویت و شبکه‌ها */}
             <Col xs={24} sm={24} md={24} lg={8} className="app-footer__col">
               <div className="app-footer__subscribe">
-                <h2 className="app-footer__subscribe_title">
+                <div className="app-footer__subscribe_title">
                   {t("local_newsletterSubscribtion")}
-                </h2>
+                </div>
                 <div className="blockEmail">
                   <Input
                     name="email"

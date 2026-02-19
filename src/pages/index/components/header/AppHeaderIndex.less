@@ -284,8 +284,8 @@
   top: 45px;
   right: 40px;
   z-index: 2000;
-  width: 45px;
-  height: 35px;
+     width: 35px;
+    height: 26px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -312,7 +312,7 @@ width: 35px;
     right: 27px;
 
     span:nth-child(1) {
-      transform: rotate(45deg) translate(11px, 6px);
+      transform: rotate(45deg) translate(5px, 0px);
         @media (max-width: 768px) {
 
 transform: rotate(45deg) translate(4px, 5px);
@@ -463,6 +463,17 @@ transform: rotate(45deg) translate(4px, 5px);
   background-color: #000 !important;
   height: 59vh;
   overflow-y: auto;
+&::-webkit-scrollbar {
+width: 10px;
+height: 10px;
+}
+&::-webkit-scrollbar-track-piece  {
+background-color: #3b3b3b;
+}
+&::-webkit-scrollbar-thumb:vertical {
+height: 30px;
+background-color: #797979;
+}
 
   li {
     span {
