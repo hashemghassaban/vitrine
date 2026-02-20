@@ -30,7 +30,7 @@ export const FullPageOverlay: React.FC = () => {
           {
             title: t("site.indexmidslide3"),
             description: t("site.indexmidslide4"),
-            x: 70,
+            x: 10,
             y: 35,
           },
         ],
@@ -63,9 +63,10 @@ export const FullPageOverlay: React.FC = () => {
           <div style={{ display: "inline-block" }}>
             {item?.content.map((subject) => (
               <div
-                className={`content-overlay-container ${subject?.x === 70 ? "right" : "left"}`}
+                className={`content-overlay-container ${subject?.x === 10 ? "right" : "left"}`}
                 style={{
-                  left: `${subject.x}%`,
+                  left: `${subject.x === 10 ? 'none' : subject.x + '%'}`,
+                   right: `${subject.x === 10 ? subject.x + '%' : 'none'}`,
                   top: `${subject.y}%`,
                 }}
               >

@@ -32,7 +32,7 @@ export const VideoBlock: React.FC = () => {
   }
     return (
       <section id="VideoBlock" className="video-block">
-        <Row gutter={[24, 24]} align="middle">
+        <Row  align="middle">
           {/* متن */}
           <Col xs={24} sm={24} lg={11} className="video-block__content fade-in">
             <div className="content-wrapper">

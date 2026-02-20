@@ -9,10 +9,19 @@
       text-align: start;
       color: white;
       padding-inline: 0.7% !important;
+        @media (max-width: 992px) {
+
+   text-align: center;
+          }
       .app-footer__logo_img {
         width: 90px;
         margin-bottom: 6rem;
         transition: 0.3s ease;
+               @media (max-width: 992px) {
+
+   margin-bottom: 2rem;
+          }
+          
       }
 
       .app-footer_title {
@@ -33,6 +42,11 @@
         line-height: 26px;
         color: #767676;
         max-width: 100%;
+         @media (max-width: 992px) {
+          text-align: center;
+
+
+         }
 
 
       }
@@ -54,6 +68,10 @@
     }
 
     .app-footer__subscribe {
+        @media (max-width: 992px) {
+        width: 84%;
+        margin: auto;
+        }
 
       .app-footer__subscribe_title {
         font-style: normal;
@@ -112,6 +130,10 @@
         flex-direction: row-reverse;
         justify-content: flex-end;
         gap: 25px;
+       @media (max-width: 992px) {
+    justify-content: center;
+       }
+        
 
         .footer_en_text {
           font-style: normal;
@@ -232,7 +254,13 @@
       top: -10px;
     }
   }
+ @media (max-width: 992px) {
+ .app-footer__content {
+      padding: 5rem 2% 0;
 
+ }
+
+ }
   @media (max-width: 768px) {
 
     .app-footer__content {

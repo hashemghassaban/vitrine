@@ -23,7 +23,7 @@ export const Service: React.FC = () => {
         <Col
           xs={24}
           sm={24}
-          md={12}
+          md={24}
           lg={10}
           xl={7}
           className="service__content fade-in"
@@ -36,7 +36,7 @@ export const Service: React.FC = () => {
           <AppButton onclick={() => push(`/${currentLang}/${data?.link}`)} className="service__Button"> {data?.link_title} </AppButton>
         </Col>
 
-        <Col xs={24} sm={24} md={12} lg={14} xl={17} className="service__image">
+        <Col xs={24} sm={24} md={24} lg={14} xl={17} className="service__image">
           <a href={`/${currentLang}${data?.link}`}>
             <img src={data?.image ?? undefined} alt="service" className="service-img" />
           </a>
