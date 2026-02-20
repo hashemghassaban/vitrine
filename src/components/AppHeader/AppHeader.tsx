@@ -58,7 +58,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
   };
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
-  
+
   const fetchBrands = async () => {
     const { success, data } = await getList();
     if (success && data) {
@@ -257,7 +257,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     <>
       <div className={`header-wrapper ${searchOpen ? "blur-active" : ""}`}>
         <Container
-          className={`app-header_container ${isScrolled ? 'freez' : ''} ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor"  : ""}`}
+          className={`app-header_container ${isScrolled ? 'freez' : ''} ${noBackground ? "no-bg" : noBackgroundProducts ? "backgroundColor" : ""}`}
           style={headerBackground}
         >
           <Row>
@@ -300,6 +300,25 @@ export const AppHeader: FC<AppHeaderProps> = ({
             </Menu>
 
             <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
+            <div className={`header_en_content ${isMenuOpen ? 'active' : ''}`} >
+              <p className="header_en_text">
+                {LANGUAGES
+                  .filter((lang) => lang !== currentLang)
+                  .map((lang, index, arr) => (
+                    <span
+                      key={lang}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleLanguageChange(lang)}
+                    >
+                      {langLabels[lang]}
+                      {index < arr.length - 1 && " | "}{" "}
+                      {/* pipe بین آیتم‌ها */}
+                    </span>
+                  ))}
+              </p>
+
+
+            </div>
             <div className="burgerMenu">
               <button
                 className={`menu-toggle-btn ${isMenuOpen ? 'active' : ''}`}
@@ -364,56 +383,56 @@ export const AppHeader: FC<AppHeaderProps> = ({
             </div>
           )}
 
-              {searchOpen && <div className="page-overlay" />}
-      {searchOpen && (
-        <div className="search-box">
-          <Input
-            placeholder={
-              currentLang === "fa"
-                ? "جستجو"
-                : currentLang === "en"
-                  ? "Search"
-                  : "يبحث"
-            }
-            className="search-input"
-            autoFocus
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onPressEnter={handleSearch}
-          />
+          {searchOpen && <div className="page-overlay" />}
+          {searchOpen && (
+            <div className="search-box">
+              <Input
+                placeholder={
+                  currentLang === "fa"
+                    ? "جستجو"
+                    : currentLang === "en"
+                      ? "Search"
+                      : "يبحث"
+                }
+                className="search-input"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onPressEnter={handleSearch}
+              />
 
-          <button className="close-btn" onClick={() => setSearchOpen(false)}>
-            ✕
-          </button>
-        </div>
-      )}
-      <div className={`side-menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
-      <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
+              <button className="close-btn" onClick={() => setSearchOpen(false)}>
+                ✕
+              </button>
+            </div>
+          )}
+          <div className={`side-menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
+          <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
 
-        <div className="side-menu-search">
-          <Input
-            className="search_box_mobile"
-            placeholder={t("local_search")}
-            suffix={<img onClick={handleSearch} src={search} alt={search} />}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onPressEnter={handleSearch}
+            <div className="side-menu-search">
+              <Input
+                className="search_box_mobile"
+                placeholder={t("local_search")}
+                suffix={<img onClick={handleSearch} src={search} alt={search} />}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onPressEnter={handleSearch}
 
-          />
+              />
 
 
-        </div>
-        <Menu
-          className="app-header__menu-slide"
-          mode="inline"
-          selectable={false}
-        >
-          {renderMenuItems(menuItems)}
-        </Menu>
-      </div>
+            </div>
+            <Menu
+              className="app-header__menu-slide"
+              mode="inline"
+              selectable={false}
+            >
+              {renderMenuItems(menuItems)}
+            </Menu>
+          </div>
         </Container>
       </div>
-  
+
     </>
   );
 };

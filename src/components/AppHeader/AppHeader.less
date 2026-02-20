@@ -2,7 +2,6 @@
   width: 100% !important;
   max-width: none;
   height: 397px;
-
   padding-bottom: 0px !important;
   background-size: cover;
   background-position: center;
@@ -16,6 +15,10 @@
   max-width: none;
   z-index: 1000;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  @media (max-width: 992px) {
+    height: 127px;
+  }
 
   .burgerMenu {
     display: none;
@@ -39,8 +42,8 @@
   top: 45px;
   right: 40px;
   z-index: 2000;
-    width: 35px;
-    height: 26px;
+  width: 35px;
+  height: 26px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -138,6 +141,24 @@
       }
     }
   }
+}
+
+.app-header__menu-Text li {
+  width: 24px !important;
+  height: 34px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-style: normal !important;
+  font-weight: 100 !important;
+  font-size: 20px !important;
+  line-height: 34px !important;
+  text-align: right !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  right: -25px !important;
+  padding-inline: 0 !important;
+  position: relative !important;
 }
 
 /* --- 3. لایه تاریک پشت منو (Overlay) --- */
@@ -317,30 +338,54 @@
   .search__img {
     filter: invert(1);
   }
-  &.freez{
+
+  &.freez {
     .home__img {
-    img {
+      img {
+        filter: invert(0);
+      }
+
+    }
+
+    .search__img {
       filter: invert(0);
     }
 
-  }
-      .search__img {
-    filter: invert(0);
-  }
-  .ant-menu-title-content {
-    color: #fff;
-  }
+    .ant-menu-title-content {
+      color: #fff;
+    }
   }
 
   .ant-menu-title-content {
     color: #000;
   }
 }
+
+.header_en_content {
+  display: none;
+}
+
+.header_en_content.active {
+  position: absolute;
+  right: 415px;
+  top: 44px;
+  color: #cccccc;
+  z-index: 10000;
+  font-size: 19px;
+  display: block;
+  width: 68px;
+
+  @media (max-width: 768px) {
+    left: 33px !important;
+    right: inherit !important;
+  }
+}
+
 .freez {
   background-color: rgba(0, 0, 0, 0.95) !important;
-  background-image: none!important;
-  padding: 4rem 15px!important;
-  height: 129px!important;
+  background-image: none !important;
+  padding: 4rem 15px !important;
+  height: 129px !important;
 
   .app-header__menu-home,
   .search__img {
@@ -354,32 +399,24 @@
   .en_img,
   .app-header__menu-Text {
     right: -100px;
+
+    @media (max-width: 992px) {
+      display: none;
+
+    }
   }
 
   .en_img.active {
-    display: block !important;
-    position: absolute;
-    z-index: 1111000;
-    right: 444px;
-    top: 48px;
-        @media (max-width: 992px) {
-
-   
-    right: 28px !important;
-  }
+    display: none;
   }
 
   .app-header__menu-Text.active {
-    position: absolute !important;
-    margin-right: 345px;
-    display: block !important;
-    width: 29px;
-    top: 17px!important;
-    right: 120px;
+    display: none;
 
   }
 
 }
+
 .app-header_container::before {
   content: "";
   position: absolute;
@@ -445,9 +482,10 @@
   z-index: 10000;
   height: 19px;
   display: block;
-    @media (max-width: 992px) {
 
-  top: 15px;
+  @media (max-width: 992px) {
+
+    top: 15px;
   }
 
   .ant-menu-item,
@@ -548,7 +586,7 @@
   z-index: 100000;
 }
 
-.En_text {
+.app-header__menu-Text li {
   // position: absolute;
   width: 24px;
   height: 34px;
@@ -709,6 +747,55 @@
   }
 
 
+  .header_en_content.active {
+    position: absolute;
+    left: 426px;
+    top: 44px;
+    color: #cccccc;
+    z-index: 10000;
+    right: inherit;
+    font-size: 19px;
+    display: block;
+
+    @media (max-width: 768px) {
+      right: 33px !important;
+      left: inherit !important;
+    }
+  }
+
+  .app-header__menu-Text li {
+
+    right: 27px !important;
+
+  }
+
+
+
+
+  .en_img {
+    @media (max-width: 992px) {
+      display: none;
+    }
+
+    &.active {
+      display: none;
+
+    }
+  }
+
+  .side-menu {
+    transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1); // انیمیشن نرم
+    left: -100% !important;
+    right: unset !important;
+
+
+    &.open {
+      right: unset !important;
+
+      left: 0 !important;
+    }
+
+  }
 
 
 
@@ -721,14 +808,8 @@
     }
 
     .app-header__menu-Text.active {
-      left: 120px !important;
-      right: unset !important;
-      margin-right: unset !important;
-      margin-left: 345px !important;
-              @media (max-width: 992px) {
+      display: none;
 
-       right: 26px !important;
-  }
     }
 
     .side-menu {
@@ -752,13 +833,8 @@
     }
 
     .en_img.active {
-      left: 444px !important;
-      right: unset !important;
-             @media (max-width: 992px) {
+      display: none;
 
-   
-    right: 60px !important;
-  }
     }
 
   }
@@ -789,4 +865,3 @@
 .ant-menu-submenu-rtl.ant-menu-submenu-popup>.ant-menu .ant-menu-item {
   direction: rtl !important;
 }
-

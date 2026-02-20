@@ -126,7 +126,7 @@ export const AppHeaderIndex: FC = () => {
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
       path: "catalogue",
     },
-     {
+    {
       key: "menu-projects",
       title: { en: "Projects", fa: "پروژه‌ها", ar: "المشاريع" },
       path: "project",
@@ -136,7 +136,7 @@ export const AppHeaderIndex: FC = () => {
       title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
       path: "services",
     },
-   
+
     {
       key: "menu-representation",
       title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
@@ -262,6 +262,25 @@ export const AppHeaderIndex: FC = () => {
           </Menu.SubMenu>
         </Menu>
         <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
+        <div className={`header_en_content ${isMenuOpen ? 'active' : ''}`} >
+          <p className="header_en_text">
+            {LANGUAGES
+              .filter((lang) => lang !== currentLang)
+              .map((lang, index, arr) => (
+                <span
+                  key={lang}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleLanguageChange(lang)}
+                >
+                  {langLabels[lang]}
+                  {index < arr.length - 1 && " | "}{" "}
+                  {/* pipe بین آیتم‌ها */}
+                </span>
+              ))}
+          </p>
+
+
+        </div>
         <div className="burgerMenu">
           <button
             className={`menu-toggle-btn ${isMenuOpen ? 'active' : ''}`}
