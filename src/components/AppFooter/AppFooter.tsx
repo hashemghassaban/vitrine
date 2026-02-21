@@ -118,13 +118,17 @@ export const AppFooter: React.FC<AppFooterProps> = ({
             {/* منوها */}
             <Col className="menu__col" xs={12} sm={12} md={12} lg={4}>
               <FooterMenu
-                links={data?.links.filter((c) => c.type == "left")}
+              links={data?.links
+                  .filter((c) => c.type === "left")
+                  .map((c) => ({ ...c, type: c.type as "left" | "right" }))}
                 title={t("site.footerblock4")}
               />
             </Col>
             <Col className="menu__col" xs={12} sm={12} md={12} lg={4}>
               <FooterMenu
-                links={data?.links.filter((c) => c.type == "right")}
+                links={data?.links
+                  .filter((c) => c.type === "right")
+                  .map((c) => ({ ...c, type: c.type as "right" | "left" }))}
                 title={t("site.footerblock5")}
               />
             </Col>

@@ -20,7 +20,7 @@
   @media (max-width: 992px) {
 
     background: rgba(0, 0, 0, 0.95) !important;
-    padding: 4rem 15px;
+    padding: 2.5rem 15px;
 
   }
 
@@ -87,7 +87,11 @@
 .app-header_containers.freez {
   background: rgba(0, 0, 0, 0.95) !important;
   padding: 4rem 15px;
+ @media (max-width: 992px) {
+     padding: 2.5rem 15px !important;
+         height: 80px !important;
 
+    }
   .app-header__menu-home,
   .search__img {
     display: none;
@@ -242,8 +246,17 @@
   position: absolute;
   width: 75.08px;
   height: 75px;
-  right: calc(50% - 75.08px / 2 - 0.46px);
+  left: calc(50% - 75.08px / 2 - 0.46px);
   top: 23px;
+    @media (max-width: 992px) {
+    width: 52.08px!important;
+    height: 31px!important;
+    left: calc(50% - 52.08px / 2 - 0.46px)!important;
+        top: 15px!important;
+    img{
+      width: 100%!important;
+    }
+    }
 }
 
 .search__img {
@@ -323,11 +336,17 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
+        @media (max-width: 992px) {
+   right: 25px ;
+     top: 25px;
+        }
+
 
   @media (max-width: 768px) {
 
     width: 35px;
     height: 25px;
+    top: 28px;
   }
 
   span {
@@ -591,7 +610,9 @@
     right: inherit;
     font-size: 19px;
     display: block;
-
+  @media (max-width: 992px) {
+        top: 28px;
+    }
     @media (max-width: 768px) {
       right: 33px !important;
       left: inherit !important;
@@ -607,6 +628,9 @@
   .menu-toggle-btn {
     left: 40px !important;
     right: unset !important;
+        @media (max-width: 992px) {
+   left: 25px !important;
+        }
 
 
     &.active {

@@ -125,3 +125,27 @@
      }
  }
 }
+
+  .app-footer__link-desktop ,.footer-menu__title{
+      display: block;
+
+    }
+     .app-footer__link-mobile{
+ display: none;
+    }
+  @media (max-width: 768px) {
+    .app-footer__link-desktop ,.footer-menu__title{
+      display: none;
+
+    }
+     .app-footer__link-mobile {
+    display: block;
+    margin-bottom: 0!important;
+padding: 0 3% !important;
+    
+    }
+    .ant-menu-item-only-child,.ant-menu-inline{
+  margin-bottom: 0!important;
+    }
+  }
+

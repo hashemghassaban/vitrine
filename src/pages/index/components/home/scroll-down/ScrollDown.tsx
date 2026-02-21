@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import "./ScrollDown.less";
 import { useTranslate } from "../../../../../i18n/useTranslate";
+import { useIsMobile } from "../../../../../helpers/useIsMobile";
 
 interface ScrollDownProps {
   scrollAmount?: number; // اختیاری، می‌تونی مقدار px هم بدی
@@ -10,10 +11,12 @@ export const ScrollDown: FC<ScrollDownProps> = ({
   scrollAmount,
 }) => {
   const { t } = useTranslate();
+    const isMobile = useIsMobile();
+
 
   const scrollToContent = () => {
     window.scrollBy({
-      top: scrollAmount ?? window.innerHeight - 130, // اگر scrollAmount داده نشده، از 100vh استفاده می‌کنه
+      top: scrollAmount ?? window.innerHeight - (isMobile ? 200 : 130), // اگر scrollAmount داده نشده، از 100vh استفاده می‌کنه
       behavior: "smooth",
     });
   };

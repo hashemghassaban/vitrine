@@ -51,6 +51,10 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
+       @media (max-width: 992px) {
+   right: 25px ;
+     top: 25px;
+        }
 
   @media (max-width: 768px) {
 
@@ -386,7 +390,11 @@
   background-image: none !important;
   padding: 4rem 15px !important;
   height: 129px !important;
+ @media (max-width: 992px) {
+     padding: 2.5rem 15px !important;
+         height: 80px !important;
 
+    }
   .app-header__menu-home,
   .search__img {
     display: none;
@@ -736,9 +744,13 @@
 
 
 .ant-layout-rtl {
+
   .menu-toggle-btn {
     left: 40px !important;
     right: unset !important;
+        @media (max-width: 992px) {
+   left: 25px !important;
+        }
 
     &.active {
       left: 27px !important;
@@ -756,7 +768,9 @@
     right: inherit;
     font-size: 19px;
     display: block;
-
+  @media (max-width: 992px) {
+        top: 28px;
+    }
     @media (max-width: 768px) {
       right: 33px !important;
       left: inherit !important;

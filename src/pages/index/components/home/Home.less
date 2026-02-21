@@ -2,7 +2,7 @@
 .home{
     @media (max-width: 992px) {
 
-    padding-top: 128px;
+    padding-top: 78px;
   }
 }
 .home__content {
@@ -19,6 +19,11 @@
   font-size: 28px;
   white-space: nowrap;
   margin-bottom: 6px; 
+   @media (max-width: 992px) {
+    text-align: center;
+        font-size: 26px;
+
+   }
 }
 
 .home__text {
@@ -30,6 +35,12 @@
   white-space: nowrap!important;
 margin-top: 10px !important;
     margin-bottom: 45px;
+      @media (max-width: 992px) {
+    text-align: center!important;
+        margin-bottom: 23px;
+         font-size: 18px!important;
+
+   }
 }
 
 .home__button {
@@ -42,6 +53,15 @@ margin-top: 10px !important;
   width: 170px !important;
   font-weight: 100;
   border-radius: 0;
+   @media (max-width: 992px) {
+    margin: auto;
+    display: block;
+      font-size: 14px;
+          height: 38px !important;
+    width: 140px !important;
+
+
+   }
   &:hover {
     background: #000 !important;
       border: 1px solid #000!important;
@@ -79,7 +99,7 @@ margin-top: 10px !important;
 z-index: 0;
   @media (max-width: 992px) {
 
-  height: 55vh;
+  height: 70vh;
   }
       }
 
@@ -110,6 +130,12 @@ position: absolute;
               .content{
    left: inherit;
    right: 14%;
+    @media (max-width: 992px) {
+          left: inherit;
+    right: 50%;
+    transform: translate(50%, -50%);
+    top: 50%;
+    }
               }
       }
       

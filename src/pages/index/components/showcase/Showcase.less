@@ -1,6 +1,9 @@
 .showcase {
   margin: 200px 0 0;
   text-align: center;
+   @media (max-width: 768px) {
+   margin: 100px 0 0;
+    }
 
   .showcase__title {
     font-size: 22px;
@@ -24,16 +27,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 80px;
+    padding: 10px 0 ;
     white-space: nowrap;
-    flex: 11.1%;
-    max-width: 11.1%;
+    flex:100%;
+    max-width: 100%;
 
     .showcase-img-wrapper {
       img {
         width: 75px;
         height: 75px;
         object-fit: contain;
+        margin: auto;
         transition:
           transform 0.3s ease,
           opacity 0.4s ease;
@@ -49,11 +53,17 @@
         position: relative;
         margin-top: 15px;
         font-size: 15px;
+        text-align: center;
         color: #888;
         opacity: 0;
         transform: translateY(10px);
         transition: all 0.4s ease;
         text-align: center;
+          @media (max-width: 992px) {
+   opacity: 1;
+           transform: translateY(0);
+
+    }
       }
 
       p.show-text {

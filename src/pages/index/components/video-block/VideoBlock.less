@@ -51,9 +51,9 @@
         animation-delay: 0.3s;
 
     }
-    @media (max-width: 576px) {
-      padding: 20px;
-      text-align: center;
+    @media (max-width: 768px) {
+               padding: 20px 8%;
+        text-align: start;
         transform: translateY(20px);
         animation: fadeInUp 1s forwards;
         animation-delay: 0.3s;
@@ -62,6 +62,9 @@
 
   .video-block__content {
     overflow: visible !important;
+       @media (max-width: 992px) {
+          order: 2;
+       }
   }
 
   .video-block__title {
@@ -70,6 +73,35 @@
   line-height: 45px;
     color: #767676;
     margin-bottom: 50px;
+
+       &.desktop{
+      display: block;
+     
+            @media (max-width: 992px) {
+     margin-top: 50px;
+
+            }
+
+    }
+    &.mobile{
+ display: none;
+    }
+  @media (max-width: 768px) {
+    &.desktop{
+      display: none;
+
+    }
+    &.mobile{
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+        font-size: 22px;
+                height: 41px;
+                        padding-bottom: 65px;
+
+    }
+  }
   }
   .video-block__desc,
   .video-block__text {
@@ -77,6 +109,11 @@
     font-size: 15px;
     line-height: 28px;
       margin-bottom: 30px;
+          margin-top: 30px;
+           @media (max-width: 1199px) { font-size: 15px; line-height: 28px; }
+  @media (max-width: 991px)  { font-size: 14px; line-height: 26px; }
+  @media (max-width: 767px)  { font-size: 14px; line-height: 24px;  }
+  @media (max-width: 575px)  { font-size: 13px; line-height: 22px;  }
   }
   .video-block__desc{
     color: #000;
@@ -95,7 +132,8 @@
         margin-bottom: 60px;
   }
     @media (max-width: 768px) {
-      justify-content: center;
+    justify-content: flex-start;
+      margin-top: 50px;
     }
   }
 
@@ -128,6 +166,7 @@
   .video-col {
     overflow: visible !important;
     position: relative;
+    
   }
 
   .video-block__img-col,
@@ -138,6 +177,8 @@
     background-position: center;
     position: relative;
     overflow: visible !important;
+        @media (max-width: 767px) {      height: 422px;   min-height: 422px; }
+    @media (max-width: 550px) {       height: 350px;  min-height: 350px; }
   }
 
 
@@ -165,11 +206,14 @@
 
 
 
-  @media (max-width: 576px) {
+  @media (max-width: 768px) {
     .box_icon {
       bottom: -35px;
       width: 95px;
       height: 70px;
+      img {
+    width: 33px;
+      }
     }
   }
 }

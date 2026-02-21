@@ -50,7 +50,7 @@ function Index() {
             <BusinessPlan />
             <VideoBlock />
             <Showcase />
-            {!isMobile && <FullPageOverlay />}
+            <FullPageOverlay />
             <Service />
             <Blog />
             <ExploreSection />

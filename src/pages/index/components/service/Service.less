@@ -5,6 +5,10 @@
   padding: 50px 3%;
 
   }
+   @media (max-width: 768px) {
+  padding: 50px 0;
+
+  }
 }
 
 /* عنوان */
@@ -15,6 +19,36 @@
   color: #767676;
   margin-bottom: 50px;
   }
+
+       &.desktop{
+      display: block;
+     
+            @media (max-width: 992px) {
+     margin-top: 50px;
+
+            }
+
+    }
+    &.mobile{
+ display: none;
+    }
+  @media (max-width: 768px) {
+    &.desktop{
+      display: none;
+
+    }
+    &.mobile{
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+        font-size: 16px;
+                height: 41px;
+                        padding-bottom: 65px;
+
+    }
+  }
+  
 }
 
 /* متن + انیمیشن ورود */
@@ -69,6 +103,7 @@
   align-items: center;
   a{
        width: 82%;
+       
   }
 }
 
@@ -92,10 +127,15 @@
   }
 
   .service__image {
+    @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    order: 1;
+    }
     margin-top: 55px;
              justify-content: center!important;
              a{
-              width: 95%;
+              width: 100%;
              }
   
 }
@@ -121,8 +161,11 @@
   }
 
   .service__content {
-    padding: 10px 15px;
+    padding: 10px 8%;
       text-align: center;
+      order: 2;
+          align-items: flex-start;
+    margin: 23px;
   }
 
   .service__title {
@@ -132,5 +175,8 @@
   .service__text {
     font-size: 14px;
     line-height: 28px;
+  }
+  .service__Button{
+    width: 50%!important;
   }
 }

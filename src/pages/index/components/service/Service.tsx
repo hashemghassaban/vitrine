@@ -16,7 +16,7 @@ export const Service: React.FC = () => {
   );
   return (
     <section id="Service" className="service">
-      <Row className="first__title" justify="center">
+      <Row className="first__title desktop" justify="center">
         <h2>{t("local_ourServices")}</h2>
       </Row>
       <Row align="middle" justify="center" className="service__row">
@@ -37,6 +37,9 @@ export const Service: React.FC = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={14} xl={17} className="service__image">
+           <Row className="first__title mobile" justify="center">
+        <h2>{t("local_ourServices")}</h2>
+      </Row>
           <a href={`/${currentLang}${data?.link}`}>
             <img src={data?.image ?? undefined} alt="service" className="service-img" />
           </a>

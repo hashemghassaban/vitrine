@@ -10,8 +10,8 @@
     overflow: hidden;
   
     @media (max-width: 991px) { min-height: 400px; }
-    @media (max-width: 767px) { min-height: 300px; }
-
+    @media (max-width: 767px) {         min-height: 422px; }
+    @media (max-width: 550px) {         min-height: 350px; }
     .business-plan__img {
       position: absolute;
       top: 0;
@@ -21,6 +21,12 @@
       object-fit: cover;
       object-position: right;
    transition: transform 1s ease-in-out, opacity 0.8s linear;
+       @media (max-width: 768px) {   
+    object-fit: fill;
+    }
+    @media (max-width: 550px) {   
+    object-fit: fill;
+    }
     }
 
     &:hover .business-plan__img {
@@ -65,7 +71,26 @@
   line-height: 45px;     
   margin-bottom: 20px;
   color: #555;
+   &.desktop{
+      display: block;
 
+    }
+    &.mobile{
+ display: none;
+    }
+  @media (max-width: 768px) {
+    &.desktop{
+      display: none;
+
+    }
+    &.mobile{
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+        font-size: 22px;
+    }
+  }
   @media (max-width: 1199px) { font-size: 22px; line-height: 42px; }
   @media (max-width: 991px)  { font-size: 21px; line-height: 40px; }
   @media (max-width: 767px)  { font-size: 20px; line-height: 35px; }
@@ -81,13 +106,19 @@
   line-height: 31px;     
   margin-bottom: 25px;
 
+    @media (max-width: 768px) {
+text-align: justify;
+        padding: 25px 10%;
+
+    }
+
   &.business-plan__desc { color: #000; }
   &.business-plan__text { color: #6b6b6b; }
 
   @media (max-width: 1199px) { font-size: 15px; line-height: 28px; }
   @media (max-width: 991px)  { font-size: 14px; line-height: 26px; }
-  @media (max-width: 767px)  { font-size: 14px; line-height: 24px; text-align: center; }
-  @media (max-width: 575px)  { font-size: 13px; line-height: 22px; text-align: center; }
+  @media (max-width: 767px)  { font-size: 14px; line-height: 24px;  }
+  @media (max-width: 575px)  { font-size: 13px; line-height: 22px;  }
 }
 
 /* دکمه */
@@ -101,8 +132,10 @@
   cursor: pointer;
 
   @media (max-width: 991px) { width: 150px; margin: 0 auto; }
-  @media (max-width: 767px) { width: 100%; max-width: 220px; margin: 0 auto; }
-  @media (max-width: 575px) { width: 100%; max-width: 180px; margin: 0 auto; font-size: 15px; line-height: 40px; }
+  @media (max-width: 767px) { width: 100%; max-width: 220px; margin: 0 auto;         display: block;
+        margin: 0 10%;}
+  @media (max-width: 575px) { width: 100%; max-width: 145px; margin: 0 auto; font-size: 14px; line-height: 25px; display: block;
+        margin: 0 10%;}
 }
 
 /* keyframes متن */

@@ -18,6 +18,8 @@ export const BusinessPlan: React.FC = () => {
     <section id="BusinessPlan" className="business-plan">
       <Row gutter={[32, 32]} align="middle">
         {/* ستون تصویر */}
+                    <h2 className="business-plan__title mobile">{data?.title}</h2>
+
         <Col xs={24} sm={24} lg={12} className="business-plan__img-col">
           <img
             src={data?.image ?? undefined}
@@ -29,7 +31,7 @@ export const BusinessPlan: React.FC = () => {
         {/* ستون محتوا */}
         <Col xs={24} sm={24} lg={12} className="business-plan__content">
           <div className="business-plan__content-inner">
-            <h2 className="business-plan__title">{data?.title}</h2>
+            <h2 className="business-plan__title desktop">{data?.title}</h2>
 
             <p
               className="business-plan__desc"
