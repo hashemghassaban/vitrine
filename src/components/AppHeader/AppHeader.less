@@ -17,7 +17,8 @@
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   @media (max-width: 992px) {
-    height: 127px;
+    height: 84px;
+            padding: 0rem 15px;
   }
 
   .burgerMenu {
@@ -321,7 +322,10 @@
   background-image: none !important;
   background-color: #E7E7E7 !important;
   height: 189px;
-
+  @media (max-width: 768px) {
+  height: 85px;
+          padding: 0rem 15px;
+  }
   &::before {
     background-color: inherit !important;
 
@@ -337,6 +341,13 @@
       filter: invert(1);
     }
 
+  }
+
+  .menu-toggle-btn span{
+    background-color: #000;
+  }
+   .menu-toggle-btn.active span{
+    background-color: #fff;
   }
 
   .search__img {

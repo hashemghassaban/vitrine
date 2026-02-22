@@ -10,7 +10,7 @@
      margin-bottom: 80px;
          flex-direction: row-reverse;
             @media (max-width: 992px) {
-   margin: 165px 0 80px;
+   margin: 115px 0 80px;
     }
  
 
@@ -18,7 +18,6 @@
   @media (max-width: 992px) {
     flex-direction: column;
     gap: 20px;
-   margin: 30px;
   }
   
 
@@ -120,6 +119,9 @@
 }
   .form-section {
     margin-top: 80px;
+     @media (max-width: 768px) {
+  margin-top: 20px;
+     }
     .ant-select-selection-search-input , .ant-select-selection-placeholder , .ant-select-selection-item{
           font-size: 11px;
           color: #ACACAC;
@@ -130,14 +132,24 @@
       display: flex;
       gap: 20px;
       flex-wrap: nowrap;
+        @media (max-width: 768px) {
+   
+          display: flex;
+    flex-direction: column;
+    }
       
       .input-group {
         flex: 1;
         min-width: auto;
         text-align: right;
+        
                 
         &.half {
           flex: 1 1 45%;
+                  @media (max-width: 768px) {
+   flex: 100%;
+      max-width: 100%;
+                  }
          
         }
         

@@ -15,6 +15,7 @@
    border-bottom: 1px solid #ccc;
         padding-bottom: 35px;
         margin-bottom: 18px;
+              padding-inline: 3.7% !important;
           }
       .app-footer__logo_img {
         width: 90px;
@@ -63,7 +64,10 @@
     .app-footer__col {
       display: flex;
       justify-content: end !important;
+       @media (max-width: 992px) {
+              padding-inline: 3.7% !important;
 
+       }
     }
 
     .blockEmail {
@@ -114,9 +118,14 @@
         display: flex;
         gap: 25px;
 
-        .footer-media {
-          width: 36px;
+        .footer_media_content a{
+              width: 36px;
           height: 35px;
+        }
+        .footer-media {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
           transition: transform 0.3s ease, filter 0.3s ease;
 
           &:hover {
@@ -251,7 +260,9 @@
         }
 
         .footer-media {
-          width: 35px;
+               width: 100%;
+          height: 100%;
+          object-fit: contain;
           gap: 15px;
         }
 
@@ -273,6 +284,9 @@
       padding: 5rem 2% 0;
 
  }
+ .footer_media_content{
+          justify-content: start!important;
+ }
 
  }
   @media (max-width: 768px) {
@@ -283,8 +297,11 @@
         background-color: #f7f7f7!important;
 
 }
+.footer_en_content{
+      margin-bottom: 10px;
+}
     .app-footer__content {
-      padding: 3rem 0;
+      padding: 3rem 0 0;
       .ant-row-center{
             row-gap: 5px!important;
       }
@@ -293,7 +310,7 @@
                 margin-top: 22px;
       }
       .app-footer__logo{
-        padding: 0 3% !important;
+        padding: 0 5% !important;
       }
       .ant-row{
         margin: 0!important;
@@ -329,10 +346,11 @@
       .app-footer_text {
         font-size: 16px;
       }
-
-      .app-footer__subscribe .footer_media_content .footer-media {
-               min-width: 31px;
+.footer_media_content a{
+         width: 31px;
         height: 28px;
+}
+      .app-footer__subscribe .footer_media_content .footer-media {
         gap: 10px;
       }
 
@@ -358,12 +376,14 @@
         font-size: 14px;
         line-height: 22px;
       }
-
+    .footer_media_content {
+        gap: 10px!important;
+    }
       .app-footer__subscribe {
         .footer_media_content .footer-media {
 
           width: 35px;
-          gap: 15px;
+          gap: 10px;
         }
       }
     }
