@@ -36,6 +36,7 @@ import type {
 } from "../../../models/views/indexView";
 import useCollections from "../../../hooks/collections/useCollections";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import backgroundHeader from "../../../assets/header/IMG_7071.jpg"
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -532,7 +533,7 @@ useEffect(() => {
     <>
       <LoadingSpin loading={loading} />
       <AppHeader
-        categoryBackground={selectedCategory?.image_link}
+        categoryBackground={selectedCategory?.image_link ? selectedCategory?.image_link : backgroundHeader}
         title={
           !!selectedCategory
             ? selectedCategory?.title

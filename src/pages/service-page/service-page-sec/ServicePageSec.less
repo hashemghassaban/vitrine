@@ -6,6 +6,14 @@
                 @media (max-width: 992px) {
    padding: 165px 0 40px;
     }
+     @media (max-width: 768px) {
+   padding: 115px 0 40px;
+   .ant-col , .ant-row{
+    padding: 0!important;
+       margin: 0!important;
+   }
+
+    }
 }
 
 /* ---------------- بخش بالایی ---------------- */
@@ -22,18 +30,22 @@
     justify-content: flex-start;
 }
 .top-text-box {
-  margin-right: 30px;
+  margin-left: 30px;
   font-weight: 700;
   font-size: 23px;
   line-height: 45px;
   color: #767676;
+      display: flex;
+    color: #767676;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .top-title {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 45px;
-  text-align: start;
+  text-align: left;
   max-width: 480px;
 }
 
@@ -45,6 +57,9 @@
   line-height: 31px;
   max-width: 480px;
   min-height: 60px;
+   @media (max-width: 768px) {
+font-size: 12px;
+     }
 }
 //section3
 .service-title {
@@ -56,6 +71,12 @@
   font-size: 23px;
   line-height: 45px;
   color: #767676;
+     @media (max-width: 768px) {
+font-size: 18px;
+margin-bottom: 0px;
+text-align: start;
+padding:0 15px;
+     }
 }
 
 .service-subtitle {
@@ -66,10 +87,20 @@
   line-height: 31px;
   margin-bottom: 5px;
   font-weight: 300;
+    @media (max-width: 768px) {
+font-size: 12px;
+margin-bottom: 0px;
+text-align: start;
+padding:0 20px;
+     }
 }
 .top-image {
   width: 591px;
   height: 492px;
+       @media (max-width: 768px) {
+   width: 100%;
+     height: auto;
+    }
 }
 
 
@@ -88,6 +119,9 @@
   border: none;
   max-width: 430px;
   margin: 28px;
+   @media (max-width: 768px) {
+ margin: 20px 20px;
+   }
 }
 
 .mg-block{
@@ -112,6 +146,7 @@
   font-size: 19px;
 line-height: 30px;
     text-align: start;
+    
     color: #767676;
     margin-bottom: 17px;
 }
@@ -119,6 +154,7 @@ line-height: 30px;
   font-weight: 300;
   font-size: 15px;
   color: #737373;
+      line-height: 29px;
   padding-top: 0px;
   margin-top: 0px;
 }
@@ -128,7 +164,7 @@ line-height: 30px;
 
 @media (max-width: 768px) {
   .stack-space {
-    height: 32px;
+    height: 0;
   }
 }
 
@@ -145,7 +181,10 @@ line-height: 30px;
 
 @media (max-width: 576px) {
   .top-title {
-    text-align: center;
+text-align: left;
+        line-height: 28px;
+        font-size: 20px;
+        margin: 0 0 20px;
   }
   .top-text {
     text-align: center;
@@ -170,6 +209,9 @@ line-height: 30px;
 }
 .top-text-box {
   margin-right: 30px;
+   @media (max-width: 768px) {
+  margin-right: 20px!important;
+  }
 }
 .btn-more{
     display: flex;

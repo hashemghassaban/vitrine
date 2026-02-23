@@ -11,6 +11,7 @@ import { useLanguage } from "../../contexts/useLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
+import backgroundHeader from "../../assets/header/IMG_7061.jpg"
 
 const BrandPage: React.FC = () => {
   useSyncLanguage();
@@ -39,6 +40,7 @@ const BrandPage: React.FC = () => {
         title={t("site.brandpage1")}
         text={t("site.brandpage2")}
         style={false}
+        categoryBackground={backgroundHeader}
       />
       <div className="brands-page">
         <h2 className="brands-title">{t("site.brandpage3")}</h2>

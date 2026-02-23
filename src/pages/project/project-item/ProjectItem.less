@@ -19,7 +19,7 @@
     padding: 450px 8% 20px;
     background: #F5F5F5;
      @media (max-width: 992px) {
-   padding: 120px 8% 20px;
+   padding: 120px 4% 20px;
     }
 
   /* استایل تب‌ها */
@@ -47,6 +47,9 @@
       margin-inline: 8px;
       border-radius: 4px;
       transition: all 0.3s;
+             @media (max-width: 768px) {
+   padding: 8px 6px;
+    }
     }
 
     .ant-tabs-tab-active {
@@ -88,6 +91,9 @@
         object-fit: cover;
         transition: transform 0.4s ease;
         cursor: pointer;
+          @media (max-width: 768px) {
+   height: auto;
+    }
       }
       &:hover img {
         transform: scale(1.02);
@@ -97,6 +103,7 @@
     .text-box-project {
       max-width: fit-content;
       // padding-left: 60px;
+      width: 100%;
     }
       .title-text-box-project {
         margin-bottom: 35px;
@@ -106,6 +113,10 @@
         text-align: left;
         color: #767676;
           cursor: pointer;
+                    @media (max-width: 768px) {
+            font-size: 18px;
+        line-height: 36px;
+    }
       }
 
     .title-dec-box-project {
@@ -114,6 +125,9 @@
       margin-bottom: 20px;
       color: #767676;
       margin-top: 30px;
+         @media (max-width: 768px) {
+           font-size: 14px;
+    }
     }
 
       .item-box-project {
@@ -128,6 +142,9 @@
           font-size: 18px;
           line-height: 45px;
           margin: 0;
+           @media (max-width: 768px) {
+           font-size: 16px;
+    }
         }
 
         .dec-text-project {
@@ -137,12 +154,18 @@
           text-align: left;
           color: #6b6b6b;
                   margin: 0;
+                    @media (max-width: 768px) {
+           font-size: 14px;
+    }
         }
       }
 
       .dec-text-project-box {
         width: 400px;
             margin-top: 25px;
+             @media (max-width: 768px) {
+             width: 100%;
+    }
       }
       .text-project {
         font-style: normal;
@@ -151,6 +174,9 @@
         line-height: 31px;
         text-align: justify;
         color: #000000;
+         @media (max-width: 768px) {
+       font-size: 14px;
+    }
       }
       .ant-btn-link {
         padding: 0;
@@ -159,6 +185,9 @@
         line-height: 45px;
         text-align: right;
         color: #010101;
+          @media (max-width: 768px) {
+      font-size: 12px;
+    }
 
         &:hover {
           color: black !important;
@@ -193,6 +222,12 @@
     line-height: 45px;
     color: #818181;
     box-shadow: none!important;
+      @media (max-width: 768px) {
+    font-size: 14px!important;
+    line-height: 23px!important;
+        margin-bottom: 0!important;
+    width: 200px !important;
+      }
   }
 
   /* واکنش‌گرایی برای موبایل */

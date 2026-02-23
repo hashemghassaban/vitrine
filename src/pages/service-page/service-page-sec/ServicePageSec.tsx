@@ -11,6 +11,8 @@ import type { AimItemView } from "../../../models/views/aimView";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import backgroundHeader from "../../../assets/header/IMG_7069.jpg"
+
 
 const ServicePageSec: React.FC = () => {
   useSyncLanguage();
@@ -49,7 +51,7 @@ const ServicePageSec: React.FC = () => {
   return (
     <>
       <LoadingSpin loading={loading} />
-      <AppHeader title={t("site.servicetitlenew")} />
+      <AppHeader title={t("site.servicetitlenew")} categoryBackground={backgroundHeader}/>
 
       {!loading ? (
         <div className="showroom-page">

@@ -3,7 +3,7 @@
   max-width: none;
   height: 397px;
   padding-bottom: 0px !important;
-  background-size: cover;
+  background-size: 100% 100%!important;
   background-position: center;
   background-repeat: no-repeat;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0));
@@ -17,7 +17,7 @@
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   @media (max-width: 992px) {
-    height: 84px;
+    height: 85px;
             padding: 0rem 15px;
   }
 
@@ -74,7 +74,7 @@
 
   // حالت فعال (تبدیل به ضربدر)
   &.active {
-    right: 27px;
+    right: 15px;
 
     span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 0px);
@@ -115,7 +115,7 @@
   @media (max-width: 768px) {
     width: 100%;
     right: -100%;
-   padding:  30px;
+   padding:  30px 15px;
 
   }
 
@@ -331,6 +331,9 @@
 
   }
 
+    .side-menu .ant-menu-title-content {
+      color: #fff!important;
+    }
   .title-page,
   .text-page {
     display: none;
@@ -342,6 +345,9 @@
     }
 
   }
+  .en_img{
+    filter: invert(0);
+  }
 
   .menu-toggle-btn span{
     background-color: #000;
@@ -350,11 +356,17 @@
     background-color: #fff;
   }
 
+  .ant-menu-title-content{
+    color: #000!important;
+  }
   .search__img {
     filter: invert(1);
   }
 
   &.freez {
+      .menu-toggle-btn span{
+    background-color: #fff;
+  }
     .home__img {
       img {
         filter: invert(0);
@@ -366,13 +378,10 @@
       filter: invert(0);
     }
 
-    .ant-menu-title-content {
-      color: #fff;
-    }
   }
 
   .ant-menu-title-content {
-    color: #000;
+    // color: #000;
   }
 }
 
@@ -391,7 +400,7 @@
   width: 68px;
 
   @media (max-width: 768px) {
-    left: 33px !important;
+    left: 15px !important;
     right: inherit !important;
        top: 20px!important;
   }
@@ -404,7 +413,7 @@
   height: 129px !important;
  @media (max-width: 992px) {
      padding: 2.5rem 15px !important;
-         height: 80px !important;
+         height: 85px !important;
 
     }
   .app-header__menu-home,
@@ -595,6 +604,10 @@
   left: calc(50% - 75.08px / 2 - 0.46px);
   top: 23px;
   cursor: pointer;
+   @media (max-width: 768px) {
+  left: 15px!important
+
+   }
 }
 
 .search__img {
@@ -710,6 +723,10 @@
     text-align: left;
     color: #c2c2c2;
     z-index: 2;
+     @media (max-width: 768px) {
+    font-size: 18px;
+
+   }
   }
 
   .text-page {
@@ -721,6 +738,10 @@
     color: #cacaca;
     z-index: 2;
     padding-bottom: 50px;
+     @media (max-width: 768px) {
+    font-size: 12px;
+
+   }
   }
 }
 
@@ -740,6 +761,10 @@
     color: #c2c2c2;
     padding-bottom: 50px;
     z-index: 2;
+    @media (max-width: 768px) {
+    font-size: 18px;
+
+   }
   }
 
   .text-page2 {
@@ -751,21 +776,31 @@
     padding-top: 60px;
     z-index: 2;
   }
+   @media (max-width: 768px) {
+    font-size: 15px;
+
+   }
 }
 
 
 
 .ant-layout-rtl {
+ .home__img {
+   @media (max-width: 768px) {
+  left: inherit!important;
+  right: 15px!important;
 
+   }
+  }
   .menu-toggle-btn {
     left: 40px !important;
     right: unset !important;
         @media (max-width: 992px) {
-   left: 25px !important;
+   left: 15px !important;
         }
 
     &.active {
-      left: 27px !important;
+      left: 15px !important;
       right: unset !important;
     }
   }
@@ -784,7 +819,7 @@
         top: 28px;
     }
     @media (max-width: 768px) {
-      right: 33px !important;
+      right: 15px !important;
       left: inherit !important;
         top: 20px!important;
     }
@@ -792,7 +827,7 @@
 
   .app-header__menu-Text li {
 
-    right: 27px !important;
+    right: 15px !important;
 
   }
 
@@ -827,7 +862,12 @@
 
 
   .freez {
+    .home__img {
+   @media (max-width: 768px) {
+  left: 15px!important;
 
+   }
+  }
     .en_img,
     .app-header__menu-Text {
       left: -100px !important;

@@ -10,6 +10,7 @@ import img6 from "../../assets/service-page/img6.png";
 import img7 from "../../assets/service-page/img7.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
+import backgroundHeader from "../../../assets/header/IMG_7069.jpg"
 
 const items = [
   {
@@ -47,7 +48,7 @@ const items = [
 const ServicePage: React.FC = () => {
   return (
     <>
-      <AppHeader title={"خدمات مشاوره و طراحی ویترین"} />
+      <AppHeader title={"خدمات مشاوره و طراحی ویترین"} categoryBackground={backgroundHeader}/>
       <div className="showroom-page">
         <Row gutter={[40, 40]} align="middle" className="top-section">
            <Col xs={24} lg={12} style={{textAlign:'center'}}>

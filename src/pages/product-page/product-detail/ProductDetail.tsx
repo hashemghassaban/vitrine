@@ -133,7 +133,7 @@ export default function ProductDetail() {
                 />
               </div>
 
-              <h1 className="product-title">{product?.title}</h1>
+              <h1 className="product-title desktop">{product?.title}</h1>
 
               <p
                 className="product-desc"
@@ -170,6 +170,8 @@ export default function ProductDetail() {
           </Col>
 
           <Col xs={24} md={24} lg={9} className="gallery">
+                            <h1 className="product-title mobile">{product?.title}</h1>
+
             <div className="main-image">
               {!!mainImage && (
                 <img src={mainImage ?? undefined} alt="product" />
@@ -177,6 +179,7 @@ export default function ProductDetail() {
             </div>
 
             <div className="thumbs">
+
               {product?.media?.map((t, i) => (
                 <img
                   key={i ?? 0}
@@ -186,6 +189,7 @@ export default function ProductDetail() {
                 />
               ))}
             </div>
+            
           </Col>
         </Row>
       </div>

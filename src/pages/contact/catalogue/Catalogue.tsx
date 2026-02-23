@@ -12,6 +12,9 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import { useEffect, useState } from "react";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import backgroundHeader from "../../../assets/header/IMG_7062.jpg"
+
+
 const { Title } = Typography;
 
 export default function Catalogue() {
@@ -38,7 +41,7 @@ export default function Catalogue() {
   return (
     <>
       <LoadingSpin loading={loading} />
-      <AppHeader />
+      <AppHeader  categoryBackground={backgroundHeader}/>
       <div className="showcase-container">
         <Row justify="center">
           <h1 className="title">{t("site.catalog1")}</h1>
@@ -72,7 +75,7 @@ export default function Catalogue() {
                     rel="noopener noreferrer"
                     className="btn download-link"
                   >
-                    <img src={download} alt="download" />
+                    <img src={download} alt="download" className="download" />
                     {t("local_download")}
                   </a>
                 </Row>

@@ -10,7 +10,7 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import "./representation.less";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
-
+import backgroundHeader from "../../../assets/header/IMG_7060.jpg"
 const { Title } = Typography;
 
 export default function Representation() {
@@ -35,7 +35,8 @@ export default function Representation() {
   return (
     <>
       <LoadingSpin loading={loading} />
-      <AppHeader />
+      <AppHeader categoryBackground={backgroundHeader}/>
+
       <div className="showcase-container">
         <h1  className="title-page">
           {t("site.agents1")}

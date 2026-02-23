@@ -13,6 +13,8 @@ import { useTranslate } from "../../i18n/useTranslate";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
 import "./blog.less";
+import backgroundHeader from "../../assets/header/IMG_7072.jpg"
+
 
 function Blog() {
   useSyncLanguage();
@@ -91,7 +93,8 @@ function Blog() {
     <>
       <LoadingSpin loading={loading} />
       <AppHeader
-        categoryBackground={activeCategory?.image}
+        categoryBackground={activeCategory?.image ? activeCategory?.image :backgroundHeader}
+        
         title={t("site.blog11")}
         text={t("site.blog22")}
       />

@@ -12,6 +12,7 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import backgroundHeader from "../../../assets/header/IMG_7070.jpg"
 
 export default function ProjectItem() {
   const { push } = useNavigation();
@@ -92,7 +93,7 @@ export default function ProjectItem() {
   return (
     <>
     <LoadingSpin loading={loadingCategory} />
-     <AppHeader categoryBackground={ activeCategory?.image ?? undefined} title={t("site.projectlist1")} />
+     <AppHeader categoryBackground={ activeCategory?.image ?? backgroundHeader} title={t("site.projectlist1")} />
       {!loadingCategory ? (
         <div className="interior-page-container">
           <Row justify="center" align="middle" style={{ overflow: "auto" }}>
