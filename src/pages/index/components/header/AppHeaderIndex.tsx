@@ -109,7 +109,7 @@ export const AppHeaderIndex: FC = () => {
               fa: brand.title,
               ar: brand.title,
             },
-            path: `BrandProducts/${encodeURIComponent(brand.title)}`,
+            path: `brand-detail/${encodeURIComponent(brand?.id)}`,
             image: brand.image,
           })),
         ]
@@ -139,8 +139,8 @@ export const AppHeaderIndex: FC = () => {
 
     {
       key: "menu-representation",
-      title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
-      path: "representation",
+      title: { en: "Agents", fa: "نمایندگی‌ها", ar: "الوكلاء" },
+      path: "agents",
     },
     {
       key: "menu-about",

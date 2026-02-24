@@ -127,7 +127,7 @@ export default function ProductDetail() {
                   className="brand-logo-product"
                   onClick={() =>
                       push(
-                        `/${currentLang}/brandProducts/${product?.brand?.id}`,
+                        `/${currentLang}/brand-detail/${product?.brand?.id}`,
                       )
                     }
                 />

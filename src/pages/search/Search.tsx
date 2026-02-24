@@ -51,11 +51,11 @@ const Search: React.FC = () => {
         case t("local_Catalogues"):
           return `/${currentLang}/catalogue`;
         case t("local_Representation"):
-          return `/${currentLang}/representation`;
+          return `/${currentLang}/agents`;
         case t("local_About"):
           return `/${currentLang}/about`;
         case t("local_Contact"):
-          return `/${currentLang}/contactBranch`;
+          return `/${currentLang}/contact`;
         case t("local_Brands"):
           return `/${currentLang}/brands`;
       }

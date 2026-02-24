@@ -46,7 +46,7 @@ const Pages = () => {
           <Route path="blog" element={<Blog />} />
           <Route path="blog/:id" element={<BlogDetailPage />} />
           <Route path="about" element={<About />} />
-          <Route path="representation" element={<Representation />} />
+          <Route path="agents" element={<Representation />} />
           <Route path="catalogue" element={<Catalogue />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="contactBranch" element={<ContactBranch />} />
@@ -55,7 +55,7 @@ const Pages = () => {
           <Route path="project/:id" element={<ProjectItemDetail />} />
           <Route path="brands" element={<BrandPage />} />
           <Route path="services" element={<ServicePageSec />} />
-          <Route path="brandProducts/:id" element={<BrandProducts />} />
+          <Route path="brand-detail/:id" element={<BrandProducts />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:id" element={<ProductDetail />} />
           <Route path="products/category/:categorySlug" element={<AllProducts />} />

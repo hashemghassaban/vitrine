@@ -53,21 +53,21 @@ const BrandPage: React.FC = () => {
               <Card className="brand-card">
                 <div brand-box className="logos">
                   <img
-                    onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
+                    onClick={() => push(`/${currentLang}/brand-detail/${item.id}`)}
                     src={item.logo}
                     alt={item.title}
                     className="brand-logo"
                   />
                 </div>
                 <h2
-                  onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
+                  onClick={() => push(`/${currentLang}/brand-detail/${item.id}`)}
                   className="brand-title"
                 >
                   {item.title}
                 </h2>
                 <p className="brand-text">{item.excerpt}</p>
                 <Button
-                  onClick={() => push(`/${currentLang}/BrandProducts/${item.id}`)}
+                  onClick={() => push(`/${currentLang}/brand-detail/${item.id}`)}
                   type="link"
                   className={`brand-more ${currentLang == "en" ? "english" : ""}`}
                 >

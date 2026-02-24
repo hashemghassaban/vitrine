@@ -64,7 +64,7 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
             {data?.product_categories.map((category, index) => (
               <div key={index} className="menu-column">
                 <h3 className="menu-column-title"
-                  onClick={() => push(`/${currentLang}/products/category/${category.slug}`)}
+                  onClick={() => push(`/${currentLang}/products/category/${category.id}`)}
                 >
                   <img src={category?.icon_link} alt="icon" />
                   {category.title}
@@ -74,7 +74,7 @@ export const ImageHoverModal: FC<Props> = ({ triggerImg }) => {
                   {category.children.map((item, i) => (
                     <li key={i}>
                       <a className="menu-item-link" onClick={() =>
-                        push(`/${currentLang}/products/category/${item.slug}`)
+                        push(`/${currentLang}/products/category/${item.id}`)
                       }>
                         {item?.title}
                       </a>

@@ -1,3 +1,5 @@
+
+
 export interface IndexDataView {
   settings: SiteSettingsView;
   sliders: SliderItemView[];
@@ -12,6 +14,7 @@ export interface IndexDataView {
 export interface BrandItemView {
   title: string;
   image: string;
+  id: number;
 }
 
 export interface SimpleCategoryView {

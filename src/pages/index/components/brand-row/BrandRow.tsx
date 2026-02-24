@@ -82,7 +82,7 @@ export function BrandRow(): JSX.Element {
               <div key={brand.id} className="brand-slide">
                 <img
                   onClick={() =>
-                    push(`/${currentLang}/BrandProducts/${brand.id}`)
+                    push(`/${currentLang}/brand-detail/${brand.id}`)
                   }
                   src={brand.logo}
                   alt={brand.title}
@@ -97,7 +97,7 @@ export function BrandRow(): JSX.Element {
               <Col key={brand.id} className="brand-col">
                 <img
                   onClick={() =>
-                    push(`/${currentLang}/BrandProducts/${brand.id}`)
+                    push(`/${currentLang}/brand-detail/${brand.id}`)
                   }
                   src={brand.logo}
                   alt={brand.title}

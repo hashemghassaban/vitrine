@@ -207,7 +207,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
                 fa: brand.title,
                 ar: brand.title,
               },
-              path: `brandProducts/${brand.id}`,
+              path: `brand-detail/${brand.id}`,
               image: brand.image,
             })),
           ]
@@ -238,8 +238,8 @@ export const AppHeader: FC<AppHeaderProps> = ({
 
     {
       key: "menu-representation",
-      title: { en: "Representation", fa: "نمایندگی‌ها", ar: "الوكلاء" },
-      path: "representation",
+      title: { en: "Agents", fa: "نمایندگی‌ها", ar: "الوكلاء" },
+      path: "agents",
     },
     {
       key: "menu-about",
@@ -249,7 +249,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
     {
       key: "menu-contact",
       title: { en: "Contact", fa: "تماس با ما", ar: "اتصل بنا" },
-      path: "contactBranch",
+      path: "contact",
     },
   ];
 
