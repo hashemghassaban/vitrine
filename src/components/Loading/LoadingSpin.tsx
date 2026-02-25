@@ -7,13 +7,6 @@ interface LoadingSpinProps {
   loading?: boolean;
 }
 
-/* انیمیشن پر شدن از پایین */
-const fillUp = keyframes`
-  0% { height: 0%; }
-  100% { height: 100%; }
-`;
-
-
 
 
 
