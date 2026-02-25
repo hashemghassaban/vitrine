@@ -1,6 +1,7 @@
 import React from "react";
 import { useLanguage } from "../../contexts/useLanguage";
 import styled, { keyframes } from "styled-components";
+import videoRef from '../../assets/video-block/videoLoading.mov'
 
 interface LoadingSpinProps {
   loading?: boolean;
@@ -12,7 +13,10 @@ const fillUp = keyframes`
   100% { height: 100%; }
 `;
 
-/* فول اسکرین */
+
+
+
+
 const LoaderWrapper = styled.div<{ $loading: boolean }>`
   position: fixed;
   inset: 0;
@@ -26,8 +30,8 @@ const LoaderWrapper = styled.div<{ $loading: boolean }>`
 /* مربع اصلی */
 const LogoBox = styled.div`
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border: 2px solid #fff;
   display: flex;
   justify-content: center;
@@ -35,36 +39,31 @@ const LogoBox = styled.div`
   overflow: hidden;
 `;
 
-/* لایه پر شونده */
-const FillLayer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #777; /* رنگ طوسی */
-  animation: ${fillUp} 2.5s ease-in-out infinite alternate;
-  z-index: 1;
-`;
-
-/* متن */
-const LogoText = styled.div`
-  position: relative;
-  color: #fff;
-  font-size: 20px;
-  font-family: sans-serif;
-  z-index: 2;
-  direction:ltr;
-  font-style:italic;
-`;
-
 const LoadingSpin: React.FC<LoadingSpinProps> = ({ loading = true }) => {
 
   return (
     <LoaderWrapper $loading={loading}>
-      <LogoBox>
-        <FillLayer />
-        <LogoText>vitrine.</LogoText>
+        <LogoBox className="loadingBlock">
+
+
+        <video
+          controls={false}
+          width="600"
+          height="468"
+          autoPlay
+          muted
+          loop
+          style={{
+            transform: 'scale(0.7) translate(4px, 2px)',
+          }}
+        >
+          <source
+            src={videoRef}
+            type="video/mp4"
+          />
+        </video>
       </LogoBox>
+
     </LoaderWrapper>
   );
 };

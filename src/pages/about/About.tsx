@@ -134,7 +134,7 @@ export default function About() {
                       type="video/mp4"
                     />
                   </video>
-                  ّ
+                  
                 </div>
               )}
             </div>
@@ -161,7 +161,7 @@ export default function About() {
                   >
                     <source src={videoTwo?.video ?? ""} type="video/mp4" />
                   </video>
-                  ّ
+                  
                 </div>
               )}
             </div>
