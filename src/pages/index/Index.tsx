@@ -13,7 +13,6 @@ import { FullPageOverlay } from "./components/full-page-overlay/FullPageOverlay"
 import { useEffect, useState } from "react";
 import useIndex from "../../hooks/index/useIndex";
 import type { IndexDataView } from "../../models/views/indexView";
-import { useIsMobile } from "../../helpers/useIsMobile";
 import { useLanguage } from "../../contexts/useLanguage";
 import { IndexProvider } from "../../contexts/indexContext";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
@@ -21,7 +20,6 @@ import LoadingSpin from "../../components/Loading/LoadingSpin";
 
 function Index() {
   useSyncLanguage();
-  const isMobile = useIsMobile();
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
   const [loading, setLoading] = useState(true);
   const { currentLang } = useLanguage();

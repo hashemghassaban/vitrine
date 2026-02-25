@@ -1,6 +1,5 @@
 import React from "react";
-import { useLanguage } from "../../contexts/useLanguage";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import videoRef from '../../assets/video-block/videoLoading.mov'
 
 interface LoadingSpinProps {
