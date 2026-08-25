@@ -14,32 +14,35 @@ export const Showcase: React.FC = () => {
 
   const [isCarouselNeeded, setIsCarouselNeeded] = useState(false);
 
-  useEffect(() => {
-    const checkWidth = () => {
-      const totalContentWidth = categories.length * 200;
-      setIsCarouselNeeded(window.innerWidth < totalContentWidth + 40);
-    };
-    checkWidth();
-    window.addEventListener('resize', checkWidth);
-    return () => window.removeEventListener('resize', checkWidth);
-  }, [categories.length]);
+useEffect(() => {
+  const checkWidth = () => {
+    if (typeof window === "undefined") return;
+
+    const totalContentWidth = categories.length * 200;
+    setIsCarouselNeeded(window.innerWidth < totalContentWidth + 40);
+  };
+
+  checkWidth();
+  window.addEventListener("resize", checkWidth);
+
+  return () => window.removeEventListener("resize", checkWidth);
+}, [categories.length]);
+
   
   return (
     <section className="showcase">
       <h2 className="showcase__title">{t("site.categoriesindex1")}</h2>
       <p className="showcase__subtitle">{t("site.categoriesindex2")}</p>
 
-      <div>
+      <div className="desktopCategory">
         {isCarouselNeeded ? (
           <Carousel
-            autoplay
             dots={false}
-            infinite
             draggable
             speed={1000}
             autoplaySpeed={2000}
             style={{ paddingInline: 20 }}
-            slidesToShow={7}
+            slidesToShow={7.5}
             responsive={[
               {
                 breakpoint: 1280,
@@ -76,7 +79,7 @@ export const Showcase: React.FC = () => {
               >
                 <div className="showcase-img-wrapper">
                   <a
-                    href={`/${currentLang}/products?category=${encodeURIComponent(item.slug)}`}
+                    href={`/${currentLang}/products/category/${encodeURIComponent(item.id)}`}
                   >
                     <img
                       src={item.icon}
@@ -102,13 +105,16 @@ export const Showcase: React.FC = () => {
               >
                 <div className="showcase-img-wrapper">
                   <a
-                    href={`/${currentLang}/products?category=${encodeURIComponent(item.slug)}`}
+                    href={`/${currentLang}/products/category/${encodeURIComponent(item.id)}`}
                   >
-                    <img
+                
+  <img
                       src={item.icon}
                       alt={item.title}
                       className={hoverIndex === i ? "hovered" : ""}
                     />
+                 
+                  
                     <p className={hoverIndex === i ? "show-text" : ""}>
                       {item.title}
                     </p>
@@ -118,6 +124,31 @@ export const Showcase: React.FC = () => {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="mobileCategory">
+        <div className="mobileCategoryBlock">
+           {categories.map((item, i) => (
+          <div className="mobileCategoryBox">
+             <a
+                    href={`/${currentLang}/products/category/${encodeURIComponent(item.id)}`}
+                  >
+                        <div className="icon">
+                    <img
+                      src={item.icon}
+                      alt={item.title}
+                      className={hoverIndex === i ? "hovered" : ""}
+                    />
+                    </div>
+                    <p className={hoverIndex === i ? "show-text" : ""}>
+                      {item.title}
+                    </p>
+                  </a>
+          </div>
+
+           ))}
+        </div>
+
       </div>
     </section>
   );

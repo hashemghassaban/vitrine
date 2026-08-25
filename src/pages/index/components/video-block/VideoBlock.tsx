@@ -19,7 +19,7 @@ export const VideoBlock: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const headerBackground = {
-    backgroundImage: `url(https://admin.vitrinegallery.ir/uploads/images/slider/thumbnail-1770115255_1629897596about.png)`,
+    backgroundImage: `url(${data?.image ?? undefined})`,
   };
 
   const onplay = () => {
@@ -61,7 +61,7 @@ export const VideoBlock: React.FC = () => {
 
           {/* تصویر / ویدئو */}
           <Col xs={24} sm={24} lg={13} className="video-col fade-in">
-                        <h2 className="video-block__title mobile">{data?.title}  </h2>
+                        {/* <h2 className="video-block__title mobile">{data?.title}  </h2> */}
 
             <div className="video-wrapper">
               {!isPlaying ? (

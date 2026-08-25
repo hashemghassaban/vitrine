@@ -12,11 +12,15 @@ import useFaq from "../../../hooks/contact/useFaq";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../../hooks/usePageMetadata";
+
 const { Title } = Typography;
 const { Panel } = Collapse;
 
 export default function FAQ() {
   useSyncLanguage();
+        usePageMetadata();
+  
   const [faq, setFaq] = useState<FaqView[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useFaq(currentLang);

@@ -13,6 +13,7 @@ import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import BlogCommentForm from "./components/BlogCommentForm";
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 export default function BlogDetailPage() {
   useSyncLanguage();
@@ -49,6 +50,23 @@ export default function BlogDetailPage() {
     setLoading(false);
   };
 
+  const textMainCaption = currentLang === "fa" ? 'ویترین گالری' : 'Vitrine Gallery'
+  const meta = blog
+    ? {
+      title: (blog.seo?.page_title || blog.title) + ' | ' + textMainCaption,
+      description:
+        blog.seo?.meta_description ||
+        blog.title,
+      ogImage: blog.image,
+      ogType: 'blog',
+    }
+    : {
+      title: textMainCaption,
+      description: 'blog details are loading',
+    };
+
+  usePageMetadata(meta);
+
   useEffect(() => {
     if (!id) return;
     fetchData();
@@ -66,25 +84,32 @@ export default function BlogDetailPage() {
               <h3 className="sidebar-title">{t("local_relatedArticles")}</h3>
               {related.map((item) => (
                 <div key={item.id} className="related-item">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    onClick={() => push(`/${currentLang}/blog/${item.id}`)}
-                  />
-                  <p className="title-stiler">{item.title}</p>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: truncate(item.content, 120, {
-                        ellipsis: "...",
-                      }),
-                    }}
-                  ></div>
-                  <Button
-                    type="link"
-                    onClick={() => push(`/${currentLang}/blog/${item.id}`)}
-                  >
-                    {t("local_readArticle")}
-                  </Button>
+                  <div className="photo">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      onClick={() => push(`/${currentLang}/blog/${item.id}`)}
+                    />
+                  </div>
+                  <div className="info-blog">
+                    <p className="title-stiler">{item.title}</p>
+                    <div
+                      className="descriptions"
+                      dangerouslySetInnerHTML={{
+                        __html: truncate(item.content, 120, {
+                          ellipsis: "...",
+                        }),
+                      }}
+                    ></div>
+                    <Button
+                      type="link"
+                      onClick={() => push(`/${currentLang}/blog/${item.id}`)}
+                    >
+                      {t("local_readArticle")}
+                    </Button>
+                  </div>
+
+
                 </div>
               ))}
             </div>
@@ -96,8 +121,7 @@ export default function BlogDetailPage() {
               <p className="meta">
                 {t("local_publishedAt")}: <span>{blog?.published_at}</span>
               </p>
-              {/* عکس اصلی */}
-              <img src={blog?.image} className="main-image" alt="main" />
+
               <div
                 className="paragraph"
                 dangerouslySetInnerHTML={{
@@ -106,10 +130,10 @@ export default function BlogDetailPage() {
               ></div>
               <BlogCommentForm id={id} blog={blog} />
             </div>
-            
+
           </Col>
         </Row>
-        
+
       </div>
       <AppFooter />
     </>

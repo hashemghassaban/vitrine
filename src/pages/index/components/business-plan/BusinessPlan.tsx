@@ -10,20 +10,22 @@ export const BusinessPlan: React.FC = () => {
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { indexData } = useIndexContext();
-
+  let slug =  "home-first-section" 
   const data = indexData?.sliders.find(
-    (item) => item.slug == "home-first-section",
+    (item) => item.slug === slug,
   );
+  console.log('sss',data);
+  
   return (
     <section id="BusinessPlan" className="business-plan">
       <Row gutter={[32, 32]} align="middle">
         {/* ستون تصویر */}
-                    <h2 className="business-plan__title mobile">{data?.title}</h2>
+        {/* <h2 className="business-plan__title mobile">{data?.title}</h2> */}
 
         <Col xs={24} sm={24} lg={12} className="business-plan__img-col">
           <img
             src={data?.image ?? undefined}
-            alt="business"
+            alt={data?.title}
             className="business-plan__img"
           />
         </Col>

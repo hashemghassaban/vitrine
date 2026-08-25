@@ -5,21 +5,29 @@ import type { FeatureView } from "../../models/views/productFeaturesView";
 const useProductFeatures = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
 
-  async function getProductFeatures() {
+  async function getProductFeatures(categoryId?: number) {
     let success = false;
     let data: FeatureView[] = [];
     let result = "";
 
     try {
-      const res =
-        await axiosAuthInstance.get<ServerResult<FeatureView[]>>(
-          `/product-features`,
-        );
+      const config = categoryId
+        ? {
+            params: {
+              category_id: categoryId,
+            },
+          }
+        : undefined;
+
+      const res = await axiosAuthInstance.get<ServerResult<FeatureView[]>>(
+        "/product-features",
+        config
+      );
 
       success = true;
       data = res.data.data;
     } catch {
-      result = "Failed to load blog post";
+      result = "Failed to load product features";
     }
 
     return {

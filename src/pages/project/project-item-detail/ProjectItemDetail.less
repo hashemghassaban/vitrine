@@ -1,23 +1,37 @@
 .blog-details-container-detail {
   padding: 450px 20px 20px;
-      background: #fff;
+  background: #fff;
   margin-top: 40px;
-   @media (max-width: 992px) {
-   padding: 70px 20px 20px;
-    }
+
+  @media (max-width: 992px) {
+    padding: 70px 20px 20px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 32vh 20px 20px;
+    margin-top: 0;
+  }
 
   /* محتوای اصلی */
   .content-block-detail {
     margin-bottom: 40px;
     background-color: #fff;
     padding: 15px 8%;
-       @media (max-width: 992px) {
- padding: 15px 0 0;
-     margin-bottom: 0;
+
+    @media (max-width: 992px) {
+      padding: 0;
+      margin-bottom: 0;
     }
-.ant-row {
-    align-items: flex-start;
-}
+
+    .ant-row {
+      align-items: flex-start;
+
+      @media (max-width: 768px) {
+        flex-direction: column-reverse !important;
+        margin: 27px 0 0;
+      }
+    }
+
     .blog__image-detail {
       display: flex;
       align-items: center;
@@ -25,31 +39,35 @@
     }
 
     .blog__content-detail {
-    display: flex;
+      display: flex;
       align-items: center;
     }
+
     .img-box-detail {
       width: 100%;
       height: 450px;
+
       @media (max-width: 992px) {
-  height: auto;
-    }
+        height: auto;
+      }
+
       .imgs-detail {
-       width: 100%;
+        width: 100%;
         height: 450px;
         margin: 0 auto;
         display: block;
         object-fit: cover;
-             @media (max-width: 992px) {
-  height: auto;
-    }
+
+        @media (max-width: 992px) {
+          height: auto;
+        }
       }
 
       .custom-dots {
         bottom: -20px;
         width: 90%;
-    margin: auto;
-     
+        margin: auto;
+
       }
 
       .custom-dots li button {
@@ -62,16 +80,18 @@
         background: black;
         opacity: 1;
         height: 6px;
-            position: relative;
-    top: -2px;
+        position: relative;
+        top: -2px;
       }
-      .slick-active{
-            // height: 5px;
-    
-      &::after{
-        background-color: #000;
 
-      }  }
+      .slick-active {
+        // height: 5px;
+
+        &::after {
+          background-color: #000;
+
+        }
+      }
 
       .ant-carousel {
         top: calc(100% + 20px);
@@ -79,11 +99,16 @@
       }
     }
 
-  
+
 
     .text-box-detail {
       padding: 40px 40px 40px 40px;
       text-align: left;
+
+      @media (max-width: 768px) {
+        padding: 0 0 40px;
+      }
+
       .title-text-box-detail {
         font-size: 25px;
         margin-bottom: 30px;
@@ -97,15 +122,17 @@
         font-weight: 300;
         font-size: 15px;
         line-height: 31px;
-    text-align: justify !important;
+        text-align: justify !important;
         color: #000000;
         margin-top: 50px;
-           @media (max-width: 768px) {
-  margin-top: 0;
-    }
+
+        @media (max-width: 768px) {
+          margin-top: 0;
+        }
       }
     }
   }
+
   .item-box-detail-detail {
     /* ----rtl---*/
     direction: ltr;
@@ -114,7 +141,12 @@
     grid-template-columns: 145px 1fr;
     align-items: start;
     gap: 10px;
-  
+
+    @media (max-width: 768px) {
+      grid-template-columns: 100px 1fr;
+
+    }
+
 
     .title-text-detail {
       color: #767676;
@@ -122,7 +154,11 @@
       font-size: 18px;
       line-height: 45px;
       text-align: left;
-        margin: 0;
+      margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+      }
     }
 
     .dec-text-detail {
@@ -131,32 +167,33 @@
       line-height: 45px;
       text-align: left;
       color: #6b6b6b;
-        margin: 0;
+      margin: 0;
     }
   }
 
-.custom-bottom-arrows{
-  display: flex;
-  margin-top: 8px;
-justify-content:space-between;
-flex-direction: row-reverse;
-}
+  .custom-bottom-arrows {
+    display: flex;
+    margin-top: 8px;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
 
-.icon-arrow{
- font-size: 20px;
-  cursor: pointer;
+  .icon-arrow {
+    font-size: 20px;
+    cursor: pointer;
 
-}
+  }
 
-.icon-arrow-btn{
- background: transparent !important;
- border: none;
- cursor: pointer;
-}
+  .icon-arrow-btn {
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
+  }
 
   /* واکنش‌گرایی برای موبایل */
   @media (max-width: 991px) {
     .content-block-detail {
+
       .blog__image-detail,
       .blog__content-detail {
         order: 0 !important;
@@ -164,21 +201,29 @@ flex-direction: row-reverse;
     }
   }
 }
-.ant-carousel{
+
+.ant-carousel {
   position: static;
 }
+
 .product-card-detail {
   text-align: center;
   padding: 40px 20px 0;
-   @media (max-width: 768px) {
-  padding: 0 20px ;
-   }
+
+  @media (max-width: 768px) {
+    padding: 0;
+
+    .slick-slide {
+      margin: 0 5px;
+    }
+  }
 
   .title-detail {
     padding-top: 40px;
     margin-bottom: 30px;
     color: #767676 !important;
   }
+
   .two-lines-detail {
     margin-bottom: 40px;
     color: #767676;
@@ -197,25 +242,32 @@ flex-direction: row-reverse;
   border-radius: 0px;
   margin: auto;
 
+  @media (max-width: 768px) {
+    margin: 'auto';
+
+  }
+
   &:hover {
-    transform: translateY(-3px);
     box-shadow: none;
   }
 
-  .ant-card-cover{
-     height: 350px;
-        @media (max-width: 768px) {
-  height: 250px;
-   }
+  .ant-card-cover {
+    height: 300px;
+    width: 100%;
+
+    @media (max-width: 768px) {
+      height: 250px;
+      width: 100%;
+    }
   }
 
   .img-card-project {
     object-fit: cover;
     border-radius: 0px;
     padding: 10px;
-        width: 100%;
+    width: 100%;
     height: 100%;
-  
+
   }
 
   .book-title-project {
@@ -223,12 +275,17 @@ flex-direction: row-reverse;
     margin-top: 0;
     color: #767676;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+
+      font-size: 11px !important;
+
+    }
   }
 }
 
 @media (max-width: 768px) {
   .showcase-card {
-    width: 250px;
 
     img {
       height: 250px;
@@ -250,21 +307,23 @@ flex-direction: row-reverse;
 
 .image-container {
   width: 100%;
-  
+
   padding-bottom: 20%;
   position: relative;
   overflow: hidden;
   margin-bottom: 100px;
   height: 580px !important;
+
   @media (max-width: 768px) {
- height: 200px !important;
-     margin-bottom: 25px;
-         padding-bottom: 0;
-         div{
-            width: 92%;
-        min-width: 96%;
-        margin: auto;
-         }
+    height: 200px !important;
+    margin-bottom: 25px;
+    padding-bottom: 0;
+
+    div {
+      width: 92%;
+      min-width: 96%;
+      margin: auto;
+    }
 
   }
 }
@@ -276,8 +335,10 @@ flex-direction: row-reverse;
   width: 100%;
   max-height: 580px;
   object-fit: cover;
-    @media (max-width: 768px) {
- max-height: 200px;
+
+  @media (max-width: 768px) {
+    max-height: 100%;
+    height: 100%;
   }
 }
 
@@ -285,7 +346,8 @@ flex-direction: row-reverse;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* وسط container */
+  transform: translate(-50%, -50%);
+  /* وسط container */
   width: 100px;
   height: 100px;
   object-fit: contain;
@@ -294,34 +356,43 @@ flex-direction: row-reverse;
     width: 80px;
     height: 80px;
   }
+
   @media (max-width: 768px) {
     width: 60px;
     height: 60px;
   }
 }
 
-.ant-layout-rtl{
-.text-box-detail{
-      padding: 40px 0 40px 80px!important;
-        @media (max-width: 768px) {
-   padding:0 !important;
+.ant-layout-rtl {
+  .text-box-detail {
+    padding: 40px 0 40px 80px !important;
+
+    @media (max-width: 768px) {
+      padding: 0 !important;
+    }
+
   }
 
-}
-.title-text-box-detail ,   .dec-text-detail ,   .title-text-detail  ,.title-dec-box-detail , .item-box-detail-detail {
-  text-align: right!important;
-}
+  .title-text-box-detail,
+  .dec-text-detail,
+  .title-text-detail,
+  .title-dec-box-detail,
+  .item-box-detail-detail {
+    text-align: right !important;
+  }
+
   .item-box-detail-detail {
     direction: rtl;
-        grid-template-columns: 100px 1fr!important;
+    grid-template-columns: 100px 1fr !important;
 
   }
-  .custom-bottom-arrows{
 
-flex-direction: row;
-}
+  .custom-bottom-arrows {
+
+    flex-direction: row;
+  }
 }
 
-.anticon{
-transform: rotate(0deg)!important;
+.anticon {
+  transform: rotate(0deg) !important;
 }

@@ -14,10 +14,13 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
 import "./blog.less";
 import backgroundHeader from "../../assets/header/IMG_7072.jpg"
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 
 function Blog() {
   useSyncLanguage();
+      usePageMetadata();
+  
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { getPosts, getCategories } = useBlog(currentLang);
@@ -131,7 +134,7 @@ function Blog() {
                 <div className="img-box">
                   <img
                     src={block.image}
-                    alt={`pic${block.id}`}
+                    alt={block.title}
                     onClick={() => push(`/${currentLang}/blog/${block.id}`)}
                   />
                 </div>

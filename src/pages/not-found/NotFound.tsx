@@ -7,11 +7,27 @@ import useNavigation from "../../hooks/useHistory";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import { useLanguage } from "../../contexts/useLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 const NotFound = () => {
   useSyncLanguage();
-  const { push } = useNavigation();
   const { currentLang } = useLanguage();
+  usePageMetadata({
+    title:
+      currentLang === "fa"
+        ? "صفحه یافت نشد | ویترین گالری"
+        : currentLang === "ar"
+          ? "الصفحة غير موجودة | Vitrine Gallery"
+          : "Page Not Found | Vitrine Gallery",
+    description:
+      currentLang === "fa"
+        ? "صفحه مورد نظر شما یافت نشد."
+        : currentLang === "ar"
+          ? "الصفحة التي تبحث عنها غير موجودة."
+          : "The page you are looking for does not exist.",
+    htmlLang: currentLang,
+  });
+  const { push } = useNavigation();
   const { t } = useTranslate();
   return (
     <>
@@ -22,7 +38,7 @@ const NotFound = () => {
 
           <div className="error-texts">
             <p className="fa-text">{t("local_NotFoundMessage")}</p>
-            <p className="en-text">Not Found</p>
+            <p className="en-text">{t("local_Sorry")}</p>
             <Button type="link" onClick={() => push(`/${currentLang}`)}>
               {t("local_redirectToHome")}
             </Button>

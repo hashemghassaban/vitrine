@@ -86,9 +86,7 @@ This set of fonts are used in this project under the license: (.....)
 	font-family: interEnFont;
 	font-style: normal;
 	font-weight: 950;
-	src: url('fonts/en/inter.woff2') format('woff'),   
-	url('fonts/en/inter.eot') format('eot'),
-	url('fonts/en/inter.ttf') format('ttf'),
-	url('fonts/en/inter.woff') format('woff');	
+	src: 
+	url('fonts/enFont/Homepagebaukasten Book.ttf') format('ttf'),
 		 
 }

@@ -269,6 +269,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ product }) => {
                   <Button
                     icon={<PlusOutlined />}
                     onClick={() => setIsAddingProduct(true)}
+                    className={'addProduct'}
                   >
                     {t("local_orderFormAddProduct")}
                   </Button>

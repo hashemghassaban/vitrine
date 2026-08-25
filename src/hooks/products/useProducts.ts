@@ -12,33 +12,75 @@ const useProducts = (currentLang: string) => {
   const { axiosAuthInstance } = useAxious(currentLang);
   const { t } = useTranslate();
 
-  async function getListProducts(perPage = 15) {
-    let success = false;
-    let result = "";
-    let data: ProductView[] = [];
-    let total = 0;
-    await axiosAuthInstance
-      .get<ServerResult<ProductView[]>>(`/products?per_page=${perPage}`)
-      .then((res) => {
-        if (res.data.success) {
-          success = true;
-          data = res.data.data;
-          total = res.data.meta.pagination.total;
-        } else {
-          result = res.data.message ?? "";
-        }
-      })
-      .catch(() => {
-        result = "Failed to fetch products";
-      });
+async function getListProducts(
+  perPage: number = 15,
+  categoryId?: number,
+  brands?: number[],
+  collections?: number[],
+  features?: number[]
+) {
+  try {
+    const res = await axiosAuthInstance.get<ServerResult<ProductView[]>>(
+      "/products",
+      {
+        params: {
+          per_page: perPage,
+          category_id: categoryId,
+          brand_ids: brands,
+          collection_ids: collections,
+          feature_values: features,
+        },
+        paramsSerializer: (params) => {
+          const query: string[] = [];
+
+          Object.entries(params).forEach(([key, value]) => {
+            if (value === undefined || value === null) return;
+
+            if (Array.isArray(value)) {
+              value.forEach((v) => {
+                query.push(`${key}[]=${encodeURIComponent(v)}`);
+              });
+            } else {
+              query.push(`${key}=${encodeURIComponent(value)}`);
+            }
+          });
+
+          return query.join("&");
+        },
+      }
+    );
+
+    if (res.data.success) {
+      const { data, meta } = res.data;
+
+      return {
+        success: true,
+        result: "",
+        data,
+        total: meta?.pagination?.total ?? 0,
+      };
+    }
 
     return {
-      success,
-      result,
-      data,
-      total,
+      success: false,
+      result: res.data.message ?? "Unknown error",
+      data: [],
+      total: 0,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      result: error?.response?.data?.message || "Failed to fetch products",
+      data: [],
+      total: 0,
     };
   }
+}
+
+
+
+
+
 
   async function getProductById(id: number) {
     let success = false;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ConfigProvider, Layout } from "antd";
 import faIR from "antd/es/locale/fa_IR";
 import enUS from "antd/es/locale/en_US";
@@ -9,21 +9,34 @@ import { setTranslations } from "./i18n/translationStore";
 import Pages from "./pages/Pages";
 import "antd/dist/reset.css";
 import { localTranslations } from "./i18n/localTranslations";
+
+/** Baseline strings before remote translations load (also used on SSR first paint). */
+setTranslations(localTranslations);
+
 const { Content } = Layout;
 
 const AppContent: React.FC = () => {
   const { currentLang, isRtl } = useLanguage();
   const { getTranslations } = useTranslations(currentLang);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    getTranslations().then((res) => {
-      const local = localTranslations.filter((c) => !res.data!.some((d) => c.key == d.key));
-      setTranslations([...local, ...res.data!]);
-      setLoading(false);
-    });
-  }, []);
+    let cancelled = false;
+
+    getTranslations()
+      .then((res) => {
+        if (cancelled) return;
+        const remote = Array.isArray(res.data) ? res.data : [];
+        const local = localTranslations.filter((c) => !remote.some((d) => d.key === c.key));
+        setTranslations([...local, ...remote]);
+      })
+      .catch(() => {
+        if (!cancelled) setTranslations(localTranslations);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentLang]);
 
   return (
     <ConfigProvider
@@ -38,11 +51,9 @@ const AppContent: React.FC = () => {
       warning={{ strict: false }}
     >
       <Layout style={{ minHeight: "100vh" }}>
-        {!loading && (
-          <Content>
-            <Pages />
-          </Content>
-        )}
+        <Content>
+          <Pages />
+        </Content>
       </Layout>
     </ConfigProvider>
   );

@@ -10,7 +10,7 @@ import About from "./about/About";
 import Representation from "./contact/representation/Representation";
 import Catalogue from "./contact/catalogue/Catalogue";
 import FAQ from "./contact/faq/FAQ";
-import ContactBranch from "./contact/contact-branch/ContactBranch";
+import Contact from "./contact/contact-branch/ContactBranch";
 import Search from "./search/Search";
 import Project from "./project/Project";
 import ProjectItemDetail from "./project/project-item-detail/ProjectItemDetail";
@@ -20,6 +20,8 @@ import BrandProducts from "./product-page/brand-products/BrandProducts";
 import AllProducts from "./product-page/all-products/AllProducts";
 import ProductDetail from "./product-page/product-detail/ProductDetail";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+import DynamicPage from './dynamicPage/DynamicPage'; // کامپوننت صفحه داینامیک شما
+
 
 const Pages = () => {
   const { location } = useHistory();
@@ -49,7 +51,7 @@ const Pages = () => {
           <Route path="agents" element={<Representation />} />
           <Route path="catalogue" element={<Catalogue />} />
           <Route path="faq" element={<FAQ />} />
-          <Route path="contactBranch" element={<ContactBranch />} />
+          <Route path="Contact" element={<Contact />} />
           <Route path="search" element={<Search />} />
           <Route path="project" element={<Project />} />
           <Route path="project/:id" element={<ProjectItemDetail />} />
@@ -58,7 +60,8 @@ const Pages = () => {
           <Route path="brand-detail/:id" element={<BrandProducts />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:id" element={<ProductDetail />} />
-          <Route path="products/category/:categorySlug" element={<AllProducts />} />
+          <Route path="products/category/:categoryId" element={<AllProducts />} />
+          <Route path="pages/:pageName" element={<DynamicPage />} />
         </Route>
       </Routes>
     </>

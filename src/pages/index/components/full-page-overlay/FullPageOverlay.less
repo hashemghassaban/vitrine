@@ -7,6 +7,16 @@
   position: sticky;
   overflow: hidden;
   top: 0;
+    &::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #00000061;
+    top: 0;
+    right: 0;
+    z-index: 0;
+  }
 }
 
 .overlay-section img {
@@ -15,21 +25,46 @@
   object-fit: cover;
 }
 
+.overlay-section video {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
 .content-overlay-container{
      position: absolute;
-    width: 300px;
-    text-align: right;
+    width: auto;
+    text-align: start;
     height: 124px;
-          @media (max-width: 992px) {
+    z-index: 1;
+      left:inherit!important;
+       right: 10%!important;
+               top: 35%!important;
+         &.right{
+         text-align: start;
+         left: 10%!important;
+         right: inherit!important;
+                 @media (max-width: 992px) {
+right: 50% !important;
+
+        top: 6% !important;
+        left: inherit !important;
+              }
+       
+
+    }
+       @media (max-width: 992px) {
         text-align: center !important;
         margin: 0 !important;
-        top: inherit !important;
+           width: 100%!important;
+        top: 6% !important;
         height: auto !important;
-        bottom: 10%;
+        bottom: inherit !important;
+        right: 50% !important;
+                left: inherit!important;
+
+        transform: translate(50%, 0);
           }
-    &.right{
-         text-align: left;
-    }
 
   h4{
 color: #000;
@@ -44,16 +79,45 @@ color: #000;
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
-    white-space: nowrap;
     margin-top: 0;
+
+ @media (max-width: 768px) {
+        font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    margin-top: 0;
+    line-height: 39px;
+ }
+  }
+  & ~ div{
+    z-index: 1;
   }
 }
 
 .ant-layout-rtl{
   .content-overlay-container{
        text-align: left;
+       right:inherit!important;
+       left: 10%!important;
          &.right{
          text-align: right;
+         right: 10%!important;
+         left: inherit!important;
+              @media (max-width: 992px) {
+   right: 50% !important;
+        top: 6% !important;
+              }
+         
     }
+     @media (max-width: 992px) {
+        text-align: center !important;
+        margin: 0 !important;
+        top: 6% !important;
+        height: auto !important;
+        bottom: inherit !important;
+        right: 50% !important;
+        left: inherit!important;
+        transform: translate(50%, 0);
+          }
   }
 }

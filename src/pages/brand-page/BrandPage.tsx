@@ -12,9 +12,12 @@ import { useTranslate } from "../../i18n/useTranslate";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
 import backgroundHeader from "../../assets/header/IMG_7061.jpg"
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 const BrandPage: React.FC = () => {
   useSyncLanguage();
+        usePageMetadata();
+  
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { getList } = useBrands(currentLang);

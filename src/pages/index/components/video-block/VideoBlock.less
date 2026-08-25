@@ -25,7 +25,7 @@
   /* --- متن داخل wrapper --- */
   .content-wrapper {
   
-    padding: 100px 150px;
+    padding: 100px 50px 100px 200px;
    
       transform: translateX(50px);
       animation: fadeInRight 1s forwards;
@@ -52,7 +52,7 @@
 
     }
     @media (max-width: 768px) {
-               padding: 20px 8%;
+               padding: 20px 5%;
         text-align: start;
         transform: translateY(20px);
         animation: fadeInUp 1s forwards;
@@ -79,28 +79,36 @@
      
             @media (max-width: 992px) {
      margin-top: 50px;
+     text-align: start!important;
 
             }
 
     }
-    &.mobile{
- display: none;
-    }
+//     &.mobile{
+//  display: none;
+//     }
   @media (max-width: 768px) {
     &.desktop{
-      display: none;
-
-    }
-    &.mobile{
-    display: block;
-    text-align: center;
+      display: block;
+          text-align: center;
     width: 100%;
     margin: 0;
-        font-size: 22px;
+        font-size: 20px;
                 height: 41px;
-                        padding-bottom: 65px;
+                             padding-bottom: 0;
+        margin-top: 50px;
 
     }
+    // &.mobile{
+    // display: block;
+    // text-align: center;
+    // width: 100%;
+    // margin: 0;
+    //     font-size: 22px;
+    //             height: 41px;
+    //                     padding-bottom: 65px;
+
+    // }
   }
   }
   .video-block__desc,
@@ -132,7 +140,6 @@
         margin-bottom: 60px;
   }
     @media (max-width: 768px) {
-    justify-content: flex-start;
       margin-top: 50px;
     }
   }
@@ -216,4 +223,13 @@
       }
     }
   }
+}
+
+.ant-layout-rtl{
+.video-block .content-wrapper{
+      padding: 100px 200px 100px 50px;
+        @media (max-width: 768px) {
+    padding: 20px 5%;
+        }
+}
 }

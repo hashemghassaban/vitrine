@@ -1,6 +1,11 @@
 .business-plan {
-  padding: 10px 0;
+  padding: 50px 0 10px; 
   overflow: hidden;
+         @media (max-width: 768px) {  
+  padding: 25px 0 10px; 
+
+         }
+
   
   .business-plan__img-col {
     position: relative;
@@ -38,16 +43,16 @@
   .business-plan__content {
     display: flex;
     justify-content: flex-start;
-    padding-right: 100px !important;
+    padding-left: 100px !important;
        @media (max-width: 992px) {
     justify-content: center;
-    padding-right: 0 !important;
+    padding-left: 0 !important;
        }
 
     .business-plan__content-inner {
-      max-width: 350px;
+      max-width: 400px;
       width: 100%;
-      text-align: right;
+      text-align: start;
       opacity: 0;
       transform: translateX(50px);
       animation: fadeInRight 1s forwards;
@@ -64,37 +69,57 @@
   }
 }
 
+
+.ant-layout-rtl{
+ .business-plan__content{
+ padding-right: 100px !important;
+          padding-left: 0 !important;
+                 @media (max-width: 992px) {
+
+ padding-right: 0 !important;
+
+
+                 }
+  }
+     
+}
 /* تیتر */
 .business-plan__title {
   font-weight: 700;
   font-size: 23px;       
   line-height: 45px;     
+  text-align: start;
   margin-bottom: 20px;
   color: #555;
-   &.desktop{
-      display: block;
+//    &.desktop{
+//       display: block;
 
-    }
-    &.mobile{
- display: none;
-    }
+//     }
+//     &.mobile{
+//  display: none;
+//     }
   @media (max-width: 768px) {
     &.desktop{
-      display: none;
-
-    }
-    &.mobile{
-    display: block;
-    text-align: center;
+      text-align: start;
     width: 100%;
     margin: 0;
-        font-size: 20px;
+       font-size: 20px;
+               padding: 0 10%;
     }
+
+    
+    // &.mobile{
+    // display: block;
+    // text-align: center;
+    // width: 100%;
+    // margin: 0;
+    //     font-size: 16px;
+    // }
   }
   @media (max-width: 1199px) { font-size: 22px; line-height: 42px; }
   @media (max-width: 991px)  { font-size: 21px; line-height: 40px; }
   @media (max-width: 767px)  { font-size: 20px; line-height: 35px; }
-  @media (max-width: 575px)  { font-size: 18px; line-height: 32px; }
+  @media (max-width: 575px)  { font-size: 16px; line-height: 32px; }
 }
 
 /* متن‌ها */
@@ -103,12 +128,14 @@
   font-style: normal;
   font-weight: 300;
   font-size: 15px;       
+  text-align: start;
   line-height: 31px;     
   margin-bottom: 25px;
 
     @media (max-width: 768px) {
 text-align: justify;
         padding: 25px 10%;
+         margin-bottom: 0;
 
     }
 
@@ -126,7 +153,8 @@ text-align: justify;
   background: transparent !important;
   border: 1px solid #818181;
   font-size: 17px;     
-  width: 170px;
+  min-width: 170px;
+  width: auto;
   margin-top: 20px;
   color: #818181;
   cursor: pointer;
@@ -134,7 +162,7 @@ text-align: justify;
   @media (max-width: 991px) { width: 150px; margin: 0 auto; }
   @media (max-width: 767px) { width: 100%; max-width: 220px; margin: 0 auto;         display: block;
         margin: 0 10%;}
-  @media (max-width: 575px) { width: 100%; max-width: 145px; margin: 0 auto; font-size: 14px; line-height: 25px; display: block;
+  @media (max-width: 575px) { padding: 0.4rem 0 !important; width: 100%; max-width: 160px;min-width: 140px; margin: 0 auto; font-size: 14px; line-height: 25px; display: block;
         margin: 0 10%;}
 }
 
@@ -148,3 +176,5 @@ text-align: justify;
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+

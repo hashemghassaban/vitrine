@@ -15,9 +15,12 @@ import "./About.less";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import { useTranslate } from "../../i18n/useTranslate";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 export default function About() {
   useSyncLanguage();
+    usePageMetadata();
+
   const { currentLang } = useLanguage();
   const [page, setPage] = useState<PageView>();
   const { getAbout } = useAboutPage(currentLang);
@@ -48,6 +51,7 @@ export default function About() {
   );
   const fetchabout = async () => {
     const { success, data } = await getAbout();
+    
     if (success && data) {
       setPage(data);
     }
@@ -115,8 +119,9 @@ export default function About() {
                   <img
                     src={videoOne?.image ?? undefined}
                     className="main-image"
+                    alt="cover"
                   />
-                  <img src={play} className="overlay-image" />
+                  <img src={play} className="overlay-image" alt="play" />
                 </>
               ) : (
                 <div>
@@ -145,8 +150,8 @@ export default function About() {
             <div className=" video-div" onClick={() => onplay1()}>
               {!showVideo2 ? (
                 <>
-                  <img src={videoTwo?.image ?? ""} className="main-image" />
-                  <img src={play} className="overlay-image" />
+                  <img src={videoTwo?.image ?? ""} className="main-image" alt="cover" />
+                  <img src={play} className="overlay-image" alt="play" />
                 </>
               ) : (
                 <div>

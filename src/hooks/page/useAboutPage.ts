@@ -9,7 +9,7 @@ const useAboutPage = (currentLang: string) => {
     let result = "";
     let success = false;
     let data: PageView | null = null;
-    const slug = currentLang === "fa" ? "درباره-ما" : "about-us";
+    const slug = currentLang === "fa" ? "درباره-ما" : currentLang === "en" ? "about-us" : "عن-الشركة";
     await axiosAuthInstance
       .get<ServerResult<PageView>>(`/page/${slug}`)
       .then((res) => {

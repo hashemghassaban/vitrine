@@ -1,4 +1,5 @@
 export type TranslationKey =
+|"site.servicecodes"
   //service page
   | "site.servicetitlenew"
   //brand page
@@ -70,14 +71,18 @@ export type TranslationKey =
   | "local_phone"
   | "local_more"
   | "local_less"
-  | "local_vitrin20years"
   | "local_category"
   | "local_type_products"
+  | "local_filter_products"
+  |"local_apply_filter_products"
   | "local_type_blog"
   | "local_type_news"
   | "local_type_pages"
   | "local_aboutVitrine"
   | "local_ourServices"
+  | "local_OurServicesFooter"
+  | "local_AccessFooter"
+
   | "local_home"
   | "local_captchaTextInput"
   | "local_blogRating"
@@ -116,6 +121,7 @@ export type TranslationKey =
   | "local_commentReplyTo"
   | "local_commentReply"
   | "local_rate"
+  | "exploreMore"
 
   //project
   | "local_architect"
@@ -128,6 +134,7 @@ export type TranslationKey =
   | "local_relatedArticles"
   | "local_readArticle"
   | "local_nextArticles"
+  |"local_nextProject"
   | "local_lastArticles"
   | "local_publishedAt"
   //contactBranch
@@ -153,7 +160,13 @@ export type TranslationKey =
   | "local_Contact"
   | "local_Brands"
 
+ | "site.tajrobe.ar"
+  | "site.tajrobe.fa"
+  | "site.tajrobe.en"
+
+
   //404 page
   | "local_NotFoundMessage"
+  |"local_Sorry"
   | "local_redirectToHome";
 //----local

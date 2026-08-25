@@ -199,7 +199,7 @@ export default function ProjectItem() {
           {hasMore && (
             <Row justify="center">
               <AppButton className="blog__Button-project" onclick={loadMore}>
-                {t("local_nextArticles")}
+                {t("local_nextProject")}
               </AppButton>
             </Row>
           )}

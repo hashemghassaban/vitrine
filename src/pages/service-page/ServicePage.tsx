@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button , Divider} from "antd";
 import "./ServicePage.less";
 import img1 from "../../assets/service-page/img1.png";
 import img2 from "../../assets/service-page/img2.png";
@@ -11,7 +11,8 @@ import img7 from "../../assets/service-page/img7.png";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 import backgroundHeader from "../../../assets/header/IMG_7069.jpg"
-
+import { useSyncLanguage } from "../../i18n/useSyncLanguage";
+import usePageMetadata from "../../hooks/usePageMetadata";
 const items = [
   {
     id: 1,
@@ -46,6 +47,8 @@ const items = [
 ];
 
 const ServicePage: React.FC = () => {
+   useSyncLanguage();
+   usePageMetadata();
   return (
     <>
       <AppHeader title={"خدمات مشاوره و طراحی ویترین"} categoryBackground={backgroundHeader}/>
@@ -115,7 +118,9 @@ const ServicePage: React.FC = () => {
           </Row>
         </div>
 
-        {/*section3*/}
+         <div className="divider-service">
+                                  <Divider className="divider-service" />
+                                </div>
         <Row justify="center">
           <div>
             <h2 className="service-title"> پروژه های انجام شده </h2>

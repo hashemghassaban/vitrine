@@ -11,9 +11,13 @@ export const Service: React.FC = () => {
   const { push } = useNavigation();
   const { currentLang } = useLanguage();
   const { t } = useTranslate();
+    let slug = "home-service-section" 
+
   const data = indexData?.sliders.find(
-    (item) => item.slug == "home-service-section",
+    (item) => item.slug == slug,
   );
+
+  
   return (
     <section id="Service" className="service">
       <Row className="first__title desktop" justify="center">
@@ -41,7 +45,7 @@ export const Service: React.FC = () => {
         <h2>{t("local_ourServices")}</h2>
       </Row>
           <a href={`/${currentLang}${data?.link}`}>
-            <img src={data?.image ?? undefined} alt="service" className="service-img" />
+            <img src={data?.image ?? undefined} alt={data?.title} className="service-img" />
           </a>
         </Col>
       </Row>

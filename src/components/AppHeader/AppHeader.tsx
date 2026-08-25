@@ -7,7 +7,6 @@ import search from "../../assets/header/search.png";
 import en from "../../assets/header/en.png";
 import defaultBg from "../../assets/header/back.png";
 import "./AppHeader.less";
-import { ImageHoverModal } from "./ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../contexts/useLanguage";
 import useBrands from "../../hooks/brand/useBrands";
 import type BrandView from "../../models/views/brandView";
@@ -34,6 +33,7 @@ const langLabels: Record<Language, string> = {
   fa: "FA",
   ar: "AR",
 };
+
 export const AppHeader: FC<AppHeaderProps> = ({
   noBackground,
   noBackgroundProducts,
@@ -56,6 +56,10 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+const isMobile = typeof window !== "undefined"
+  ? window.innerWidth < 768
+  : false
+
   const [brands, setBrands] = useState<BrandView[]>([]);
   const { getList } = useBrands(currentLang);
 
@@ -78,13 +82,23 @@ export const AppHeader: FC<AppHeaderProps> = ({
   useEffect(() => {
     // تابعی که هنگام اسکرول اجرا می‌شود
     const handleScroll = () => {
-      // اگر اسکرول عمودی بیشتر از ۵۰ پیکسل بود، وضعیت را true کن
-      if (window.scrollY > 100) {
-        setIsScrolled(true);
+      if (!isMobile) {
+        if (window.scrollY > 100) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+          setIsMenuOpen(false)
+        }
       } else {
-        setIsScrolled(false);
-        setIsMenuOpen(false)
+        if (window.scrollY > 20) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+          setIsMenuOpen(false)
+        }
       }
+      // اگر اسکرول عمودی بیشتر از ۵۰ پیکسل بود، وضعیت را true کن
+
     };
 
     // اضافه کردن رویداد اسکرول به پنجره
@@ -96,69 +110,79 @@ export const AppHeader: FC<AppHeaderProps> = ({
     };
   }, []);
   const renderMenuItems = (items: any[]) => {
-    return items.map((item) => {
+    return items.flatMap((item) => {
       // ✅ اگر type برابر imageHover بود
       if (item.type === "imageHover") {
         const productChildren = buildProductChildren(data);
 
-        return (
-          <Menu.SubMenu
-            key={item.key}
-            title={item.title[currentLang]}
-          >
-            {productChildren.map((child) => (
-              <Menu.Item
-                key={child.key}
-                onClick={() =>
-                  push(`/${currentLang}/${child.key}`)
-                }
-              >
-                {child.label}
-              </Menu.Item>
-            ))}
-          </Menu.SubMenu>
-        );
+        return {
+          key: item.key,
+          label: item.title[currentLang],
+          children: productChildren.map((child) => ({
+            key: child.key,
+            label: child.label,
+            onClick: () => {
+              push(`/${currentLang}/${child.key}`);
+            },
+          })),
+        };
       }
 
       // ✅ حالت معمولی SubMenu
       if (item.children && item.children.length > 0) {
-        return (
-          <Menu.SubMenu
-            key={item.key}
-            title={item.title[currentLang]}
-          >
-            {renderMenuItems(item.children)}
-          </Menu.SubMenu>
-        );
+        return {
+          key: item.key,
+          label: item.title[currentLang],
+          children: item.children.map((child: any) => ({
+            key: child.key,
+            label: child.title[currentLang],
+            onClick: () => {
+              child.path ? push(`/${currentLang}/${child.path}`) : undefined;
+            },
+          })),
+        };
       }
 
       // ✅ آیتم ساده
-      return (
-        <Menu.Item
-          key={item.key}
-          onClick={() =>
-            item.path
-              ? push(`/${currentLang}/${item.path}`)
-              : undefined
-          }
-        >
-          {item.title[currentLang]}
-        </Menu.Item>
-      );
+      return {
+        key: item.key,
+        label: item.title[currentLang],
+        onClick: () => {
+          item.path ? push(`/${currentLang}/${item.path}`) : undefined;
+        },
+      };
     });
   };
   const handleLanguageChange = (newLang: Language) => {
     if (!currentLang) return;
+
     const newPath = location.pathname.replace(`/${currentLang}`, `/${newLang}`);
-    window.location.href = newPath;
+    const newUrl = `${newPath}${location.search}`;
+
+    window.location.href = newUrl;
   };
+
+  const languageMenuItems = [
+    {
+      key: "b",
+      label: langLabels[currentLang],
+      className: "En_text",
+      popupClassName: "lang-submenu-popup",
+      children: LANGUAGES.filter((lang) => lang !== currentLang).map((lang) => ({
+        key: `lang-${lang}`,
+        label: langLabels[lang],
+        onClick: () => handleLanguageChange(lang),
+      })),
+    },
+  ];
+
   const buildProductChildren = (
     data: IndexDataView | null,
   ): MenuItem[] => {
     if (!data?.product_categories) return [];
 
     return data.product_categories.map((cat) => ({
-      key: `products?category=${cat.slug}`,
+      key: `products/category/${cat.id}`,
       label: cat.title,
     }));
   };
@@ -280,24 +304,8 @@ export const AppHeader: FC<AppHeaderProps> = ({
               triggerSubMenuAction="hover"
               selectable={false}
               overflowedIndicator={null}
-            >
-              <Menu.SubMenu
-                key="b"
-                title={langLabels[currentLang]} // نمایش label زبان فعلی
-                className="En_text"
-                popupClassName="lang-submenu-popup"
-              >
-                {LANGUAGES.filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
-                  .map((lang) => (
-                    <Menu.Item
-                      key={`lang-${lang}`}
-                      onClick={() => handleLanguageChange(lang)}
-                    >
-                      {langLabels[lang]}
-                    </Menu.Item>
-                  ))}
-              </Menu.SubMenu>
-            </Menu>
+              items={languageMenuItems}
+            />
 
             <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
             <div className={`header_en_content ${isMenuOpen ? 'active' : ''}`} >
@@ -337,40 +345,8 @@ export const AppHeader: FC<AppHeaderProps> = ({
             triggerSubMenuAction="hover"
             selectable={false}
             overflowedIndicator={null}
-          >
-            {menuItems.map((item) =>
-              item.children ? (
-                <Menu.SubMenu key={item.key} title={item.title[currentLang]}>
-                  {item.children.map((child) => (
-                    <Menu.Item
-                      key={child.key}
-                      onClick={() =>
-                        child.path
-                          ? push(`/${currentLang}/${child.path}`)
-                          : undefined
-                      }
-                    >
-                      {child.title[currentLang]}
-                    </Menu.Item>
-                  ))}
-                </Menu.SubMenu>
-              ) : item.type === "imageHover" ? (
-                <Menu.Item key={item.key} title={item.title[currentLang]}>
-                  <ImageHoverModal triggerImg={item.title[currentLang]} />
-                </Menu.Item>
-              ) : (
-                <Menu.Item
-                  key={item.key}
-                  title={item.title[currentLang]}
-                  onClick={() =>
-                    item.path ? push(`/${currentLang}/${item.path}`) : undefined
-                  }
-                >
-                  {item.title[currentLang]}
-                </Menu.Item>
-              ),
-            )}
-          </Menu>
+            items={renderMenuItems(menuItems)}
+          />
           {style ? (
             <div className="box-page">
               <h1 className="title-page">{title}</h1>
@@ -426,9 +402,8 @@ export const AppHeader: FC<AppHeaderProps> = ({
               className="app-header__menu-slide"
               mode="inline"
               selectable={false}
-            >
-              {renderMenuItems(menuItems)}
-            </Menu>
+              items={renderMenuItems(menuItems)}
+            />
           </div>
         </Container>
       </div>

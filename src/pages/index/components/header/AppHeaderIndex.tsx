@@ -5,7 +5,6 @@ import useNavigation from "../../../../hooks/useHistory";
 import img from "../../../../assets/header/header.png";
 import search from "../../../../assets/header/search.png";
 import en from "../../../../assets/header/en.png";
-import { ImageHoverModal } from "../../../../components/AppHeader/ImageHoverModal/ImageHoverModal";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import "./AppHeaderIndex.less";
 
@@ -33,6 +32,21 @@ export const AppHeaderIndex: FC = () => {
     fa: "FA",
     ar: "AR",
   };
+
+  const languageMenuItems = [
+    {
+      key: "b",
+      label: langLabels[currentLang],
+      className: "En_text",
+      popupClassName: "lang-submenu-popup",
+      children: LANGUAGES.filter((lang) => lang !== currentLang).map((lang) => ({
+        key: `lang-${lang}`,
+        label: langLabels[lang],
+        onClick: () => handleLanguageChange(lang),
+      })),
+    },
+  ];
+
   useEffect(() => {
     // تابعی که هنگام اسکرول اجرا می‌شود
     const handleScroll = () => {
@@ -150,7 +164,7 @@ export const AppHeaderIndex: FC = () => {
     {
       key: "menu-contact",
       title: { en: "Contact", fa: "تماس با ما", ar: "اتصل بنا" },
-      path: "contactBranch",
+      path: "contact",
     },
   ];
 
@@ -160,61 +174,48 @@ export const AppHeaderIndex: FC = () => {
     if (!data?.product_categories) return [];
 
     return data.product_categories.map((cat) => ({
-      key: `products?category=${cat.slug}`,
+      key: `products/category/${cat.id}`,
       label: cat.title,
     }));
   };
 
   const renderMenuItems = (items: any[]) => {
-    return items.map((item) => {
+    return items.flatMap((item) => {
       // ✅ اگر type برابر imageHover بود
       if (item.type === "imageHover") {
         const productChildren = buildProductChildren(data);
-
-        return (
-          <Menu.SubMenu
-            key={item.key}
-            title={item.title[currentLang]}
-          >
-            {productChildren.map((child) => (
-              <Menu.Item
-                key={child.key}
-                onClick={() =>
-                  push(`/${currentLang}/${child.key}`)
-                }
-              >
-                {child.label}
-              </Menu.Item>
-            ))}
-          </Menu.SubMenu>
-        );
+        return {
+          key: item.key,
+          label: item.title[currentLang],
+          children: productChildren.map((child) => ({
+            key: child.key,
+            label: child.label,
+            onClick: () => push(`/${currentLang}/${child.key}`),
+          })),
+        };
       }
 
       // ✅ حالت معمولی SubMenu
       if (item.children && item.children.length > 0) {
-        return (
-          <Menu.SubMenu
-            key={item.key}
-            title={item.title[currentLang]}
-          >
-            {renderMenuItems(item.children)}
-          </Menu.SubMenu>
-        );
+        return {
+          key: item.key,
+          label: item.title[currentLang],
+          children: item.children.map((child: any) => ({
+            key: child.key,
+            label: child.title[currentLang],
+            onClick: () =>
+              child.path ? push(`/${currentLang}/${child.path}`) : undefined,
+          })),
+        };
       }
 
       // ✅ آیتم ساده
-      return (
-        <Menu.Item
-          key={item.key}
-          onClick={() =>
-            item.path
-              ? push(`/${currentLang}/${item.path}`)
-              : undefined
-          }
-        >
-          {item.title[currentLang]}
-        </Menu.Item>
-      );
+      return {
+        key: item.key,
+        label: item.title[currentLang],
+        onClick: () =>
+          item.path ? push(`/${currentLang}/${item.path}`) : undefined,
+      };
     });
   };
 
@@ -243,24 +244,8 @@ export const AppHeaderIndex: FC = () => {
           triggerSubMenuAction="hover"
           selectable={false}
           overflowedIndicator={null}
-        >
-          <Menu.SubMenu
-            key="b"
-            title={langLabels[currentLang]} // نمایش label زبان فعلی
-            className="En_text"
-            popupClassName="lang-submenu-popup"
-          >
-            {LANGUAGES.filter((lang) => lang !== currentLang) // حذف زبان فعلی از گزینه‌ها
-              .map((lang) => (
-                <Menu.Item
-                  key={`lang-${lang}`}
-                  onClick={() => handleLanguageChange(lang)}
-                >
-                  {langLabels[lang]}
-                </Menu.Item>
-              ))}
-          </Menu.SubMenu>
-        </Menu>
+          items={languageMenuItems}
+        />
         <img className={`en_img ${isMenuOpen ? 'active' : ''}`} src={en} alt={en} />
         <div className={`header_en_content ${isMenuOpen ? 'active' : ''}`} >
           <p className="header_en_text">
@@ -299,40 +284,8 @@ export const AppHeaderIndex: FC = () => {
         triggerSubMenuAction="hover"
         selectable={false}
         overflowedIndicator={null}
-      >
-        {menuItems.map((item) =>
-          item.children ? (
-            <Menu.SubMenu key={item.key} title={item.title[currentLang]}>
-              {item.children.map((child) => (
-                <Menu.Item
-                  key={child.key}
-                  onClick={() =>
-                    child.path
-                      ? push(`/${currentLang}/${child.path}`)
-                      : undefined
-                  }
-                >
-                  {child.title[currentLang]}
-                </Menu.Item>
-              ))}
-            </Menu.SubMenu>
-          ) : item.type === "imageHover" ? (
-            <Menu.Item key={item.key} title={item.title[currentLang]}>
-              <ImageHoverModal triggerImg={item.title[currentLang]} />
-            </Menu.Item>
-          ) : (
-            <Menu.Item
-              key={item.key}
-              title={item.title[currentLang]}
-              onClick={() =>
-                item.path ? push(`/${currentLang}/${item.path}`) : undefined
-              }
-            >
-              {item.title[currentLang]}
-            </Menu.Item>
-          ),
-        )}
-      </Menu>
+        items={renderMenuItems(menuItems)}
+      />
       {searchOpen && <div className="page-overlay" />}
       {searchOpen && (
         <div className="search-box">
@@ -370,9 +323,8 @@ export const AppHeaderIndex: FC = () => {
           className="app-header__menu-slide"
           mode="inline"
           selectable={false}
-        >
-          {renderMenuItems(menuItems)}
-        </Menu>
+          items={renderMenuItems(menuItems)}
+        />
       </div>
     </Container>
   );

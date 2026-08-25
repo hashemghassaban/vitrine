@@ -17,6 +17,14 @@ export interface BrandItemView {
   id: number;
 }
 
+export interface DataBusiness {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+}
+
+
 export interface SimpleCategoryView {
   id: number;
   title: string;
@@ -48,6 +56,7 @@ export interface PageItemView {
 }
 
 export interface ProductCategoryView {
+  name: any;
   id: number;
   title: string;
   slug: string;

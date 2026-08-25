@@ -10,7 +10,7 @@
      margin-bottom: 80px;
          flex-direction: row-reverse;
             @media (max-width: 992px) {
-   margin: 115px 0 0;
+   margin: 32vh 0 0;
     }
  
 
@@ -42,7 +42,7 @@
  
   }
     @media (max-width: 768px) {
-         font-size: 20px;
+         font-size: 16px;
  
   }
     }
@@ -228,6 +228,9 @@
       animation: pulse 2s infinite;
       img{
         width: 80px;
+         @media (max-width: 550px) {
+      width: 50px;
+    }
       }
     }
   }
@@ -253,6 +256,10 @@
  &::after {
 right: inherit;
   left: 6px;
+      @media (max-width: 768px) {
+         left: 0;
+ 
+  }
   }
 }
     .action-icons {
@@ -307,9 +314,13 @@ right: inherit;
   background: url("../../../assets/icon/arrow.png") no-repeat center;
   background-color:#fff;
   pointer-events: none;
+    @media (max-width: 768px) {
+         right: 10px;
+ 
+  }
 }
 }
 
 .ant-select-arrow{
-  display: none;
+  display: none!important;
 }

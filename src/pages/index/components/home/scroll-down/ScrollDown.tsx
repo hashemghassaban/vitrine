@@ -2,14 +2,25 @@ import type { FC } from "react";
 import "./ScrollDown.less";
 import { useTranslate } from "../../../../../i18n/useTranslate";
 import { useIsMobile } from "../../../../../helpers/useIsMobile";
+import { useLanguage } from "../../../../../contexts/useLanguage";
 
 interface ScrollDownProps {
   scrollAmount?: number; // اختیاری، می‌تونی مقدار px هم بدی
 }
 
+
+
 export const ScrollDown: FC<ScrollDownProps> = ({
   scrollAmount,
 }) => {
+
+    const { currentLang } = useLanguage();
+
+const tajrobeText =   currentLang === "fa"
+                    ? "site.tajrobe.fa"
+                    : currentLang === "en"
+                      ? "site.tajrobe.en"
+                      : "site.tajrobe.ar"
   const { t } = useTranslate();
     const isMobile = useIsMobile();
 
@@ -26,7 +37,7 @@ export const ScrollDown: FC<ScrollDownProps> = ({
       <div className="scroll-down-circle">
         <span className="arrow-icon">.</span>
       </div>
-      <span className="scroll-down-text">{t("local_vitrin20years")}</span>
+      <span className="scroll-down-text">{t(tajrobeText)}</span>
     </div>
   );
 };

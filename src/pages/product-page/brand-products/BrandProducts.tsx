@@ -11,9 +11,11 @@ import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import useNavigation from "../../../hooks/useHistory";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 const BrandProducts: React.FC = () => {
   useSyncLanguage();
+  
   const { id } = useParams();
   const { currentLang } = useLanguage();
   const { getById } = useBrand(currentLang);
@@ -22,14 +24,6 @@ const BrandProducts: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
   const { push } = useNavigation();
-  // const getDescriptionContinuation = () => {
-  //   if (!brand?.description || !brand?.excerpt) return "";
-  //   const cleanExcerpt = brand.excerpt.replace(/(\.\.\.|…)\s*$/, "").trim();
-  //   if (brand.description.length <= cleanExcerpt.length) {
-  //     return "";
-  //   }
-  //   return brand.description.substring(cleanExcerpt.length + 3).trim();
-  // }
   const fetchBrand = async () => {
     if (!id) return;
     setLoading(true);
@@ -39,6 +33,24 @@ const BrandProducts: React.FC = () => {
     }
     setLoading(false);
   };
+
+    const textMainCaption = currentLang === "fa" ? 'ویترین گالری' : 'Vitrine Gallery'
+    const meta = brand
+    ? {
+        title: brand.title + ' | ' + textMainCaption ,
+        description:
+          brand.meta_description ||
+          brand.excerpt ||
+          brand.title, 
+        ogImage: brand.logo,
+        ogType: 'brand',
+      }
+    : {
+        title: textMainCaption,
+        description: 'brand details are loading',
+      };
+  
+  usePageMetadata(meta);
 
   useEffect(() => {
     fetchBrand();
@@ -56,18 +68,20 @@ const BrandProducts: React.FC = () => {
             align="middle"
             className="header-row"
           >
-            <Col xs={24} lg={9} className="logo-col">
+            <Col xs={24} lg={7} className="logo-col">
+                          <h1 className="title mobile" > {brand?.title}</h1>
+
               <div className="logo-box">
                 <img
                   src={brand?.logo ?? undefined}
-                  alt="brand-logo"
+                  alt={brand?.title}
                   className="brand-logo"
                 />
               </div>
             </Col>
             <Col xs={24} lg={15}>
-              <h1 className="title"> {brand?.title}</h1>
-              {showMore && <p className="text">{brand?.excerpt}</p>}
+              <h1 className="title desktop"> {brand?.title}</h1>
+              {showMore && <p className="text" dangerouslySetInnerHTML={{ __html: brand?.excerpt || "" }}></p>}
               <div className="btn-box-brand-products">
                 {!showMore && <p dangerouslySetInnerHTML={{ __html: brand?.description || "" }}></p>
                 }
@@ -90,11 +104,11 @@ const BrandProducts: React.FC = () => {
                   <div className="img-card"
                     onClick={() => {
 
-                      const urlFriendlyTitle = item?.title.replace(/ /g, '-');
-                      push(`/${currentLang}/products?collection=${urlFriendlyTitle}`);
+                      const urlFriendlyId= item?.id;
+                      push(`/${currentLang}/products?collection=${urlFriendlyId}`);
                     }}
                   >
-                    <img src={item.main_image} alt="item" />
+                    <img src={item.main_image} alt={item.title} />
                     <div className="card-info">
                       <h2 className="card-title">{item.title}</h2>
                       <span className="card-arrow">←</span>

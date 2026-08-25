@@ -40,7 +40,7 @@ export const Blog: React.FC = () => {
           >
             <Col xs={24} lg={13} className="blog__image">
               <a>
-                <img src={item.image} alt="blog" />
+                <img src={item.image} alt={item.title}  />
               </a>
             </Col>
 

@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import videoRef from '../../assets/video-block/videoLoading.mov'
+import { useLottie } from "lottie-react";
+import animationData from "./VI.json";
 
 interface LoadingSpinProps {
   loading?: boolean;
 }
-
-
-
 
 const LoaderWrapper = styled.div<{ $loading: boolean }>`
   position: fixed;
@@ -19,43 +17,23 @@ const LoaderWrapper = styled.div<{ $loading: boolean }>`
   z-index: 10000;
 `;
 
-/* مربع اصلی */
 const LogoBox = styled.div`
-  position: relative;
-  width: 150px;
-  height: 150px;
-  border: 2px solid #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  width: 140px;
+  height: 140px;
 `;
 
 const LoadingSpin: React.FC<LoadingSpinProps> = ({ loading = true }) => {
+  const options = {
+    animationData,
+    loop: true,
+    autoplay: true,
+  };
+
+  const { View } = useLottie(options);
 
   return (
     <LoaderWrapper $loading={loading}>
-        <LogoBox className="loadingBlock">
-
-
-        <video
-          controls={false}
-          width="600"
-          height="468"
-          autoPlay
-          muted
-          loop
-          style={{
-            transform: 'scale(0.7) translate(4px, 2px)',
-          }}
-        >
-          <source
-            src={videoRef}
-            type="video/mp4"
-          />
-        </video>
-      </LogoBox>
-
+      <LogoBox>{View}</LogoBox>
     </LoaderWrapper>
   );
 };

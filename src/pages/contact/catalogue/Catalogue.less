@@ -1,33 +1,40 @@
 .showcase-container {
   text-align: center;
-    padding: 450px 10% 40px;
+  padding: 450px 10% 40px;
   margin-bottom: 80px;
-    @media (max-width: 992px) {
-    padding: 165px 10% 40px;
-    }
-     @media (max-width: 768px) {
-    padding: 115px 4% 40px;
-    margin-bottom: 0;
-    }
 
-  .title  {
+  @media (max-width: 992px) {
+    padding: 165px 10% 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 30vh 4% 40px;
+    margin-bottom: 0;
+  }
+
+  .title {
 
     margin-bottom: 50px;
     color: #767676;
-             @media (max-width: 768px) {
- margin-bottom: 20px;
-      }
+
+    @media (max-width: 768px) {
+      margin-bottom: 20px;
+      font-size: 20px!important;
+    }
   }
-    .two-lines  {
+
+  .two-lines {
     margin-bottom: 40px;
     color: #767676;
   }
 
 }
 
-.showcase-col{
+.showcase-col {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .showcase-card {
@@ -35,95 +42,125 @@
   overflow: hidden;
   padding: 10px;
   transition: all 0.3s ease;
-  max-width: 423px;
+  max-width: 100%;
   width: 100%;
-  border-radius:0px;
+  border-radius: 0px;
   display: flex;
   flex-direction: column;
 
   &:hover {
-    transform: translateY(-0.5px);  
-    box-shadow: none  
+    transform: translateY(-0.5px);
+    box-shadow: none
   }
 
- 
+  span {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .ant-card-cover {
+    height: 100%;
+  }
+
   .img-card {
 
     object-fit: cover;
-     border-radius:0px;
-     border-bottom: 0px !important;
+    border-radius: 0px;
+    border-bottom: 0px !important;
+    height: 100%;
   }
 
   .ant-card-body {
     display: flex;
     flex-direction: column;
-    flex: 1;          
+    flex: 1;
+
+    @media (max-width: 768px) {
+      justify-content: space-between;
+      flex-direction: row;
+    }
   }
 
   .book-title {
-    margin-top: auto;  
+    margin-top: auto;
     text-align: start;
-    font-size: 21px;
+    font-size: 18px;
     display: flex;
-        height: 38px;
+    height: 45px;
     overflow: hidden;
     color: #767676;
-        margin-bottom: 0;
-            @media (max-width: 768px) {
-   font-size: 18px!important;
+    margin-bottom: 0;
+    line-height: 45px;
+
+    @media (max-width: 768px) {
+      font-size: 12px !important;
+      padding-inline-end: 20px;
     }
   }
 
   .btn {
     font-size: 15px;
     color: #767676;
-    img{
-         margin: 0 10px;
+     img {
+      margin: 0 10px;
     }
+ @media (max-width: 768px) {
+    img {
+      margin: 12px 10px;
+    }
+  }
 
   }
 }
+
 :where(.css-dev-only-do-not-override-16o3jpe).ant-card .ant-card-body {
-    padding: 5px;
+  padding: 5px;
 }
 
 .showcase-card .ant-card-body {
- padding-right: 8px !important;
- padding-left: 8px !important;
-padding-top: 3px !important;
- }
+padding-right: 0px !important;
+    padding-left: 0px !important;
+    padding-top: 3px !important;
+    padding-bottom: 5px !important;
 
-
- .download{
-    height: auto!important;
-  }
-@media (max-width: 768px) {
-  .showcase-card {
-    width: 250px;
-  
-  img {
-    height: 250px;
-     
-    object-fit: contain;
-  }
-  .download{
-    height: auto!important;
+  @media (max-width: 768px) {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 }
+
+
+.download {
+  height: auto !important;
+}
+
+@media (max-width: 768px) {
+  .showcase-card {
+
+    img {
+      height: 250px;
+
+      object-fit: contain;
+    }
+
+    .download {
+      height: auto !important;
+    }
+  }
 }
 
 @media (max-width: 480px) {
-  .showcase-card
-  {
-     
-  
-  img {
-    height: 180px;
-    
-  }
-   .download{
-    height: auto;
-  }
-}
-}
+  .showcase-card {
 
+
+    img {
+      height: 180px;
+
+    }
+
+    .download {
+      height: auto;
+    }
+  }
+}

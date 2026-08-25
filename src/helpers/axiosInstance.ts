@@ -2,7 +2,7 @@ import axios, { type AxiosResponse } from "axios";
 import { useState, useCallback } from "react";
 import { header } from "./header";
 
-const baseAPI = "https://admin.vitrinegallery.ir/api";
+const baseAPI = "/api";
 
 interface FilterParams {
   [key: string]: string | number | boolean | undefined;

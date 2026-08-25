@@ -11,10 +11,14 @@ import "./representation.less";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import backgroundHeader from "../../../assets/header/IMG_7060.jpg"
+import usePageMetadata from "../../../hooks/usePageMetadata";
+
 const { Title } = Typography;
 
 export default function Representation() {
   useSyncLanguage();
+      usePageMetadata();
+  
   const [repres, setRepresentations] = useState<representationView[]>([]);
   const [loading, setLoading] = useState(true);
   const { currentLang } = useLanguage();
@@ -94,8 +98,9 @@ export default function Representation() {
                 <Row
                   justify={"space-between"}
                   style={{ marginInline: "15px", marginBottom: "10px" }}
+                  className="phone"
                 >
-                  <Col>{t("local_phone")}</Col>
+                  <Col className="titleKey">{t("local_phone")}</Col>
                   <Col>
                     <a href={`tel:${item.phone}`} className="tel-link">
                       {item.phone}

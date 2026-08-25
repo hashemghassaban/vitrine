@@ -14,10 +14,14 @@ import { cleanText } from "../../helpers/cleanText";
 import { useTranslate } from "../../i18n/useTranslate";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../hooks/usePageMetadata";
+
 const { Paragraph } = Typography;
 
 const Search: React.FC = () => {
   useSyncLanguage();
+            usePageMetadata();
+  
   const { push } = useNavigation();
   const [items, setItems] = useState<SearchItemView[]>([]);
   const { currentLang } = useLanguage();
@@ -60,7 +64,7 @@ const Search: React.FC = () => {
           return `/${currentLang}/brands`;
       }
     }
-    return `/${currentLang}/${item.type}/${item.id}`;
+    return `/${currentLang}/${item.type}/${item.type === "pages" ? item.slug : item.id}`;
   };
 
   if (!query) {
@@ -88,6 +92,7 @@ const Search: React.FC = () => {
 
               {items.map((item) => (
                 <React.Fragment key={item.id}>
+                  <div className="result-item-Block">
                   <Row gutter={[20, 16]} className="result-item" align="middle">
                     <Col xs={24} md={8} xl={5} className="image-block">
                       <Image
@@ -101,7 +106,7 @@ const Search: React.FC = () => {
                       />
                     </Col>
 
-                    <Col xs={24} md={16} xl={19}>
+                    <Col xs={24} md={16} xl={19} className="item-info">
                       <h2
                         className="item-title"
                         onClick={() =>
@@ -110,7 +115,7 @@ const Search: React.FC = () => {
                       >
                         {item.title}
                       </h2>
-                      <p>
+                      <p className="item-category">
                         {t("local_category")}: {t(`local_type_${item.type}`)}
                       </p>
                       <Paragraph className="item-text">
@@ -128,6 +133,7 @@ const Search: React.FC = () => {
                       </Button>
                     </Col>
                   </Row>
+                  </div>
                 </React.Fragment>
               ))}
             </Col>

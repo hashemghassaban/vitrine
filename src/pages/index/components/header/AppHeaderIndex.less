@@ -8,7 +8,8 @@
   max-width: none;
   z-index: 1000;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    @media (max-width: 992px) {
+
+  @media (max-width: 992px) {
     height: 85px;
   }
 
@@ -24,6 +25,7 @@
 
     background: rgba(0, 0, 0, 0.95) !important;
     padding: 2.5rem 15px;
+
 
   }
 
@@ -84,18 +86,21 @@
   @media (max-width: 768px) {
     left: 15px !important;
     right: inherit !important;
-       top: 20px!important;
+    top: 20px !important;
   }
 }
 
 .app-header_containers.freez {
   background: rgba(0, 0, 0, 0.95) !important;
   padding: 4rem 15px;
- @media (max-width: 992px) {
-     padding: 2.5rem 15px !important;
-         height: 85px !important;
 
-    }
+  @media (max-width: 992px) {
+    padding: 2.5rem 15px !important;
+    height: 85px !important;
+    margin-top: -100px !important;
+
+  }
+
   .app-header__menu-home,
   .search__img {
     display: none;
@@ -252,19 +257,22 @@
   height: 75px;
   left: calc(50% - 75.08px / 2 - 0.46px);
   top: 23px;
-    @media (max-width: 992px) {
-    width: 52.08px!important;
-    height: 31px!important;
-    left: calc(50% - 52.08px / 2 - 0.46px)!important;
-        top: 15px!important;
-    img{
-      width: 100%!important;
-    }
-    }
-     @media (max-width: 768px) {
-  left: 15px;
 
-   }
+  @media (max-width: 992px) {
+    width: 52.08px !important;
+    height: 31px !important;
+    left: calc(50% - 52.08px / 2 - 0.46px) !important;
+    top: 15px !important;
+
+    img {
+      width: 100% !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    left: 15px;
+
+  }
 }
 
 .search__img {
@@ -320,7 +328,23 @@
 }
 
 .ant-menu-sub.ant-menu-vertical {
+  max-height: 240px!important;
+  overflow-y: auto!important;
   left: 22px;
+    &::-webkit-scrollbar {
+    width: 4px;
+
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f2f2f2;
+    
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+
+  }
 
 }
 
@@ -331,7 +355,7 @@
 
 /* --- 1. استایل دکمه همبرگری (تبدیل به ضربدر) --- */
 .menu-toggle-btn {
-  position: fixed;
+  position: absolute;
   top: 45px;
   right: 40px;
   z-index: 2000;
@@ -344,10 +368,11 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
-        @media (max-width: 992px) {
-   right: 25px ;
-     top: 25px;
-        }
+
+  @media (max-width: 992px) {
+    right: 25px;
+    top: 25px;
+  }
 
 
   @media (max-width: 768px) {
@@ -409,7 +434,7 @@
   @media (max-width: 768px) {
     width: 100%;
     right: -100%;
-      padding:  30px 15px;
+    padding: 30px 15px;
 
 
   }
@@ -434,6 +459,10 @@
         text-decoration: none;
         font-size: 18px;
         transition: color 0.3s;
+
+        @media (max-width: 768px) {
+          font-size: 16px;
+        }
 
         &:hover {
           color: #aaa; // رنگ هاور
@@ -610,13 +639,13 @@
 }
 
 .ant-layout-rtl {
-.home__img {
-   @media (max-width: 768px) {
-  left: inherit;
-  right:30px
-
-   }
+  .home__img {
+    @media (max-width: 768px) {
+      left: inherit;
+      right: 30px
+    }
   }
+
   .header_en_content.active {
     position: absolute;
     left: 426px;
@@ -626,13 +655,15 @@
     right: inherit;
     font-size: 19px;
     display: block;
-  @media (max-width: 992px) {
-        top: 28px;
+
+    @media (max-width: 992px) {
+      top: 28px;
     }
+
     @media (max-width: 768px) {
       right: 15px !important;
       left: inherit !important;
-          top: 20px!important;
+      top: 20px !important;
     }
   }
 
@@ -645,9 +676,10 @@
   .menu-toggle-btn {
     left: 40px !important;
     right: unset !important;
-        @media (max-width: 992px) {
-   left: 15px !important;
-        }
+
+    @media (max-width: 992px) {
+      left: 15px !important;
+    }
 
 
     &.active {

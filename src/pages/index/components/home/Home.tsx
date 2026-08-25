@@ -1,48 +1,86 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import type { JSX } from "react";
 import "./Home.less";
 import { Carousel } from "antd";
 import { AppHeaderIndex } from "../header/AppHeaderIndex";
-import { Button } from "antd";
 import { ScrollDown } from "./scroll-down/ScrollDown";
-import { useTranslate } from "../../../../i18n/useTranslate";
 import videoSlider from '../../../../assets/video-block/videoSlider.mov'
+import useIndex from "../../../../hooks/index/useIndex";
+import { useLanguage } from "../../../../contexts/useLanguage";
+import type { IndexDataView } from "../../../../models/views/indexView";
+
 
 export function Home(): JSX.Element {
   const carouselRef = useRef<any>(null);
-  const { t } = useTranslate();
+  const { currentLang } = useLanguage();
+  const [indexData, setIndexData] = useState<IndexDataView | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const sliders = indexData?.sliders?.filter((c) => c.slug === "test-hero") || []  
+
+  const { getIndex } = useIndex(currentLang);
+  
+  const fetchIndex = async () => {
+    const { success, data } = await getIndex();
+    if (success && data) {
+      setIndexData(data);
+    }
+  };
+
+  useEffect(() => {
+    setIndexData(null);
+    fetchIndex();
+  }, [currentLang]);
   return (
     <section id="home" className="home">
       <AppHeaderIndex />
-     <div className="home-main desktop"> 
-        <Carousel
-          arrows={false}
-          ref={carouselRef}
-          infinite={true}
-          dots={false}
-          autoplay={true}
-          waitForAnimate={true}
+      <div className="home-main desktop">
+  <Carousel
+  arrows={false}
+  ref={carouselRef}
+  infinite={true}
+  dots={false}
+  autoplay={true}
+  waitForAnimate={true}
+  afterChange={(current) => setActiveIndex(current)}
+>
+  {sliders.map((item, i) => (
+    <div className="home__content" key={i} id={`home-content${i}`}>
+      {item?.video ? (
+         <video
+          controls={false}
+          autoPlay
+          muted
+          loop
+          playsInline
+          webkit-playsinline="true"
         >
-          {/* <div className="home__content" id="home-content">
-            <img className="imgs-detail" src={intro} alt="img" />
-          </div> */}
-          <div className="home__content" id="home-content2">
-            <video autoPlay muted loop>
-              <source src={videoSlider}></source>
-            </video>
-          </div>
-        </Carousel>
-        <div className="content">
-          <h2 className="home__title">{t("local_luxuryProducts")}</h2>
-          <p className="home__text">{t("local_vitrineBuildingShowroom")}</p>
-          <Button className="home__button">{t("local_moreInfo")}</Button>
-        </div>
+          <source src={item?.video || videoSlider} type="video/mp4" />
+        </video>
+      ) : (
+      <img className="imgs-detail" src={item?.image || ""} alt={item.title} />
 
+      )}
+    </div>
+  ))}
+</Carousel>
+<div className="content">
+  <h2 className="home__title">{sliders[activeIndex]?.title}</h2>
+                     <p
+                className="home__text"
+                dangerouslySetInnerHTML={{
+                  __html: sliders[activeIndex]?.description ?? "",
+                }}
+              ></p>
+  <a  href={`/${currentLang}${sliders[activeIndex]?.link}`} className="home__button">
+    {sliders[activeIndex]?.link_title}
+  </a>
+</div>
+   
         <ScrollDown />
       </div>
 
 
-            <div className="home-main mobile">
+      <div className="home-main mobile">
         <Carousel
           arrows={false}
           ref={carouselRef}
@@ -51,20 +89,40 @@ export function Home(): JSX.Element {
           autoplay={true}
           waitForAnimate={true}
         >
-          {/* <div className="home__content" id="home-content">
-            <img className="imgs-detail" src={intro} alt="img" />
-          </div> */}
-          <div className="home__content" id="home-content2">
-            <video autoPlay muted loop>
-              <source src={videoSlider}></source>
-            </video>
-          </div>
+          {indexData?.sliders
+            ?.filter((c) => c.slug === "test-hero")
+            .map((item, i) => (
+              <div className="home__content" key={i} id={`home-content${i}`}>
+                {item?.mobile_video ? (
+                  <video
+                  controls={false}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  webkit-playsinline="true"
+                >
+                  <source src={item?.mobile_video || videoSlider} type="video/mp4" />
+                </video>
+                  
+                ) : (  <img className="imgs-detail" src={item?.responsive_image || ""} alt={item.title} />)}
+
+              </div>
+            ))}
+
         </Carousel>
-        <div className="content">
-          <h2 className="home__title">{t("local_luxuryProducts")}</h2>
-          <p className="home__text">{t("local_vitrineBuildingShowroom")}</p>
-          <Button className="home__button">{t("local_moreInfo")}</Button>
-        </div>
+      <div className="content">
+  <h2 className="home__title">{sliders[activeIndex]?.title}</h2>
+                     <p
+                className="home__text"
+                dangerouslySetInnerHTML={{
+                  __html: sliders[activeIndex]?.description ?? "",
+                }}
+              ></p>
+  <a  href={`/${currentLang}${sliders[activeIndex]?.link}`} className="home__button">
+    {sliders[activeIndex]?.link_title}
+  </a>
+</div>
 
         <ScrollDown />
       </div>

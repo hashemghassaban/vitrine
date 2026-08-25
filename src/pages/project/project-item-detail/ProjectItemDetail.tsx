@@ -12,6 +12,9 @@ import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import useNavigation from "../../../hooks/useHistory";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import { useIsMobile } from "../../../helpers/useIsMobile";
+import usePageMetadata from "../../../hooks/usePageMetadata";
+
 const { Title } = Typography;
 
 export default function ProjectItemDetail() {
@@ -27,6 +30,7 @@ export default function ProjectItemDetail() {
   const carouselRef = useRef<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [loading, setLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   const prev = () => {
     if (current > 0) {
@@ -62,6 +66,9 @@ export default function ProjectItemDetail() {
       setLoading(false);
     };
 
+
+    
+
     setProject(null);
     fetchProject();
 
@@ -69,6 +76,25 @@ export default function ProjectItemDetail() {
       isMounted = false;
     };
   }, [id, currentLang]);
+
+
+      const textMainCaption = currentLang === "fa" ? 'ویترین گالری' : 'Vitrine Gallery'
+      const meta = project
+      ? {
+          title: (project.title) + ' | ' + textMainCaption ,
+          description:
+            project.meta_description ||
+            project.excerpt ||
+            project.title,
+          ogImage: project.image_link,
+          ogType: 'project',
+        }
+      : {
+          title: textMainCaption,
+          description: 'project details are loading',
+        };
+    
+    usePageMetadata(meta);
   return (
     <>
       <LoadingSpin loading={loading} />
@@ -165,28 +191,75 @@ export default function ProjectItemDetail() {
             {t("site.proje2")}
           </Title>
           <p className="two-lines-detail">{t("site.proje3")}</p>
-          <Row gutter={[24, 24]} justify="center">
-            {project?.products.map((item) => (
-              <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
-                <Card
-                  onClick={() => push(`/${currentLang}/products/${item.id}`)}
-                  hoverable
-                  className="showcase-card-project"
-                  cover={
-                    <img
-                      className="img-card-project"
-                      src={item.thumbnail_link}
-                      alt={item.title}
-                    />
-                  }
-                >
-                  <Title level={5} className="book-title-project">
-                    {item.title}
-                  </Title>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          
+            { isMobile||project?.products && project?.products?.length > 6 ? (
+  <Carousel
+    dots={false}
+    draggable
+    style={{ paddingInline: 20 }}
+                    slidesToShow={2.5}
+    responsive={[
+      {
+        breakpoint: 992,
+        settings: { slidesToShow: 3 },
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: 2.5 },
+      },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1.55555 },
+      },
+    ]}
+  >
+    {project?.products.map((item) => (
+      <div key={item.id}>
+        <Card
+          onClick={() => push(`/${currentLang}/products/${item.id}`)}
+          hoverable
+          className="showcase-card-project"
+          cover={
+            <img
+              className="img-card-project"
+              src={item.thumbnail_link}
+              alt={item.title}
+            />
+          }
+        >
+          <Title level={5} className="book-title-project">
+            {item.title}
+          </Title>
+        </Card>
+      </div>
+    ))}
+  </Carousel>
+) : (
+  <Row gutter={[24, 24]} justify="center">
+    {project?.products.map((item) => (
+      <Col key={item.id} xs={24} sm={12} md={8} lg={4}>
+        <Card
+          onClick={() => push(`/${currentLang}/products/${item.id}`)}
+          hoverable
+          className="showcase-card-project"
+          cover={
+            <img
+              className="img-card-project"
+              src={item.thumbnail_link}
+              alt={item.title}
+            />
+          }
+        >
+          <Title level={5} className="book-title-project">
+            {item.title}
+          </Title>
+        </Card>
+      </Col>
+    ))}
+  </Row>
+)}
+
+        
           <div className="product-card-detail">
             <Title level={3} className="title-detail">
               {t("site.proje4")}

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
 export const useIsMobile = (maxWidth = 768) => {
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth <= maxWidth
-  );
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  setIsMobile(window.innerWidth <= maxWidth);
+}, [maxWidth]);
 
   useEffect(() => {
     const media = window.matchMedia(`(max-width: ${maxWidth}px)`);

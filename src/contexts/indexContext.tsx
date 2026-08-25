@@ -9,7 +9,9 @@ const IndexContext = createContext<IndexContextType>({
   indexData: null,
 });
 
+
 export const useIndexContext = () => useContext(IndexContext);
+
 
 export const IndexProvider = ({
   children,

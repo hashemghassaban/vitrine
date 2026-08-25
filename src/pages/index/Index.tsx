@@ -17,17 +17,24 @@ import { useLanguage } from "../../contexts/useLanguage";
 import { IndexProvider } from "../../contexts/indexContext";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 function Index() {
   useSyncLanguage();
+  usePageMetadata();
+  
   const [indexData, setIndexData] = useState<IndexDataView | null>(null);
   const [loading, setLoading] = useState(true);
   const { currentLang } = useLanguage();
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
-    const { success, data } = await getIndex();
-    if (success && data) {
-      setIndexData(data);
+    setLoading(true);
+    try {
+      const { success, data } = await getIndex();
+      if (success && data) {
+        setIndexData(data);
+      }
+    } finally {
       setLoading(false);
     }
   };

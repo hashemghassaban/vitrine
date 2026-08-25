@@ -13,12 +13,15 @@ import { useEffect, useState } from "react";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import backgroundHeader from "../../../assets/header/IMG_7062.jpg"
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 
 const { Title } = Typography;
 
 export default function Catalogue() {
   useSyncLanguage();
+        usePageMetadata();
+  
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const { currentLang } = useLanguage();
   const { getList } = useDocuments(currentLang);
@@ -51,7 +54,7 @@ export default function Catalogue() {
             <Col
               className="showcase-col"
               key={item.id}
-              xs={24}
+              xs={20}
               sm={12}
               md={8}
               lg={6}
@@ -76,7 +79,8 @@ export default function Catalogue() {
                     className="btn download-link"
                   >
                     <img src={download} alt="download" className="download" />
-                    {t("local_download")}
+                   
+                    <span> {t("local_download")}</span>
                   </a>
                 </Row>
               </Card>

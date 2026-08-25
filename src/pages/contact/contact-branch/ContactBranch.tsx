@@ -24,9 +24,12 @@ import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import { validateEmail, validatePhone } from "../../../helpers/validation";
 import Captcha from "../../../components/Captcha/Captcha";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 const ContactBranch: React.FC = () => {
   useSyncLanguage();
+          usePageMetadata();
+  
   const { currentLang } = useLanguage();
   const { getSetting } = useSetting(currentLang);
   const { getList } = useDepartment(currentLang);

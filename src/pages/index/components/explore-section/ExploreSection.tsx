@@ -12,7 +12,7 @@ export const ExploreSection: FC = () => {
         <h2 className="explore__title">{t("site.footerblock1")}</h2>
         <p className="explore__subtitle">{t("site.footerblock2")}</p>
         <a className="explore__more" href="">
-          بیشتر
+          {t("exploreMore")}
                     <ArrowLeftOutlined></ArrowLeftOutlined>
 
         </a>

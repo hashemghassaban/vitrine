@@ -1,35 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col , Divider } from "antd";
 import "./ServicePageSec.less";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { useLanguage } from "../../../contexts/useLanguage";
-// import type { PageView } from "../../../models/views/pageView";
-// import useServicePage from "../../../hooks/page/useServicePage";
 import useAim from "../../../hooks/page/useAim";
 import type { AimItemView } from "../../../models/views/aimView";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import backgroundHeader from "../../../assets/header/IMG_7069.jpg"
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 
 const ServicePageSec: React.FC = () => {
   useSyncLanguage();
+     usePageMetadata();
+  
   const { currentLang } = useLanguage();
-  // const [page, setPage] = useState<PageView>();
-  // const { getService } = useServicePage(currentLang);
   const { getList } = useAim(currentLang);
   const [items, setItems] = useState<AimItemView[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
-
-  // const fetchService = async () => {
-  //   const { success, data } = await getService();
-  //   if (success && data) {
-  //     setPage(data);
-  //   }
-  // };
 
   const fetchAim = async () => {
     const { success, data } = await getList();
@@ -68,15 +60,16 @@ const ServicePageSec: React.FC = () => {
               </div>
             </Col>
           </Row>
-
+   <div className="divider-service">
+                                  <Divider className="divider-service" />
+                                </div>
           {/*section3*/}
           <Row justify="center">
             <div>
               <h2 className="service-title">{t("local_completedProjects")}</h2>
               <p className="service-subtitle">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                طراحی. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                و طراحی.
+              {t("site.servicecodes")}
+
               </p>
             </div>
           </Row>

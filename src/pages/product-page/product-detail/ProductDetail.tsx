@@ -1,4 +1,4 @@
-import { Row, Col, Button, Divider, Card, Tag } from "antd";
+import { Row, Col, Button, Divider, Card, Tag, Carousel } from "antd";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import { useState, useEffect } from "react";
@@ -18,9 +18,11 @@ import "./ProductDetail.less";
 import CommentForm from "./components/CommentForm";
 import OrderForm from "./components/OrderForm";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
+import usePageMetadata from "../../../hooks/usePageMetadata";
 
 export default function ProductDetail() {
   useSyncLanguage();
+
   const [mainImage, setMainImage] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -31,6 +33,29 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslate();
   const { push } = useNavigation();
+
+const isMobile = typeof window !== "undefined"
+  ? window.innerWidth < 768
+  : false
+  const textMainCaption = currentLang === "fa" ? 'ویترین گالری' : 'Vitrine Gallery'
+
+  const meta = product
+    ? {
+      title: (product.seo?.page_title || product.title) + ' | ' + textMainCaption,
+      description:
+        product.seo?.meta_description ||
+        product.summary ||
+        product.excerpt ||
+        product.title,
+      ogImage: product.media?.[0]?.url,
+      ogType: 'product',
+    }
+    : {
+      title: textMainCaption,
+      description: 'Product details are loading',
+    };
+
+  usePageMetadata(meta);
   const groupedFeatures = product?.features.reduce<Record<string, string[]>>(
     (acc, feature) => {
       if (!acc[feature.feature_title]) {
@@ -53,9 +78,11 @@ export default function ProductDetail() {
     const { success, data } = await getProductById(Number(id));
     if (success && data) {
       setproduct(data);
+      setMainImage(data.media[0]?.url);
       if (data?.category?.id) {
         const relatedRes = await getListProducts();
         if (relatedRes.success) {
+
           setRelated(
             relatedRes.data
               .filter(
@@ -73,6 +100,8 @@ export default function ProductDetail() {
   useEffect(() => {
     if (!id) return;
     fetchData();
+
+
   }, [id, currentLang]);
 
   useEffect(() => {
@@ -91,17 +120,18 @@ export default function ProductDetail() {
       <AppHeader noBackgroundProducts />
       <div className="product-page">
         <Row gutter={[40, 40]} justify="center">
-          <Col xs={24} md={24} lg={15} className="product-info">
+          <Col xs={24} md={24} lg={13} className="product-info">
             <div className="product-info">
               <div className="brand-section" id="sectionDown">
-                <div>
+                <div className="infoPro">
                   {product?.collection && (
                     <div
                       className="date-box"
                       onClick={() => {
-                       
-                        const urlFriendlyTitle = product.collection.title.replace(/ /g, '-');
-                        push(`/${currentLang}/products?collection=${urlFriendlyTitle}`);
+
+                        const urlFriendlyId = product.collection.id;
+
+                        push(`/${currentLang}/products?collection=${urlFriendlyId}`);
                       }}
                     >
                       {product?.collection?.title}{" "}
@@ -110,11 +140,11 @@ export default function ProductDetail() {
 
                   <p
                     className="category-text"
-                    
+
                   >
                     {t("local_category")}/ <span onClick={() =>
                       push(
-                        `/${currentLang}/products?category=${product?.category?.slug}`,
+                        `/${currentLang}/products/category/${product?.category?.id}`,
                       )
                     }>{product?.category?.title}</span>
                   </p>
@@ -125,11 +155,12 @@ export default function ProductDetail() {
                 <img
                   src={product?.brand?.logo ?? undefined}
                   className="brand-logo-product"
+                  alt="brand logo"
                   onClick={() =>
-                      push(
-                        `/${currentLang}/brand-detail/${product?.brand?.id}`,
-                      )
-                    }
+                    push(
+                      `/${currentLang}/brand-detail/${product?.brand?.id}`,
+                    )
+                  }
                 />
               </div>
 
@@ -143,53 +174,62 @@ export default function ProductDetail() {
               ></p>
 
               <div className="additional-info">
-                <div className="feature-box">
-                  {groupedFeatures &&
-                    Object.entries(groupedFeatures).map(
-                      ([title, values], index) => (
-                        <div key={index}>
-                          <div className="feature-title">
-                            {t("local_productFeatures")}
+                {product?.features.length !== 0 ? (
+                  <div className="feature-box">
+                    <div className="feature-title">
+                      {t("local_productFeatures")}
+                    </div>
+                    {groupedFeatures &&
+                      Object.entries(groupedFeatures).map(
+                        ([title, values], index) => (
+                          <div key={index}>
+
+                            <div className="feature-item" key={index}>
+                              <span>
+                                {title}: {values.join(", ")}
+                              </span>
+                              {index !==
+                                Object.entries(groupedFeatures).length - 1 && (
+                                  <Divider />
+                                )}
+                            </div>
                           </div>
-                          <div className="feature-item" key={index}>
-                            <span>
-                              {title}: {values.join(", ")}
-                            </span>
-                            {index !==
-                              Object.entries(groupedFeatures).length - 1 && (
-                                <Divider />
-                              )}
-                          </div>
-                        </div>
-                      ),
-                    )}
-                </div>
+                        ),
+                      )}
+                  </div>
+                ) : null}
+
                 <OrderForm product={product} />
               </div>
             </div>
           </Col>
 
-          <Col xs={24} md={24} lg={9} className="gallery">
-                            <h1 className="product-title mobile">{product?.title}</h1>
+          <Col xs={24} md={24} lg={11} className="gallery">
+            <div className="galleryBlock">
+              <div className="main-image">
+                {!!mainImage && (
+                  <img src={mainImage ?? undefined} alt={product?.title} />
+                )}
+              </div>
 
-            <div className="main-image">
-              {!!mainImage && (
-                <img src={mainImage ?? undefined} alt="product" />
-              )}
+              <div className="thumbs" >
+
+                {product?.media?.map((t, i) => (
+                  <div className={`thumbBox ${mainImage == t?.url ? "active" : ""}`}>
+                    <img
+                      key={i ?? 0}
+                      src={t?.url ?? undefined}
+                      className="thumb"
+                      alt={product?.title}
+                      onClick={() => setMainImage(t?.url)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="thumbs">
 
-              {product?.media?.map((t, i) => (
-                <img
-                  key={i ?? 0}
-                  src={t?.url ?? undefined}
-                  className={`thumb ${mainImage == t?.url ? "active" : ""}`}
-                  onClick={() => setMainImage(t?.url)}
-                />
-              ))}
-            </div>
-            
+
           </Col>
         </Row>
       </div>
@@ -239,43 +279,95 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
-
             <CommentForm id={id} product={product} />
+            {related?.length > 0 ? (
+              <div className="other-box">
+                <div className="other-title">{t("local_relatedProducts")}</div>
+                {isMobile ? (
+                  <Carousel
+                    dots={false}
+                    draggable
+                    infinite={false}
+                    style={{ paddingInline: 20 }}
+                    slidesToShow={2.5}
+                    responsive={[
+                      {
+                        breakpoint: 768,
+                        settings: { slidesToShow: 2.5 },
+                      },
+                      {
+                        breakpoint: 480,
+                        settings: { slidesToShow: 1.8 },
+                      },
+                    ]}
+                  >
 
-            <div className="other-box">
-              <div className="other-title">{t("local_relatedProducts")}</div>
-              <Row className="other-box-row" gutter={[16, 24]} justify="center">
-                {related.map((item, index) => (
+                    {related.map((item) => (
 
-                  <Col key={index} xs={24} sm={12} md={8} lg={5} xl={4}>
-                    <Card
-                      onClick={() =>
-                        push(`/${currentLang}/products/${item.id}`)
-                      }
-                      hoverable
-                      className="showcase-card-product-another"
-                      cover={
-                        <img
-                          src={item?.image ?? undefined}
-                          alt="product"
-                          className="img-card-product"
-                        />
-                      }
-                    >
-                      <div className="selected-tags-item">
-                        <Tag>
-                          <div className="pulse-tag">
-                            {item?.collection?.title}
+                      <Card
+                        onClick={() =>
+                          push(`/${currentLang}/products/${item.id}`)
+                        }
+                        hoverable
+                        className="showcase-card-product-another"
+                        cover={
+                          <img
+                            src={item?.image ?? undefined}
+                            alt={item?.title}
+                            className="img-card-product"
+                          />
+                        }
+                      >
+                        <div className="selected-tags-item">
+                          {item?.collection && (
+                            <Tag>
+                              <div className="pulse-tag">
+                                {item?.collection?.title}
+                              </div>
+                            </Tag>)}
+                        </div>
+                        <p className="product-title-product">{item?.title}</p>
+                      </Card>
+
+                    ))}
+
+
+                  </Carousel>
+                ) : (
+                  <Row className="other-box-row" gutter={[16, 24]} justify="center">
+                    {related.map((item, index) => (
+                      <Col key={index} xs={24} sm={12} md={5} lg={5} >
+                        <Card
+                          onClick={() =>
+                            push(`/${currentLang}/products/${item.id}`)
+                          }
+                          hoverable
+                          className="showcase-card-product-another"
+                          cover={
+                            <img
+                              src={item?.image ?? undefined}
+                              alt={item?.title}
+                              className="img-card-product"
+                            />
+                          }
+                        >
+                          <div className="selected-tags-item">
+                            {item?.collection && (
+                              <Tag>
+                                <div className="pulse-tag">
+                                  {item?.collection?.title}
+                                </div>
+                              </Tag>)}
                           </div>
-                        </Tag>
-                      </div>
-                      <p className="product-title-product">{item?.title}</p>
-                    </Card>
-                  </Col>
-                 
-                ))}
-              </Row>
-            </div>
+                          <p className="product-title-product">{item?.title}</p>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                )}
+              </div>
+            ) : (null)}
+
           </Col>
         </Row>
       </div>

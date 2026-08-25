@@ -12,12 +12,16 @@ const Captcha: React.FC<CaptchaProps> = ({ onVerify }) => {
   const [userInput, setUserInput] = useState<string>("");
   const { t } = useTranslate();
   
+  
   const fetchCaptcha = async (): Promise<void> => {
     try {
       const response = await fetch(
-        "https://admin.vitrinegallery.ir/captcha/api/math",
+        "/captcha/api/math",
       );
+      
       const result: CAPTCHADTO = await response.json();
+            console.log(result);
+
       setData(result);
       setUserInput("");
       onVerify("key", result.key);
@@ -60,7 +64,7 @@ const Captcha: React.FC<CaptchaProps> = ({ onVerify }) => {
           type="button"
           onClick={fetchCaptcha}
         >
-          🗘
+          ↻
         </button>
       </div>
       <Input

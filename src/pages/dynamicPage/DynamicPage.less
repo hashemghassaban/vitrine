@@ -1,0 +1,60 @@
+.dynamicPage-container {
+  width: 100%;
+  padding: 450px 10% 40px;
+  margin-bottom: 80px;
+   @media (max-width: 992px) {
+ padding: 165px 10% 40px;
+    }
+       @media (max-width: 768px) {
+    padding: 35vh 4% 40px;
+        margin-bottom: 0;
+    }
+}
+
+/* --- Header Section --- */
+.page-header-row{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: right;
+    align-items: flex-start;
+    width: 100%;
+    line-height: 30px;
+    font-size: 16px;
+           @media (max-width: 768px) {
+    font-size: 14px;
+      }
+}
+
+
+.ant-layout-rtl{
+
+.top-title , .text ,.black-title-sec  , .black-text-sec  , .card-title  , .card-text{
+  text-align: right;
+}
+
+.btn-more-page-products{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row!important;
+        margin-top: 15px;
+}
+.btn-more-page-products::before {
+
+  position: relative;
+  transform: rotate(0deg);
+}
+.card-arrow {
+  font-size: 20px;
+      transform: rotate(0deg);
+    top: 12px;
+    left: 0;
+
+  &:hover {
+    transform: translateX(-5px) rotate(0deg);
+  }
+}
+
+}
+
+
+
