@@ -4,7 +4,6 @@ import "./Home.less";
 import { Carousel } from "antd";
 import { AppHeaderIndex } from "../header/AppHeaderIndex";
 import { ScrollDown } from "./scroll-down/ScrollDown";
-import videoSlider from '../../../../assets/video-block/videoSlider.mov'
 import useIndex from "../../../../hooks/index/useIndex";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import type { IndexDataView } from "../../../../models/views/indexView";
@@ -54,7 +53,7 @@ export function Home(): JSX.Element {
           playsInline
           webkit-playsinline="true"
         >
-          <source src={item?.video || videoSlider} type="video/mp4" />
+          <source src={item?.video} type="video/mp4" />
         </video>
       ) : (
       <img className="imgs-detail" src={item?.image || ""} alt={item.title} />
@@ -102,7 +101,7 @@ export function Home(): JSX.Element {
                   playsInline
                   webkit-playsinline="true"
                 >
-                  <source src={item?.mobile_video || videoSlider} type="video/mp4" />
+                  <source src={item?.mobile_video } type="video/mp4" />
                 </video>
                   
                 ) : (  <img className="imgs-detail" src={item?.responsive_image || ""} alt={item.title} />)}
