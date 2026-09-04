@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server/dev.mjs",
     "build": "tsc -b && vite build",
-    "build:ssr": "npm run build && vite build --ssr src/entry-server.tsx --outDir dist/server && npm run build:server",
+    "vercel-build": "npm run build:ssr",
+    "build:ssr": "npm run build && vite build --ssr src/entry-server.tsx --outDir dist/server && npm run build:server && cp dist/client/index.html dist/server/index.html",
     "build:server": "tsc server/middleware.ts --outDir dist/server --target es2020 --module esnext --moduleResolution node --skipLibCheck --allowSyntheticDefaultImports",
     "preview": "vite preview",
     "preview:ssr": "npm run build:ssr && node dist/server/middleware.js",
