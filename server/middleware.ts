@@ -8,7 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app: Express = express();
-const API_TARGET = process.env.API_TARGET || "https://admin.vitrine.gallery";
+const API_TARGET = (
+  process.env.API_TARGET || "https://admin.vitrine.gallery"
+).replace(/\/$/, "");
 
 type EntryServerModule = {
   render: (
@@ -54,14 +56,25 @@ function createProxy(prefix: string) {
         else if (Array.isArray(value)) headers.set(key, value.join(", "));
       }
 
-      const response = await fetch(targetUrl, {
+      const hasBody = req.method !== "GET" && req.method !== "HEAD";
+      const requestOptions = {
         method: req.method,
         headers,
-      });
+        body: hasBody && req.body?.length ? new Uint8Array(req.body) : undefined,
+        duplex: hasBody ? "half" : undefined,
+      } as RequestInit;
+
+      const response = await fetch(targetUrl, requestOptions);
 
       res.status(response.status);
       response.headers.forEach((value, key) => {
-        if (key.toLowerCase() !== "transfer-encoding") {
+        // Node fetch decompresses upstream responses. Do not forward stale
+        // encoding/length headers for the already-decoded response body.
+        if (
+          key.toLowerCase() !== "transfer-encoding" &&
+          key.toLowerCase() !== "content-encoding" &&
+          key.toLowerCase() !== "content-length"
+        ) {
           res.setHeader(key, value);
         }
       });
@@ -85,6 +98,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Preserve JSON, form and captcha payloads while forwarding them upstream.
+app.use(express.raw({ type: "*/*", limit: "10mb" }));
+app.get("/healthz", (_req, res) => {
+  res.json({ ok: true, mode: "ssr", apiTarget: API_TARGET });
+});
 app.use("/api", createProxy("/api"));
 app.use("/captcha", createProxy("/captcha"));
 
@@ -97,6 +115,10 @@ app.use(
 
 const templatePath = path.resolve(__dirname, "../../dist/client/index.html");
 let template: string;
+
+app.get("/", (_req, res) => {
+  res.redirect(302, "/fa");
+});
 
 app.get("*", async (req: Request, res: Response) => {
   try {

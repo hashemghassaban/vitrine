@@ -5,6 +5,7 @@ import React, {
   type ReactNode,
   useEffect,
 } from "react";
+import { useLocation } from "react-router-dom";
 import type { Language } from "../i18n/languageType";
 
 interface LanguageContextType {
@@ -34,7 +35,15 @@ interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
 }) => {
-  const [currentLang, setCurrentLang] = useState<Language>(getInitialLanguage);
+  const location = useLocation();
+  const [storedLang, setStoredLang] = useState<Language>(getInitialLanguage);
+  const routeLang = location.pathname.split("/")[1];
+  const currentLang: Language =
+    routeLang === "fa" || routeLang === "en" || routeLang === "ar"
+      ? routeLang
+      : storedLang;
+  const setCurrentLang: React.Dispatch<React.SetStateAction<Language>> =
+    setStoredLang;
 
   useEffect(() => {
     try {

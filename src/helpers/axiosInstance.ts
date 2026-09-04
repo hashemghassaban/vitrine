@@ -2,7 +2,9 @@ import axios, { type AxiosResponse } from "axios";
 import { useState, useCallback } from "react";
 import { header } from "./header";
 
-const baseAPI = "/api";
+// In SSR deployments this must stay same-origin so the Node server can proxy it.
+// A different value is still supported for intentionally static-only builds.
+const baseAPI = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
 
 interface FilterParams {
   [key: string]: string | number | boolean | undefined;

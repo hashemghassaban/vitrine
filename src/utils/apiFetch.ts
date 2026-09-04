@@ -1,4 +1,10 @@
-const API_BASE = import.meta.env.VITE_API_TARGET || "https://admin.vitrine.gallery";
+const configuredApiBase =
+  import.meta.env.VITE_API_TARGET ||
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://admin.vitrine.gallery";
+
+// Accept both `https://host` and `https://host/api` in environment files.
+const API_BASE = configuredApiBase.replace(/\/$/, "").replace(/\/api$/, "");
 
 interface ApiResult<T> {
   success?: boolean;

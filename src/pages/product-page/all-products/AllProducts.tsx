@@ -761,7 +761,6 @@ const shouldShowFeatureMenu = (
               selectedCollection={selectedCollection}
               selectCollection={selectCollection}
               setSelectedCollection={setSelectedCollection}
-              selectedCategory={selectedCategory}
               productFeatures={productFeatures}
               selectedFeature={selectedFeature}
               selectFeature={selectFeature}

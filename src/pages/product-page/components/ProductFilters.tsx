@@ -6,7 +6,6 @@ interface Brand { id: number; title: string; }
 interface Collection { id: number; title: string; }
 interface FeatureValue { id: number; value: string; }
 interface ProductFeature { id: number; title: string; values: FeatureValue[]; category_id: number | string; }
-interface Category { id: number; title: string; }
 
 const MenuLabel: React.FC<{ title: string }> = ({ title }) => (
   <div className="menu-label-filter">
@@ -35,7 +34,6 @@ interface ProductFiltersProps {
   selectedCollection: number[];
   selectCollection: (id: number) => void;
   setSelectedCollection: React.Dispatch<React.SetStateAction<number[]>>;
-  selectedCategory?: Category | null;
   productFeatures: ProductFeature[];
   selectedFeature: number[];
   selectFeature: (id: number) => void;
@@ -48,7 +46,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   openFilter, brands, selected, toggleBrand, removeFilter,
   filteredBrands, search, setSearch,
   filteredCollections, selectedCollection, selectCollection,
-  selectedCategory, productFeatures, selectedFeature, selectFeature,
+  productFeatures, selectedFeature, selectFeature,
   t,
 }) => {
   return (
