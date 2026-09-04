@@ -12,7 +12,7 @@ import { useLanguage } from "../../../contexts/useLanguage";
 import { useTranslate } from "../../../i18n/useTranslate";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
-import backgroundHeader from "../../../assets/header/IMG_7070.jpg"
+import backgroundHeader from "../../../assets/header/IMG_7070.jpg" 
 
 export default function ProjectItem() {
   const { push } = useNavigation();
