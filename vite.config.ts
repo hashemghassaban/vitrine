@@ -23,6 +23,7 @@ export default defineConfig({
       "stylis",
       "antd",
       "@ant-design/icons",
+      "@ant-design/icons-svg",
       "@ant-design/cssinjs",
       "@ant-design/react-slick",
       /rc-.*/
