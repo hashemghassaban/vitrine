@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Row,
   Col,
@@ -7,7 +7,8 @@ import {
   Tag,
   Card,
   Button,
-  Drawer
+  Drawer,
+  Spin,
 } from "antd";
 import "./AllProducts.less";
 import useNavigation from "../../../hooks/useHistory";
@@ -83,8 +84,12 @@ const AllProducts: React.FC = () => {
   const [animatedItems, setAnimatedItems] = useState<number[]>([]);
   const [productFeatures, setProductFeatures] = useState<FeatureView[]>([]);
   const { getProductFeatures } = useProductFeatures(currentLang);
-  const [visibleCount, setVisibleCount] = useState(16);
   const [product, setProducts] = useState<ProductView[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [productLoadError, setProductLoadError] = useState(false);
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
   const [collections, setCollections] = useState<CollectionView[]>([]);
@@ -101,6 +106,7 @@ const AllProducts: React.FC = () => {
   const LANG_STORAGE_KEY = "app-language";
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isCategorySwitching, setIsCategorySwitching] = useState(false);
+  const productsRequestId = useRef(0);
   const textMainCaption =
     currentLang === "fa" ? "ویترین گالری" : "Vitrine Gallery";
 
@@ -310,9 +316,11 @@ const AllProducts: React.FC = () => {
 
 
   const fetchProducts = async () => {
+    const requestId = ++productsRequestId.current;
 
     try {
       setLoading(true);
+      setProductLoadError(false);
 
       // مقدار اولیه کالکشن
       let finalCollection = selectedCollection;
@@ -335,17 +343,30 @@ const AllProducts: React.FC = () => {
         categoryId ? Number(categoryId) : undefined,
         selected,            // برندها
         finalCollection,     // کالکشن اصلاح شده
-        selectedFeature      // فیچرها
+        selectedFeature,     // فیچرها
+        1,
       );
 
-      if (res.success) {
-        setProducts([...res.data]);
+      if (requestId !== productsRequestId.current) return;
 
+      if (res.success) {
+        // Keep the exact order returned by the API.
+        setProducts(res.data);
+        setAnimatedItems([]);
+        setCurrentPage(1);
+        setTotalPages(res.totalPages);
+        setTotalProducts(res.total);
+      } else {
+        setProductLoadError(true);
       }
     } catch (error) {
+      if (requestId !== productsRequestId.current) return;
       console.error("Error fetching products:", error);
+      setProductLoadError(true);
     } finally {
-      setLoading(false); // پایان لودینگ حتی اگر خطا رخ دهد
+      if (requestId === productsRequestId.current) {
+        setLoading(false); // پایان لودینگ فقط برای آخرین درخواست
+      }
     }
   };
 
@@ -355,9 +376,25 @@ const fetchFeatures = async (categoryIdParam?: number) => {
   const { success, data } = await getProductFeatures(categoryIdParam);
 
   if (success && data) {
-    setProductFeatures(data);
+    const categoryFeatures = categoryIdParam
+      ? data.filter(
+          (feature) => String(feature.category_id) === String(categoryIdParam),
+        )
+      : data;
+
+    setProductFeatures(categoryFeatures);
+
+    const validValueIds = new Set(
+      categoryFeatures.flatMap((feature) =>
+        feature.values.map((value) => value.id),
+      ),
+    );
+    setSelectedFeature((previous) =>
+      previous.filter((id) => validValueIds.has(id)),
+    );
   } else {
     setProductFeatures([]);
+    setSelectedFeature([]);
   }
 };
 
@@ -672,10 +709,52 @@ const shouldShowFeatureMenu = (
     return [String(selectedCategory.id)];
   };
 
-  const loadMore = () => {
-    const newItems = filteredProducts.slice(visibleCount, visibleCount + 4);
-    setVisibleCount((prev) => prev + 4);
-    setAnimatedItems((prev) => [...prev, ...newItems.map((i) => i.id)]);
+  const loadMore = async () => {
+    if (loadingMore || currentPage >= totalPages) return;
+
+    const nextPage = currentPage + 1;
+    const requestId = productsRequestId.current;
+    let finalCollection = selectedCollection;
+
+    if (
+      categoryId &&
+      selectedCollection.length === 1 &&
+      selectedCollection[0] === Number(categoryId)
+    ) {
+      finalCollection = [];
+    }
+
+    setLoadingMore(true);
+    try {
+      const res = await getListProducts(
+        20,
+        categoryId ? Number(categoryId) : undefined,
+        selected,
+        finalCollection,
+        selectedFeature,
+        nextPage,
+      );
+
+      if (requestId !== productsRequestId.current) return;
+
+      if (res.success) {
+        const nextProducts = res.data;
+        setProducts((previous) => {
+          const merged = [...previous, ...nextProducts];
+          return Array.from(
+            new Map(merged.map((item) => [item.id, item])).values(),
+          );
+        });
+        setAnimatedItems((previous) => [
+          ...previous,
+          ...nextProducts.map((item) => item.id),
+        ]);
+        setCurrentPage(nextPage);
+        setTotalPages(res.totalPages);
+      }
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   return (
@@ -774,7 +853,13 @@ const shouldShowFeatureMenu = (
           <Col xs={24} lg={17}>
             <div className="product-block">
               <p className="count">
-                {filteredProducts.length} {t("local_productsFound")}
+                {productLoadError
+                  ? currentLang === "fa"
+                    ? "خطا در دریافت محصولات"
+                    : currentLang === "ar"
+                      ? "حدث خطأ أثناء تحميل المنتجات"
+                      : "Failed to load products"
+                  : `${totalProducts} ${t("local_productsFound")}`}
               </p>
 
               <button
@@ -786,11 +871,8 @@ const shouldShowFeatureMenu = (
             </div>
 
             <Row gutter={[20, 30]}>
-              {[...filteredProducts]
-                .reverse()
-                .slice(0, visibleCount)
-                .map((item) => (
-                  <Col xs={12} md={3} sm={12} lg={6} key={item.id}>
+              {filteredProducts.map((item, index) => (
+                  <Col xs={12} sm={12} md={8} lg={8} xl={6} key={item.id}>
                     <Card
                       hoverable
                       className={`showcase-card-product ${animatedItems.includes(item.id) ? "fade-in" : ""}`}
@@ -802,6 +884,8 @@ const shouldShowFeatureMenu = (
                           src={item?.image}
                           alt={item?.title}
                           className="img-card-product"
+                          loading={index < 4 ? "eager" : "lazy"}
+                          decoding="async"
                         />
                       }
                     >
@@ -821,10 +905,26 @@ const shouldShowFeatureMenu = (
                 ))}
             </Row>
 
-            {visibleCount < filteredProducts.length && (
+            {currentPage < totalPages && (
               <div className="load-more-box">
-                <button className="load-more" onClick={loadMore}>
-                  {t("local_viewMoreProducts")}
+                <button
+                  className="load-more"
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  aria-busy={loadingMore}
+                >
+                  {loadingMore ? (
+                    <span className="load-more-loading">
+                      <Spin size="small" />
+                      {currentLang === "fa"
+                        ? "در حال بارگذاری..."
+                        : currentLang === "ar"
+                          ? "جارٍ التحميل..."
+                          : "Loading..."}
+                    </span>
+                  ) : (
+                    t("local_viewMoreProducts")
+                  )}
                 </button>
               </div>
             )}

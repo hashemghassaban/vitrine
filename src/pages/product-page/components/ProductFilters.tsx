@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Menu, Tag, Input, Checkbox } from "antd";
+import type { ItemType } from "antd/es/menu/interface";
 import { CloseOutlined } from "@ant-design/icons";
 
 interface Brand { id: number; title: string; }
@@ -15,12 +16,9 @@ const MenuLabel: React.FC<{ title: string }> = ({ title }) => (
 );
 
 interface ProductFiltersProps {
-  // Category Menu Props
   items: any[];
   openKeys: string[];
   onOpenChange: (keys: string[]) => void;
-
-  // Filters Props
   openFilter: boolean;
   setOpenFilter: React.Dispatch<React.SetStateAction<boolean>>;
   brands: Brand[];
@@ -49,26 +47,50 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   productFeatures, selectedFeature, selectFeature,
   t,
 }) => {
+
+  // سورت الفبایی ساده بدون گروه‌بندی و بدون تیترهای ant-menu-item-group-title
+  const brandMenuItems: ItemType[] = useMemo(() => {
+    return [...filteredBrands]
+      .sort((a, b) => a.title.localeCompare(b.title, "fa", { sensitivity: "base" }))
+      .map((b) => ({
+        key: `brand-${b.id}`,
+        className: "brand-menu-item",
+        label: (
+          <div className="item-menu-box">
+            <div className="item-menu-check-box">
+              <Checkbox
+                className="item-menu-check"
+                checked={selected.includes(b.id)}
+                onChange={() => toggleBrand(b.id)}
+              >
+                {b.title}
+              </Checkbox>
+            </div>
+          </div>
+        ),
+      }));
+  }, [filteredBrands, selected, toggleBrand]);
+
   return (
     <div className={`filters-box ${openFilter ? "open" : ""}`}>
-      {/* بخش دسته‌بندی‌ها که حذف شده بود */}
-      <h3 className="filter-title">{t("local_category")}</h3>
-      <div className="menu-scroll-container category-scroll">
-        <Menu
-          className="menu-item-product"
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          mode="inline"
-          items={items}
-        />
+      {/* بخش دسته‌بندی‌ها */}
+      <div className="filter-section">
+        <h3 className="filter-title">{t("local_category")}</h3>
+        <div className="menu-scroll-container category-scroll">
+          <Menu
+            className="menu-item-product"
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
+            mode="inline"
+            items={items}
+          />
+        </div>
       </div>
 
-      <div className="filters-box">
+      {/* تگ‌های انتخاب‌شده */}
+      <div className="filters-box filter-section">
         <h3 className="filter-title mt-30">{t("local_filters")}</h3>
         <div className="selected-tags">
-
-
-          {/* برندها */}
           {selected.map((id) => {
             const b = brands.find((x) => x.id === id);
             if (!b) return null;
@@ -76,10 +98,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
               <Tag key={`brand-${id}`}>
                 <div className="pulse-tag">
                   {b.title}
-                  <button
-                    onClick={() => removeFilter(id, "brand")}
-                    className="pulse-button"
-                  >
+                  <button onClick={() => removeFilter(id, "brand")} className="pulse-button">
                     <span className="plus-icon">+</span>
                   </button>
                 </div>
@@ -87,7 +106,6 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             );
           })}
 
-          {/* کالکشن‌ها */}
           {selectedCollection.map((id) => {
             const c = filteredCollections.find((x) => x.id === id);
             if (!c) return null;
@@ -95,10 +113,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
               <Tag key={`collection-${id}`}>
                 <div className="pulse-tag">
                   {c.title}
-                  <button
-                    onClick={() => removeFilter(id, "collection")}
-                    className="pulse-button"
-                  >
+                  <button onClick={() => removeFilter(id, "collection")} className="pulse-button">
                     <span className="plus-icon">+</span>
                   </button>
                 </div>
@@ -106,11 +121,10 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             );
           })}
 
-          {/* فیچرها */}
           {selectedFeature.map((id) => {
             const feature = productFeatures
-              .flatMap(f => f.values.map(v => ({ ...v, featureTitle: f.title })))
-              .find(v => v.id === id);
+              .flatMap((f) => f.values.map((v) => ({ ...v, featureTitle: f.title })))
+              .find((v) => v.id === id);
 
             if (!feature) return null;
 
@@ -118,21 +132,18 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
               <Tag key={`feature-${id}`}>
                 <div className="pulse-tag">
                   {feature.featureTitle}: {feature.value}
-                  <button
-                    onClick={() => removeFilter(id, "feature")}
-                    className="pulse-button"
-                  >
+                  <button onClick={() => removeFilter(id, "feature")} className="pulse-button">
                     <span className="plus-icon">+</span>
                   </button>
                 </div>
               </Tag>
             );
           })}
-
         </div>
-
       </div>
-      <div className="menu-scroll-container category-scroll">
+
+      {/* برندها */}
+      <div className="menu-scroll-container category-scroll filter-section">
         <div className="filters-box-t">
           <h3 className="filter-brand-title">{t("local_brands")}</h3>
           <Input
@@ -140,32 +151,25 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("local_search")}
-            suffix={<CloseOutlined />}
+            suffix={
+              search ? (
+                <CloseOutlined
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setSearch("")}
+                />
+              ) : null
+            }
           />
 
           <Menu
             className="menu-item-product-brand"
-            items={filteredBrands.map((b) => ({
-              key: `brand-${b.id}`,
-              label: (
-                <div className="item-menu-box">
-                  <div className="item-menu-check-box">
-                    <Checkbox
-                      className="item-menu-check"
-                      checked={selected.includes(b.id)}
-                      onChange={() => toggleBrand(b.id)}
-                    >
-                      {b.title}
-                    </Checkbox>
-                  </div>
-                </div>
-              ),
-              className: "brand-menu-item",
-            }))}
+            items={brandMenuItems}
           />
         </div>
       </div>
-      <div className="menu-scroll-container category-scroll">
+
+      {/* کالکشن‌ها */}
+      <div className="menu-scroll-container category-scroll filter-section">
         {filteredCollections.length > 0 && (
           <Menu
             className="menu-item-product-col"
@@ -183,9 +187,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                           <Checkbox
                             className="item-menu-check"
                             checked={selectedCollection.includes(c.id)}
-                            onChange={() => {
-                              selectCollection(c.id);
-                            }}
+                            onChange={() => selectCollection(c.id)}
                           >
                             {c.title}
                           </Checkbox>
@@ -199,40 +201,40 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             ]}
           />
         )}
-
       </div>
 
-
+      {/* فیچرها */}
       {productFeatures && productFeatures.length > 0 && (
-        <Menu
-          className="menu-item-product-col"
-          mode="inline"
-          items={productFeatures.map((f) => ({
-            key: f.id,
-            label: <MenuLabel title={f.title} />,
-            children: f.values.flatMap((v, idx) => [
-              {
-                key: `feature-${v.id}`,
-                label: (
-                  <div className="item-menu-box">
-                    <div className="item-menu-check-box">
-                      <Checkbox
-                        className="item-menu-check"
-                        checked={selectedFeature.includes(v.id)}
-                        onChange={() => selectFeature(v.id)}
-                      >
-                        {v.value}
-                      </Checkbox>
+        <div className="filter-section">
+          <Menu
+            className="menu-item-product-col"
+            mode="inline"
+            items={productFeatures.map((f) => ({
+              key: f.id,
+              label: <MenuLabel title={f.title} />,
+              children: f.values.flatMap((v, idx) => [
+                {
+                  key: `feature-${v.id}`,
+                  label: (
+                    <div className="item-menu-box">
+                      <div className="item-menu-check-box">
+                        <Checkbox
+                          className="item-menu-check"
+                          checked={selectedFeature.includes(v.id)}
+                          onChange={() => selectFeature(v.id)}
+                        >
+                          {v.value}
+                        </Checkbox>
+                      </div>
                     </div>
-                  </div>
-                ),
-              },
-              ...(idx !== f.values.length - 1 ? [{ type: "divider" as const, key: `divider-feat-${v.id}` }] : []),
-            ]),
-          }))}
-        />
+                  ),
+                },
+                ...(idx !== f.values.length - 1 ? [{ type: "divider" as const, key: `divider-feat-${v.id}` }] : []),
+              ]),
+            }))}
+          />
+        </div>
       )}
-
     </div>
   );
 };

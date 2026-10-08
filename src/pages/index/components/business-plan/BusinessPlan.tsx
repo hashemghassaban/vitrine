@@ -14,8 +14,6 @@ export const BusinessPlan: React.FC = () => {
   const data = indexData?.sliders.find(
     (item) => item.slug === slug,
   );
-  console.log('sss',data);
-  
   return (
     <section id="BusinessPlan" className="business-plan">
       <Row gutter={[32, 32]} align="middle">

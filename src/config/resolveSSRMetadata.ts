@@ -198,7 +198,7 @@ async function resolveDynamicMeta(
 
 export async function resolveSSRMetadata(
   url: string,
-): Promise<{ meta: MetaTags; statusCode: number }> {
+): Promise<{ meta: MetaTags; statusCode: number; pageData?: { type: string; id?: string; data: unknown } }> {
   const path = url.split("?")[0];
   const searchParams = new URL(url, "http://localhost").searchParams;
   const parsed = parseRoute(path);
@@ -212,7 +212,12 @@ export async function resolveSSRMetadata(
   }
 
   if (parsed.type === "home") {
-    return { meta: enrichMeta(getRouteMetadata(path), path), statusCode: 200 };
+    const indexData = await fetchApiData<IndexDataView>("", parsed.lang);
+    return {
+      meta: enrichMeta(getRouteMetadata(path), path),
+      statusCode: 200,
+      pageData: indexData ? { type: "home", data: indexData } : undefined,
+    };
   }
 
   if (parsed.type === "static") {
@@ -246,9 +251,25 @@ export async function resolveSSRMetadata(
   }
 
   if (parsed.type === "dynamic-page") {
+    const page = await fetchApiData<{
+      title?: string;
+      meta_description?: string;
+      description?: string;
+      image?: string;
+    }>(`/page/${parsed.pageName}`, parsed.lang);
     return {
-      meta: await resolveDynamicMeta(parsed.lang, parsed.pageName, path),
+      meta: page?.title
+        ? enrichMeta({
+            title: `${page.title} | ${siteName(parsed.lang)}`,
+            description: page.meta_description || page.description || page.title,
+            htmlLang: parsed.lang,
+            ogLocale: metadataByLang[parsed.lang]["/"].ogLocale,
+            ogImage: page.image,
+            ogType: "website",
+          }, path)
+        : await resolveDynamicMeta(parsed.lang, parsed.pageName, path),
       statusCode: 200,
+      pageData: page ? { type: "dynamic-page", id: parsed.pageName, data: page } : undefined,
     };
   }
 
@@ -279,6 +300,7 @@ export async function resolveSSRMetadata(
           path,
         ),
         statusCode: 200,
+        pageData: { type: "product-detail", id: parsed.id, data: product },
       };
     }
   }
@@ -304,6 +326,7 @@ export async function resolveSSRMetadata(
           path,
         ),
         statusCode: 200,
+        pageData: { type: "blog-detail", id: parsed.id, data: blog },
       };
     }
   }
@@ -330,6 +353,7 @@ export async function resolveSSRMetadata(
           path,
         ),
         statusCode: 200,
+        pageData: { type: "project-detail", id: parsed.id, data: project },
       };
     }
   }
@@ -356,6 +380,7 @@ export async function resolveSSRMetadata(
           path,
         ),
         statusCode: 200,
+        pageData: { type: "brand-detail", id: parsed.id, data: brand },
       };
     }
   }

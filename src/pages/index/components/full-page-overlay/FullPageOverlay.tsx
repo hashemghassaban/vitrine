@@ -7,17 +7,16 @@ import imageMobile2 from "../../../../assets/home/slideMobile2.jpg";
 import video from "../../../../assets/home/sliderVideo.mp4";
 import PulseCircleButton from "./components/PulsingButton";
 import { useTranslate } from "../../../../i18n/useTranslate";
+import { useIsMobile } from "../../../../helpers/useIsMobile";
 
 export const FullPageOverlay: React.FC = () => {
   const { t } = useTranslate();
-const isMobile = typeof window !== "undefined"
-  ? window.innerWidth < 768
-  : false
+  const isMobile = useIsMobile(767);
 
   const getImages = () => {
     return [
       {
-        img: isMobile  ? image8 : imageMobile1,
+        img: isMobile ? imageMobile1 : image8,
         buttons: [{ id: 1, x: 52, y: 40 }],
         content: [
           {
@@ -29,7 +28,7 @@ const isMobile = typeof window !== "undefined"
         ],
       },
       {
-        img: isMobile  ? image7 : imageMobile2,
+        img: isMobile ? imageMobile2 : image7,
         buttons: [{ id: 1, x: 40, y: 35 }],
         content: [
           {
@@ -40,7 +39,6 @@ const isMobile = typeof window !== "undefined"
           },
         ],
       },
-      ,
       {
         video: video,
         buttons: [
@@ -56,7 +54,6 @@ const isMobile = typeof window !== "undefined"
           },
         ],
       },
-      ,
     ];
   };
 
@@ -64,7 +61,7 @@ const isMobile = typeof window !== "undefined"
     <div className="overlay-container">
       {getImages().map((item, index) => (
         <div key={index} className="overlay-section">
-          {index !== 3 ? (
+          {!item.video ? (
           <img src={item?.img} alt={item?.content[0].title} />
 
           ):(

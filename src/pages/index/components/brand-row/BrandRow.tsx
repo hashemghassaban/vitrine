@@ -5,13 +5,10 @@ import { useTranslate } from "../../../../i18n/useTranslate";
 import type BrandView from "../../../../models/views/brandView";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import useBrands from "../../../../hooks/brand/useBrands";
-import useNavigation from "../../../../hooks/useHistory";
+import { useIsMobile } from "../../../../helpers/useIsMobile";
 export function BrandRow(): JSX.Element {
-  const { push } = useNavigation();
   const { currentLang } = useLanguage();
-const isMobile = typeof window !== "undefined"
-  ? window.innerWidth < 768
-  : false
+  const isMobile = useIsMobile(767);
 
   const { getList } = useBrands(currentLang);
   const [brands, setBrands] = useState<BrandView[]>([]);
@@ -42,35 +39,39 @@ const isMobile = typeof window !== "undefined"
   speed={600}
   autoplaySpeed={2500}
   cssEase="linear"
-  slidesToShow={5}
+  slidesToShow={7}
   slidesToScroll={1}
   responsive={[
     {
       breakpoint: 1200,
-      settings: { slidesToShow: 6.5 },
+      settings: { slidesToShow: 6 },
     },
     {
       breakpoint: 992,
-      settings: { slidesToShow: 5.5 },
+      settings: { slidesToShow: 5 },
     },
     {
       breakpoint: 768,
-      settings: { slidesToShow: 4.5 },
+      settings: { slidesToShow: 4 },
     },
     {
       breakpoint: 480,
-      settings: { slidesToShow: 3.5 },
+      settings: { slidesToShow: 3 },
     },
   ]}
 >
   {brands.map((brand) => (
     <div key={brand.id} className="brand-slide">
-      <img
-        onClick={() => push(`/${currentLang}/brand-detail/${brand.id}`)}
-        src={brand.logo}
-        alt={brand.title}
-        className="brand-img"
-      />
+      <a
+        href={`/${currentLang}/brand-detail/${encodeURIComponent(brand.id)}`}
+        aria-label={brand.title}
+      >
+        <img
+          src={brand.logo}
+          alt={brand.title}
+          className="brand-img"
+        />
+      </a>
     </div>
   ))}
  
@@ -81,14 +82,16 @@ const isMobile = typeof window !== "undefined"
     <div className="brand-center">
       {brands.map((brand) => (
         <div key={brand.id} className="brand-slide static">
-          <img
-            onClick={() =>
-              push(`/${currentLang}/brand-detail/${brand.id}`)
-            }
-            src={brand.logo}
-            alt={brand.title}
-            className="brand-img"
-          />
+          <a
+            href={`/${currentLang}/brand-detail/${encodeURIComponent(brand.id)}`}
+            aria-label={brand.title}
+          >
+            <img
+              src={brand.logo}
+              alt={brand.title}
+              className="brand-img"
+            />
+          </a>
         </div>
       ))}
     

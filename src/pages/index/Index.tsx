@@ -18,13 +18,15 @@ import { IndexProvider } from "../../contexts/indexContext";
 import { useSyncLanguage } from "../../i18n/useSyncLanguage";
 import LoadingSpin from "../../components/Loading/LoadingSpin";
 import usePageMetadata from "../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../contexts/ssrDataContext";
 
 function Index() {
   useSyncLanguage();
   usePageMetadata();
   
-  const [indexData, setIndexData] = useState<IndexDataView | null>(null);
-  const [loading, setLoading] = useState(true);
+  const ssrIndexData = useSSRPageData<IndexDataView>("home");
+  const [indexData, setIndexData] = useState<IndexDataView | null>(ssrIndexData);
+  const [loading, setLoading] = useState(!ssrIndexData);
   const { currentLang } = useLanguage();
   const { getIndex } = useIndex(currentLang);
   const fetchIndex = async () => {
@@ -40,6 +42,7 @@ function Index() {
   };
 
   useEffect(() => {
+    if (ssrIndexData) return;
     setIndexData(null);
     fetchIndex();
   }, [currentLang]);

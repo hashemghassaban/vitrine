@@ -103,6 +103,9 @@ export interface ProductDetailView {
   collection: CollectionView;
 
   features: FeatureValueView[];
+  related_products?: ProductView[];
+  relatedProducts?: ProductView[];
+  related?: ProductView[];
 }
 
 export interface BrochoresView {

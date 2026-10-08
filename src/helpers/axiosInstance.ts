@@ -1,10 +1,51 @@
-import axios, { type AxiosResponse } from "axios";
+import axios, {
+  type AxiosInstance,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { useState, useCallback } from "react";
 import { header } from "./header";
 
 // In SSR deployments this must stay same-origin so the Node server can proxy it.
 // A different value is still supported for intentionally static-only builds.
 const baseAPI = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
+
+type RetryableRequestConfig = InternalAxiosRequestConfig & {
+  _retryCount?: number;
+};
+
+const RETRYABLE_STATUSES = new Set([500, 502, 503, 504]);
+
+const addGetRetry = (client: AxiosInstance) => {
+  client.interceptors.response.use(undefined, async (error) => {
+    const config = error.config as RetryableRequestConfig | undefined;
+    const status = error.response?.status as number | undefined;
+    const isGet = config?.method?.toLowerCase() === "get";
+    const retryCount = config?._retryCount ?? 0;
+    const isTemporaryFailure = !status || RETRYABLE_STATUSES.has(status);
+    const wasCancelled = error.code === "ERR_CANCELED";
+
+    if (!config || !isGet || !isTemporaryFailure || wasCancelled || retryCount >= 2) {
+      return Promise.reject(error);
+    }
+
+    config._retryCount = retryCount + 1;
+    await new Promise((resolve) =>
+      setTimeout(resolve, retryCount === 0 ? 300 : 800),
+    );
+    return client.request(config);
+  });
+
+  return client;
+};
+
+const createApiClient = (requestHeaders: Record<string, string>) =>
+  addGetRetry(
+    axios.create({
+      baseURL: baseAPI,
+      headers: requestHeaders,
+    }),
+  );
 
 interface FilterParams {
   [key: string]: string | number | boolean | undefined;
@@ -23,15 +64,9 @@ const useCustomAxios = (currentLang:string) => {
   const [filters, setFilters] = useState<FilterParams>({});
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const axiosInstance = axios.create({
-    baseURL: baseAPI,
-    headers: header(currentLang),
-  });
+  const axiosInstance = createApiClient(header(currentLang));
 
-  const axiosAuthInstance = axios.create({
-    baseURL: baseAPI,
-    headers: header(currentLang),
-  });
+  const axiosAuthInstance = createApiClient(header(currentLang));
 
   axiosAuthInstance.interceptors.request.use((config) => {
     return config;
@@ -43,10 +78,7 @@ const useCustomAxios = (currentLang:string) => {
       ...customHeaders,
     };
 
-    return axios.create({
-      baseURL: baseAPI,
-      headers: finalHeaders,
-    });
+    return createApiClient(finalHeaders);
   };
 
   const performRequest = useCallback(

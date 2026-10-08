@@ -17,7 +17,8 @@ async function getListProducts(
   categoryId?: number,
   brands?: number[],
   collections?: number[],
-  features?: number[]
+  features?: number[],
+  page: number = 1,
 ) {
   try {
     const res = await axiosAuthInstance.get<ServerResult<ProductView[]>>(
@@ -29,6 +30,7 @@ async function getListProducts(
           brand_ids: brands,
           collection_ids: collections,
           feature_values: features,
+          page,
         },
         paramsSerializer: (params) => {
           const query: string[] = [];
@@ -58,6 +60,7 @@ async function getListProducts(
         result: "",
         data,
         total: meta?.pagination?.total ?? 0,
+        totalPages: meta?.pagination?.total_pages ?? 1,
       };
     }
 
@@ -66,6 +69,7 @@ async function getListProducts(
       result: res.data.message ?? "Unknown error",
       data: [],
       total: 0,
+      totalPages: 0,
     };
   } catch (error: any) {
     return {
@@ -73,14 +77,10 @@ async function getListProducts(
       result: error?.response?.data?.message || "Failed to fetch products",
       data: [],
       total: 0,
+      totalPages: 0,
     };
   }
 }
-
-
-
-
-
 
   async function getProductById(id: number) {
     let success = false;

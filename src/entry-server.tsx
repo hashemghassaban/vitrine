@@ -10,6 +10,7 @@ import {
   setSSRPathname,
 } from "./utils/metaTags.ts";
 import App from "./App.tsx";
+import { SSRDataProvider } from "./contexts/ssrDataContext.tsx";
 
 interface RenderContext {
   url: string;
@@ -26,14 +27,16 @@ export async function render(url: string, context: RenderContext) {
   context.url = url;
 
   const path = url.split("?")[0];
-  const { meta, statusCode } = await resolveSSRMetadata(url);
+  const { meta, statusCode, pageData } = await resolveSSRMetadata(url);
 
   setSSRPathname(path);
   setMetaTags(meta);
 
   const appHtml = renderToString(
     <StaticRouter location={url} basename={ROUTER_BASENAME}>
-      <App />
+      <SSRDataProvider value={pageData ?? null}>
+        <App />
+      </SSRDataProvider>
     </StaticRouter>,
   );
 
@@ -51,5 +54,6 @@ export async function render(url: string, context: RenderContext) {
     htmlLang: lang,
     htmlDir: dir,
     statusCode,
+    pageData: pageData ?? null,
   };
 }

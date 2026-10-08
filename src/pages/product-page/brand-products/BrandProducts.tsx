@@ -12,14 +12,16 @@ import { useSyncLanguage } from "../../../i18n/useSyncLanguage";
 import useNavigation from "../../../hooks/useHistory";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import usePageMetadata from "../../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../../contexts/ssrDataContext";
 
 const BrandProducts: React.FC = () => {
   useSyncLanguage();
   
   const { id } = useParams();
+  const ssrBrand = useSSRPageData<BrandView>("brand-detail", id);
   const { currentLang } = useLanguage();
   const { getById } = useBrand(currentLang);
-  const [brand, setBrand] = useState<BrandView | null>(null);
+  const [brand, setBrand] = useState<BrandView | null>(ssrBrand);
   const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslate();
@@ -53,6 +55,7 @@ const BrandProducts: React.FC = () => {
   usePageMetadata(meta);
 
   useEffect(() => {
+    if (ssrBrand) return;
     fetchBrand();
   }, [currentLang, id]);
 
@@ -108,7 +111,12 @@ const BrandProducts: React.FC = () => {
                       push(`/${currentLang}/products?collection=${urlFriendlyId}`);
                     }}
                   >
-                    <img src={item.main_image} alt={item.title} />
+                    <img
+                      src={item.main_image}
+                      alt={item.title}
+                      loading={i < 3 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
                     <div className="card-info">
                       <h2 className="card-title">{item.title}</h2>
                       <span className="card-arrow">←</span>

@@ -3,7 +3,7 @@ import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import instagram from "../../../assets/footer/media1.png";
-import Marker from "../../../assets/icon/pin.png";
+import MarkerPin from "../../../assets/icon/pin.png";
 import whatsapp from "../../../assets/footer/media2.png";
 import linkedin from "../../../assets/footer/media3.png";
 import telegram from "../../../assets/footer/media4.png";
@@ -28,8 +28,8 @@ import usePageMetadata from "../../../hooks/usePageMetadata";
 
 const ContactBranch: React.FC = () => {
   useSyncLanguage();
-          usePageMetadata();
-  
+  usePageMetadata();
+
   const { currentLang } = useLanguage();
   const { getSetting } = useSetting(currentLang);
   const { getList } = useDepartment(currentLang);
@@ -38,8 +38,9 @@ const ContactBranch: React.FC = () => {
   const [setting, setSetting] = useState<SettingView | null>(null);
   const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // جلوگیری از خطای WebGL و SSR Hydration
   const [formData, setFormData] = useState<contractBranchDTO>(
-    {} as contractBranchDTO,
+    {} as contractBranchDTO
   );
   const { t } = useTranslate();
 
@@ -58,14 +59,12 @@ const ContactBranch: React.FC = () => {
   };
 
   useEffect(() => {
+    setIsMounted(true); // فقط در کلاینت true می‌شود
     const fetchAll = async () => {
-    await Promise.all([
-      fetchDepartments(),
-      fetchSettings()
-    ]);
-    setLoading(false);
-  };
-  fetchAll();
+      await Promise.all([fetchDepartments(), fetchSettings()]);
+      setLoading(false);
+    };
+    fetchAll();
   }, [currentLang]);
 
   const handleInputChange = (field: keyof contractBranchDTO, value: any) => {
@@ -84,7 +83,10 @@ const ContactBranch: React.FC = () => {
     });
   };
 
-  const mapSrc = setting?.google_map_address?.match(/src="([^"]+)"/)?.[1] || "";
+  // استخراج مختصات
+  const lat = Number((setting as any)?.latitude) || 35.6997;
+  const lng = Number((setting as any)?.longitude) || 51.338;
+
   const onSubmit = async () => {
     try {
       const isEmpty =
@@ -142,25 +144,22 @@ const ContactBranch: React.FC = () => {
           </div>
 
           <div className="action-icons">
-            <a href={setting?.instagram_url} target="_blank">
+            <a href={setting?.instagram_url} target="_blank" rel="noreferrer">
               <img src={instagram} className="action-icon" alt="Instagram" />
             </a>
-            <a href={setting?.whatsapp_url} target="_blank">
+            <a href={setting?.whatsapp_url} target="_blank" rel="noreferrer">
               <img src={whatsapp} className="action-icon" alt="WhatsApp" />
             </a>
-            <a href={setting?.linkedin_url} target="_blank">
+            <a href={setting?.linkedin_url} target="_blank" rel="noreferrer">
               <img src={linkedin} className="action-icon" alt="linkedin" />
             </a>
-            <a href={setting?.telegram_url} target="_blank">
+            <a href={setting?.telegram_url} target="_blank" rel="noreferrer">
               <img src={telegram} className="action-icon" alt="telegram" />
             </a>
-            <a href={setting?.facebook_url} target="_blank">
+            <a href={setting?.facebook_url} target="_blank" rel="noreferrer">
               <img src={facebook} className="action-icon" alt="facebook" />
             </a>
-            {/* <a href={setting?.twitter_url} target="_blank">
-              <img src={twitter} className="action-icon" alt="twitter" />
-            </a> */}
-            <a href={setting?.youtube_url} target="_blank">
+            <a href={setting?.youtube_url} target="_blank" rel="noreferrer">
               <img src={youtube} className="action-icon" alt="youtube" />
             </a>
           </div>
@@ -243,21 +242,59 @@ const ContactBranch: React.FC = () => {
             </div>
           </div>
         </div>
+{/* بخش نقشه نشان (Neshan) */}
+<div
+  className="map-section"
+  style={{
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    minHeight: "450px",
+    borderRadius: "12px",
+    overflow: "hidden",
+  }}
+>
+  {isMounted && (
+    <>
+      <iframe
+        title="Neshan Map"
+        src={`https://neshan.org/maps/@${lat},${lng},16z,0p/search`}
+        allow="fullscreen; geolocation; accelerometer; gyroscope"
+        allowFullScreen
+        loading="lazy"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          minHeight: "450px",
+        }}
+      />
+      {/* دکمه باز کردن مستقیم در اپلیکیشن / سایت نشان */}
+      <a
+        href={`https://neshan.org/maps/@${lat},${lng},16z`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          position: "absolute",
+          bottom: 12,
+          right: 12,
+          background: "#fff",
+          color: "#333",
+          padding: "6px 14px",
+          borderRadius: "8px",
+          fontSize: "12px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          textDecoration: "none",
+          zIndex: 10,
+          fontWeight: 500,
+        }}
+      >
+        مسیریابی در نشان
+      </a>
+    </>
+  )}
+</div>
 
-        <div className="map-section">
-          <iframe
-            title={setting?.city}
-            src={mapSrc}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-          ></iframe>
-          <div className="map-pin">
-            <img src={Marker} className="action" alt="WhatsApp" />
-          </div>
-        </div>
       </div>
       <AppFooter />
     </>

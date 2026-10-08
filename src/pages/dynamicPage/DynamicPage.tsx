@@ -11,15 +11,18 @@ import LoadingSpin from "../../components/Loading/LoadingSpin";
 import { useLocation } from "react-router-dom";
 import "./DynamicPage.less";
 import usePageMetadata from "../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../contexts/ssrDataContext";
 
 export default function DynamicPage() {
   useSyncLanguage();
   
   const { currentLang } = useLanguage();
   const { pathname } = useLocation();
-  const [dynamicPage, setDynamicPage] = useState<DynamicPage | null>(null);
+  const pageName = pathname.split('/')[3];
+  const ssrPage = useSSRPageData<DynamicPage>("dynamic-page", pageName);
+  const [dynamicPage, setDynamicPage] = useState<DynamicPage | null>(ssrPage);
   const { getList } = useDynamicPage(currentLang);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!ssrPage);
   const fetchPage = async (location: string) => {
 
     setLoading(true);
@@ -51,9 +54,9 @@ export default function DynamicPage() {
     usePageMetadata(meta);
 
   useEffect(() => {
-    let result = pathname.split('/')[3];    
-    fetchPage(result);
-  }, [currentLang]);
+    if (ssrPage) return;
+    fetchPage(pageName);
+  }, [currentLang, pageName, ssrPage]);
 
   return (
     <>

@@ -202,6 +202,11 @@ const isMobile = typeof window !== "undefined"
       })`,
   };
 
+  // مرتب‌سازی الفبایی برندها بر اساس عنوان (title)
+  const sortedBrands = [...(brands || [])].sort((a, b) =>
+    (a.title || "").localeCompare(b.title || "", "fa", { sensitivity: "base" })
+  );
+
   const menuItems = [
     {
       key: "menu-products",
@@ -212,38 +217,36 @@ const isMobile = typeof window !== "undefined"
       key: "menu-brands",
       title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
       children:
-        brands?.length > 0
+        sortedBrands.length > 0
           ? [
-            {
-              key: "menu-brands-all",
-              title: {
-                en: "All Brands",
-                fa: "همه برندها",
-                ar: "جميع العلامات التجارية",
+              {
+                key: "menu-brands-all",
+                title: {
+                  en: "All Brands",
+                  fa: "همه برندها",
+                  ar: "جميع العلامات التجارية",
+                },
+                path: "brands",
               },
-              path: "brands",
-            },
-
-            ...brands.map((brand, index) => ({
-              key: `brand-${brand.title}-${index}`,
-              title: {
-                en: brand.title,
-                fa: brand.title,
-                ar: brand.title,
-              },
-              path: `brand-detail/${brand.id}`,
-              image: brand.image,
-            })),
-          ]
+              ...sortedBrands.map((brand, index) => ({
+                key: `brand-${brand.id || index}`,
+                title: {
+                  en: brand.title,
+                  fa: brand.title,
+                  ar: brand.title,
+                },
+                path: `brand-detail/${brand.id}`,
+                image: brand.image,
+              })),
+            ]
           : [
-            {
-              key: "menu-brands-main",
-              title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-              path: "brands",
-            },
-          ],
+              {
+                key: "menu-brands-main",
+                title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
+                path: "brands",
+              },
+            ],
     },
-
     {
       key: "menu-catalogues",
       title: { en: "Catalogues", fa: "کاتالوگ‌ها", ar: "الكتالوجات" },
@@ -259,7 +262,6 @@ const isMobile = typeof window !== "undefined"
       title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
       path: "services",
     },
-
     {
       key: "menu-representation",
       title: { en: "Agents", fa: "نمایندگی‌ها", ar: "الوكلاء" },
@@ -276,6 +278,7 @@ const isMobile = typeof window !== "undefined"
       path: "contact",
     },
   ];
+
 
   return (
     <>

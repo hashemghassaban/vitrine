@@ -14,18 +14,20 @@ import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import BlogCommentForm from "./components/BlogCommentForm";
 import usePageMetadata from "../../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../../contexts/ssrDataContext";
 
 export default function BlogDetailPage() {
   useSyncLanguage();
   const { push } = useNavigation();
   const { id } = useParams<{ id: string }>();
+  const ssrBlog = useSSRPageData<BlogItemView>("blog-detail", id);
   const { currentLang } = useLanguage();
   const { getPostById, getPosts } = useBlog(currentLang);
-  const [blog, setBlog] = useState<BlogItemView | null>(null);
-  const [backgroundData, setBackground] = useState<string>("");
+  const [blog, setBlog] = useState<BlogItemView | null>(ssrBlog);
+  const [backgroundData, setBackground] = useState<string>(ssrBlog?.image ?? "");
 
   const [related, setRelated] = useState<BlogItemView[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!ssrBlog);
   const { t } = useTranslate();
 
   const fetchData = async () => {
@@ -69,6 +71,7 @@ export default function BlogDetailPage() {
 
   useEffect(() => {
     if (!id) return;
+    if (ssrBlog) return;
     fetchData();
   }, [id, currentLang]);
 

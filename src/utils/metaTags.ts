@@ -271,6 +271,7 @@ export function injectSSRIntoTemplate(
     metaTagsHtml: string;
     htmlLang: string;
     htmlDir: string;
+    pageData?: unknown;
   },
 ): string {
   let html = template.replace(/<title>[^<]*<\/title>\s*/i, "");
@@ -282,6 +283,15 @@ export function injectSSRIntoTemplate(
   });
 
   html = html.replace("<!--ssr-outlet-->", options.appHtml);
+
+  const serializedData = JSON.stringify(options.pageData ?? null)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+  html = html.replace(
+    "</body>",
+    `<script>window.__SSR_DATA__=${serializedData}</script></body>`,
+  );
 
   if (options.metaTagsHtml) {
     html = html.replace("</head>", `${options.metaTagsHtml}</head>`);

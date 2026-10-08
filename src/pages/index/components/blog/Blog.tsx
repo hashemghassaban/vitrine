@@ -7,6 +7,7 @@ import { AppButton } from "../../../../components/AppButton/AppButton";
 import { useLanguage } from "../../../../contexts/useLanguage";
 import { useIndexContext } from "../../../../contexts/indexContext";
 import { useTranslate } from "../../../../i18n/useTranslate";
+import { cleanText } from "../../../../helpers/cleanText";
 
 export const Blog: React.FC = () => {
   const { push } = useNavigation();
@@ -14,10 +15,7 @@ export const Blog: React.FC = () => {
   const { indexData } = useIndexContext();
   const { t } = useTranslate();
   const truncateHtml = (html: string, limit: number) => {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-
-    const text = div.textContent || div.innerText || "";
+    const text = cleanText(html);
 
     if (text.length <= limit) return html;
 

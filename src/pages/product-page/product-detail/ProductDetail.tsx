@@ -19,18 +19,36 @@ import CommentForm from "./components/CommentForm";
 import OrderForm from "./components/OrderForm";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import usePageMetadata from "../../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../../contexts/ssrDataContext";
+
+const getEmbeddedRelatedProducts = (
+  product: ProductDetailView | null,
+): ProductView[] => {
+  if (!product) return [];
+  return (
+    product.related_products ??
+    product.relatedProducts ??
+    product.related ??
+    []
+  );
+};
 
 export default function ProductDetail() {
   useSyncLanguage();
 
-  const [mainImage, setMainImage] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
+  const ssrProduct = useSSRPageData<ProductDetailView>("product-detail", id);
+  const [mainImage, setMainImage] = useState(ssrProduct?.media?.[0]?.url ?? "");
+  const [isExpanded, setIsExpanded] = useState(false);
   const { currentLang } = useLanguage();
   const { getListProducts, getProductById } = useProducts(currentLang);
-  const [product, setproduct] = useState<ProductDetailView | null>(null);
-  const [related, setRelated] = useState<ProductView[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [product, setproduct] = useState<ProductDetailView | null>(ssrProduct);
+  const [related, setRelated] = useState<ProductView[]>(() =>
+    getEmbeddedRelatedProducts(ssrProduct)
+      .filter((item) => item.id !== ssrProduct?.id)
+      .slice(0, 5),
+  );
+  const [loading, setLoading] = useState(!ssrProduct);
   const { t } = useTranslate();
   const { push } = useNavigation();
 
@@ -79,30 +97,60 @@ const isMobile = typeof window !== "undefined"
     if (success && data) {
       setproduct(data);
       setMainImage(data.media[0]?.url);
-      if (data?.category?.id) {
-        const relatedRes = await getListProducts();
-        if (relatedRes.success) {
-
-          setRelated(
-            relatedRes.data
-              .filter(
-                (b) =>
-                  b?.category?.id === data?.category?.id && b?.id !== data?.id,
-              )
-              .slice(0, 5),
-          );
-        }
-      }
     }
     setLoading(false);
   };
 
   useEffect(() => {
     if (!id) return;
+    if (ssrProduct) return;
     fetchData();
 
 
   }, [id, currentLang]);
+
+  useEffect(() => {
+    if (!product) return;
+
+    let cancelled = false;
+    const embeddedRelated = getEmbeddedRelatedProducts(product)
+      .filter((item) => item.id !== product.id)
+      .slice(0, 5);
+
+    if (embeddedRelated.length > 0) {
+      setRelated(embeddedRelated);
+      return;
+    }
+
+    if (!product.category?.id) {
+      setRelated([]);
+      return;
+    }
+
+    const fetchRelatedProducts = async () => {
+      const relatedRes = await getListProducts(
+        6,
+        product.category.id,
+      );
+
+      if (!cancelled && relatedRes.success) {
+        setRelated(
+          relatedRes.data
+            .filter(
+              (item) =>
+                item.id !== product.id &&
+                item.category?.id === product.category.id,
+            )
+            .slice(0, 5),
+        );
+      }
+    };
+
+    fetchRelatedProducts();
+    return () => {
+      cancelled = true;
+    };
+  }, [product, currentLang]);
 
   useEffect(() => {
     if (product?.media?.length && !mainImage) {

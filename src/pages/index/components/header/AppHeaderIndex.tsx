@@ -95,6 +95,14 @@ export const AppHeaderIndex: FC = () => {
     }
   };
 
+// مرتب‌سازی الفبایی برندها بر اساس title
+  const sortedBrands = [...(data?.brands || [])].sort((a, b) =>
+    (a?.title || "").localeCompare(b?.title || "", undefined, {
+      sensitivity: "base",
+      numeric: true,
+    })
+  );
+
   const menuItems = [
     {
       key: "menu-products",
@@ -104,36 +112,36 @@ export const AppHeaderIndex: FC = () => {
     {
       key: "menu-brands",
       title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-      children: data?.brands?.length
+      children: sortedBrands.length
         ? [
-          {
-            key: "menu-brands-all",
-            title: {
-              en: "All Brands",
-              fa: "همه برندها",
-              ar: "جميع العلامات التجارية",
+            {
+              key: "menu-brands-all",
+              title: {
+                en: "All Brands",
+                fa: "همه برندها",
+                ar: "جميع العلامات التجارية",
+              },
+              path: "brands",
             },
-            path: "brands",
-          },
 
-          ...data.brands.map((brand, index) => ({
-            key: `brand-${brand.title}-${index}`,
-            title: {
-              en: brand.title,
-              fa: brand.title,
-              ar: brand.title,
-            },
-            path: `brand-detail/${encodeURIComponent(brand?.id)}`,
-            image: brand.image,
-          })),
-        ]
+            ...sortedBrands.map((brand, index) => ({
+              key: `brand-${brand?.title || index}-${index}`,
+              title: {
+                en: brand?.title,
+                fa: brand?.title,
+                ar: brand?.title,
+              },
+              path: `brand-detail/${encodeURIComponent(brand?.id)}`,
+              image: brand?.image,
+            })),
+          ]
         : [
-          {
-            key: "menu-brands-main",
-            title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
-            path: "brands",
-          },
-        ],
+            {
+              key: "menu-brands-main",
+              title: { en: "Brands", fa: "برندها", ar: "العلامات التجارية" },
+              path: "brands",
+            },
+          ],
     },
     {
       key: "menu-catalogues",
@@ -150,7 +158,6 @@ export const AppHeaderIndex: FC = () => {
       title: { en: "Services", fa: "خدمات", ar: "الخدمات" },
       path: "services",
     },
-
     {
       key: "menu-representation",
       title: { en: "Agents", fa: "نمایندگی‌ها", ar: "الوكلاء" },
@@ -167,6 +174,7 @@ export const AppHeaderIndex: FC = () => {
       path: "contact",
     },
   ];
+
 
   const buildProductChildren = (
     data: IndexDataView | null,

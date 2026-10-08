@@ -1,34 +1,19 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import type { JSX } from "react";
 import "./Home.less";
 import { Carousel } from "antd";
 import { AppHeaderIndex } from "../header/AppHeaderIndex";
 import { ScrollDown } from "./scroll-down/ScrollDown";
-import useIndex from "../../../../hooks/index/useIndex";
 import { useLanguage } from "../../../../contexts/useLanguage";
-import type { IndexDataView } from "../../../../models/views/indexView";
+import { useIndexContext } from "../../../../contexts/indexContext";
 
 
 export function Home(): JSX.Element {
   const carouselRef = useRef<any>(null);
   const { currentLang } = useLanguage();
-  const [indexData, setIndexData] = useState<IndexDataView | null>(null);
+  const { indexData } = useIndexContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const sliders = indexData?.sliders?.filter((c) => c.slug === "test-hero") || []  
-
-  const { getIndex } = useIndex(currentLang);
-  
-  const fetchIndex = async () => {
-    const { success, data } = await getIndex();
-    if (success && data) {
-      setIndexData(data);
-    }
-  };
-
-  useEffect(() => {
-    setIndexData(null);
-    fetchIndex();
-  }, [currentLang]);
   return (
     <section id="home" className="home">
       <AppHeaderIndex />

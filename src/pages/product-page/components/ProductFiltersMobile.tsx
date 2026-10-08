@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Menu, Tag, Input, Checkbox } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 interface Brand { id: number; title: string; }
 interface Collection { id: number; title: string; }
@@ -119,6 +120,13 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
 
   t,
 }) => {
+  // سورت الفبایی برندها
+  const sortedBrands = useMemo(() => {
+    return [...filteredBrands].sort((a, b) =>
+      a.title.localeCompare(b.title, "fa", { sensitivity: "base" })
+    );
+  }, [filteredBrands]);
+
   return (
     <div className="filters-box">
 
@@ -156,8 +164,8 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
 
         {selectedFeature.map((id) => {
           const feature = productFeatures
-            .flatMap(f => f.values.map(v => ({ ...v, featureTitle: f.title })))
-            .find(v => v.id === id);
+            .flatMap((f) => f.values.map((v) => ({ ...v, featureTitle: f.title })))
+            .find((v) => v.id === id);
 
           if (!feature) return null;
 
@@ -176,7 +184,7 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
 
       {/* ⭐⭐⭐ CATEGORY MENU — EXACTLY LIKE DESKTOP ⭐⭐⭐ */}
       <Menu
-        className="menu-item-product"
+        className="menu-item-product filter-section"
         expandIcon={null}
         selectedKeys={getSelectedKeys()}
         onSelect={handleMenuSelect}
@@ -194,7 +202,7 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
 
       {/* BRANDS */}
       <Menu
-        className="menu-item-product-col"
+        className="menu-item-product-col filter-section"
         mode="inline"
         openKeys={openBrandMenu ? ["brand-menu"] : []}
         onOpenChange={(keys) =>
@@ -213,11 +221,19 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
                     placeholder={t("local_search")}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    suffix={
+                      search ? (
+                        <CloseOutlined
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setSearch("")}
+                        />
+                      ) : null
+                    }
                   />
                 ),
                 disabled: true,
               },
-              ...filteredBrands.flatMap((b, idx) => [
+              ...sortedBrands.flatMap((b, idx) => [
                 {
                   key: `brand-${b.id}`,
                   label: (
@@ -231,7 +247,7 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
                   ),
                   className: "brand-menu-item",
                 },
-                ...(idx !== filteredBrands.length - 1 ? [{ type: "divider" as const, key: `divider-${b.id}` }] : []),
+                ...(idx !== sortedBrands.length - 1 ? [{ type: "divider" as const, key: `divider-${b.id}` }] : []),
               ]),
             ],
           },
@@ -241,7 +257,7 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
       {/* COLLECTIONS */}
       {filteredCollections.length > 0 && (
         <Menu
-          className="menu-item-product-col"
+          className="menu-item-product-col filter-section"
           mode="inline"
           openKeys={openCollectionMenu ? ["collection-menu"] : []}
           onOpenChange={(keys) =>
@@ -275,7 +291,7 @@ const ProductFiltersMobile: React.FC<ProductFiltersMobileProps> = ({
       {/* FEATURES */}
       {selectedCategory && (
         <Menu
-          className="menu-item-product-col"
+          className="menu-item-product-col filter-section"
           mode="inline"
           items={productFeatures
             .filter((feat) =>

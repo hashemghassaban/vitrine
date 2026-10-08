@@ -40,16 +40,18 @@ async function createServer() {
       const { render } = await vite.ssrLoadModule("src/entry-server.tsx");
 
       const context = {};
-      const { appHtml, metaTags } = await render(url, context);
+      const { appHtml, metaTags, htmlLang, htmlDir, statusCode, pageData } = await render(url, context);
 
-      let html = template.replace(`<!--ssr-outlet-->`, appHtml);
-      
-      // Insert meta tags in head
-      if (metaTags) {
-        html = html.replace("</head>", `${metaTags}</head>`);
-      }
+      const { injectSSRIntoTemplate } = await vite.ssrLoadModule("src/utils/metaTags.ts");
+      const html = injectSSRIntoTemplate(template, {
+        appHtml,
+        metaTagsHtml: metaTags,
+        htmlLang,
+        htmlDir,
+        pageData,
+      });
 
-      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      res.status(statusCode || 200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
       vite.ssrFixStacktrace(e);
       console.error("SSR Error:", e);

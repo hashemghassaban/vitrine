@@ -12,20 +12,32 @@ interface ApiResult<T> {
 }
 
 export async function fetchApiData<T>(path: string, lang: string): Promise<T | null> {
-  try {
-    const response = await fetch(`${API_BASE}/api${path}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Accept-Language": lang,
-      },
-    });
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(`${API_BASE}/api${path}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": lang,
+        },
+      });
 
-    if (!response.ok) return null;
+      if (response.ok) {
+        const json = (await response.json()) as ApiResult<T>;
+        return json.data ?? null;
+      }
 
-    const json = (await response.json()) as ApiResult<T>;
-    return json.data ?? null;
-  } catch {
-    return null;
+      if (![500, 502, 503, 504].includes(response.status)) return null;
+    } catch {
+      // Network errors are retried below as well.
+    }
+
+    if (attempt < 2) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, attempt === 0 ? 300 : 800),
+      );
+    }
   }
+
+  return null;
 }

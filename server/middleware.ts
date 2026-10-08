@@ -22,6 +22,7 @@ type EntryServerModule = {
     htmlLang: string;
     htmlDir: string;
     statusCode: number;
+    pageData: unknown;
   }>;
   injectSSRIntoTemplate: (
     template: string,
@@ -30,6 +31,7 @@ type EntryServerModule = {
       metaTagsHtml: string;
       htmlLang: string;
       htmlDir: string;
+      pageData?: unknown;
     },
   ) => string;
 };
@@ -128,7 +130,7 @@ app.get("*", async (req: Request, res: Response) => {
 
     const { render, injectSSRIntoTemplate } = await getEntryServer();
     const context: Record<string, unknown> = {};
-    const { appHtml, metaTags, htmlLang, htmlDir, statusCode } = await render(
+    const { appHtml, metaTags, htmlLang, htmlDir, statusCode, pageData } = await render(
       req.originalUrl,
       context,
     );
@@ -138,6 +140,7 @@ app.get("*", async (req: Request, res: Response) => {
       metaTagsHtml: metaTags,
       htmlLang,
       htmlDir,
+      pageData,
     });
 
     res.status(statusCode || 200).set({ "Content-Type": "text/html" }).end(html);

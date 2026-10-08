@@ -14,22 +14,24 @@ import useNavigation from "../../../hooks/useHistory";
 import LoadingSpin from "../../../components/Loading/LoadingSpin";
 import { useIsMobile } from "../../../helpers/useIsMobile";
 import usePageMetadata from "../../../hooks/usePageMetadata";
+import { useSSRPageData } from "../../../contexts/ssrDataContext";
 
 const { Title } = Typography;
 
 export default function ProjectItemDetail() {
   useSyncLanguage();
   const { id } = useParams<{ id: string }>();
+  const ssrProject = useSSRPageData<ProjectDetailView>("project-detail", id);
   const { currentLang } = useLanguage();
   const { getById } = useProjectDetail(currentLang);
-  const [project, setProject] = useState<ProjectDetailView | null>(null);
+  const [project, setProject] = useState<ProjectDetailView | null>(ssrProject);
   const [current, setCurrent] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
   const { t } = useTranslate();
   const { push } = useNavigation();
   const carouselRef = useRef<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!ssrProject);
   const isMobile = useIsMobile();
 
   const prev = () => {
@@ -55,6 +57,7 @@ export default function ProjectItemDetail() {
 
   }
   useEffect(() => {
+    if (ssrProject) return;
     let isMounted = true;
 
     const fetchProject = async () => {
