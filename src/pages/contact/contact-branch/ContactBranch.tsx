@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./ContactBranch.less";
 import { AppHeader } from "../../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../../components/AppFooter/AppFooter";
 import instagram from "../../../assets/footer/media1.png";
-import MarkerPin from "../../../assets/icon/pin.png";
 import whatsapp from "../../../assets/footer/media2.png";
 import linkedin from "../../../assets/footer/media3.png";
+import MarkerPin from "../../../assets/icon/pin.png";
 import telegram from "../../../assets/footer/media4.png";
 import facebook from "../../../assets/footer/media5.png";
 import youtube from "../../../assets/footer/media6.png";
@@ -38,7 +38,7 @@ const ContactBranch: React.FC = () => {
   const [setting, setSetting] = useState<SettingView | null>(null);
   const [departments, setDepartments] = useState<DepartmentView[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // جلوگیری از خطای WebGL و SSR Hydration
+  const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState<contractBranchDTO>(
     {} as contractBranchDTO
   );
@@ -59,10 +59,15 @@ const ContactBranch: React.FC = () => {
   };
 
   useEffect(() => {
-    setIsMounted(true); // فقط در کلاینت true می‌شود
+    setIsMounted(true);
     const fetchAll = async () => {
-      await Promise.all([fetchDepartments(), fetchSettings()]);
-      setLoading(false);
+      try {
+        await Promise.all([fetchDepartments(), fetchSettings()]);
+      } catch (err) {
+        console.error("Error fetching contact data:", err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchAll();
   }, [currentLang]);
@@ -83,9 +88,12 @@ const ContactBranch: React.FC = () => {
     });
   };
 
-  // استخراج مختصات
-  const lat = Number((setting as any)?.latitude) || 35.6997;
-  const lng = Number((setting as any)?.longitude) || 51.338;
+  // استخراج هوشمندانه مختصات (پشتیبانی از lat/latitude و lng/longitude)
+  const rawLat = (setting as any)?.latitude ?? (setting as any)?.lat;
+  const rawLng = (setting as any)?.longitude ?? (setting as any)?.lng;
+
+  const lat = !isNaN(Number(rawLat)) && Number(rawLat) !== 0 ? Number(rawLat) : 36.2972;
+  const lng = !isNaN(Number(rawLng)) && Number(rawLng) !== 0 ? Number(rawLng) : 59.6067;
 
   const onSubmit = async () => {
     try {
@@ -168,7 +176,7 @@ const ContactBranch: React.FC = () => {
             <div className="form-row">
               <div className="input-group half">
                 <Input
-                  className=" input-text"
+                  className="input-text"
                   placeholder={t("local_contactFullName")}
                   variant="underlined"
                   value={formData.full_name || ""}
@@ -179,7 +187,7 @@ const ContactBranch: React.FC = () => {
               </div>
               <div className="input-group half">
                 <Input
-                  className=" input-text"
+                  className="input-text"
                   placeholder={t("local_contactPhoneNumber")}
                   variant="underlined"
                   value={formData.phone || ""}
@@ -191,7 +199,7 @@ const ContactBranch: React.FC = () => {
             <div className="form-row">
               <div className="input-group half">
                 <Input
-                  className=" input-text"
+                  className="input-text"
                   placeholder={t("local_contactEmail")}
                   variant="underlined"
                   value={formData.email || ""}
@@ -200,7 +208,7 @@ const ContactBranch: React.FC = () => {
               </div>
               <div className="input-group half">
                 <Select
-                  className=" input-text custom-select"
+                  className="input-text custom-select"
                   placeholder={t("local_contactSelectDepartment")}
                   variant="underlined"
                   value={formData.department_id}
@@ -217,7 +225,7 @@ const ContactBranch: React.FC = () => {
             <div className="form-row">
               <div className="input-group">
                 <TextArea
-                  className=" input-text"
+                  className="input-text"
                   rows={4}
                   placeholder={t("local_contactMessageContent")}
                   variant="underlined"
@@ -242,51 +250,72 @@ const ContactBranch: React.FC = () => {
             </div>
           </div>
         </div>
-{/* بخش نقشه نشان (Neshan) */}
+{/* بخش نقشه به همراه مارکر اختصاصی */}
 <div
   className="map-section"
   style={{
     position: "relative",
     width: "100%",
-    height: "100%",
+    height: "450px",
     minHeight: "450px",
     borderRadius: "12px",
     overflow: "hidden",
   }}
 >
-  {isMounted && (
+  {isMounted && !loading && (
     <>
       <iframe
-        title="Neshan Map"
-        src={`https://neshan.org/maps/@${lat},${lng},16z,0p/search`}
-        allow="fullscreen; geolocation; accelerometer; gyroscope"
-        allowFullScreen
+        title="Location Map"
+        src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.008}%2C${lat - 0.005}%2C${lng + 0.008}%2C${lat + 0.005}&layer=mapnik`}
+        width="100%"
+        height="100%"
+        style={{ border: 0, width: "100%", height: "100%" }}
         loading="lazy"
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "none",
-          minHeight: "450px",
-        }}
       />
-      {/* دکمه باز کردن مستقیم در اپلیکیشن / سایت نشان */}
+
+      {/* پین اختصاصی پروژه دقیقاً در مرکز نقشه */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -100%)", // نوک پین دقیقاً روی نقطه قرار می‌گیرد
+          pointerEvents: "none", // جلوگیری از اختلال در اسکرول و کلیک روی نقشه
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src={MarkerPin}
+          alt="Location Pin"
+          style={{
+            width: "60px",
+            height: "auto",
+            filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.35))",
+          }}
+        />
+      </div>
+
+      {/* دکمه مستقیم باز کردن مکان در نشان */}
       <a
         href={`https://neshan.org/maps/@${lat},${lng},16z`}
         target="_blank"
         rel="noopener noreferrer"
         style={{
           position: "absolute",
-          bottom: 12,
-          right: 12,
-          background: "#fff",
-          color: "#333",
-          padding: "6px 14px",
+          bottom: 16,
+          right: 16,
+          background: "#ffffff",
+          color: "#333333",
+          padding: "8px 16px",
           borderRadius: "8px",
-          fontSize: "12px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          fontSize: "13px",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
           textDecoration: "none",
-          zIndex: 10,
-          fontWeight: 500,
+          zIndex: 1000,
+          fontWeight: 600,
         }}
       >
         مسیریابی در نشان
