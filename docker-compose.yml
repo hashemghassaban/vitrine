@@ -1,0 +1,23 @@
+services:
+  app:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-your-username}/vitrine:branch-production
+    container_name: vitrine-app
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=production
+      - PORT=5173
+      - API_TARGET=${API_TARGET:-https://admin.vitrine.gallery}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:5173/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - vitrine-network
+
+networks:
+  vitrine-network:
+    driver: bridge
