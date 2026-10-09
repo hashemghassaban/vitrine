@@ -29,7 +29,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata for Docker
         id: meta
@@ -38,11 +38,12 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
+            type=semver,pattern={{version}}
             type=sha,prefix=sha-
-            type=raw,value=branch-production,enable={{eq(github.ref, 'refs/heads/production')}}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/production' }}
 
       - name: Build and push Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -55,5 +56,4 @@ jobs:
 
       - name: Output image digest
         run: |
-          echo "Image pushed to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
-          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}"
