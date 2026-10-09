@@ -10,6 +10,9 @@
     "build:ssr": "npm run build && vite build --ssr src/entry-server.tsx --outDir dist/server && npm run build:server && cp dist/client/index.html dist/server/index.html",
     "build:server": "tsc server/middleware.ts --outDir dist/server --target es2020 --module esnext --moduleResolution node --skipLibCheck --allowSyntheticDefaultImports",
     "preview": "vite preview",
+    "build:cf": "CF_WORKER=1 VITE_API_TARGET=https://admin.northwebhost.ir npm run build:ssr",
+    "deploy:cf": "npm run build:cf && wrangler deploy",
+    "preview:cf": "npm run build:cf && wrangler dev",
     "preview:ssr": "npm run build:ssr && node dist/server/middleware.js",
     "start": "node dist/server/middleware.js"
   },

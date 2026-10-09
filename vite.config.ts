@@ -18,7 +18,9 @@ export default defineConfig({
   },
 
   ssr: {
-    noExternal: [
+    // CF_WORKER=1 builds the SSR bundle for Cloudflare Workers (no node shims)
+    target: process.env.CF_WORKER ? "webworker" : "node",
+    noExternal: process.env.CF_WORKER ? true : [
       "styled-components",
       "stylis",
       "antd",
